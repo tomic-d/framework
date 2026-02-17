@@ -1,0 +1,74 @@
+.e-aa4ad7d > .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+}
+
+.e-aa4ad7d > .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+}
+
+.e-aa4ad7d > .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+}
+
+.e-aa4ad7d > .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+}
+
+.e-aa4ad7d > .holder[variant*="bg-1"]:hover
+{
+	background: var(--dh-bg-1-hover);
+}
+
+.e-aa4ad7d > .holder[variant*="bg-2"]:hover
+{
+	background: var(--dh-bg-2-hover);
+}
+
+.e-aa4ad7d > .holder[variant*="bg-3"]:hover
+{
+	background: var(--dh-bg-3-hover);
+}
+
+.e-aa4ad7d > .holder[variant*="bg-4"]:hover
+{
+	background: var(--dh-bg-4-hover);
+}
+
+.e-aa4ad7d > .holder[variant*="border"]
+{
+	border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-aa4ad7d > .holder[variant*="brand"]
+{
+	border-color: var(--dh-brand-border);
+	background: var(--dh-brand-opacity);
+}
+
+.e-aa4ad7d > .holder[variant*="blue"]
+{
+	border-color: var(--dh-blue-border);
+	background: var(--dh-blue-opacity);
+}
+
+.e-aa4ad7d > .holder[variant*="red"]
+{
+	border-color: var(--dh-red-border);
+	background: var(--dh-red-opacity);
+}
+
+.e-aa4ad7d > .holder[variant*="orange"]
+{
+	border-color: var(--dh-orange-border);
+	background: var(--dh-orange-opacity);
+}
+
+.e-aa4ad7d > .holder[variant*="green"]
+{
+	border-color: var(--dh-green-border);
+	background: var(--dh-green-opacity);
+}

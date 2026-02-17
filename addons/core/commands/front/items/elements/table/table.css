@@ -1,0 +1,18 @@
+/* Base */
+.e-cmd-table > .holder
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.e-cmd-table > .holder > .error
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--dh-spacing-l);
+	color: var(--dh-red);
+	font-size: var(--dh-size-m);
+	background: var(--dh-red-opacity);
+	border-radius: var(--dh-radius-m);
+}

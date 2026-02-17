@@ -1,0 +1,377 @@
+/* ============================================
+   PREVIEW HTML - Premium component showcase
+   ============================================ */
+
+.e-dbe4fa6 > .holder
+{
+	display: flex;
+	flex-direction: column;
+	background: var(--dh-bg-1);
+	border-radius: var(--dh-radius-l);
+	overflow: hidden;
+	transition: box-shadow 0.2s ease;
+}
+
+.e-dbe4fa6 > .holder:hover
+{
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.e-dbe4fa6 > .holder > .header
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--dh-spacing-s) var(--dh-spacing-m);
+	background: var(--dh-bg-2);
+	border-bottom: 1px solid var(--dh-bg-1-border);
+}
+
+.e-dbe4fa6 > .holder > .header > .title
+{
+	font-size: var(--dh-size-s);
+	font-weight: 600;
+	color: var(--dh-text-2);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.e-dbe4fa6 > .holder > .header > .actions
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-x);
+}
+
+
+/* ============================================
+   PREVIEW AREA
+   ============================================ */
+
+.e-dbe4fa6 > .holder > .preview
+{
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 140px;
+	padding: var(--dh-spacing-l);
+	overflow: hidden;
+}
+
+/* Grid background - separate layer for animation */
+.e-dbe4fa6 > .holder > .preview > .grid
+{
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(var(--dh-bg-1-border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--dh-bg-1-border) 1px, transparent 1px);
+	background-size: 24px 24px;
+	background-position: center center;
+	opacity: 0.6;
+	transition: opacity 0.3s ease;
+}
+
+.e-dbe4fa6 > .holder:hover > .preview > .grid
+{
+	opacity: 1;
+}
+
+/* Content container */
+.e-dbe4fa6 > .holder > .preview > .content
+{
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--dh-spacing-m);
+}
+
+/* Alignment */
+.e-dbe4fa6 > .holder > .preview[align="start"]
+{
+	justify-content: flex-start;
+}
+
+.e-dbe4fa6 > .holder > .preview[align="center"]
+{
+	justify-content: center;
+}
+
+.e-dbe4fa6 > .holder > .preview[align="end"]
+{
+	justify-content: flex-end;
+}
+
+/* Resize handle */
+.e-dbe4fa6 > .holder > .preview > .resize-handle
+{
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 40px;
+	background: var(--dh-bg-2);
+	border-left: 1px solid var(--dh-bg-1-border);
+	border-radius: var(--dh-radius-s) 0 0 var(--dh-radius-s);
+	cursor: ew-resize;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.e-dbe4fa6 > .holder > .preview > .resize-handle > i
+{
+	font-size: 16px;
+	color: var(--dh-text-3);
+	transform: rotate(90deg);
+}
+
+.e-dbe4fa6 > .holder:hover > .preview > .resize-handle
+{
+	opacity: 1;
+}
+
+
+/* ============================================
+   CODE BLOCK
+   ============================================ */
+
+.e-dbe4fa6 > .holder > .code
+{
+	display: flex;
+	flex-direction: column;
+	background: var(--dh-bg-3);
+	border-top: 1px solid var(--dh-bg-1-border);
+}
+
+.e-dbe4fa6 > .holder > .code > .code-header
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--dh-spacing-s) var(--dh-spacing-m);
+	border-bottom: 1px solid var(--dh-bg-3-border);
+}
+
+.e-dbe4fa6 > .holder > .code > .code-header > .label
+{
+	font-size: 10px;
+	font-weight: 600;
+	color: var(--dh-text-3);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.e-dbe4fa6 > .holder > .code > pre
+{
+	margin: 0;
+	padding: var(--dh-spacing-m);
+	overflow-x: auto;
+}
+
+.e-dbe4fa6 > .holder > .code > pre > code
+{
+	font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+	font-size: 12px;
+	line-height: 1.6;
+	color: var(--dh-text-2);
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+
+/* ============================================
+   VARIANTS - Backgrounds
+   ============================================ */
+
+/* bg-1 (default) */
+.e-dbe4fa6 > .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+}
+
+/* bg-2 */
+.e-dbe4fa6 > .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-2"] > .header
+{
+	background: var(--dh-bg-3);
+	border-bottom-color: var(--dh-bg-2-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-2"] > .preview > .grid
+{
+	background-image:
+		linear-gradient(var(--dh-bg-2-border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--dh-bg-2-border) 1px, transparent 1px);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-2"] > .code
+{
+	background: var(--dh-bg-4);
+	border-top-color: var(--dh-bg-2-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-2"] > .code > .code-header
+{
+	border-bottom-color: var(--dh-bg-4-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-2"] > .preview > .resize-handle
+{
+	background: var(--dh-bg-3);
+	border-left-color: var(--dh-bg-2-border);
+}
+
+/* bg-3 */
+.e-dbe4fa6 > .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-3"] > .header
+{
+	background: var(--dh-bg-4);
+	border-bottom-color: var(--dh-bg-3-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-3"] > .preview > .grid
+{
+	background-image:
+		linear-gradient(var(--dh-bg-3-border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--dh-bg-3-border) 1px, transparent 1px);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-3"] > .code
+{
+	background: var(--dh-bg-4);
+	border-top-color: var(--dh-bg-3-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-3"] > .code > .code-header
+{
+	border-bottom-color: var(--dh-bg-4-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-3"] > .preview > .resize-handle
+{
+	background: var(--dh-bg-4);
+	border-left-color: var(--dh-bg-3-border);
+}
+
+/* bg-4 */
+.e-dbe4fa6 > .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-4"] > .preview > .grid
+{
+	background-image:
+		linear-gradient(var(--dh-bg-4-border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--dh-bg-4-border) 1px, transparent 1px);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-4"] > .header
+{
+	background: var(--dh-bg-3);
+	border-bottom-color: var(--dh-bg-4-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-4"] > .code
+{
+	background: var(--dh-bg-3);
+	border-top-color: var(--dh-bg-4-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-4"] > .code > .code-header
+{
+	border-bottom-color: var(--dh-bg-3-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-4"] > .preview > .resize-handle
+{
+	background: var(--dh-bg-3);
+	border-left-color: var(--dh-bg-4-border);
+}
+
+
+/* ============================================
+   VARIANTS - Border
+   ============================================ */
+
+.e-dbe4fa6 > .holder[variant*="border"]
+{
+	border: 1px solid var(--dh-bg-1-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-2"][variant*="border"]
+{
+	border-color: var(--dh-bg-2-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-3"][variant*="border"]
+{
+	border-color: var(--dh-bg-3-border);
+}
+
+.e-dbe4fa6 > .holder[variant*="bg-4"][variant*="border"]
+{
+	border-color: var(--dh-bg-4-border);
+}
+
+
+/* ============================================
+   VARIANTS - Compact
+   ============================================ */
+
+.e-dbe4fa6 > .holder[variant*="compact"] > .preview
+{
+	min-height: 80px;
+	padding: var(--dh-spacing-m);
+}
+
+.e-dbe4fa6 > .holder[variant*="compact"] > .code > pre
+{
+	padding: var(--dh-spacing-s) var(--dh-spacing-m);
+}
+
+
+/* ============================================
+   VARIANTS - Dots pattern
+   ============================================ */
+
+.e-dbe4fa6 > .holder[variant*="dots"] > .preview > .grid
+{
+	background-image: radial-gradient(circle, var(--dh-bg-1-border) 1px, transparent 1px);
+	background-size: 16px 16px;
+}
+
+.e-dbe4fa6 > .holder[variant*="dots"][variant*="bg-2"] > .preview > .grid
+{
+	background-image: radial-gradient(circle, var(--dh-bg-2-border) 1px, transparent 1px);
+}
+
+.e-dbe4fa6 > .holder[variant*="dots"][variant*="bg-3"] > .preview > .grid
+{
+	background-image: radial-gradient(circle, var(--dh-bg-3-border) 1px, transparent 1px);
+}
+
+.e-dbe4fa6 > .holder[variant*="dots"][variant*="bg-4"] > .preview > .grid
+{
+	background-image: radial-gradient(circle, var(--dh-bg-4-border) 1px, transparent 1px);
+}

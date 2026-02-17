@@ -1,0 +1,117 @@
+/* Base */
+.e-c6e9f50 > .holder
+{
+    position: relative;
+    width: 100%;
+    padding: var(--dh-spacing-s) var(--dh-spacing-m);
+    border-radius: var(--dh-radius-m);
+    border: none;
+    background: transparent;
+    transition: all 0.2s;
+}
+
+.e-c6e9f50 > .holder > textarea
+{
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    min-height: 100px;
+    resize: none;
+    color: var(--dh-text-1);
+    padding: 0;
+}
+
+.e-c6e9f50 > .holder > textarea::placeholder
+{
+    color: var(--dh-text-2);
+}
+
+.e-c6e9f50 > .holder > textarea:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Variants - Background */
+.e-c6e9f50 > .holder[variant*="transparent"]
+{
+    background: transparent;
+    padding: 0;
+}
+
+.e-c6e9f50 > .holder[variant*="border"]
+{
+    background: transparent;
+}
+
+.e-c6e9f50 > .holder[variant*="bg-1"]
+{
+    background: var(--dh-bg-1);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-1"]:hover
+{
+    background: var(--dh-bg-1-hover);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-2"]
+{
+    background: var(--dh-bg-2);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-2"]:hover
+{
+    background: var(--dh-bg-2-hover);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-3"]
+{
+    background: var(--dh-bg-3);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-3"]:hover
+{
+    background: var(--dh-bg-3-hover);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-4"]
+{
+    background: var(--dh-bg-4);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-4"]:hover
+{
+    background: var(--dh-bg-4-hover);
+}
+
+/* Variants - Border */
+.e-c6e9f50 > .holder[variant*="border"]
+{
+    border: 1px solid var(--dh-bg-2-border);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-1"][variant*="border"]
+{
+    border: 1px solid var(--dh-bg-1-border);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-2"][variant*="border"]
+{
+    border: 1px solid var(--dh-bg-2-border);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-3"][variant*="border"]
+{
+    border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-c6e9f50 > .holder[variant*="bg-4"][variant*="border"]
+{
+    border: 1px solid var(--dh-bg-4-border);
+}
+
+.e-c6e9f50 > .holder[variant*="border"]:focus-within
+{
+    border-color: var(--dh-brand);
+}

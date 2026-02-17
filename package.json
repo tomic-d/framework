@@ -1,0 +1,54 @@
+{
+    "name": "divhunt",
+    "version": "2.0.0",
+    "description": "Full-stack isomorphic JavaScript framework built from scratch. One addon abstraction powers databases, servers, commands, pages, directives, queues, and more.",
+    "type": "module",
+    "main": "framework/load.js",
+    "browser": "framework/browser.js",
+    "imports": {
+        "#framework/*": "./framework/*",
+        "#database/*": "./addons/core/database/back/*",
+        "#servers/*": "./addons/core/servers/back/*",
+        "#clients/*": "./addons/core/clients/back/*",
+        "#commands/*": "./addons/core/commands/back/*",
+        "#queue/*": "./addons/core/queue/back/*",
+        "#assets/*": "./addons/render/assets/back/*",
+        "#html/*": "./addons/render/html/*",
+        "#directives/*": "./addons/render/directives/*",
+        "#elements/*": "./addons/render/elements/*",
+        "#tags/*": "./addons/render/tags/*",
+        "#sources/*": "./addons/modules/sources/*",
+        "#variables/*": "./addons/modules/variables/*"
+    },
+    "dependencies": {
+        "@grpc/grpc-js": "^1.13.3",
+        "@grpc/proto-loader": "^0.7.15",
+        "bcrypt": "^5.1.1",
+        "busboy": "^1.6.0",
+        "dotenv": "^16.4.7",
+        "knex": "^3.1.0",
+        "linkedom": "^0.18.9",
+        "pg": "^8.13.3",
+        "terser": "^5.37.0"
+    },
+    "author": "Dejan Tomic <hi@iamdejan.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tomic-d/framework"
+    },
+    "keywords": [
+        "framework",
+        "fullstack",
+        "isomorphic",
+        "addon",
+        "orm",
+        "grpc",
+        "reactivity",
+        "dom-diffing",
+        "directives"
+    ],
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

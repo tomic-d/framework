@@ -1,0 +1,124 @@
+.e-5239ce65 > .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+}
+
+.e-5239ce65 > .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+}
+
+.e-5239ce65 > .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+}
+
+.e-5239ce65 > .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+}
+
+.e-5239ce65 > .holder[variant*="bg-1"]:hover
+{
+	background: var(--dh-bg-1-hover);
+}
+
+.e-5239ce65 > .holder[variant*="bg-2"]:hover
+{
+	background: var(--dh-bg-2-hover);
+}
+
+.e-5239ce65 > .holder[variant*="bg-3"]:hover
+{
+	background: var(--dh-bg-3-hover);
+}
+
+.e-5239ce65 > .holder[variant*="bg-4"]:hover
+{
+	background: var(--dh-bg-4-hover);
+}
+
+.e-5239ce65 > .holder[variant*="border"]
+{
+	border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-5239ce65 > .holder[variant*="brand"]
+{
+	border-color: var(--dh-brand-border);
+	background: var(--dh-brand-opacity);
+}
+
+.e-5239ce65 > .holder[variant*="brand"] > .header > i
+{
+	color: var(--dh-brand);
+}
+
+.e-5239ce65 > .holder[variant*="brand"] > .footer > .sparkline
+{
+	color: var(--dh-brand);
+}
+
+.e-5239ce65 > .holder[variant*="blue"]
+{
+	border-color: var(--dh-blue-border);
+	background: var(--dh-blue-opacity);
+}
+
+.e-5239ce65 > .holder[variant*="blue"] > .header > i
+{
+	color: var(--dh-blue);
+}
+
+.e-5239ce65 > .holder[variant*="blue"] > .footer > .sparkline
+{
+	color: var(--dh-blue);
+}
+
+.e-5239ce65 > .holder[variant*="red"]
+{
+	border-color: var(--dh-red-border);
+	background: var(--dh-red-opacity);
+}
+
+.e-5239ce65 > .holder[variant*="red"] > .header > i
+{
+	color: var(--dh-red);
+}
+
+.e-5239ce65 > .holder[variant*="red"] > .footer > .sparkline
+{
+	color: var(--dh-red);
+}
+
+.e-5239ce65 > .holder[variant*="orange"]
+{
+	border-color: var(--dh-orange-border);
+	background: var(--dh-orange-opacity);
+}
+
+.e-5239ce65 > .holder[variant*="orange"] > .header > i
+{
+	color: var(--dh-orange);
+}
+
+.e-5239ce65 > .holder[variant*="orange"] > .footer > .sparkline
+{
+	color: var(--dh-orange);
+}
+
+.e-5239ce65 > .holder[variant*="green"]
+{
+	border-color: var(--dh-green-border);
+	background: var(--dh-green-opacity);
+}
+
+.e-5239ce65 > .holder[variant*="green"] > .header > i
+{
+	color: var(--dh-green);
+}
+
+.e-5239ce65 > .holder[variant*="green"] > .footer > .sparkline
+{
+	color: var(--dh-green);
+}

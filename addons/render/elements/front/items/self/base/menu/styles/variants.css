@@ -1,0 +1,99 @@
+.e-4de878b > .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+}
+
+.e-4de878b > .holder[variant*="bg-1"]:hover
+{
+	background: var(--dh-bg-1-hover);
+}
+
+.e-4de878b > .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+}
+
+.e-4de878b > .holder[variant*="bg-2"]:hover
+{
+	background: var(--dh-bg-2-hover);
+}
+
+.e-4de878b > .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+}
+
+.e-4de878b > .holder[variant*="bg-3"]:hover
+{
+	background: var(--dh-bg-3-hover);
+}
+
+.e-4de878b > .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+}
+
+.e-4de878b > .holder[variant*="bg-4"]:hover
+{
+	background: var(--dh-bg-4-hover);
+}
+
+.e-4de878b > .holder[variant*="border"]
+{
+	border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-4de878b > .holder[variant*="brand"]
+{
+	background: var(--dh-brand-opacity);
+	color: var(--dh-brand);
+}
+
+.e-4de878b > .holder[variant*="brand"] > i
+{
+	color: var(--dh-brand);
+}
+
+.e-4de878b > .holder[variant*="blue"]
+{
+	background: var(--dh-blue-opacity);
+	color: var(--dh-blue);
+}
+
+.e-4de878b > .holder[variant*="blue"] > i
+{
+	color: var(--dh-blue);
+}
+
+.e-4de878b > .holder[variant*="red"]
+{
+	background: var(--dh-red-opacity);
+	color: var(--dh-red);
+}
+
+.e-4de878b > .holder[variant*="red"] > i
+{
+	color: var(--dh-red);
+}
+
+.e-4de878b > .holder[variant*="orange"]
+{
+	background: var(--dh-orange-opacity);
+	color: var(--dh-orange);
+}
+
+.e-4de878b > .holder[variant*="orange"] > i
+{
+	color: var(--dh-orange);
+}
+
+.e-4de878b > .holder[variant*="green"]
+{
+	background: var(--dh-green-opacity);
+	color: var(--dh-green);
+}
+
+.e-4de878b > .holder[variant*="green"] > i
+{
+	color: var(--dh-green);
+}

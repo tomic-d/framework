@@ -1,0 +1,13 @@
+.e-67186a99 > .holder
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-s);
+}
+
+.e-67186a99 > .holder > .items
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-x);
+}

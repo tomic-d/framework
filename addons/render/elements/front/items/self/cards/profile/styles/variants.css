@@ -1,0 +1,131 @@
+.e-56553afe > .holder[variant*="horizontal"]
+{
+	flex-direction: row;
+	text-align: left;
+}
+
+.e-56553afe > .holder[variant*="horizontal"] > .header
+{
+	flex-direction: row;
+}
+
+.e-56553afe > .holder[variant*="horizontal"] > .content
+{
+	flex: 1;
+	min-width: 0;
+}
+
+.e-56553afe > .holder[variant*="horizontal"] > .stats
+{
+	flex-direction: column;
+	width: auto;
+	padding-top: 0;
+	padding-left: var(--dh-spacing-m);
+	border-top: none;
+	border-left: 1px solid var(--dh-bg-3-border);
+}
+
+.e-56553afe > .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+}
+
+.e-56553afe > .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+}
+
+.e-56553afe > .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+}
+
+.e-56553afe > .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+}
+
+.e-56553afe > .holder[variant*="bg-1"]:hover
+{
+	background: var(--dh-bg-1-hover);
+}
+
+.e-56553afe > .holder[variant*="bg-2"]:hover
+{
+	background: var(--dh-bg-2-hover);
+}
+
+.e-56553afe > .holder[variant*="bg-3"]:hover
+{
+	background: var(--dh-bg-3-hover);
+}
+
+.e-56553afe > .holder[variant*="bg-4"]:hover
+{
+	background: var(--dh-bg-4-hover);
+}
+
+.e-56553afe > .holder[variant*="border"]
+{
+	border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-56553afe > .holder[variant*="brand"]
+{
+	border-color: var(--dh-brand-border);
+	background: var(--dh-brand-opacity);
+}
+
+.e-56553afe > .holder[variant*="brand"] > .header > .avatar
+{
+	background: var(--dh-brand);
+	color: var(--dh-text-1);
+}
+
+.e-56553afe > .holder[variant*="blue"]
+{
+	border-color: var(--dh-blue-border);
+	background: var(--dh-blue-opacity);
+}
+
+.e-56553afe > .holder[variant*="blue"] > .header > .avatar
+{
+	background: var(--dh-blue);
+	color: var(--dh-text-1);
+}
+
+.e-56553afe > .holder[variant*="red"]
+{
+	border-color: var(--dh-red-border);
+	background: var(--dh-red-opacity);
+}
+
+.e-56553afe > .holder[variant*="red"] > .header > .avatar
+{
+	background: var(--dh-red);
+	color: var(--dh-text-1);
+}
+
+.e-56553afe > .holder[variant*="orange"]
+{
+	border-color: var(--dh-orange-border);
+	background: var(--dh-orange-opacity);
+}
+
+.e-56553afe > .holder[variant*="orange"] > .header > .avatar
+{
+	background: var(--dh-orange);
+	color: var(--dh-text-1);
+}
+
+.e-56553afe > .holder[variant*="green"]
+{
+	border-color: var(--dh-green-border);
+	background: var(--dh-green-opacity);
+}
+
+.e-56553afe > .holder[variant*="green"] > .header > .avatar
+{
+	background: var(--dh-green);
+	color: var(--dh-text-1);
+}

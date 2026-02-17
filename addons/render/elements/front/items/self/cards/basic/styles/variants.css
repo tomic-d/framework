@@ -1,0 +1,99 @@
+.e-a0811c7 > .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+}
+
+.e-a0811c7 > .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+}
+
+.e-a0811c7 > .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+}
+
+.e-a0811c7 > .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+}
+
+.e-a0811c7 > .holder[variant*="bg-1"]:hover
+{
+	background: var(--dh-bg-1-hover);
+}
+
+.e-a0811c7 > .holder[variant*="bg-2"]:hover
+{
+	background: var(--dh-bg-2-hover);
+}
+
+.e-a0811c7 > .holder[variant*="bg-3"]:hover
+{
+	background: var(--dh-bg-3-hover);
+}
+
+.e-a0811c7 > .holder[variant*="bg-4"]:hover
+{
+	background: var(--dh-bg-4-hover);
+}
+
+.e-a0811c7 > .holder[variant*="border"]
+{
+	border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-a0811c7 > .holder[variant*="brand"]
+{
+	border-color: var(--dh-brand-border);
+	background: var(--dh-brand-opacity);
+}
+
+.e-a0811c7 > .holder[variant*="brand"] > .header > i
+{
+	color: var(--dh-brand);
+}
+
+.e-a0811c7 > .holder[variant*="blue"]
+{
+	border-color: var(--dh-blue-border);
+	background: var(--dh-blue-opacity);
+}
+
+.e-a0811c7 > .holder[variant*="blue"] > .header > i
+{
+	color: var(--dh-blue);
+}
+
+.e-a0811c7 > .holder[variant*="red"]
+{
+	border-color: var(--dh-red-border);
+	background: var(--dh-red-opacity);
+}
+
+.e-a0811c7 > .holder[variant*="red"] > .header > i
+{
+	color: var(--dh-red);
+}
+
+.e-a0811c7 > .holder[variant*="orange"]
+{
+	border-color: var(--dh-orange-border);
+	background: var(--dh-orange-opacity);
+}
+
+.e-a0811c7 > .holder[variant*="orange"] > .header > i
+{
+	color: var(--dh-orange);
+}
+
+.e-a0811c7 > .holder[variant*="green"]
+{
+	border-color: var(--dh-green-border);
+	background: var(--dh-green-opacity);
+}
+
+.e-a0811c7 > .holder[variant*="green"] > .header > i
+{
+	color: var(--dh-green);
+}

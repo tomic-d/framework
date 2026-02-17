@@ -1,0 +1,98 @@
+/* Variants */
+.r538212a9 > .holder[variant="transparent"] input
+{
+    background: transparent;
+    border-color: transparent;
+    padding: 0;
+}
+
+.r538212a9 > .holder[variant="transparent"] input:hover
+{
+    background: transparent;
+}
+
+.r538212a9 > .holder[variant="transparent"] input:focus
+{
+    border-color: transparent;
+}
+
+.r538212a9 > .holder[variant="border"] input
+{
+    background: transparent;
+    border-color: var(--dh-bg-1-border);
+}
+
+.r538212a9 > .holder[variant="border"] input:hover
+{
+    background: transparent;
+    border-color: var(--dh-bg-2-border);
+}
+
+.r538212a9 > .holder[variant="border"] input:focus
+{
+    border-color: var(--dh-brand);
+}
+
+.r538212a9 > .holder[variant="bg-1"] input
+{
+    background: var(--dh-bg-1);
+    border-color: var(--dh-bg-1-border);
+}
+
+.r538212a9 > .holder[variant="bg-1"] input:hover
+{
+    background: var(--dh-bg-1-hover);
+}
+
+.r538212a9 > .holder[variant="bg-1"] input:focus
+{
+    border-color: var(--dh-brand);
+}
+
+.r538212a9 > .holder[variant="bg-2"] input
+{
+    background: var(--dh-bg-2);
+    border-color: var(--dh-bg-2-border);
+}
+
+.r538212a9 > .holder[variant="bg-2"] input:hover
+{
+    background: var(--dh-bg-2-hover);
+}
+
+.r538212a9 > .holder[variant="bg-2"] input:focus
+{
+    border-color: var(--dh-brand);
+}
+
+.r538212a9 > .holder[variant="bg-3"] input
+{
+    background: var(--dh-bg-3);
+    border-color: var(--dh-bg-3-border);
+}
+
+.r538212a9 > .holder[variant="bg-3"] input:hover
+{
+    background: var(--dh-bg-3-hover);
+}
+
+.r538212a9 > .holder[variant="bg-3"] input:focus
+{
+    border-color: var(--dh-brand);
+}
+
+.r538212a9 > .holder[variant="bg-4"] input
+{
+    background: var(--dh-bg-4);
+    border-color: var(--dh-bg-4-border);
+}
+
+.r538212a9 > .holder[variant="bg-4"] input:hover
+{
+    background: var(--dh-bg-4-hover);
+}
+
+.r538212a9 > .holder[variant="bg-4"] input:focus
+{
+    border-color: var(--dh-brand);
+}

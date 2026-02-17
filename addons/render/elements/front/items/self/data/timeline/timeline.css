@@ -1,0 +1,127 @@
+/* Base */
+.e-338c43a9 > .holder
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.e-338c43a9 > .holder > .item
+{
+	display: flex;
+	gap: var(--dh-spacing-l);
+	position: relative;
+	padding-bottom: calc(var(--dh-spacing-l) * 2);
+}
+
+.e-338c43a9 > .holder > .item:last-child
+{
+	padding-bottom: 0;
+}
+
+.e-338c43a9 > .holder > .item::before
+{
+	content: '';
+	position: absolute;
+	left: 20px;
+	top: 44px;
+	bottom: 0;
+	width: 2px;
+	background: var(--dh-bg-4);
+}
+
+.e-338c43a9 > .holder > .item:last-child::before
+{
+	display: none;
+}
+
+.e-338c43a9 > .holder > .item > .marker
+{
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var(--dh-brand);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	z-index: 1;
+}
+
+.e-338c43a9 > .holder > .item > .marker > .icon
+{
+	font-size: 20px;
+	color: white;
+}
+
+.e-338c43a9 > .holder > .item > .content
+{
+	flex: 1;
+	padding-top: var(--dh-spacing-x);
+}
+
+.e-338c43a9 > .holder > .item > .content > .title
+{
+	font-size: var(--dh-size-m);
+	font-weight: 700;
+	color: var(--dh-text-1);
+	margin: 0 0 var(--dh-spacing-x) 0;
+}
+
+.e-338c43a9 > .holder > .item > .content > .description
+{
+	font-size: var(--dh-size-s);
+	color: var(--dh-text-2);
+	line-height: 1.6;
+	margin: 0 0 var(--dh-spacing-x) 0;
+}
+
+.e-338c43a9 > .holder > .item > .content > .date
+{
+	font-size: 11px;
+	color: var(--dh-text-2);
+	font-weight: 600;
+}
+
+/* Variants - Colors */
+.e-338c43a9 > .holder[variant*="brand"] > .item > .marker
+{
+	background: var(--dh-brand);
+}
+
+.e-338c43a9 > .holder[variant*="blue"] > .item > .marker
+{
+	background: var(--dh-blue);
+}
+
+.e-338c43a9 > .holder[variant*="red"] > .item > .marker
+{
+	background: var(--dh-red);
+}
+
+.e-338c43a9 > .holder[variant*="orange"] > .item > .marker
+{
+	background: var(--dh-orange);
+}
+
+.e-338c43a9 > .holder[variant*="green"] > .item > .marker
+{
+	background: var(--dh-green);
+}
+
+/* Variants - Alternate */
+.e-338c43a9 > .holder[variant*="alternate"] > .item:nth-child(even)
+{
+	flex-direction: row-reverse;
+}
+
+.e-338c43a9 > .holder[variant*="alternate"] > .item:nth-child(even) > .content
+{
+	text-align: right;
+}
+
+.e-338c43a9 > .holder[variant*="alternate"] > .item:nth-child(even)::before
+{
+	left: auto;
+	right: 20px;
+}

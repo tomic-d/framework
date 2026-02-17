@@ -1,0 +1,32 @@
+.e-523d241b > .holder[variant*="size-s"]
+{
+	padding: var(--dh-spacing-s);
+	gap: var(--dh-spacing-s);
+}
+
+.e-523d241b > .holder[variant*="size-s"] > i
+{
+	font-size: var(--dh-size-m);
+}
+
+.e-523d241b > .holder[variant*="size-m"]
+{
+	padding: var(--dh-spacing-m);
+	gap: var(--dh-spacing-m);
+}
+
+.e-523d241b > .holder[variant*="size-l"]
+{
+	padding: var(--dh-spacing-l);
+	gap: var(--dh-spacing-l);
+}
+
+.e-523d241b > .holder[variant*="size-l"] > i
+{
+	font-size: 28px;
+}
+
+.e-523d241b > .holder[variant*="size-l"] > .content > .header > strong
+{
+	font-size: var(--dh-size-l);
+}

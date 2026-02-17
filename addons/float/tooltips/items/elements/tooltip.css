@@ -1,0 +1,64 @@
+.e-209772d3
+{
+    pointer-events: none;
+}
+
+.e-209772d3 .holder
+{
+    display: flex;
+    align-items: flex-start;
+    gap: var(--dh-spacing-s);
+    padding: var(--dh-spacing-s) var(--dh-spacing-m);
+    border-radius: var(--dh-radius-s);
+    background: var(--dh-bg-4);
+    border: 1px solid var(--dh-bg-4-border);
+    max-width: 280px;
+}
+
+.e-209772d3 .holder .icon
+{
+    flex-shrink: 0;
+    font-size: 16px;
+    color: var(--dh-text-2);
+}
+
+.e-209772d3 .holder .content
+{
+    flex: 1;
+    min-width: 0;
+}
+
+.e-209772d3 .holder .content .title
+{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dh-text-1);
+    margin-bottom: 2px;
+}
+
+.e-209772d3 .holder .content .text
+{
+    font-size: 12px;
+    color: var(--dh-text-2);
+    line-height: 1.4;
+}
+
+.e-209772d3 .holder[variant="info"] .icon
+{
+    color: var(--dh-blue);
+}
+
+.e-209772d3 .holder[variant="success"] .icon
+{
+    color: var(--dh-green);
+}
+
+.e-209772d3 .holder[variant="warning"] .icon
+{
+    color: var(--dh-orange);
+}
+
+.e-209772d3 .holder[variant="error"] .icon
+{
+    color: var(--dh-red);
+}

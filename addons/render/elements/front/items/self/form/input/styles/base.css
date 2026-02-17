@@ -1,0 +1,26 @@
+.r538212a9 > .holder
+{
+    position: relative;
+}
+
+.r538212a9 input
+{
+    width: 100%;
+    padding: 0 var(--dh-spacing-m);
+    border-radius: var(--dh-radius-m);
+    border: 1px solid;
+    background: transparent;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.r538212a9 input::placeholder
+{
+    color: var(--dh-text-2);
+}
+
+.r538212a9 input:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+}

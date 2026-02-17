@@ -1,0 +1,49 @@
+.e-5239ce65 > .holder[variant*="size-s"]
+{
+	padding: var(--dh-spacing-s);
+	gap: var(--dh-spacing-s);
+}
+
+.e-5239ce65 > .holder[variant*="size-s"] > .header > i
+{
+	font-size: var(--dh-size-m);
+}
+
+.e-5239ce65 > .holder[variant*="size-s"] > .content > strong
+{
+	font-size: var(--dh-size-m);
+}
+
+.e-5239ce65 > .holder[variant*="size-s"] > .footer > .sparkline
+{
+	width: 60px;
+	height: 18px;
+}
+
+.e-5239ce65 > .holder[variant*="size-m"]
+{
+	padding: var(--dh-spacing-m);
+	gap: var(--dh-spacing-m);
+}
+
+.e-5239ce65 > .holder[variant*="size-l"]
+{
+	padding: var(--dh-spacing-l);
+	gap: var(--dh-spacing-l);
+}
+
+.e-5239ce65 > .holder[variant*="size-l"] > .header > i
+{
+	font-size: 28px;
+}
+
+.e-5239ce65 > .holder[variant*="size-l"] > .content > strong
+{
+	font-size: 32px;
+}
+
+.e-5239ce65 > .holder[variant*="size-l"] > .footer > .sparkline
+{
+	width: 100px;
+	height: 32px;
+}

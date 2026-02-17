@@ -1,0 +1,32 @@
+.e-a0811c7 > .holder[variant*="size-s"]
+{
+	padding: var(--dh-spacing-s);
+	gap: var(--dh-spacing-s);
+}
+
+.e-a0811c7 > .holder[variant*="size-s"] > .header > i
+{
+	font-size: var(--dh-size-m);
+}
+
+.e-a0811c7 > .holder[variant*="size-m"]
+{
+	padding: var(--dh-spacing-m);
+	gap: var(--dh-spacing-m);
+}
+
+.e-a0811c7 > .holder[variant*="size-l"]
+{
+	padding: var(--dh-spacing-l);
+	gap: var(--dh-spacing-l);
+}
+
+.e-a0811c7 > .holder[variant*="size-l"] > .header > i
+{
+	font-size: 28px;
+}
+
+.e-a0811c7 > .holder[variant*="size-l"] > .content > h3
+{
+	font-size: var(--dh-size-l);
+}

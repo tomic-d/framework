@@ -1,0 +1,49 @@
+.e-aa4ad7d > .holder[variant*="size-s"]
+{
+	gap: var(--dh-spacing-s);
+}
+
+.e-aa4ad7d > .holder[variant*="size-s"] > .content
+{
+	padding: var(--dh-spacing-s);
+}
+
+.e-aa4ad7d > .holder[variant*="size-s"] > .meta
+{
+	padding: var(--dh-spacing-s);
+}
+
+.e-aa4ad7d > .holder[variant*="size-m"]
+{
+	gap: var(--dh-spacing-m);
+}
+
+.e-aa4ad7d > .holder[variant*="size-m"] > .content
+{
+	padding: 0 var(--dh-spacing-m);
+}
+
+.e-aa4ad7d > .holder[variant*="size-m"] > .meta
+{
+	padding: var(--dh-spacing-m);
+}
+
+.e-aa4ad7d > .holder[variant*="size-l"]
+{
+	gap: var(--dh-spacing-l);
+}
+
+.e-aa4ad7d > .holder[variant*="size-l"] > .content
+{
+	padding: 0 var(--dh-spacing-l);
+}
+
+.e-aa4ad7d > .holder[variant*="size-l"] > .meta
+{
+	padding: var(--dh-spacing-l);
+}
+
+.e-aa4ad7d > .holder[variant*="size-l"] > .content > h3
+{
+	font-size: var(--dh-size-l);
+}

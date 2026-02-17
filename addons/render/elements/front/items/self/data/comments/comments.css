@@ -1,0 +1,253 @@
+/* Base */
+.e-2452c60a> .holder
+{
+	display: flex;
+	flex-direction: column;
+	background: var(--dh-bg-1);
+	border-radius: var(--dh-radius-l);
+	overflow: hidden;
+}
+
+.e-2452c60a> .holder > .comment-wrapper
+{
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid var(--dh-bg-2-border);
+}
+
+.e-2452c60a> .holder > .comment-wrapper:last-child
+{
+	border-bottom: none;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment
+{
+	display: flex;
+	gap: var(--dh-spacing-m);
+	padding: var(--dh-spacing-l);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .avatar
+{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var(--dh-bg-3);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .avatar > .icon
+{
+	font-size: 24px;
+	color: var(--dh-text-2);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .avatar > img
+{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--dh-spacing-s);
+	flex: 1;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .header
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-s);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .header > .author
+{
+	font-weight: 600;
+	color: var(--dh-text-1);
+	font-size: var(--dh-size-m);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .header > .time
+{
+	font-size: var(--dh-size-s);
+	color: var(--dh-text-2);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .text
+{
+	color: var(--dh-text-1);
+	font-size: var(--dh-size-m);
+	line-height: 1.6;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .actions
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-m);
+	margin-top: var(--dh-spacing-x);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .actions > .action
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-x);
+	padding: var(--dh-spacing-x) var(--dh-spacing-s);
+	border-radius: var(--dh-radius-s);
+	color: var(--dh-text-2);
+	font-size: var(--dh-size-s);
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .actions > .action:hover
+{
+	background: var(--dh-bg-2);
+	color: var(--dh-brand);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .comment > .content > .actions > .action > .icon
+{
+	font-size: 18px;
+}
+
+/* Replies */
+.e-2452c60a> .holder > .comment-wrapper > .replies
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--dh-spacing-m);
+	padding: var(--dh-spacing-m) var(--dh-spacing-l) var(--dh-spacing-l) calc(var(--dh-spacing-l) + 40px + var(--dh-spacing-m));
+	background: var(--dh-bg-2);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply
+{
+	display: flex;
+	gap: var(--dh-spacing-m);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .avatar
+{
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: var(--dh-bg-3);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .avatar > .icon
+{
+	font-size: 18px;
+	color: var(--dh-text-2);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .avatar > img
+{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--dh-spacing-x);
+	flex: 1;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .header
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-x);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .header > .author
+{
+	font-weight: 600;
+	color: var(--dh-text-1);
+	font-size: var(--dh-size-s);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .header > .time
+{
+	font-size: 12px;
+	color: var(--dh-text-2);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .text
+{
+	color: var(--dh-text-1);
+	font-size: var(--dh-size-s);
+	line-height: 1.6;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .actions
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-m);
+	margin-top: var(--dh-spacing-x);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .actions > .action
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-x);
+	padding: var(--dh-spacing-x) var(--dh-spacing-s);
+	border-radius: var(--dh-radius-s);
+	color: var(--dh-text-2);
+	font-size: 12px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .actions > .action:hover
+{
+	background: var(--dh-bg-3);
+	color: var(--dh-brand);
+}
+
+.e-2452c60a> .holder > .comment-wrapper > .replies > .reply > .content > .actions > .action > .icon
+{
+	font-size: 16px;
+}
+
+/* Variants - Border */
+.e-2452c60a> .holder[variant*="border"]
+{
+	border: 1px solid var(--dh-bg-2-border);
+}
+
+/* Variants - Background */
+.e-2452c60a> .holder[variant*="bg-1"] { background: var(--dh-bg-1); }
+.e-2452c60a> .holder[variant*="bg-2"] { background: var(--dh-bg-2); }
+.e-2452c60a> .holder[variant*="bg-3"] { background: var(--dh-bg-3); }
+
+/* Variants - Compact */
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .comment { padding: var(--dh-spacing-m); gap: var(--dh-spacing-s); }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .comment > .avatar { width: 32px; height: 32px; }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .comment > .avatar > .icon { font-size: 18px; }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .comment > .content > .header > .author,
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .comment > .content > .text { font-size: var(--dh-size-s); }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .comment > .content > .actions > .action { padding: var(--dh-spacing-x); }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .comment > .content > .actions > .action > .icon { font-size: 16px; }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .replies { padding: var(--dh-spacing-s) var(--dh-spacing-m) var(--dh-spacing-m) calc(var(--dh-spacing-m) + 32px + var(--dh-spacing-s)); }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .replies > .reply > .avatar { width: 28px; height: 28px; }
+.e-2452c60a> .holder[variant*="compact"] > .comment-wrapper > .replies > .reply > .avatar > .icon { font-size: 16px; }

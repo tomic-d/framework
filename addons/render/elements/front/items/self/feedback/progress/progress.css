@@ -1,0 +1,136 @@
+/* Base */
+.e-c8faa43
+{
+	width: 100%;
+	height: 8px;
+}
+
+.e-c8faa43 > .holder
+{
+	position: relative;
+	background: var(--dh-bg-3);
+	border-radius: var(--dh-radius-s);
+	overflow: hidden;
+}
+
+.e-c8faa43 > .holder > .bar
+{
+	height: 100%;
+	background: var(--dh-brand);
+	border-radius: var(--dh-radius-s);
+	transition: width 0.3s ease;
+}
+
+.e-c8faa43 > .holder > .text
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: var(--dh-size-s);
+	font-weight: 600;
+	color: var(--dh-text-1);
+	white-space: nowrap;
+}
+
+/* Variants - Colors */
+.e-c8faa43 > .holder[variant*="brand"] > .bar
+{
+	background: var(--dh-brand);
+}
+
+.e-c8faa43 > .holder[variant*="blue"] > .bar
+{
+	background: var(--dh-blue);
+}
+
+.e-c8faa43 > .holder[variant*="red"] > .bar
+{
+	background: var(--dh-red);
+}
+
+.e-c8faa43 > .holder[variant*="orange"] > .bar
+{
+	background: var(--dh-orange);
+}
+
+.e-c8faa43 > .holder[variant*="green"] > .bar
+{
+	background: var(--dh-green);
+}
+
+/* Variants - Striped */
+.e-c8faa43 > .holder[variant*="striped"] > .bar
+{
+	background-image: linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.15) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.15) 50%,
+		rgba(255, 255, 255, 0.15) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: 20px 20px;
+}
+
+/* Variants - Animated */
+@keyframes progress-stripes
+{
+	0%
+	{
+		background-position: 0 0;
+	}
+	100%
+	{
+		background-position: 20px 0;
+	}
+}
+
+.e-c8faa43 > .holder[variant*="animated"] > .bar
+{
+	background-image: linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.15) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.15) 50%,
+		rgba(255, 255, 255, 0.15) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: 20px 20px;
+	animation: progress-stripes 1s linear infinite;
+}
+
+/* Variants - Sizes */
+.e-c8faa43 > .holder[variant*="size-s"]
+{
+	height: 4px;
+}
+
+.e-c8faa43 > .holder[variant*="size-s"] > .text
+{
+	font-size: 10px;
+}
+
+.e-c8faa43 > .holder[variant*="size-m"]
+{
+	height: 8px;
+}
+
+.e-c8faa43 > .holder[variant*="size-m"] > .text
+{
+	font-size: var(--dh-size-s);
+}
+
+.e-c8faa43 > .holder[variant*="size-l"]
+{
+	height: 16px;
+}
+
+.e-c8faa43 > .holder[variant*="size-l"] > .text
+{
+	font-size: var(--dh-size-m);
+}

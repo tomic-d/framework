@@ -1,0 +1,117 @@
+.e-52c43b2c > .holder
+{
+	display: flex;
+	gap: var(--dh-spacing-m);
+	padding-bottom: var(--dh-spacing-m);
+	border-bottom: 1px solid var(--dh-bg-2-border);
+}
+
+.e-52c43b2c > .holder > i
+{
+	width: 40px;
+	height: 40px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--dh-radius-m);
+	background: var(--dh-brand-opacity);
+	color: var(--dh-brand);
+	font-size: 20px;
+	transition: all 0.2s;
+}
+
+.e-52c43b2c > .holder > i:hover
+{
+	background: var(--dh-brand-hover);
+	transform: scale(1.05);
+}
+
+.e-52c43b2c > .holder > .content
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--dh-spacing-x);
+	flex: 1;
+}
+
+.e-52c43b2c > .holder > .content > h2
+{
+	margin: 0;
+	color: var(--dh-text-1);
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.e-52c43b2c > .holder > .content > p
+{
+	margin: 0;
+	color: var(--dh-text-2);
+	font-size: var(--dh-size-m);
+	line-height: 1.5;
+}
+
+.e-52c43b2c > .holder[variant*="align-center"]
+{
+	align-items: center;
+	text-align: center;
+}
+
+.e-52c43b2c > .holder[variant*="align-right"]
+{
+	align-items: flex-end;
+	text-align: right;
+}
+
+.e-52c43b2c > .holder[variant*="size-s"] > i
+{
+	width: 36px;
+	height: 36px;
+	font-size: 18px;
+}
+
+.e-52c43b2c > .holder[variant*="size-s"] > .content > h2
+{
+	font-size: 20px;
+}
+
+.e-52c43b2c > .holder[variant*="size-s"] > .content > p
+{
+	font-size: var(--dh-size-s);
+}
+
+.e-52c43b2c > .holder[variant*="size-m"] > i
+{
+	width: 40px;
+	height: 40px;
+	font-size: 20px;
+}
+
+.e-52c43b2c > .holder[variant*="size-m"] > .content > h2
+{
+	font-size: 24px;
+}
+
+.e-52c43b2c > .holder[variant*="size-m"] > .content > p
+{
+	font-size: var(--dh-size-m);
+}
+
+.e-52c43b2c > .holder[variant*="size-l"] > i
+{
+	width: 48px;
+	height: 48px;
+	font-size: 24px;
+}
+
+.e-52c43b2c > .holder[variant*="size-l"] > .content > h2
+{
+	font-size: 32px;
+}
+
+.e-52c43b2c > .holder[variant*="size-l"] > .content > p
+{
+	font-size: var(--dh-size-l);
+}

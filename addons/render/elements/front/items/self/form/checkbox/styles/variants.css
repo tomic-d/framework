@@ -1,0 +1,121 @@
+/* Variants */
+.r51d47f16 > .holder[variant="transparent"] .checkbox-mark
+{
+    background: transparent;
+    border-color: transparent;
+}
+
+.r51d47f16 > .holder[variant="transparent"] .checkbox-mark::after
+{
+    border-color: var(--dh-text-1);
+}
+
+.r51d47f16 > .holder[variant="border"] .checkbox-mark
+{
+    background: transparent;
+    border-color: var(--dh-bg-1-border);
+}
+
+.r51d47f16 > .holder[variant="border"]:hover .checkbox-mark
+{
+    border-color: var(--dh-bg-2-border);
+}
+
+.r51d47f16 > .holder[variant="border"] input[type="checkbox"]:checked ~ .checkbox-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r51d47f16 > .holder[variant="border"] .checkbox-mark::after
+{
+    border-color: white;
+}
+
+.r51d47f16 > .holder[variant="bg-1"] .checkbox-mark
+{
+    background: var(--dh-bg-1);
+    border-color: var(--dh-bg-1-border);
+}
+
+.r51d47f16 > .holder[variant="bg-1"]:hover .checkbox-mark
+{
+    background: var(--dh-bg-1-hover);
+}
+
+.r51d47f16 > .holder[variant="bg-1"] input[type="checkbox"]:checked ~ .checkbox-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r51d47f16 > .holder[variant="bg-1"] .checkbox-mark::after
+{
+    border-color: white;
+}
+
+.r51d47f16 > .holder[variant="bg-2"] .checkbox-mark
+{
+    background: var(--dh-bg-2);
+    border-color: var(--dh-bg-2-border);
+}
+
+.r51d47f16 > .holder[variant="bg-2"]:hover .checkbox-mark
+{
+    background: var(--dh-bg-2-hover);
+}
+
+.r51d47f16 > .holder[variant="bg-2"] input[type="checkbox"]:checked ~ .checkbox-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r51d47f16 > .holder[variant="bg-2"] .checkbox-mark::after
+{
+    border-color: white;
+}
+
+.r51d47f16 > .holder[variant="bg-3"] .checkbox-mark
+{
+    background: var(--dh-bg-3);
+    border-color: var(--dh-bg-3-border);
+}
+
+.r51d47f16 > .holder[variant="bg-3"]:hover .checkbox-mark
+{
+    background: var(--dh-bg-3-hover);
+}
+
+.r51d47f16 > .holder[variant="bg-3"] input[type="checkbox"]:checked ~ .checkbox-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r51d47f16 > .holder[variant="bg-3"] .checkbox-mark::after
+{
+    border-color: white;
+}
+
+.r51d47f16 > .holder[variant="bg-4"] .checkbox-mark
+{
+    background: var(--dh-bg-4);
+    border-color: var(--dh-bg-4-border);
+}
+
+.r51d47f16 > .holder[variant="bg-4"]:hover .checkbox-mark
+{
+    background: var(--dh-bg-4-hover);
+}
+
+.r51d47f16 > .holder[variant="bg-4"] input[type="checkbox"]:checked ~ .checkbox-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r51d47f16 > .holder[variant="bg-4"] .checkbox-mark::after
+{
+    border-color: white;
+}

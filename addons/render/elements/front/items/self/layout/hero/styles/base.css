@@ -1,0 +1,81 @@
+.e-4e0ccf0 > .holder
+{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: calc(var(--dh-spacing-l) * 3) var(--dh-spacing-l);
+	transition: all 0.2s;
+}
+
+.e-4e0ccf0 > .holder > .content
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--dh-spacing-m);
+	max-width: 800px;
+}
+
+.e-4e0ccf0 > .holder > .content > h1
+{
+	margin: 0;
+	font-size: calc(var(--dh-size-l) * 2);
+	font-weight: 700;
+	color: var(--dh-text-1);
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+}
+
+.e-4e0ccf0 > .holder > .content > h1 > span
+{
+	color: var(--dh-brand);
+}
+
+.e-4e0ccf0 > .holder > .content > p
+{
+	margin: 0;
+	font-size: var(--dh-size-m);
+	color: var(--dh-text-2);
+	line-height: 1.6;
+	max-width: 600px;
+}
+
+.e-4e0ccf0 > .holder > .content > .actions
+{
+	display: flex;
+	gap: var(--dh-spacing-s);
+	margin-top: var(--dh-spacing-s);
+}
+
+.e-4e0ccf0 > .holder > .content > .stats
+{
+	display: flex;
+	gap: var(--dh-spacing-l);
+	margin-top: var(--dh-spacing-m);
+}
+
+.e-4e0ccf0 > .holder > .content > .stats > .stat
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-x);
+	font-size: var(--dh-size-s);
+	color: var(--dh-text-2);
+	transition: all 0.2s;
+}
+
+.e-4e0ccf0 > .holder > .content > .stats > .stat:hover
+{
+	color: var(--dh-text-1);
+}
+
+.e-4e0ccf0 > .holder > .content > .stats > .stat > i
+{
+	font-size: var(--dh-size-m);
+	color: var(--dh-brand);
+}
+
+.e-4e0ccf0 > .holder > .content > .stats > .stat > strong
+{
+	color: var(--dh-text-1);
+	font-weight: 600;
+}

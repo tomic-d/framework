@@ -1,0 +1,229 @@
+/* Base */
+.e-5c0da3ea> .holder
+{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 450px;
+	background: var(--dh-bg-2);
+	border: 1px solid var(--dh-bg-2-border);
+	border-radius: var(--dh-radius-l);
+	overflow: hidden;
+}
+
+.e-5c0da3ea> .holder > .header
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--dh-spacing-l);
+	border-bottom: 1px solid var(--dh-bg-2-border);
+}
+
+.e-5c0da3ea> .holder > .header > .title
+{
+	font-size: var(--dh-size-l);
+	font-weight: 600;
+	color: var(--dh-text-1);
+	flex: 1;
+}
+
+.e-5c0da3ea> .holder > .content
+{
+	padding: var(--dh-spacing-l);
+	color: var(--dh-text-2);
+	font-size: var(--dh-size-m);
+	line-height: 1.6;
+}
+
+.e-5c0da3ea> .holder > .content > .text
+{
+	color: var(--dh-text-2);
+	line-height: 1.6;
+}
+
+.e-5c0da3ea> .holder > .footer
+{
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: var(--dh-spacing-l);
+	border-top: 1px solid var(--dh-bg-2-border);
+	gap: var(--dh-spacing-s);
+}
+
+/* Variants - Background */
+.e-5c0da3ea> .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+	border-color: var(--dh-bg-1-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-1"] > .header
+{
+	border-bottom-color: var(--dh-bg-1-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-1"] > .footer
+{
+	border-top-color: var(--dh-bg-1-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+	border-color: var(--dh-bg-2-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-2"] > .header
+{
+	border-bottom-color: var(--dh-bg-2-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-2"] > .footer
+{
+	border-top-color: var(--dh-bg-2-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+	border-color: var(--dh-bg-3-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-3"] > .header
+{
+	border-bottom-color: var(--dh-bg-3-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-3"] > .footer
+{
+	border-top-color: var(--dh-bg-3-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+	border-color: var(--dh-bg-4-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-4"] > .header
+{
+	border-bottom-color: var(--dh-bg-4-border);
+}
+
+.e-5c0da3ea> .holder[variant*="bg-4"] > .footer
+{
+	border-top-color: var(--dh-bg-4-border);
+}
+
+/* Variants - Border */
+.e-5c0da3ea> .holder[variant*="border"]
+{
+	border-width: 2px;
+}
+
+/* Variants - Animation */
+@keyframes bounce
+{
+	0%, 100%
+	{
+		transform: translateX(0);
+	}
+	25%
+	{
+		transform: translateX(-10px);
+	}
+	50%
+	{
+		transform: translateX(0);
+	}
+	75%
+	{
+		transform: translateX(-5px);
+	}
+}
+
+.e-5c0da3ea> .holder[variant*="animate-bounce"]
+{
+	animation: bounce 1s ease-in-out;
+}
+
+/* Variants - Sizes */
+.e-5c0da3ea> .holder[variant*="size-s"]
+{
+	max-width: 350px;
+}
+
+.e-5c0da3ea> .holder[variant*="size-s"] > .header
+{
+	padding: var(--dh-spacing-m);
+}
+
+.e-5c0da3ea> .holder[variant*="size-s"] > .header > .title
+{
+	font-size: var(--dh-size-m);
+}
+
+.e-5c0da3ea> .holder[variant*="size-s"] > .content
+{
+	padding: var(--dh-spacing-m);
+	font-size: var(--dh-size-s);
+}
+
+.e-5c0da3ea> .holder[variant*="size-s"] > .footer
+{
+	padding: var(--dh-spacing-m);
+}
+
+.e-5c0da3ea> .holder[variant*="size-m"]
+{
+	max-width: 450px;
+}
+
+.e-5c0da3ea> .holder[variant*="size-m"] > .header
+{
+	padding: var(--dh-spacing-l);
+}
+
+.e-5c0da3ea> .holder[variant*="size-m"] > .header > .title
+{
+	font-size: var(--dh-size-l);
+}
+
+.e-5c0da3ea> .holder[variant*="size-m"] > .content
+{
+	padding: var(--dh-spacing-l);
+	font-size: var(--dh-size-m);
+}
+
+.e-5c0da3ea> .holder[variant*="size-m"] > .footer
+{
+	padding: var(--dh-spacing-l);
+}
+
+.e-5c0da3ea> .holder[variant*="size-l"]
+{
+	max-width: 600px;
+}
+
+.e-5c0da3ea> .holder[variant*="size-l"] > .header
+{
+	padding: var(--dh-spacing-l);
+}
+
+.e-5c0da3ea> .holder[variant*="size-l"] > .header > .title
+{
+	font-size: 24px;
+}
+
+.e-5c0da3ea> .holder[variant*="size-l"] > .content
+{
+	padding: var(--dh-spacing-l);
+	font-size: var(--dh-size-l);
+}
+
+.e-5c0da3ea> .holder[variant*="size-l"] > .footer
+{
+	padding: var(--dh-spacing-l);
+}

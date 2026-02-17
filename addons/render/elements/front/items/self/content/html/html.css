@@ -1,0 +1,93 @@
+/* Base */
+.e-10533634 > .holder
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    background: transparent;
+}
+
+.e-10533634 > .holder > .preview *
+{
+    pointer-events: none;
+}
+
+/* Variants - Background */
+.e-10533634 > .holder[variant*="bg-1"]
+{
+    background: var(--dh-bg-1);
+}
+
+.e-10533634 > .holder[variant*="bg-2"]
+{
+    background: var(--dh-bg-2);
+}
+
+.e-10533634 > .holder[variant*="bg-3"]
+{
+    background: var(--dh-bg-3);
+}
+
+.e-10533634 > .holder[variant*="bg-4"]
+{
+    background: var(--dh-bg-4);
+}
+
+/* Variants - Border */
+.e-10533634 > .holder[variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-2-border);
+}
+
+.e-10533634 > .holder[variant*="bg-1"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-1-border);
+}
+
+.e-10533634 > .holder[variant*="bg-2"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-2-border);
+}
+
+.e-10533634 > .holder[variant*="bg-3"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-10533634 > .holder[variant*="bg-4"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-4-border);
+}
+
+/* Variants - Radius */
+.e-10533634 > .holder[variant*="radius-s"]
+{
+    border-radius: var(--dh-radius-s);
+}
+
+.e-10533634 > .holder[variant*="radius-m"]
+{
+    border-radius: var(--dh-radius-m);
+}
+
+.e-10533634 > .holder[variant*="radius-l"]
+{
+    border-radius: var(--dh-radius-l);
+}
+
+/* Size */
+.e-10533634 > .holder[size="s"]
+{
+    height: 150px;
+}
+
+.e-10533634 > .holder[size="m"]
+{
+    height: 300px;
+}
+
+.e-10533634 > .holder[size="l"]
+{
+    height: 600px;
+}

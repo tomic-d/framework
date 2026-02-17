@@ -1,0 +1,121 @@
+/* Variants */
+.r53095678 > .holder[variant="transparent"] .radio-mark
+{
+    background: transparent;
+    border-color: transparent;
+}
+
+.r53095678 > .holder[variant="transparent"] .radio-mark::after
+{
+    background: var(--dh-text-1);
+}
+
+.r53095678 > .holder[variant="border"] .radio-mark
+{
+    background: transparent;
+    border-color: var(--dh-bg-1-border);
+}
+
+.r53095678 > .holder[variant="border"]:hover .radio-mark
+{
+    border-color: var(--dh-bg-2-border);
+}
+
+.r53095678 > .holder[variant="border"] input[type="radio"]:checked ~ .radio-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r53095678 > .holder[variant="border"] .radio-mark::after
+{
+    background: white;
+}
+
+.r53095678 > .holder[variant="bg-1"] .radio-mark
+{
+    background: var(--dh-bg-1);
+    border-color: var(--dh-bg-1-border);
+}
+
+.r53095678 > .holder[variant="bg-1"]:hover .radio-mark
+{
+    background: var(--dh-bg-1-hover);
+}
+
+.r53095678 > .holder[variant="bg-1"] input[type="radio"]:checked ~ .radio-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r53095678 > .holder[variant="bg-1"] .radio-mark::after
+{
+    background: white;
+}
+
+.r53095678 > .holder[variant="bg-2"] .radio-mark
+{
+    background: var(--dh-bg-2);
+    border-color: var(--dh-bg-2-border);
+}
+
+.r53095678 > .holder[variant="bg-2"]:hover .radio-mark
+{
+    background: var(--dh-bg-2-hover);
+}
+
+.r53095678 > .holder[variant="bg-2"] input[type="radio"]:checked ~ .radio-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r53095678 > .holder[variant="bg-2"] .radio-mark::after
+{
+    background: white;
+}
+
+.r53095678 > .holder[variant="bg-3"] .radio-mark
+{
+    background: var(--dh-bg-3);
+    border-color: var(--dh-bg-3-border);
+}
+
+.r53095678 > .holder[variant="bg-3"]:hover .radio-mark
+{
+    background: var(--dh-bg-3-hover);
+}
+
+.r53095678 > .holder[variant="bg-3"] input[type="radio"]:checked ~ .radio-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r53095678 > .holder[variant="bg-3"] .radio-mark::after
+{
+    background: white;
+}
+
+.r53095678 > .holder[variant="bg-4"] .radio-mark
+{
+    background: var(--dh-bg-4);
+    border-color: var(--dh-bg-4-border);
+}
+
+.r53095678 > .holder[variant="bg-4"]:hover .radio-mark
+{
+    background: var(--dh-bg-4-hover);
+}
+
+.r53095678 > .holder[variant="bg-4"] input[type="radio"]:checked ~ .radio-mark
+{
+    border-color: var(--dh-brand);
+    background: var(--dh-brand);
+}
+
+.r53095678 > .holder[variant="bg-4"] .radio-mark::after
+{
+    background: white;
+}

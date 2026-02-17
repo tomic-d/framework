@@ -1,0 +1,43 @@
+.e-56553afe > .holder[variant*="size-s"]
+{
+	padding: var(--dh-spacing-s);
+	gap: var(--dh-spacing-s);
+}
+
+.e-56553afe > .holder[variant*="size-s"] > .header > .avatar
+{
+	width: var(--dh-height-l);
+	height: var(--dh-height-l);
+	font-size: var(--dh-size-m);
+}
+
+.e-56553afe > .holder[variant*="size-m"]
+{
+	padding: var(--dh-spacing-m);
+	gap: var(--dh-spacing-m);
+}
+
+.e-56553afe > .holder[variant*="size-m"] > .header > .avatar
+{
+	width: 64px;
+	height: 64px;
+	font-size: var(--dh-size-l);
+}
+
+.e-56553afe > .holder[variant*="size-l"]
+{
+	padding: var(--dh-spacing-l);
+	gap: var(--dh-spacing-l);
+}
+
+.e-56553afe > .holder[variant*="size-l"] > .header > .avatar
+{
+	width: 80px;
+	height: 80px;
+	font-size: 24px;
+}
+
+.e-56553afe > .holder[variant*="size-l"] > .content > strong
+{
+	font-size: var(--dh-size-l);
+}

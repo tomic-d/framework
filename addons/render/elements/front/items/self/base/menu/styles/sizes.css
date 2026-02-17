@@ -1,0 +1,27 @@
+.e-4de878b > .holder[variant*="size-s"]
+{
+	min-height: 24px;
+	padding: 2px var(--dh-spacing-x);
+	font-size: var(--dh-size-s);
+}
+
+.e-4de878b > .holder[variant*="size-s"] > i
+{
+	font-size: var(--dh-size-s);
+}
+
+.e-4de878b > .holder[variant*="size-m"]
+{
+	min-height: 36px;
+}
+
+.e-4de878b > .holder[variant*="size-l"]
+{
+	min-height: 38px;
+	font-size: var(--dh-size-l);
+}
+
+.e-4de878b > .holder[variant*="size-l"] > i
+{
+	font-size: var(--dh-size-l);
+}

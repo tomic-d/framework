@@ -1,0 +1,96 @@
+/* Base */
+.e-2109a6b9 > .holder
+{
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--dh-spacing-l);
+	padding: var(--dh-spacing-m);
+}
+
+.e-2109a6b9 > .holder > .info
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--dh-spacing-x);
+	flex: 1;
+	min-width: 0;
+}
+
+.e-2109a6b9 > .holder > .info > label
+{
+	font-size: var(--dh-size-m);
+	font-weight: 500;
+	color: var(--dh-text-1);
+	line-height: 1.3;
+}
+
+.e-2109a6b9 > .holder > .info > p
+{
+	margin: 0;
+	font-size: var(--dh-size-s);
+	color: var(--dh-text-2);
+	line-height: 1.4;
+}
+
+.e-2109a6b9 > .holder > .input
+{
+	flex-shrink: 0;
+	min-width: 200px;
+	max-width: 280px;
+	width: 100%;
+}
+
+/* Variants - Border */
+.e-2109a6b9 > .holder[variant*="border-bottom"]
+{
+	border-bottom: 1px solid var(--dh-bg-2-border);
+}
+
+.e-2109a6b9 > .holder[variant*="border-bottom"]:last-child
+{
+	border-bottom: none;
+}
+
+/* Sizes */
+.e-2109a6b9 > .holder[variant*="size-s"]
+{
+	padding: var(--dh-spacing-s);
+}
+
+.e-2109a6b9 > .holder[variant*="size-s"] > .info > label
+{
+	font-size: var(--dh-size-s);
+}
+
+.e-2109a6b9 > .holder[variant*="size-s"] > .info > p
+{
+	font-size: var(--dh-size-x);
+}
+
+.e-2109a6b9 > .holder[variant*="size-s"] > .input
+{
+	min-width: 160px;
+	max-width: 220px;
+}
+
+.e-2109a6b9 > .holder[variant*="size-l"]
+{
+	padding: var(--dh-spacing-l);
+}
+
+.e-2109a6b9 > .holder[variant*="size-l"] > .info > label
+{
+	font-size: var(--dh-size-l);
+}
+
+.e-2109a6b9 > .holder[variant*="size-l"] > .info > p
+{
+	font-size: var(--dh-size-m);
+}
+
+.e-2109a6b9 > .holder[variant*="size-l"] > .input
+{
+	min-width: 240px;
+	max-width: 320px;
+}

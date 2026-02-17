@@ -1,0 +1,15 @@
+/* Sizes */
+.r538212a9 > .holder[size="s"] input
+{
+    height: var(--dh-height-s);
+}
+
+.r538212a9 > .holder[size="m"] input
+{
+    height: var(--dh-height-m);
+}
+
+.r538212a9 > .holder[size="l"] input
+{
+    height: var(--dh-height-l);
+}

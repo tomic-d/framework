@@ -1,0 +1,24 @@
+.e-4e0ccf0 > .holder[variant*="size-s"]
+{
+	padding: var(--dh-spacing-l) var(--dh-spacing-m);
+}
+
+.e-4e0ccf0 > .holder[variant*="size-s"] > .content > h1
+{
+	font-size: calc(var(--dh-size-l) * 1.5);
+}
+
+.e-4e0ccf0 > .holder[variant*="size-l"]
+{
+	padding: calc(var(--dh-spacing-l) * 3) calc(var(--dh-spacing-l) * 2);
+}
+
+.e-4e0ccf0 > .holder[variant*="size-l"] > .content > h1
+{
+	font-size: calc(var(--dh-size-l) * 2.5);
+}
+
+.e-4e0ccf0 > .holder[variant*="size-l"] > .content > p
+{
+	font-size: var(--dh-size-l);
+}

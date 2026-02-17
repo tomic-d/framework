@@ -1,0 +1,203 @@
+/* Base */
+.e-4888da57> .holder
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.e-4888da57> .holder > .spinner
+{
+	width: 40px;
+	height: 40px;
+	border: 3px solid var(--dh-bg-3);
+	border-top-color: var(--dh-text-1);
+	border-radius: 50%;
+}
+
+/* Variants - Spin */
+@keyframes spin
+{
+	to
+	{
+		transform: rotate(360deg);
+	}
+}
+
+.e-4888da57> .holder[variant*="spin"] > .spinner
+{
+	animation: spin 0.8s linear infinite;
+}
+
+/* Variants - Dots */
+@keyframes dots
+{
+	0%, 100%
+	{
+		background-position: 0% 50%, 50% 50%, 100% 0%;
+	}
+	33%
+	{
+		background-position: 0% 0%, 50% 50%, 100% 50%;
+	}
+	66%
+	{
+		background-position: 0% 50%, 50% 0%, 100% 100%;
+	}
+}
+
+.e-4888da57> .holder[variant*="dots"] > .spinner
+{
+	border: none;
+	background: radial-gradient(circle, var(--dh-text-1) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-text-1) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-text-1) 25%, transparent 26%);
+	background-size: 33% 33%;
+	background-position: 0% 50%, 50% 50%, 100% 0%;
+	background-repeat: no-repeat;
+	animation: dots 1.5s infinite ease-in-out;
+}
+
+/* Variants - Pulse */
+@keyframes pulse
+{
+	0%, 100%
+	{
+		transform: scale(1);
+		opacity: 1;
+	}
+	50%
+	{
+		transform: scale(1.5);
+		opacity: 0.5;
+	}
+}
+
+.e-4888da57> .holder[variant*="pulse"] > .spinner
+{
+	border: 3px solid var(--dh-text-1);
+	animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Variants - Colors */
+.e-4888da57> .holder[variant*="brand"] > .spinner
+{
+	border-top-color: var(--dh-brand);
+}
+
+.e-4888da57> .holder[variant*="brand"][variant*="dots"] > .spinner
+{
+	background: radial-gradient(circle, var(--dh-brand) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-brand) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-brand) 25%, transparent 26%);
+	background-size: 33% 33%;
+	background-position: 0% 0%, 50% 50%, 100% 50%;
+	background-repeat: no-repeat;
+}
+
+.e-4888da57> .holder[variant*="brand"][variant*="pulse"] > .spinner
+{
+	border-color: var(--dh-brand);
+}
+
+.e-4888da57> .holder[variant*="blue"] > .spinner
+{
+	border-top-color: var(--dh-blue);
+}
+
+.e-4888da57> .holder[variant*="blue"][variant*="dots"] > .spinner
+{
+	background: radial-gradient(circle, var(--dh-blue) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-blue) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-blue) 25%, transparent 26%);
+	background-size: 33% 33%;
+	background-position: 0% 0%, 50% 50%, 100% 50%;
+	background-repeat: no-repeat;
+}
+
+.e-4888da57> .holder[variant*="blue"][variant*="pulse"] > .spinner
+{
+	border-color: var(--dh-blue);
+}
+
+.e-4888da57> .holder[variant*="red"] > .spinner
+{
+	border-top-color: var(--dh-red);
+}
+
+.e-4888da57> .holder[variant*="red"][variant*="dots"] > .spinner
+{
+	background: radial-gradient(circle, var(--dh-red) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-red) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-red) 25%, transparent 26%);
+	background-size: 33% 33%;
+	background-position: 0% 0%, 50% 50%, 100% 50%;
+	background-repeat: no-repeat;
+}
+
+.e-4888da57> .holder[variant*="red"][variant*="pulse"] > .spinner
+{
+	border-color: var(--dh-red);
+}
+
+.e-4888da57> .holder[variant*="orange"] > .spinner
+{
+	border-top-color: var(--dh-orange);
+}
+
+.e-4888da57> .holder[variant*="orange"][variant*="dots"] > .spinner
+{
+	background: radial-gradient(circle, var(--dh-orange) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-orange) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-orange) 25%, transparent 26%);
+	background-size: 33% 33%;
+	background-position: 0% 0%, 50% 50%, 100% 50%;
+	background-repeat: no-repeat;
+}
+
+.e-4888da57> .holder[variant*="orange"][variant*="pulse"] > .spinner
+{
+	border-color: var(--dh-orange);
+}
+
+.e-4888da57> .holder[variant*="green"] > .spinner
+{
+	border-top-color: var(--dh-green);
+}
+
+.e-4888da57> .holder[variant*="green"][variant*="dots"] > .spinner
+{
+	background: radial-gradient(circle, var(--dh-green) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-green) 25%, transparent 26%),
+				radial-gradient(circle, var(--dh-green) 25%, transparent 26%);
+	background-size: 33% 33%;
+	background-position: 0% 0%, 50% 50%, 100% 50%;
+	background-repeat: no-repeat;
+}
+
+.e-4888da57> .holder[variant*="green"][variant*="pulse"] > .spinner
+{
+	border-color: var(--dh-green);
+}
+
+/* Variants - Sizes */
+.e-4888da57> .holder[variant*="size-s"] > .spinner
+{
+	width: 24px;
+	height: 24px;
+	border-width: 2px;
+}
+
+.e-4888da57> .holder[variant*="size-m"] > .spinner
+{
+	width: 40px;
+	height: 40px;
+	border-width: 3px;
+}
+
+.e-4888da57> .holder[variant*="size-l"] > .spinner
+{
+	width: 64px;
+	height: 64px;
+	border-width: 4px;
+}

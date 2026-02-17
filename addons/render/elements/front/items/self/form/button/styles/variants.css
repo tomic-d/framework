@@ -1,0 +1,421 @@
+/* ============================================
+   SOLID VARIANTS - Bold, confident, primary actions
+   ============================================ */
+
+/* Brand */
+.e-593be338 > .holder[variant*="brand"]
+{
+	background: var(--dh-brand);
+	border-color: var(--dh-brand);
+	color: white;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.1),
+		0 2px 8px var(--dh-brand-opacity);
+}
+
+.e-593be338 > .holder[variant*="brand"] > .content > i,
+.e-593be338 > .holder[variant*="brand"] > .spinner > i
+{
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="brand"]:hover
+{
+	background: var(--dh-brand-hover);
+	border-color: var(--dh-brand-hover);
+	box-shadow:
+		0 4px 12px var(--dh-brand-opacity),
+		0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.e-593be338 > .holder[variant*="brand"]:focus-visible
+{
+	box-shadow:
+		0 0 0 2px var(--dh-bg-1),
+		0 0 0 4px var(--dh-brand);
+}
+
+/* Blue */
+.e-593be338 > .holder[variant*="blue"]:not([variant*="soft-blue"]):not([variant*="outline-blue"])
+{
+	background: var(--dh-blue);
+	border-color: var(--dh-blue);
+	color: white;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.1),
+		0 2px 8px var(--dh-blue-opacity);
+}
+
+.e-593be338 > .holder[variant*="blue"]:not([variant*="soft-blue"]):not([variant*="outline-blue"]) > .content > i,
+.e-593be338 > .holder[variant*="blue"]:not([variant*="soft-blue"]):not([variant*="outline-blue"]) > .spinner > i
+{
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="blue"]:not([variant*="soft-blue"]):not([variant*="outline-blue"]):hover
+{
+	background: var(--dh-blue-hover);
+	border-color: var(--dh-blue-hover);
+	box-shadow:
+		0 4px 12px var(--dh-blue-opacity),
+		0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.e-593be338 > .holder[variant*="blue"]:focus-visible
+{
+	box-shadow:
+		0 0 0 2px var(--dh-bg-1),
+		0 0 0 4px var(--dh-blue);
+}
+
+/* Red */
+.e-593be338 > .holder[variant*="red"]:not([variant*="soft-red"]):not([variant*="outline-red"])
+{
+	background: var(--dh-red);
+	border-color: var(--dh-red);
+	color: white;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.1),
+		0 2px 8px var(--dh-red-opacity);
+}
+
+.e-593be338 > .holder[variant*="red"]:not([variant*="soft-red"]):not([variant*="outline-red"]) > .content > i,
+.e-593be338 > .holder[variant*="red"]:not([variant*="soft-red"]):not([variant*="outline-red"]) > .spinner > i
+{
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="red"]:not([variant*="soft-red"]):not([variant*="outline-red"]):hover
+{
+	background: var(--dh-red-hover);
+	border-color: var(--dh-red-hover);
+	box-shadow:
+		0 4px 12px var(--dh-red-opacity),
+		0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.e-593be338 > .holder[variant*="red"]:focus-visible
+{
+	box-shadow:
+		0 0 0 2px var(--dh-bg-1),
+		0 0 0 4px var(--dh-red);
+}
+
+/* Orange */
+.e-593be338 > .holder[variant*="orange"]:not([variant*="soft-orange"]):not([variant*="outline-orange"])
+{
+	background: var(--dh-orange);
+	border-color: var(--dh-orange);
+	color: white;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.1),
+		0 2px 8px var(--dh-orange-opacity);
+}
+
+.e-593be338 > .holder[variant*="orange"]:not([variant*="soft-orange"]):not([variant*="outline-orange"]) > .content > i,
+.e-593be338 > .holder[variant*="orange"]:not([variant*="soft-orange"]):not([variant*="outline-orange"]) > .spinner > i
+{
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="orange"]:not([variant*="soft-orange"]):not([variant*="outline-orange"]):hover
+{
+	background: var(--dh-orange-hover);
+	border-color: var(--dh-orange-hover);
+	box-shadow:
+		0 4px 12px var(--dh-orange-opacity),
+		0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.e-593be338 > .holder[variant*="orange"]:focus-visible
+{
+	box-shadow:
+		0 0 0 2px var(--dh-bg-1),
+		0 0 0 4px var(--dh-orange);
+}
+
+/* Green */
+.e-593be338 > .holder[variant*="green"]:not([variant*="soft-green"]):not([variant*="outline-green"])
+{
+	background: var(--dh-green);
+	border-color: var(--dh-green);
+	color: white;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.1),
+		0 2px 8px var(--dh-green-opacity);
+}
+
+.e-593be338 > .holder[variant*="green"]:not([variant*="soft-green"]):not([variant*="outline-green"]) > .content > i,
+.e-593be338 > .holder[variant*="green"]:not([variant*="soft-green"]):not([variant*="outline-green"]) > .spinner > i
+{
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="green"]:not([variant*="soft-green"]):not([variant*="outline-green"]):hover
+{
+	background: var(--dh-green-hover);
+	border-color: var(--dh-green-hover);
+	box-shadow:
+		0 4px 12px var(--dh-green-opacity),
+		0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.e-593be338 > .holder[variant*="green"]:focus-visible
+{
+	box-shadow:
+		0 0 0 2px var(--dh-bg-1),
+		0 0 0 4px var(--dh-green);
+}
+
+
+/* ============================================
+   SOFT VARIANTS - Subtle, secondary actions
+   ============================================ */
+
+.e-593be338 > .holder[variant*="soft-brand"]
+{
+	background: var(--dh-brand-opacity);
+	border-color: transparent;
+	color: var(--dh-brand);
+}
+
+.e-593be338 > .holder[variant*="soft-brand"]:hover
+{
+	background: var(--dh-brand);
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="soft-blue"]
+{
+	background: var(--dh-blue-opacity);
+	border-color: transparent;
+	color: var(--dh-blue);
+}
+
+.e-593be338 > .holder[variant*="soft-blue"]:hover
+{
+	background: var(--dh-blue);
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="soft-red"]
+{
+	background: var(--dh-red-opacity);
+	border-color: transparent;
+	color: var(--dh-red);
+}
+
+.e-593be338 > .holder[variant*="soft-red"]:hover
+{
+	background: var(--dh-red);
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="soft-orange"]
+{
+	background: var(--dh-orange-opacity);
+	border-color: transparent;
+	color: var(--dh-orange);
+}
+
+.e-593be338 > .holder[variant*="soft-orange"]:hover
+{
+	background: var(--dh-orange);
+	color: white;
+}
+
+.e-593be338 > .holder[variant*="soft-green"]
+{
+	background: var(--dh-green-opacity);
+	border-color: transparent;
+	color: var(--dh-green);
+}
+
+.e-593be338 > .holder[variant*="soft-green"]:hover
+{
+	background: var(--dh-green);
+	color: white;
+}
+
+
+/* ============================================
+   OUTLINE VARIANTS - Bordered, tertiary actions
+   ============================================ */
+
+.e-593be338 > .holder[variant*="outline-brand"]
+{
+	background: transparent;
+	border-color: var(--dh-brand);
+	color: var(--dh-brand);
+}
+
+.e-593be338 > .holder[variant*="outline-brand"]:hover
+{
+	background: var(--dh-brand-opacity);
+}
+
+.e-593be338 > .holder[variant*="outline-blue"]
+{
+	background: transparent;
+	border-color: var(--dh-blue);
+	color: var(--dh-blue);
+}
+
+.e-593be338 > .holder[variant*="outline-blue"]:hover
+{
+	background: var(--dh-blue-opacity);
+}
+
+.e-593be338 > .holder[variant*="outline-red"]
+{
+	background: transparent;
+	border-color: var(--dh-red);
+	color: var(--dh-red);
+}
+
+.e-593be338 > .holder[variant*="outline-red"]:hover
+{
+	background: var(--dh-red-opacity);
+}
+
+.e-593be338 > .holder[variant*="outline-orange"]
+{
+	background: transparent;
+	border-color: var(--dh-orange);
+	color: var(--dh-orange);
+}
+
+.e-593be338 > .holder[variant*="outline-orange"]:hover
+{
+	background: var(--dh-orange-opacity);
+}
+
+.e-593be338 > .holder[variant*="outline-green"]
+{
+	background: transparent;
+	border-color: var(--dh-green);
+	color: var(--dh-green);
+}
+
+.e-593be338 > .holder[variant*="outline-green"]:hover
+{
+	background: var(--dh-green-opacity);
+}
+
+
+/* ============================================
+   BACKGROUND VARIANTS - Neutral surface buttons
+   ============================================ */
+
+.e-593be338 > .holder[variant*="bg-1"]
+{
+	background: var(--dh-bg-1);
+	border-color: var(--dh-bg-1-border);
+	color: var(--dh-text-1);
+}
+
+.e-593be338 > .holder[variant*="bg-1"]:hover
+{
+	background: var(--dh-bg-1-hover);
+	border-color: var(--dh-bg-2-border);
+}
+
+.e-593be338 > .holder[variant*="bg-2"]
+{
+	background: var(--dh-bg-2);
+	border-color: var(--dh-bg-2-border);
+	color: var(--dh-text-1);
+}
+
+.e-593be338 > .holder[variant*="bg-2"]:hover
+{
+	background: var(--dh-bg-2-hover);
+	border-color: var(--dh-bg-3-border);
+}
+
+.e-593be338 > .holder[variant*="bg-3"]
+{
+	background: var(--dh-bg-3);
+	border-color: var(--dh-bg-3-border);
+	color: var(--dh-text-1);
+}
+
+.e-593be338 > .holder[variant*="bg-3"]:hover
+{
+	background: var(--dh-bg-3-hover);
+	border-color: var(--dh-bg-4-border);
+}
+
+.e-593be338 > .holder[variant*="bg-4"]
+{
+	background: var(--dh-bg-4);
+	border-color: var(--dh-bg-4-border);
+	color: var(--dh-text-1);
+}
+
+.e-593be338 > .holder[variant*="bg-4"]:hover
+{
+	background: var(--dh-bg-4-hover);
+}
+
+
+/* ============================================
+   SPECIAL VARIANTS
+   ============================================ */
+
+/* Ghost - minimal, text-like */
+.e-593be338 > .holder[variant*="ghost"]
+{
+	background: transparent;
+	border-color: transparent;
+	color: var(--dh-text-2);
+}
+
+.e-593be338 > .holder[variant*="ghost"]:hover
+{
+	background: var(--dh-bg-2);
+	color: var(--dh-text-1);
+}
+
+/* Border - neutral outlined */
+.e-593be338 > .holder[variant*="border"]
+{
+	background: transparent;
+	border-color: var(--dh-bg-1-border);
+	color: var(--dh-text-1);
+}
+
+.e-593be338 > .holder[variant*="border"]:hover
+{
+	background: var(--dh-bg-2);
+	border-color: var(--dh-bg-3-border);
+}
+
+/* Transparent - no background, subtle hover */
+.e-593be338 > .holder[variant*="transparent"]
+{
+	background: transparent;
+	border-color: transparent;
+	color: var(--dh-text-1);
+}
+
+.e-593be338 > .holder[variant*="transparent"]:hover
+{
+	background: var(--dh-bg-2-opacity);
+}
+
+/* Glass - frosted glass effect */
+.e-593be338 > .holder[variant*="glass"]
+{
+	background: var(--dh-bg-1-opacity);
+	border-color: var(--dh-bg-2-border);
+	color: var(--dh-text-1);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+}
+
+.e-593be338 > .holder[variant*="glass"]:hover
+{
+	background: var(--dh-bg-2-opacity);
+	border-color: var(--dh-bg-3-border);
+}

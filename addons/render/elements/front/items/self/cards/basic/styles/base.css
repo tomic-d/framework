@@ -1,0 +1,66 @@
+.e-a0811c7 > .holder
+{
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--dh-radius-m);
+	overflow: hidden;
+	transition: all 0.2s;
+	height: 100%;
+}
+
+.e-a0811c7 > .holder:hover
+{
+	transform: translateY(-2px);
+}
+
+.e-a0811c7 > .holder > .header
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-s);
+}
+
+.e-a0811c7 > .holder > .header > i
+{
+	font-size: var(--dh-size-l);
+	color: var(--dh-text-2);
+	transition: all 0.2s;
+}
+
+.e-a0811c7 > .holder:hover > .header > i
+{
+	color: var(--dh-text-1);
+}
+
+.e-a0811c7 > .holder > .content
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--dh-spacing-x);
+}
+
+.e-a0811c7 > .holder > .content > h3
+{
+	font-size: var(--dh-size-m);
+	font-weight: 600;
+	color: var(--dh-text-1);
+	margin: 0;
+}
+
+.e-a0811c7 > .holder > .content > p
+{
+	font-size: var(--dh-size-s);
+	color: var(--dh-text-2);
+	margin: 0;
+	line-height: 1.5;
+}
+
+.e-a0811c7 > .holder > .actions
+{
+	display: flex;
+	align-items: center;
+	gap: var(--dh-spacing-s);
+	margin-top: auto;
+	padding-top: var(--dh-spacing-s);
+	border-top: 1px solid var(--dh-bg-3-border);
+}

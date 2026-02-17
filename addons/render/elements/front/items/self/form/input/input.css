@@ -1,0 +1,111 @@
+/* Base */
+.e-68d95774 > .holder
+{
+    width: 100%;
+    padding: 0 var(--dh-spacing-m);
+    border-radius: var(--dh-radius-m);
+    border: none;
+    background: transparent;
+    transition: all 0.2s;
+    outline: none;
+    color: var(--dh-text-1);
+}
+
+.e-68d95774 > .holder::placeholder
+{
+    color: var(--dh-text-2);
+}
+
+.e-68d95774 > .holder:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Variants - Background */
+.e-68d95774 > .holder[variant*="bg-1"]
+{
+    background: var(--dh-bg-1);
+}
+
+.e-68d95774 > .holder[variant*="bg-1"]:hover
+{
+    background: var(--dh-bg-1-hover);
+}
+
+.e-68d95774 > .holder[variant*="bg-2"]
+{
+    background: var(--dh-bg-2);
+}
+
+.e-68d95774 > .holder[variant*="bg-2"]:hover
+{
+    background: var(--dh-bg-2-hover);
+}
+
+.e-68d95774 > .holder[variant*="bg-3"]
+{
+    background: var(--dh-bg-3);
+}
+
+.e-68d95774 > .holder[variant*="bg-3"]:hover
+{
+    background: var(--dh-bg-3-hover);
+}
+
+.e-68d95774 > .holder[variant*="bg-4"]
+{
+    background: var(--dh-bg-4);
+}
+
+.e-68d95774 > .holder[variant*="bg-4"]:hover
+{
+    background: var(--dh-bg-4-hover);
+}
+
+/* Variants - Border */
+.e-68d95774 > .holder[variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-2-border);
+}
+
+.e-68d95774 > .holder[variant*="bg-1"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-1-border);
+}
+
+.e-68d95774 > .holder[variant*="bg-2"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-2-border);
+}
+
+.e-68d95774 > .holder[variant*="bg-3"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-3-border);
+}
+
+.e-68d95774 > .holder[variant*="bg-4"][variant*="border-full"]
+{
+    border: 1px solid var(--dh-bg-4-border);
+}
+
+.e-68d95774 > .holder[variant*="border-full"]:focus
+{
+    border-color: var(--dh-brand);
+}
+
+/* Sizes */
+.e-68d95774 > .holder[size="s"]
+{
+    height: var(--dh-height-s);
+}
+
+.e-68d95774 > .holder[size="m"]
+{
+    height: var(--dh-height-m);
+}
+
+.e-68d95774 > .holder[size="l"]
+{
+    height: var(--dh-height-l);
+}
