@@ -1,5 +1,3 @@
-// © 2025 Divhunt GmbH — Licensed under the Divhunt Framework License. See LICENSE for terms.
-
 commands.Fn('item.run', function(item, properties = {}, context = {})
 {
     this.methods.resolve = null;
