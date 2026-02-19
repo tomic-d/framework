@@ -1,5 +1,3 @@
-// © 2025 Divhunt GmbH — Licensed under the Divhunt Framework License. See LICENSE for terms.
-
 import commands from '../addon.js';
 
 commands.Item({
@@ -45,7 +43,7 @@ commands.Item({
         }
         catch(error)
         {
-            resolve(null, error.message, 500);
+            resolve(null, error.message, typeof error.code === 'number' ? error.code : 500);
         }
     }
 });

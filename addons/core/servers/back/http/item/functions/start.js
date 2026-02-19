@@ -70,14 +70,16 @@ serversHTTP.Fn('item.start', function(item)
 
         if(http.error)
         {
-            response.writeHead(500, { 'Content-Type': 'application/json' });
+            const code = http.errorCode || 500;
+
+            response.writeHead(code, { 'Content-Type': 'application/json' });
             response.end(JSON.stringify({
-                data: {},
+                data: http.errorContext || {},
                 message: http.error,
-                code: 500,
+                code: code,
                 time: http.time
             }));
-            
+
             return;
         }
 
@@ -111,7 +113,11 @@ serversHTTP.Fn('item.start', function(item)
             }
             catch(error)
             {
+                const code = typeof error.code === 'number' ? error.code : 500;
+
                 http.error = error.message || 'Internal server error';
+                http.errorCode = code;
+                http.errorContext = error.context || {};
 
                 item.Get('onError') && item.Get('onError')(http.error);
 
