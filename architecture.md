@@ -19,19 +19,20 @@
 ## Project Structure
 
 ```
-lib/                         Core Divhunt class + 16 mixins
+lib/                         Core Divhunt class + 17 mixins
   load.js                    Node.js entry point (creates instance, handles signals)
   browser.js                 Browser entry point (attaches to window, mounts body)
   src/
     divhunt.js               Main class (mixin-composed)
     mixins/                  addons, emitter, middleware, data, dom, route,
                              function, generate, binaries, helper, validate,
-                             string, request, logger, dependencies, overrides
+                             string, request, logger, dependencies, overrides, error
     classes/
       addon/                 DivhuntAddon + mixins (fields, items, functions, find, render, store)
         classes/
           item/              DivhuntAddonItem + mixins (get, set, crud, functions, store)
           render/            DivhuntAddonRender + mixins (compile, dom, process, events)
+      error/                 DivhuntError class (extends Error — code, message, context)
 
 addons/                      Built-in addon library
   core/
@@ -70,10 +71,11 @@ examples/basic-api/          Minimal working example
 
 | Class | Mixins | Purpose |
 |---|---|---|
-| Divhunt | 16 | Core engine — addon registry, emitter, middleware, routing, DOM |
+| Divhunt | 17 | Core engine — addon registry, emitter, middleware, routing, DOM, error |
 | DivhuntAddon | 9 | Addon abstraction — fields, items, functions, find, render, store |
 | DivhuntAddonItem | 6 | Single record — get, set, CRUD, functions, store |
 | DivhuntAddonRender | 7 | Frontend component — compile, DOM diffing, events, lifecycle |
+| DivhuntError | — | Structured error (extends Error) — code, message, context |
 
 ## Import Aliases
 
@@ -114,6 +116,9 @@ Property assignment triggers Proxy trap → schedules 16ms debounced `Update()` 
 
 ### Binary transport over gRPC
 Buffer instances extracted to separate `map<string, bytes>` before sending. Re-injected on receive. Transparent binary transport over JSON-based gRPC.
+
+### Structured error handling
+`divhunt.Error(code, message, context)` returns a `DivhuntError` (extends `Error`). HTTP-compatible codes (400, 404, 500). Emits `'error'` event on creation. HTTP server and command system read `error.code` instead of hardcoding 500. `LogError` includes code and context in meta.
 
 ### Convention-based bundling
 No webpack. Scans directories, prioritizes `addon.js`, strips ES module syntax, concatenates by order, minifies via terser.
