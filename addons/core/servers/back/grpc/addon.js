@@ -1,5 +1,3 @@
-// © 2025 Divhunt GmbH — Licensed under the Divhunt Framework License. See LICENSE for terms.
-
 import divhunt from '#framework/load.js';
 
 const serversGRPC = divhunt.Addon('servers.grpc', (addon) =>

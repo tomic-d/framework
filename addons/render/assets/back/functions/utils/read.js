@@ -1,5 +1,3 @@
-// © 2025 Divhunt GmbH — Licensed under the Divhunt Framework License. See LICENSE for terms.
-
 import assets from '../../addon.js';
 import fs from 'fs';
 
