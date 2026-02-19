@@ -31,3 +31,5 @@
 ## Phase 3: Maintenance
 
 - [x] **2026-02-19** — Project management system set up (CLAUDE.md + brief, architecture, decisions, tasks, progress)
+- [x] **2026-02-19** — Structured error handling: `divhunt.Error(code, message, context)` with emit, HTTP/command integration, LogError enhancement
+- [x] **2026-02-19** — Copyright headers removed from all 92 source files
