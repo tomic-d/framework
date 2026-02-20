@@ -10,6 +10,8 @@ import './functions/scan/directories.js';
 import './functions/utils/read.js';
 import './functions/utils/transform.js';
 
+import './functions/import.js';
+
 /* Items */
 import './items/commands/css.js';
 import './items/commands/js.js';
