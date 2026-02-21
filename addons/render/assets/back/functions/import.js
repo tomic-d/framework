@@ -8,9 +8,10 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', 
 const map =
 {
     framework:  { js: 'lib', ignore: ['lib/load.js'] },
-    commands:   { js: 'addons/core/commands', css: 'addons/core/commands/front', ignore: ['addons/core/commands/back'] },
+    commands:   { js: 'addons/core/commands', ignore: ['addons/core/commands/back'] },
     database:   { js: 'addons/core/database/front' },
     actions:    { js: 'addons/modules/actions/front' },
+    variables:  { js: 'addons/modules/variables' },
     bugs:       { js: 'addons/modules/bugs/front' },
     events:     { js: 'addons/modules/events/front' },
     schedules:  { js: 'addons/modules/schedules/front' },
