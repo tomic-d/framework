@@ -88,8 +88,6 @@ divhunt.AddonReady('directives', function()
 
 			methods.submit = async () =>
 			{
-				compile.data[config.bind];
-
 				if(compile.data[config.bind].loading)
 				{
 					return;
@@ -97,8 +95,6 @@ divhunt.AddonReady('directives', function()
 
 				compile.data[config.bind].loading = true;
 				compile.data[config.bind].error = null;
-
-				console.log(compile.data[config.bind]);
 
 				compile.data.Update();
 
@@ -108,6 +104,16 @@ divhunt.AddonReady('directives', function()
 					const result = config.api
 						? await commands.Fn('api', config.command, formData)
 						: await commands.Fn('run', config.command, formData);
+
+					if(result && result.code && result.code !== 200)
+					{
+						compile.data[config.bind].response = null;
+						compile.data[config.bind].error    = result.message || 'Request failed.';
+						compile.data[config.bind].loading  = false;
+
+						config.onError && config.onError(compile.data[config.bind]);
+						return;
+					}
 
 					compile.data[config.bind].response = result;
 					compile.data[config.bind].error    = null;
