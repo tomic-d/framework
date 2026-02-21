@@ -52,7 +52,7 @@ directives.Fn('process.data', function(attributes, node, compile)
         {
             try 
             {
-                attribute.value = divhunt.Function(attribute.value, compile, false);
+                attribute.value = divhunt.Function(attribute.value, compile.data, false);
             }
             catch(error)
             {
