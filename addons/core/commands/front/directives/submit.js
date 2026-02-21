@@ -1,13 +1,13 @@
 directives.ItemAdd({
-	id: 'dh-command',
+	id: 'dh-command-submit',
 	icon: 'terminal',
-	name: 'Command',
-	description: 'Submit form data to a backend command via commands.Fn call',
+	name: 'Command Submit',
+	description: 'Submit form data to a command via commands.Fn',
 	category: 'data',
 	trigger: 'node',
 	order: 665,
 	strict: false,
-	tag: 'dh-command',
+	tag: 'dh-command-submit',
 	attributes: {
 		'command': ['string', null, true],
 		'bind': ['string', 'command'],
@@ -26,11 +26,20 @@ directives.ItemAdd({
 		methods.init = () =>
 		{
 			methods.config();
-			methods.state();
+
+			if(compile.data[config.bind] !== undefined)
+			{
+				return;
+			}
+
+			compile.data[config.bind] = {
+				response: null,
+				error: null,
+				loading: false
+			};
+
 			methods.element();
 			methods.handler();
-
-			console.log(config);
 		};
 
 		methods.config = () =>
@@ -43,18 +52,6 @@ directives.ItemAdd({
 			config.stop = data['stop'].value;
 			config.data = data['data'].value;
 			config.api = data['api'].value;
-		};
-
-		methods.state = () =>
-		{
-			if(!compile.data[config.bind])
-			{
-				compile.data[config.bind] = {
-					response: null,
-					error: null,
-					loading: false
-				};
-			}
 		};
 
 		methods.element = () =>
@@ -73,7 +70,7 @@ directives.ItemAdd({
 
 		methods.handler = () =>
 		{
-			config.form.dhCommand = async (event) =>
+			config.form.dhCommandSubmit = async (event) =>
 			{
 				event.preventDefault();
 
@@ -97,7 +94,7 @@ directives.ItemAdd({
 
 			state.loading = true;
 			state.error = null;
-			
+
 			compile.data.Update();
 
 			try
@@ -124,6 +121,7 @@ directives.ItemAdd({
 			}
 			finally
 			{
+				compile.data[config.bind] = state;
 				compile.data.Update();
 			}
 		};
@@ -140,9 +138,9 @@ divhunt.AddonReady('directives', function()
 
 		while(node && node !== document)
 		{
-			if('dhCommand' in node)
+			if('dhCommandSubmit' in node)
 			{
-				node.dhCommand(event);
+				node.dhCommandSubmit(event);
 				break;
 			}
 

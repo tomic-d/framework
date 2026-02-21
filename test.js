@@ -37,10 +37,7 @@ commands.Item({
     },
     callback: async function(properties, resolve)
     {
-        setTimeout(() => {
         resolve({ message: 'Hello, ' + properties.name + '!' });
-
-        }, 5000)
     }
 });
 
