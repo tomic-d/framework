@@ -22,15 +22,16 @@ serversHTTP.Fn('item.start', function(item)
         return {
             id: divhunt.GenerateUID(),
             request,
+            response,
+            error: null,
+            streaming: false,
+            prevent: false,
             data: await serversHTTP.Fn('extract.data', request),
             url: new URL(request.url, `http://${request.headers.host}`),
             user: this.methods.user(request),
             time: performance.now(),
-            error: null,
-            response,
-            streaming: false,
             types: this.methods.types,
-            prevent: false,
+            context: {},
             respond: {
                 type: 'JSON',
                 data: null,
@@ -102,12 +103,18 @@ serversHTTP.Fn('item.start', function(item)
         {
             const http = await this.methods.createHttpObject(request, response);
 
+            await divhunt.Middleware('servers.http.request', http);
+            divhunt.Emit('servers.http.request', http);
+
             try
             {
                 if(item.Get('onRequest'))
                 {
                     await Promise.resolve(item.Get('onRequest')(http));
                 }
+
+                await divhunt.Middleware('servers.http.respond', http);
+                divhunt.Emit('servers.http.respond', http);
 
                 this.methods.respond(http, response);
             }
@@ -119,10 +126,19 @@ serversHTTP.Fn('item.start', function(item)
                 http.errorCode = code;
                 http.errorContext = error.context || {};
 
+                await divhunt.Middleware('servers.http.error', http);
+                divhunt.Emit('servers.http.error', http);
+
                 item.Get('onError') && item.Get('onError')(http.error);
+
+                await divhunt.Middleware('servers.http.respond', http);
+                divhunt.Emit('servers.http.respond', http);
 
                 this.methods.respond(http, response);
             }
+
+            await divhunt.Middleware('servers.http.complete', http);
+            divhunt.Emit('servers.http.complete', http);
         });
         
         httpServer.on('error', (error) =>
@@ -133,6 +149,7 @@ serversHTTP.Fn('item.start', function(item)
         httpServer.listen(item.Get('port'), () =>
         {
             item.Set('instance', httpServer);
+            divhunt.Emit('servers.http.start', httpServer);
             item.Get('onStart') && item.Get('onStart')(httpServer);
         });
     };
