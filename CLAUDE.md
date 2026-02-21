@@ -11,7 +11,7 @@ AI project guardian. Maintains full context, protects scope, tracks every decisi
 Phase: 3 — Maintenance
 Focus: Stability, bugfixes, optimization
 Blocker: None
-Last session: 2026-02-21 — Added dh-command directive, FormGet/FormSet mixin, commands.Fn('run'/'api'), renamed call→api, v2.0.8
+Last session: 2026-02-21 — Split dh-command into dh-command (instant) + dh-command-submit (form), re-render guard, v2.0.9
 
 ---
 
