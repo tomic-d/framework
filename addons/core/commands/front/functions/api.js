@@ -1,4 +1,4 @@
-commands.Fn('call', async function(id, data = {})
+commands.Fn('api', async function(id, data = {})
 {
     try
     {

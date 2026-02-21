@@ -1,6 +1,7 @@
 import commands from '#commands/core/addon.js';
 
 import '#commands/core/item/functions/run.js';
+import '#commands/core/functions/run.js';
 
 /* gRPC */
 import '#commands/back/functions/grpc/server.js';
