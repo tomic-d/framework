@@ -1,4 +1,4 @@
-import commands from '../addon.js';
+import commands from '#commands/core/addon.js';
 
 commands.Fn('find', function(method, pathname)
 {

@@ -1,5 +1,5 @@
 import divhunt from '#framework/load.js';
-import commands from '../../addon.js';
+import commands from '#commands/core/addon.js';
 
 commands.Fn('item.run', function(item, properties = {}, onChunk = null, context = {})
 {

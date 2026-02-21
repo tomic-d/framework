@@ -1,11 +1,9 @@
 import divhunt from '#framework/load.js';
-import commands from '../addon.js';
+import commands from '#commands/core/addon.js';
 
 commands.Item({
     id: 'commands:get:one',
-    exposed: true,
     method: 'GET',
-    endpoint: '/api/commands/:id',
     type: 'JSON',
     in: {
         id: ['string']

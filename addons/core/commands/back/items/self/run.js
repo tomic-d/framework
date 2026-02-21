@@ -1,10 +1,8 @@
-import commands from '../addon.js';
+import commands from '#commands/core/addon.js';
 
 commands.Item({
     id: 'commands:run',
-    exposed: true,
     method: 'POST',
-    endpoint: '/api/commands/run',
     type: 'JSON',
     in: {
         id: ['string', null, true],
@@ -17,8 +15,6 @@ commands.Item({
     },
     callback: async function(properties, resolve)
     {
-        console.log(properties.id);
-        
         const command = commands.ItemGet(properties.id);
 
         if(!command)
@@ -31,7 +27,7 @@ commands.Item({
             return resolve(null, 'Command is not exposed.', 403);
         }
 
-        try 
+        try
         {
             const result = await commands.Item(properties.id).Fn('run', (properties.data || {}));
 
