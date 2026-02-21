@@ -6,7 +6,7 @@ commands.Item({
     type: 'JSON',
     in: {
         id: ['string', null, true],
-        data: ['object']
+        data: ['object', {}]
     },
     out: {
         data: ['string|object|boolean|number|array'],
@@ -29,7 +29,7 @@ commands.Item({
 
         try
         {
-            const result = await commands.Item(properties.id).Fn('run', (properties.data || {}));
+            const result = await commands.Item(properties.id).Fn('run', properties.data, null, this);
 
             resolve({
                 data: result.data,
