@@ -20,6 +20,60 @@ commands.Fn('http.server', 3000, {
 });
 ```
 
+## HTTP object
+
+Every request creates an `http` object passed to `onRequest` and command callbacks (via `this.http`):
+
+| Property | Type | Description |
+|---|---|---|
+| `request` | IncomingMessage | Node.js request (headers, method, url) |
+| `response` | ServerResponse | Node.js response (writeHead, setHeader, end) |
+| `data` | object | Parsed request data (query params + body) |
+| `url` | URL | Parsed request URL |
+| `user` | object | `{ ip, agent, forwarded, referrer }` |
+| `respond` | object | `{ type, data, message, code }` — response payload |
+| `prevent` | boolean | Set `true` to skip automatic response |
+
+## Cookies
+
+Built-in cookie support via `divhunt.Cookie*` methods. Works on both front (browser) and back (server) — detected via `divhunt.environment`.
+
+### Back (server)
+
+```js
+// Read from request
+const token = divhunt.CookieGet('token', this.http.request);
+
+// Set on response (HttpOnly + Secure by default)
+divhunt.CookieSet('token', value, {
+    path: '/',
+    maxAge: 86400,
+    sameSite: 'Strict'
+}, this.http.response);
+
+// Clear
+divhunt.CookieClear('token', { path: '/' }, this.http.response);
+```
+
+### Front (browser)
+
+```js
+divhunt.CookieSet('theme', 'dark', { path: '/', maxAge: 86400 });
+const theme = divhunt.CookieGet('theme');
+divhunt.CookieClear('theme');
+```
+
+### Options
+
+| Option | Back default | Front default | Description |
+|---|---|---|---|
+| `path` | — | — | Cookie path |
+| `maxAge` | — | — | Lifetime in seconds |
+| `domain` | — | — | Cookie domain |
+| `httpOnly` | `true` | N/A | JS can't read the cookie |
+| `secure` | `true` | `false` | HTTPS only |
+| `sameSite` | — | — | `Strict`, `Lax`, or `None` |
+
 ## gRPC server
 
 Bidirectional streaming with automatic reconnection and binary data transport.
