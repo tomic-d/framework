@@ -5,6 +5,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)));
 
 import assets from './addons/render/assets/back/load.js';
 import commands from './addons/core/commands/core/load.js';
+import pages from './addons/render/pages/core/load.js';
 import html from './addons/render/html/load.js';
 
 assets.Fn('import', ['framework', 'directives', 'commands', 'pages']);

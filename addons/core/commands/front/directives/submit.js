@@ -26,20 +26,21 @@ directives.ItemAdd({
 		methods.init = () =>
 		{
 			methods.config();
-
-			if(compile.data[config.bind] !== undefined)
-			{
-				return;
-			}
-
-			compile.data[config.bind] = {
-				response: null,
-				error: null,
-				loading: false
-			};
-
+			methods.state();
 			methods.element();
 			methods.handler();
+		};
+
+		methods.state = () =>
+		{
+			if(!compile.data[config.bind])
+			{
+				compile.data[config.bind] = {
+					response: null,
+					error: null,
+					loading: false
+				};
+			}
 		};
 
 		methods.config = () =>
@@ -85,15 +86,17 @@ directives.ItemAdd({
 
 		methods.submit = async () =>
 		{
-			const state = compile.data[config.bind];
+			compile.data[config.bind];
 
-			if(state.loading)
+			if(compile.data[config.bind].loading)
 			{
 				return;
 			}
 
-			state.loading = true;
-			state.error = null;
+			compile.data[config.bind].loading = true;
+			compile.data[config.bind].error = null;
+
+			console.log(compile.data[config.bind]);
 
 			compile.data.Update();
 
@@ -104,24 +107,23 @@ directives.ItemAdd({
 					? await commands.Fn('api', config.command, formData)
 					: await commands.Fn('run', config.command, formData);
 
-				state.response = result;
-				state.error    = null;
-				state.loading  = false;
+				compile.data[config.bind].response = result;
+				compile.data[config.bind].error    = null;
+				compile.data[config.bind].loading  = false;
 
 				config.reset && config.form.reset();
-				config.onSuccess && config.onSuccess(state);
+				config.onSuccess && config.onSuccess(compile.data[config.bind]);
 			}
 			catch(error)
 			{
-				state.response = null;
-				state.error    = error.message;
-				state.loading  = false;
+				compile.data[config.bind].response = null;
+				compile.data[config.bind].error    = error.message;
+				compile.data[config.bind].loading  = false;
 
-				config.onError && config.onError(state);
+				config.onError && config.onError(compile.data[config.bind]);
 			}
 			finally
 			{
-				compile.data[config.bind] = state;
 				compile.data.Update();
 			}
 		};

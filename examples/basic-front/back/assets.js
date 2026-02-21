@@ -1,4 +1,5 @@
 import assets from 'divhunt/assets';
+import 'divhunt/pages';
 
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';

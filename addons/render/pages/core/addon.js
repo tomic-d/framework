@@ -1,3 +1,5 @@
+import divhunt from '#framework/load.js';
+
 const pages = divhunt.Addon('pages', (addon) =>
 {
 	addon.Field('id', ['string']);
@@ -27,3 +29,5 @@ const pages = divhunt.Addon('pages', (addon) =>
 	addon.Field('element', ['object']);
 	addon.Field('404', ['boolean', false]);
 });
+
+export default pages;
