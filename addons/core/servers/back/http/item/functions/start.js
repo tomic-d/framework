@@ -27,11 +27,11 @@ serversHTTP.Fn('item.start', function(item)
             user: this.methods.user(request),
             time: performance.now(),
             error: null,
-            raw: response,
+            response,
             streaming: false,
             types: this.methods.types,
             prevent: false,
-            response: {
+            respond: {
                 type: 'JSON',
                 data: null,
                 message: 'Request processed',
@@ -64,7 +64,7 @@ serversHTTP.Fn('item.start', function(item)
             return;
         }
 
-        const type = http.types[http.response.type] || http.types.JSON;
+        const type = http.types[http.respond.type] || http.types.JSON;
 
         http.time = (performance.now() - http.time).toFixed(2);
 
@@ -83,14 +83,14 @@ serversHTTP.Fn('item.start', function(item)
             return;
         }
 
-        const content = http.response.type === 'JSON' ? {
-            data: http.response.data || {},
-            message: http.response.message || 'No response message provided.',
-            code: http.response.code,
+        const content = http.respond.type === 'JSON' ? {
+            data: http.respond.data || {},
+            message: http.respond.message || 'No response message provided.',
+            code: http.respond.code,
             time: http.time
-        } : http.response.data || '';
+        } : http.respond.data || '';
 
-        response.writeHead(http.response.code, { 'Content-Type': type.contentType });
+        response.writeHead(http.respond.code, { 'Content-Type': type.contentType });
         response.end(type.formatter(content));
 
         item.Get('onComplete') && item.Get('onComplete')(http);

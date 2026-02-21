@@ -25,8 +25,8 @@ commands.Fn('http.server', async function(port = 3000, callbacks = {})
 
             if(!command || !command.Get('exposed'))
             {
-                http.response.code = 404;
-                http.response.message = 'Command not found.';
+                http.respond.code = 404;
+                http.respond.message = 'Command not found.';
 
                 callbacks['onResponse'] && callbacks['onResponse'](http);
                 return;
@@ -47,7 +47,7 @@ commands.Fn('http.server', async function(port = 3000, callbacks = {})
             {
                 http.data.streaming = 1;
                 http.prevent = true;
-                http.raw.writeHead(200, {
+                http.response.writeHead(200, {
                     'Content-Type': type.contentType,
                     'Transfer-Encoding': 'chunked'
                 });
@@ -58,7 +58,7 @@ commands.Fn('http.server', async function(port = 3000, callbacks = {})
                 if(http.data.streaming)
                 {
                     http.data.streaming++;
-                    http.raw.write(type.formatter(chunk.data) + '\n');
+                    http.response.write(type.formatter(chunk.data) + '\n');
                 }
 
                 callbacks['onChunk'] && callbacks['onChunk'](http, chunk);
@@ -68,16 +68,16 @@ commands.Fn('http.server', async function(port = 3000, callbacks = {})
             {
                 if(http.data.streaming === 1)
                 {
-                    http.raw.write(type.formatter(response.data) + '\n');
+                    http.response.write(type.formatter(response.data) + '\n');
                 }
 
-                http.raw.end();
+                http.response.end();
             }
 
-            http.response.type = command.Get('type');
-            http.response.data = response.data;
-            http.response.message = response.message;
-            http.response.code = response.code;
+            http.respond.type = command.Get('type');
+            http.respond.data = response.data;
+            http.respond.message = response.message;
+            http.respond.code = response.code;
 
             callbacks['onResponse'] && callbacks['onResponse'](http);
         },
