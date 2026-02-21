@@ -18,7 +18,7 @@ const map =
     sources:    { js: 'addons/modules/sources/front' },
     directives: { js: 'addons/render/directives/front' },
     transforms: { js: 'addons/render/transforms/front' },
-    pages:      { js: 'addons/render/pages/front', css: 'addons/render/pages/front' },
+    pages:      { js: 'addons/render/pages', css: 'addons/render/pages/front' },
     elements:   { js: 'addons/render/elements/front', css: 'addons/render/elements/front' },
     float:      { js: 'addons/float', css: 'addons/float' }
 };

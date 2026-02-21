@@ -1,6 +1,6 @@
 {
     "name": "divhunt",
-    "version": "2.0.9",
+    "version": "2.0.10",
     "description": "Full-stack isomorphic JavaScript framework built from scratch. One addon abstraction powers databases, servers, commands, pages, directives, queues, and more.",
     "type": "module",
     "main": "lib/load.js",
@@ -16,6 +16,7 @@
         "./commands": "./addons/core/commands/core/load.js",
         "./queue": "./addons/core/queue/back/load.js",
         "./assets": "./addons/render/assets/back/load.js",
+        "./pages": "./addons/render/pages/core/load.js",
         "./html": "./addons/render/html/load.js",
         "./tags": "./addons/render/tags/load.js",
         "./sources": "./addons/modules/sources/back/load.js",
@@ -31,6 +32,7 @@
         "#assets/*": "./addons/render/assets/back/*",
         "#html/*": "./addons/render/html/*",
         "#directives/*": "./addons/render/directives/*",
+        "#pages/*": "./addons/render/pages/*",
         "#elements/*": "./addons/render/elements/*",
         "#tags/*": "./addons/render/tags/*",
         "#sources/*": "./addons/modules/sources/*",

@@ -11,7 +11,7 @@ AI project guardian. Maintains full context, protects scope, tracks every decisi
 Phase: 3 — Maintenance
 Focus: Stability, bugfixes, optimization
 Blocker: None
-Last session: 2026-02-21 — Split dh-command into dh-command (instant) + dh-command-submit (form), re-render guard, v2.0.9
+Last session: 2026-02-21 — Pages addon core/front split, dh-page directive, directive bugfixes, v2.0.10
 
 ---
 

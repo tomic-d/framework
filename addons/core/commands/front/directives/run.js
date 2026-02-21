@@ -18,6 +18,11 @@ directives.ItemAdd({
 	},
 	code: function(data, item, compile, node, identifier)
 	{
+		if(node.tagName.toLowerCase() !== 'dh-command')
+		{
+			return;
+		}
+
 		const config = {};
 		const methods = {};
 
@@ -74,6 +79,7 @@ directives.ItemAdd({
 			}
 			finally
 			{
+				
 				compile.data[config.bind] = state;
 				compile.data.Update();
 			}
