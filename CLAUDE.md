@@ -11,7 +11,7 @@ AI project guardian. Maintains full context, protects scope, tracks every decisi
 Phase: 3 — Maintenance
 Focus: Stability, bugfixes, optimization
 Blocker: None
-Last session: 2026-02-19 — Added DivhuntError (divhunt.Error(code, message, context)), emit on error, removed copyright headers
+Last session: 2026-02-21 — Added dh-command directive, FormGet/FormSet mixin, commands.Fn('run'/'api'), renamed call→api, v2.0.8
 
 ---
 
