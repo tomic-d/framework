@@ -12,6 +12,8 @@ pages.Item({
         {
             return `
                 1
+                {{ global.user.name }}
+
                 <h1>dh-command test</h1>
                 <dh-command-submit command="test" :api="true" bind="test" :data='{"name": "dejan"}'>
                     <input name="name" placeholder="Name"/>
