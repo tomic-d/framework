@@ -1,0 +1,7 @@
+{
+    "name": "basic-front-example",
+    "type": "module",
+    "dependencies": {
+        "divhunt": "^2.0.6"
+    }
+}

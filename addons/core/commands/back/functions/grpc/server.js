@@ -1,4 +1,4 @@
-import commands from '../../addon.js';
+import commands from '#commands/core/addon.js';
 
 commands.Fn('grpc.server', async function(port = 50000, callbacks = {})
 {

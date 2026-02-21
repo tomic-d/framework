@@ -1,11 +1,9 @@
 import divhunt from '#framework/load.js';
-import commands from '../addon.js';
+import commands from '#commands/core/addon.js';
 
 commands.Item({
     id: 'commands:get:many',
-    exposed: true,
     method: 'GET',
-    endpoint: '/api/commands',
     type: 'JSON',
     out: {
         commands: {
@@ -44,7 +42,7 @@ commands.Item({
     {
         const list = [];
 
-        Object.values(commands.Items()).forEach((item) => 
+        Object.values(commands.Items()).forEach((item) =>
         {
             if(!item.Get('exposed'))
             {

@@ -1,5 +1,5 @@
 import divhunt from '#framework/load.js';
-import commands from '../../addon.js';
+import commands from '#commands/core/addon.js';
 
 commands.Fn('http.server', async function(port = 3000, callbacks = {})
 {
