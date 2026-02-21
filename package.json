@@ -20,7 +20,7 @@
         "./html": "./addons/render/html/load.js",
         "./tags": "./addons/render/tags/load.js",
         "./sources": "./addons/modules/sources/back/load.js",
-        "./variables": "./addons/modules/variables/load.js"
+        "./variables": "./addons/modules/variables/core/load.js"
     },
     "imports": {
         "#framework/*": "./lib/*",
