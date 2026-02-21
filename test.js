@@ -42,7 +42,6 @@ commands.Item({
     }
 });
 
-
 commands.Fn('expose', 'commands:run', '/api/commands/run');
 
 await commands.Fn('http.server', 3000, {

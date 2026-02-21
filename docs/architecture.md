@@ -3,12 +3,12 @@
 ## File structure
 
 ```
-lib/                     Core Divhunt class + 16 mixins
+lib/                     Core Divhunt class + 17 mixins
   load.js                Entry point — creates Divhunt instance, handles signals
   src/
     divhunt.js           Main class (mixin-composed)
     mixins/              Addons, Emitter, Middleware, Data, DOM, Route,
-                         Function, Generate, Binaries, Helper, and more
+                         Function, Generate, Binaries, Helper, Cookie, and more
     classes/
       addon/             DivhuntAddon + mixins (fields, items, functions, find, render, store)
         classes/
