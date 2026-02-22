@@ -57,7 +57,7 @@ directives.ItemAdd({
                 loopData[forIndex] = index;
 
                 const compiled = item.Compile(html, loopData);
-                const key = divhunt.GenerateHash(typeof value === 'object' ? JSON.stringify(value) : String(value));
+                const key = divhunt.GenerateHash(index + ':' + (typeof value === 'object' ? JSON.stringify(value) : String(value)));
 
                 while(compiled.element.firstChild)
                 {
