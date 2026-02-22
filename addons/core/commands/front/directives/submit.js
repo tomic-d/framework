@@ -82,16 +82,20 @@ divhunt.AddonReady('directives', function()
 						event.stopPropagation();
 					}
 
-					await methods.submit();
+					const form = event.target.closest('form') || event.target;
+
+					await methods.submit(form);
 				};
 			};
 
-			methods.submit = async () =>
+			methods.submit = async (form) =>
 			{
 				if(compile.data[config.bind].loading)
 				{
 					return;
 				}
+
+				const formData = divhunt.FormGet(form);
 
 				compile.data[config.bind].loading = true;
 				compile.data[config.bind].error = null;
@@ -100,7 +104,6 @@ divhunt.AddonReady('directives', function()
 
 				try
 				{
-					const formData = divhunt.FormGet(config.form);
 					const result = config.api
 						? await commands.Fn('api', config.command, formData)
 						: await commands.Fn('run', config.command, formData);
@@ -119,7 +122,7 @@ divhunt.AddonReady('directives', function()
 					compile.data[config.bind].error    = null;
 					compile.data[config.bind].loading  = false;
 
-					config.reset && config.form.reset();
+					config.reset && form.reset();
 					config.onSuccess && config.onSuccess(compile.data[config.bind]);
 				}
 				catch(error)

@@ -144,13 +144,13 @@ directives.ItemAdd({
 		methods.submit = async () =>
 		{
 			const state = compile.data[config.bind];
+			const formData = methods.extract();
 
 			state.loading = true;
 			state.error = null;
 
 			try
 			{
-				const formData = methods.extract();
 				const submitData = Object.assign({}, formData, config.data);
 				const response = await methods.fetch(submitData);
 

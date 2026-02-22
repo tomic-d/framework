@@ -17,7 +17,8 @@ directives.ItemAdd({
 
         if (!result)
         {
-            node.remove();
+            const placeholder = document.createComment('dh-if:' + identifier);
+            node.replaceWith(placeholder);
             return false;
         }
     }
