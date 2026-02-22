@@ -57,10 +57,18 @@ directives.ItemAdd({
                 loopData[forIndex] = index;
 
                 const compiled = item.Compile(html, loopData);
+                const key = divhunt.GenerateHash(typeof value === 'object' ? JSON.stringify(value) : String(value));
 
                 while(compiled.element.firstChild)
                 {
-                    fragment.appendChild(compiled.element.firstChild);
+                    const child = compiled.element.firstChild;
+
+                    if(child.nodeType === Node.ELEMENT_NODE)
+                    {
+                        child.setAttribute('dh-key', key);
+                    }
+
+                    fragment.appendChild(child);
                 }
             });
 
