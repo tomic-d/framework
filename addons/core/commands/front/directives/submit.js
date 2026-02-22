@@ -68,7 +68,8 @@ divhunt.AddonReady('directives', function()
 				}
 
 				node.appendChild(config.form);
-				divhunt.FormSet(config.form, config.data);
+
+				requestAnimationFrame(() => divhunt.FormSet(config.form, config.data));
 			};
 
 			methods.handler = () =>
