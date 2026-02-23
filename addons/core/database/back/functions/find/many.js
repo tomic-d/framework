@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
 database.Fn('find.many', async function(query, set = false)
@@ -39,7 +39,7 @@ database.Fn('find.many', async function(query, set = false)
     {
         for(const join of query.joins)
         {
-            const addon = divhunt.AddonGet(join.addon);
+            const addon = onetype.AddonGet(join.addon);
 
             if(!addon)
             {

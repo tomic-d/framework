@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const serversHTTP = divhunt.Addon('servers.http', (addon) =>
+const serversHTTP = onetype.Addon('servers.http', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('instance', ['object']);

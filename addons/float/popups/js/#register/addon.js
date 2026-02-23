@@ -1,4 +1,4 @@
-const popups = divhunt.Addon('popups', (addon) =>
+const popups = onetype.Addon('popups', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('target', ['object', null]);

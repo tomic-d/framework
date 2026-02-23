@@ -1,4 +1,4 @@
-.dh-overlay
+.ot-overlay
 {
     position: fixed;
     top: 0;
@@ -9,7 +9,7 @@
     z-index: 100000;
 }
 
-.dh-overlay > .backdrop
+.ot-overlay > .backdrop
 {
     position: absolute;
     top: 0;
@@ -20,7 +20,7 @@
     pointer-events: auto;
 }
 
-.dh-overlay > .content
+.ot-overlay > .content
 {
     position: absolute;
     width: fit-content;

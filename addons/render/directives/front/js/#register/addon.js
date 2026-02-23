@@ -1,4 +1,4 @@
-const directives = divhunt.Addon('directives', (addon) =>
+const directives = onetype.Addon('directives', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('icon', ['string', 'code']);
@@ -15,17 +15,17 @@ const directives = divhunt.Addon('directives', (addon) =>
 
     /* Trigers */
     
-    divhunt.EmitOn('addon.render.compile.before', (...data) =>
+    onetype.EmitOn('addon.render.compile.before', (...data) =>
     {
         directives.Fn('process', 'before', ...data);
     })
     
-    divhunt.EmitOn('addon.render.compile.after', (...data) =>
+    onetype.EmitOn('addon.render.compile.after', (...data) =>
     {
         directives.Fn('process', 'after', ...data);
     })
     
-    divhunt.EmitOn('addon.render.compile.node', (...data) =>
+    onetype.EmitOn('addon.render.compile.node', (...data) =>
     {
         directives.Fn('process', 'node', ...data);
     })

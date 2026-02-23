@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-divhunt.AddonReady('commands', (commands) =>
+onetype.AddonReady('commands', (commands) =>
 {
 	commands.Item({
 		id: 'database:query',
@@ -49,7 +49,7 @@ divhunt.AddonReady('commands', (commands) =>
 		{
 			this.validate = () =>
 			{
-				const addon = divhunt.Addon(properties.addon);
+				const addon = onetype.Addon(properties.addon);
 
 				if(!addon)
 				{
@@ -123,7 +123,7 @@ divhunt.AddonReady('commands', (commands) =>
 								continue;
 							}
 
-							const target = divhunt.AddonGet(join.addon);
+							const target = onetype.AddonGet(join.addon);
 							const allowed = target?.expose?.select || Object.keys(target.Fields().data);
 							const selected = join.select?.length
 								? join.select.filter(field => allowed.includes(field))
@@ -155,7 +155,7 @@ divhunt.AddonReady('commands', (commands) =>
 					return;
 				}
 
-				const addon = divhunt.AddonGet(name);
+				const addon = onetype.AddonGet(name);
 				const config = addon?.expose?.resolve;
 
 				if(!config)
@@ -166,7 +166,7 @@ divhunt.AddonReady('commands', (commands) =>
 				for(const [field, target] of Object.entries(config))
 				{
 					const targetName = typeof target === 'string' ? target : target.addon;
-					const targetAddon = divhunt.AddonGet(targetName);
+					const targetAddon = onetype.AddonGet(targetName);
 
 					if(!targetAddon)
 					{

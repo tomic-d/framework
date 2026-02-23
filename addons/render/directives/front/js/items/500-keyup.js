@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-keyup',
+    id: 'ot-keyup',
     icon: 'keyboard_arrow_up',
     name: 'Keyup',
     description: 'Handle keyup events for keyboard interactions. Detects when keys are released.',
@@ -7,22 +7,22 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-keyup': ['string']
+        'ot-keyup': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-keyup'].value;
+        const attribute = data['ot-keyup'].value;
 
-        node.dhKeyup = (event) =>
+        node.otKeyup = (event) =>
         {
             // Auto-apply modifiers
-            if (data['dh-keyup'].modifiers && data['dh-keyup'].modifiers.length > 0)
+            if (data['ot-keyup'].modifiers && data['ot-keyup'].modifiers.length > 0)
             {
-                if (data['dh-keyup'].modifiers.includes('prevent')) event.preventDefault();
-                if (data['dh-keyup'].modifiers.includes('stop')) event.stopPropagation();
+                if (data['ot-keyup'].modifiers.includes('prevent')) event.preventDefault();
+                if (data['ot-keyup'].modifiers.includes('stop')) event.stopPropagation();
             }
 
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -33,7 +33,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('keyup', function(event)
     {
@@ -41,9 +41,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhKeyup' in node)
+            if('otKeyup' in node)
             {
-                node.dhKeyup(event);
+                node.otKeyup(event);
                 break;
             }
 

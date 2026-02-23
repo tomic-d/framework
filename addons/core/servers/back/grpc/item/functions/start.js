@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import serversGRPC from '#servers/grpc/addon.js';
 
 serversGRPC.Fn('item.start', async function(item)
@@ -53,7 +53,7 @@ serversGRPC.Fn('item.start', async function(item)
             item.Set('instance', server);
             item.Get('onStart') && item.Get('onStart').call(item, server);
             
-            divhunt.Emit('servers.grpc.start', server);
+            onetype.Emit('servers.grpc.start', server);
         });
     }
     catch(error)

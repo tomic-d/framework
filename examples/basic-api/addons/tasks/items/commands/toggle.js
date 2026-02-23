@@ -1,4 +1,4 @@
-import commands from 'divhunt/commands';
+import commands from 'onetype/commands';
 import tasks from '../../addon.js';
 
 commands.Item({

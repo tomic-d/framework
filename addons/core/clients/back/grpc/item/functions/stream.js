@@ -1,5 +1,5 @@
 import clientsGRPC from '#clients/grpc/addon.js';
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
 clientsGRPC.Fn('item.stream', async function(item)
 {
@@ -26,9 +26,9 @@ clientsGRPC.Fn('item.stream', async function(item)
 
         stream.request = function(name, data, onChunk = null, id = null)
         {
-            id = id || divhunt.GenerateUID();
+            id = id || onetype.GenerateUID();
 
-            const extracted = divhunt.BinariesExtract(data);
+            const extracted = onetype.BinariesExtract(data);
 
             stream.write({
                 data: JSON.stringify({type: 'request', name, data: extracted.data, id}),
@@ -42,9 +42,9 @@ clientsGRPC.Fn('item.stream', async function(item)
 
         stream.respond = function(data, message, code, end = true, id = null)
         {
-            id = id || divhunt.GenerateUID();
+            id = id || onetype.GenerateUID();
 
-            const extracted = divhunt.BinariesExtract(data);
+            const extracted = onetype.BinariesExtract(data);
 
             stream.write({
                 data: JSON.stringify({type: 'respond', data: extracted.data, message, code, id, end}),
@@ -62,7 +62,7 @@ clientsGRPC.Fn('item.stream', async function(item)
 
             if(payload.data && response.binaries)
             {
-                payload.data = divhunt.BinariesInject(payload.data, response.binaries);
+                payload.data = onetype.BinariesInject(payload.data, response.binaries);
             }
 
             if(payload.type === 'respond')

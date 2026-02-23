@@ -1,6 +1,6 @@
 modals.ItemOn('add', (item) =>
 {
-    const overlays = divhunt.Addon('overlays');
+    const overlays = onetype.Addon('overlays');
     const id = item.Get('id');
 
     const overlay = overlays.Item({
@@ -15,7 +15,7 @@ modals.ItemOn('add', (item) =>
 
             if(element)
             {
-                element.classList.add('dh-modal');
+                element.classList.add('ot-modal');
 
                 const content = element.querySelector('.content');
 

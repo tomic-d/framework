@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-mouse-move',
+    id: 'ot-mouse-move',
     icon: 'pan_tool',
     name: 'Mouse Move',
     description: 'Handle mouse move events. Track cursor position and movement within elements.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-mouse-move': ['string']
+        'ot-mouse-move': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-mouse-move'].value;
+        const attribute = data['ot-mouse-move'].value;
 
-        node.dhMouseMove = (event) =>
+        node.otMouseMove = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -25,7 +25,7 @@ directives.ItemAdd({
     }
     });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('mousemove', function(event)
     {
@@ -33,9 +33,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhMouseMove' in node)
+            if('otMouseMove' in node)
             {
-                node.dhMouseMove(event);
+                node.otMouseMove(event);
                 break;
             }
 

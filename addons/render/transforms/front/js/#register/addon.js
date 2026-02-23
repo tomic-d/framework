@@ -1,4 +1,4 @@
-const transforms = divhunt.Addon('transforms', (addon) =>
+const transforms = onetype.Addon('transforms', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('icon', ['string', 'sync_alt']);

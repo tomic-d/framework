@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-keydown',
+    id: 'ot-keydown',
     icon: 'keyboard_arrow_down',
     name: 'Keydown',
     description: 'Handle keydown events for keyboard shortcuts. Captures keys as they are pressed down.',
@@ -7,22 +7,22 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-keydown': ['string']
+        'ot-keydown': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-keydown'].value;
+        const attribute = data['ot-keydown'].value;
 
-        node.dhKeydown = (event) =>
+        node.otKeydown = (event) =>
         {
             // Auto-apply modifiers
-            if (data['dh-keydown'].modifiers && data['dh-keydown'].modifiers.length > 0)
+            if (data['ot-keydown'].modifiers && data['ot-keydown'].modifiers.length > 0)
             {
-                if (data['dh-keydown'].modifiers.includes('prevent')) event.preventDefault();
-                if (data['dh-keydown'].modifiers.includes('stop')) event.stopPropagation();
+                if (data['ot-keydown'].modifiers.includes('prevent')) event.preventDefault();
+                if (data['ot-keydown'].modifiers.includes('stop')) event.stopPropagation();
             }
 
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -33,7 +33,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('keydown', function(event)
     {
@@ -41,9 +41,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhKeydown' in node)
+            if('otKeydown' in node)
             {
-                node.dhKeydown(event);
+                node.otKeydown(event);
                 break;
             }
 

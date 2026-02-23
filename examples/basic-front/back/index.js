@@ -3,7 +3,7 @@ import './items/html/fonts.js';
 import './items/commands/html.js';
 import './items/commands/test.js';
 
-import commands from 'divhunt/commands';
+import commands from 'onetype/commands';
 
 commands.Fn('http.server', 3000, {
     onStart: () =>

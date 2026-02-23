@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
 import '#database/functions/find.js';
@@ -33,13 +33,13 @@ import '#database/events/middleware/item.crud.delete.js';
 
 import '#database/items/commands/expose.js';
 
-divhunt.DataSchema('filter', {
+onetype.DataSchema('filter', {
     field: ['string', null, true],
     value: ['string|number|boolean|array'],
     operator: ['string', 'EQUALS']
 });
 
-divhunt.DataSchema('join', {
+onetype.DataSchema('join', {
     addon: ['string', null, true],
     field: ['string', null, true],
     output: ['string'],
@@ -51,7 +51,7 @@ divhunt.DataSchema('join', {
     }
 });
 
-divhunt.DataSchema('query', {
+onetype.DataSchema('query', {
     filters: {
         type: 'array',
         each: {

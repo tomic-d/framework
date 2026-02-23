@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-click-outside',
+    id: 'ot-click-outside',
     icon: 'close_fullscreen',
     name: 'Click Outside',
     description: 'Detect clicks outside the element. Perfect for closing dropdowns and modals.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-click-outside': ['string']
+        'ot-click-outside': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-click-outside'].value;
+        const attribute = data['ot-click-outside'].value;
 
         const handler = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -27,7 +27,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     const handlers = new Set();
 

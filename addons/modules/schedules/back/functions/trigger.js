@@ -1,12 +1,12 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 import schedules from '../addon.js';
 
 schedules.Fn('trigger', function(id, props = {})
 {
     this.resolve = null;
     this.item = null;
-    this.events = divhunt.AddonGet('events');
-    this.commands = divhunt.AddonGet('commands');
+    this.events = onetype.AddonGet('events');
+    this.commands = onetype.AddonGet('commands');
 
     this.methods.init = async (resolve) =>
     {

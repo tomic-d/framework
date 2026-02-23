@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const queue = divhunt.Addon('queue', (addon) =>
+const queue = onetype.Addon('queue', (addon) =>
 {
     addon.Field('id', ['string']);
 

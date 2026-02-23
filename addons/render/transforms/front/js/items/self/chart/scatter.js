@@ -1,7 +1,7 @@
-divhunt.AddonReady('transforms', (transforms) =>
+onetype.AddonReady('transforms', (transforms) =>
 {
     transforms.ItemAdd({
-        id: 'dh-chart-scatter',
+        id: 'ot-chart-scatter',
         icon: 'scatter_plot',
         name: 'Scatter Plot',
         description: 'Scatter plot for correlation data. Show relationship between two variables with points.',
@@ -17,7 +17,7 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.setup = () =>
             {
                 node.innerHTML = '';
-                node.classList.add('dh-chart-scatter');
+                node.classList.add('ot-chart-scatter');
 
                 const canvas = document.createElement('canvas');
                 this.canvas = canvas;
@@ -29,11 +29,11 @@ divhunt.AddonReady('transforms', (transforms) =>
                 const style = getComputedStyle(document.body);
 
                 return {
-                    brand: style.getPropertyValue('--dh-brand').trim(),
-                    blue: style.getPropertyValue('--dh-blue').trim(),
-                    green: style.getPropertyValue('--dh-green').trim(),
-                    orange: style.getPropertyValue('--dh-orange').trim(),
-                    red: style.getPropertyValue('--dh-red').trim()
+                    brand: style.getPropertyValue('--ot-brand').trim(),
+                    blue: style.getPropertyValue('--ot-blue').trim(),
+                    green: style.getPropertyValue('--ot-green').trim(),
+                    orange: style.getPropertyValue('--ot-orange').trim(),
+                    red: style.getPropertyValue('--ot-red').trim()
                 };
             };
 
@@ -79,8 +79,8 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.config = () =>
             {
                 const style = getComputedStyle(document.body);
-                const textColor = style.getPropertyValue('--dh-text-1').trim();
-                const gridColor = style.getPropertyValue('--dh-bg-3-border').trim();
+                const textColor = style.getPropertyValue('--ot-text-1').trim();
+                const gridColor = style.getPropertyValue('--ot-bg-3-border').trim();
 
                 return {
                     type: 'scatter',
@@ -95,7 +95,7 @@ divhunt.AddonReady('transforms', (transforms) =>
                                 labels: {
                                     color: textColor,
                                     font: {
-                                        family: style.getPropertyValue('--dh-font-primary').trim()
+                                        family: style.getPropertyValue('--ot-font-primary').trim()
                                     }
                                 }
                             }

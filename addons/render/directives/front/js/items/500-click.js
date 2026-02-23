@@ -1,4 +1,4 @@
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('click', function(event)
     {
@@ -6,9 +6,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhClick' in node)
+            if('otClick' in node)
             {
-                node.dhClick(event);
+                node.otClick(event);
                 break;
             }
 
@@ -17,7 +17,7 @@ divhunt.AddonReady('directives', function()
     });
 
     directives.ItemAdd({
-        id: 'dh-click',
+        id: 'ot-click',
         icon: 'touch_app',
         name: 'Click',
         description: 'Handle click events with support for prevent and stop modifiers. Executes functions on element clicks.',
@@ -25,22 +25,22 @@ divhunt.AddonReady('directives', function()
         trigger: 'node',
         order: 500,
         attributes: {
-            'dh-click': ['string']
+            'ot-click': ['string']
         },
         code: function(data, item, compile, node, identifier)
         {
-            const attribute = data['dh-click'].value;
+            const attribute = data['ot-click'].value;
 
-            node.dhClick = (event) =>
+            node.otClick = (event) =>
             {
                 // Auto-apply modifiers
-                if (data['dh-click'].modifiers && data['dh-click'].modifiers.length > 0)
+                if (data['ot-click'].modifiers && data['ot-click'].modifiers.length > 0)
                 {
-                    if (data['dh-click'].modifiers.includes('prevent')) event.preventDefault();
-                    if (data['dh-click'].modifiers.includes('stop')) event.stopPropagation();
+                    if (data['ot-click'].modifiers.includes('prevent')) event.preventDefault();
+                    if (data['ot-click'].modifiers.includes('stop')) event.stopPropagation();
                 }
 
-                const results = divhunt.Function(attribute, compile.data, false);
+                const results = onetype.Function(attribute, compile.data, false);
 
                 if (typeof results === 'function')
                 {

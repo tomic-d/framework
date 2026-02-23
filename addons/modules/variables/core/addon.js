@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const variables = divhunt.Addon('variables', (addon) =>
+const variables = onetype.Addon('variables', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('value', ['any']);

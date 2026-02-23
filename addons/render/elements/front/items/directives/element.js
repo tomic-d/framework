@@ -1,4 +1,4 @@
-divhunt.AddonReady('directives', (directives) =>
+onetype.AddonReady('directives', (directives) =>
 {
 	directives.ItemAdd({
 		id: 'jt-element',
@@ -34,7 +34,7 @@ divhunt.AddonReady('directives', (directives) =>
 				}
 				else if(attr.name.startsWith(':'))
 				{
-					attributes.data[attr.name.substring(1)] = divhunt.Function(attr.value, compile.data, false);
+					attributes.data[attr.name.substring(1)] = onetype.Function(attr.value, compile.data, false);
 				}
 				else
 				{
@@ -61,7 +61,7 @@ divhunt.AddonReady('directives', (directives) =>
 				});
 			}
 
-			const render = divhunt.Addon('elements').Render(elementName, attributes.data, attributes.wrapper, slots);
+			const render = onetype.Addon('elements').Render(elementName, attributes.data, attributes.wrapper, slots);
 
 			if(render)
 			{

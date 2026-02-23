@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-html',
+    id: 'ot-html',
     icon: 'code',
     name: 'HTML',
     description: 'Set element innerHTML dynamically. Renders HTML content from data expressions.',
@@ -9,15 +9,15 @@ directives.ItemAdd({
     strict: true,
     type: '1',
     attributes: {
-        'dh-html': ['string']
+        'ot-html': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const html = data['dh-html'].value;
+        const html = data['ot-html'].value;
 
         if(html)
         {
-            const results = divhunt.Function(html, compile.data, false);
+            const results = onetype.Function(html, compile.data, false);
 
             if(typeof results === 'string' && results.trim())
             {

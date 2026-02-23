@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import commands from '#commands/core/addon.js';
 
 commands.Fn('item.run', function(item, properties = {}, onChunk = null, context = {})
@@ -23,7 +23,7 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
             {
                 try
                 {
-                    data = divhunt.DataDefine(data, item.Get('out'));
+                    data = onetype.DataDefine(data, item.Get('out'));
                 }
                 catch(error)
                 {
@@ -56,7 +56,7 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
             {
                 try 
                 {
-                    properties = divhunt.DataDefine(properties, item.Get('in'));
+                    properties = onetype.DataDefine(properties, item.Get('in'));
                 }
                 catch(error)
                 {

@@ -1,7 +1,7 @@
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     directives.ItemAdd({
-        id: 'dh-transform',
+        id: 'ot-transform',
         icon: 'auto_fix_high',
         name: 'Transform',
         description: 'Apply transform functions to elements for advanced functionality. Enables custom element behaviors and third-party integrations.',

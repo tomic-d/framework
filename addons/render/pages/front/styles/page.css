@@ -1,5 +1,5 @@
 /* Base page styles */
-.dh-page
+.ot-page
 {
 	display: grid;
 	position: fixed;
@@ -10,7 +10,7 @@
 }
 
 /* Page area containers */
-.dh-page-area
+.ot-page-area
 {
 	position: relative;
 	overflow: auto;

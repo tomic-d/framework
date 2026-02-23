@@ -1,4 +1,4 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 import shortcuts from '../addon.js';
 
 shortcuts.Fn('register', function()
@@ -11,7 +11,7 @@ shortcuts.Fn('register', function()
     this.StoreSet('registered', true);
     this.StoreSet('context', null);
 
-    this.vars = divhunt.AddonGet('variables');
+    this.vars = onetype.AddonGet('variables');
 
     this.methods.handler = (e) =>
     {
@@ -153,7 +153,7 @@ shortcuts.Fn('register', function()
 
             try
             {
-                return divhunt.Function(`return ${processed}`)();
+                return onetype.Function(`return ${processed}`)();
             }
             catch
             {

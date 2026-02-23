@@ -1,8 +1,8 @@
-## Built with the Divhunt Framework – non-commercial use only. For commercial use, contact dejan@divhunt.com.
+## Built with the OneType Framework – non-commercial use only. For commercial use, contact hi@iamdejan.com.
 
 # Clients Addon
 
-HTTP and gRPC client connectivity for Divhunt applications.
+HTTP and gRPC client connectivity for OneType applications.
 
 ## Features
 
@@ -110,13 +110,13 @@ clients.Item({
 ## Events
 
 ```javascript
-divhunt.EmitOn('clients.http.request.before', (http) =>
+onetype.EmitOn('clients.http.request.before', (http) =>
 {
     http.data.timestamp = Date.now();
     http.headers = {'X-Client-Version': '1.0.0'};
 });
 
-divhunt.EmitOn('clients.grpc.connect', (client) =>
+onetype.EmitOn('clients.grpc.connect', (client) =>
 {
     console.log('gRPC client ready for requests');
 });

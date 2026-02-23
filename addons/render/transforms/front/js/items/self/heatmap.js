@@ -1,4 +1,4 @@
-divhunt.AddonReady('transforms', (transforms) =>
+onetype.AddonReady('transforms', (transforms) =>
 {
     transforms.ItemAdd({
         id: 'heatmap',

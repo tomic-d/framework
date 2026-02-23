@@ -1,7 +1,7 @@
-divhunt.AddonReady('transforms', (transforms) =>
+onetype.AddonReady('transforms', (transforms) =>
 {
     transforms.ItemAdd({
-        id: 'dh-chart-bubble',
+        id: 'ot-chart-bubble',
         icon: 'bubble_chart',
         name: 'Bubble Chart',
         description: 'Bubble chart with three dimensions. Display data points as sized bubbles on X/Y axes.',
@@ -17,7 +17,7 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.setup = () =>
             {
                 node.innerHTML = '';
-                node.classList.add('dh-chart-bubble');
+                node.classList.add('ot-chart-bubble');
 
                 const canvas = document.createElement('canvas');
                 this.canvas = canvas;
@@ -29,16 +29,16 @@ divhunt.AddonReady('transforms', (transforms) =>
                 const style = getComputedStyle(document.body);
 
                 return {
-                    brand: style.getPropertyValue('--dh-brand').trim(),
-                    blue: style.getPropertyValue('--dh-blue').trim(),
-                    green: style.getPropertyValue('--dh-green').trim(),
-                    orange: style.getPropertyValue('--dh-orange').trim(),
-                    red: style.getPropertyValue('--dh-red').trim(),
-                    brandOpacity: style.getPropertyValue('--dh-brand-opacity').trim(),
-                    blueOpacity: style.getPropertyValue('--dh-blue-opacity').trim(),
-                    greenOpacity: style.getPropertyValue('--dh-green-opacity').trim(),
-                    orangeOpacity: style.getPropertyValue('--dh-orange-opacity').trim(),
-                    redOpacity: style.getPropertyValue('--dh-red-opacity').trim()
+                    brand: style.getPropertyValue('--ot-brand').trim(),
+                    blue: style.getPropertyValue('--ot-blue').trim(),
+                    green: style.getPropertyValue('--ot-green').trim(),
+                    orange: style.getPropertyValue('--ot-orange').trim(),
+                    red: style.getPropertyValue('--ot-red').trim(),
+                    brandOpacity: style.getPropertyValue('--ot-brand-opacity').trim(),
+                    blueOpacity: style.getPropertyValue('--ot-blue-opacity').trim(),
+                    greenOpacity: style.getPropertyValue('--ot-green-opacity').trim(),
+                    orangeOpacity: style.getPropertyValue('--ot-orange-opacity').trim(),
+                    redOpacity: style.getPropertyValue('--ot-red-opacity').trim()
                 };
             };
 
@@ -84,8 +84,8 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.config = () =>
             {
                 const style = getComputedStyle(document.body);
-                const textColor = style.getPropertyValue('--dh-text-1').trim();
-                const gridColor = style.getPropertyValue('--dh-bg-3-border').trim();
+                const textColor = style.getPropertyValue('--ot-text-1').trim();
+                const gridColor = style.getPropertyValue('--ot-bg-3-border').trim();
 
                 return {
                     type: 'bubble',
@@ -100,7 +100,7 @@ divhunt.AddonReady('transforms', (transforms) =>
                                 labels: {
                                     color: textColor,
                                     font: {
-                                        family: style.getPropertyValue('--dh-font-primary').trim()
+                                        family: style.getPropertyValue('--ot-font-primary').trim()
                                     }
                                 }
                             },

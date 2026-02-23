@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import commands from '#commands/core/addon.js';
 
 commands.Item({
@@ -60,8 +60,8 @@ commands.Item({
                     description: command.Get('description'),
                 },
                 data: {
-                    in: command.Get('in') ? divhunt.DataConfig(command.Get('in')) : null,
-                    out: command.Get('out') ? divhunt.DataConfig(command.Get('out')) : null
+                    in: command.Get('in') ? onetype.DataConfig(command.Get('in')) : null,
+                    out: command.Get('out') ? onetype.DataConfig(command.Get('out')) : null
                 },
                 api: {
                     type: command.Get('type'),

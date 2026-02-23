@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-mouse-enter',
+    id: 'ot-mouse-enter',
     icon: 'mouse',
     name: 'Mouse Enter',
     description: 'Handle mouse enter events. Triggers when cursor enters element boundaries.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-mouse-enter': ['string']
+        'ot-mouse-enter': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-mouse-enter'].value;
+        const attribute = data['ot-mouse-enter'].value;
 
-        node.dhMouseEnter = (event) =>
+        node.otMouseEnter = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -25,7 +25,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('mouseover', function(event)
     {
@@ -33,10 +33,10 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhMouseEnter' in node && !node.dhMouseEntered)
+            if('otMouseEnter' in node && !node.otMouseEntered)
             {
-                node.dhMouseEntered = true;
-                node.dhMouseEnter(event);
+                node.otMouseEntered = true;
+                node.otMouseEnter(event);
                 break;
             }
 
@@ -50,9 +50,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhMouseEnter' in node && node.dhMouseEntered)
+            if('otMouseEnter' in node && node.otMouseEntered)
             {
-                node.dhMouseEntered = false;
+                node.otMouseEntered = false;
             }
 
             node = node.parentNode;

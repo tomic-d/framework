@@ -3,17 +3,17 @@
 ## File structure
 
 ```
-lib/                     Core Divhunt class + 17 mixins
-  load.js                Entry point — creates Divhunt instance, handles signals
+lib/                     Core OneType class + 17 mixins
+  load.js                Entry point — creates OneType instance, handles signals
   src/
-    divhunt.js           Main class (mixin-composed)
+    onetype.js           Main class (mixin-composed)
     mixins/              Addons, Emitter, Middleware, Data, DOM, Route,
                          Function, Generate, Binaries, Helper, Cookie, and more
     classes/
-      addon/             DivhuntAddon + mixins (fields, items, functions, find, render, store)
+      addon/             OneTypeAddon + mixins (fields, items, functions, find, render, store)
         classes/
-          item/          DivhuntAddonItem + mixins (get, set, crud, functions, store)
-          render/        DivhuntAddonRender + mixins (compile, dom, process, events)
+          item/          OneTypeAddonItem + mixins (get, set, crud, functions, store)
+          render/        OneTypeAddonRender + mixins (compile, dom, process, events)
 
 addons/                  Built-in addon library
   core/
@@ -23,7 +23,7 @@ addons/                  Built-in addon library
     commands/            Typed API command system
     queue/               Concurrency task queue
   render/
-    directives/          dh-if, dh-for, dh-click, dh-fetch, dh-show, dh-html, dh-text
+    directives/          ot-if, ot-for, ot-click, ot-fetch, ot-show, ot-html, ot-text
     pages/               SPA page router with CSS Grid layouts + async data loading
     elements/            40+ pre-built UI components
     assets/              Convention-based asset bundler (terser)
@@ -71,7 +71,7 @@ my-app/
 Entry point:
 
 ```js
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import commands from '#commands/load.js';
 import database from '#database/load.js';
 
@@ -108,16 +108,16 @@ The framework uses Node.js package imports (`#` prefix) defined in `package.json
 
 ### Mixin composition over inheritance
 
-Both `Divhunt` and `DivhuntAddon` use `Object.assign(Class.prototype, mixin)`. No class hierarchies, no diamond problems. Each mixin is a plain object of methods that gets merged onto the prototype:
+Both `OneType` and `OneTypeAddon` use `Object.assign(Class.prototype, mixin)`. No class hierarchies, no diamond problems. Each mixin is a plain object of methods that gets merged onto the prototype:
 
 ```js
 import AddonItemGet from './mixins/get.js';
 import AddonItemSet from './mixins/set.js';
 import AddonItemCrud from './mixins/crud.js';
 
-Object.assign(DivhuntAddonItem.prototype, AddonItemGet);
-Object.assign(DivhuntAddonItem.prototype, AddonItemSet);
-Object.assign(DivhuntAddonItem.prototype, AddonItemCrud);
+Object.assign(OneTypeAddonItem.prototype, AddonItemGet);
+Object.assign(OneTypeAddonItem.prototype, AddonItemSet);
+Object.assign(OneTypeAddonItem.prototype, AddonItemCrud);
 ```
 
 ### Middleware as the extension point

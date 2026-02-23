@@ -3,7 +3,7 @@ pages.Fn('item.render', function(item, parameters = {}, data = null)
 	const grid = item.Get('grid');
 	const element = document.createElement('div');
 
-	element.classList.add('dh-page');
+	element.classList.add('ot-page');
 	element.setAttribute('data-page', item.Get('id'));
 	element.style.cssText = [
 		`grid-template-areas: ${grid.template}`,
@@ -19,7 +19,7 @@ pages.Fn('item.render', function(item, parameters = {}, data = null)
 	{
 		const container = document.createElement('div');
 
-		container.classList.add('dh-page-area');
+		container.classList.add('ot-page-area');
 		container.setAttribute('data-area', name);
 		container.style.gridArea = name;
 

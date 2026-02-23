@@ -1,7 +1,7 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 import schedules from '../addon.js';
 
-divhunt.AddonReady('commands', (commands) =>
+onetype.AddonReady('commands', (commands) =>
 {
     commands.Item({
         id: 'schedules:one',

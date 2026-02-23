@@ -1,7 +1,7 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
-divhunt.MiddlewareIntercept('addon.items.find', (middleware) =>
+onetype.MiddlewareIntercept('addon.items.find', (middleware) =>
 {
     let { addon, table, connection } = middleware.value;
 

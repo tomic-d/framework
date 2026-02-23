@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import commands from '#commands/core/addon.js';
 
 commands.Fn('http.server', async function(port = 3000, callbacks = {})
@@ -34,7 +34,7 @@ commands.Fn('http.server', async function(port = 3000, callbacks = {})
 
             // Extract path parameters from URL
             const endpoint = command.Get('endpoint');
-            const params = divhunt.RouteParams(endpoint, decodeURIComponent(http.url.pathname));
+            const params = onetype.RouteParams(endpoint, decodeURIComponent(http.url.pathname));
 
             if (params)
             {

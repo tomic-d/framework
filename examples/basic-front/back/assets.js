@@ -1,5 +1,5 @@
-import assets from 'divhunt/assets';
-import 'divhunt/pages';
+import assets from 'onetype/assets';
+import 'onetype/pages';
 
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';

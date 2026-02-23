@@ -36,31 +36,31 @@ Every request creates an `http` object passed to `onRequest` and command callbac
 
 ## Cookies
 
-Built-in cookie support via `divhunt.Cookie*` methods. Works on both front (browser) and back (server) — detected via `divhunt.environment`.
+Built-in cookie support via `onetype.Cookie*` methods. Works on both front (browser) and back (server) — detected via `onetype.environment`.
 
 ### Back (server)
 
 ```js
 // Read from request
-const token = divhunt.CookieGet('token', this.http.request);
+const token = onetype.CookieGet('token', this.http.request);
 
 // Set on response (HttpOnly + Secure by default)
-divhunt.CookieSet('token', value, {
+onetype.CookieSet('token', value, {
     path: '/',
     maxAge: 86400,
     sameSite: 'Strict'
 }, this.http.response);
 
 // Clear
-divhunt.CookieClear('token', { path: '/' }, this.http.response);
+onetype.CookieClear('token', { path: '/' }, this.http.response);
 ```
 
 ### Front (browser)
 
 ```js
-divhunt.CookieSet('theme', 'dark', { path: '/', maxAge: 86400 });
-const theme = divhunt.CookieGet('theme');
-divhunt.CookieClear('theme');
+onetype.CookieSet('theme', 'dark', { path: '/', maxAge: 86400 });
+const theme = onetype.CookieGet('theme');
+onetype.CookieClear('theme');
 ```
 
 ### Options
@@ -127,12 +127,12 @@ gRPC messages are JSON strings. Binary data (Buffers) is automatically extracted
 
 ```js
 // Extract binaries from a data object
-const extracted = divhunt.BinariesExtract(data);
+const extracted = onetype.BinariesExtract(data);
 // extracted.data    → JSON-safe object (Buffers replaced with keys)
 // extracted.binaries → map of key → Buffer
 
 // Re-inject binaries
-const restored = divhunt.BinariesInject(extracted.data, extracted.binaries);
+const restored = onetype.BinariesInject(extracted.data, extracted.binaries);
 ```
 
 This enables transparent file transfers over the same gRPC stream without base64 encoding.
@@ -172,8 +172,8 @@ The framework handles process signals through middleware:
 
 ```js
 process.on('SIGINT', async () => {
-    await divhunt.Middleware('sigint');
-    await divhunt.Middleware('shutdown');
+    await onetype.Middleware('sigint');
+    await onetype.Middleware('shutdown');
     process.exit(0);
 });
 ```
@@ -181,7 +181,7 @@ process.on('SIGINT', async () => {
 Register shutdown handlers:
 
 ```js
-divhunt.MiddlewareAdd('shutdown', async () => {
+onetype.MiddlewareAdd('shutdown', async () => {
     // Close connections, flush data, etc.
 });
 ```

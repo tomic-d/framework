@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-input',
+    id: 'ot-input',
     icon: 'keyboard',
     name: 'Input',
     description: 'Handle input events for real-time form field updates. Captures value changes as user types.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-input': ['string']
+        'ot-input': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-input'].value;
+        const attribute = data['ot-input'].value;
 
-        node.dhInput = (event) =>
+        node.otInput = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if (typeof results === 'function')
             {
@@ -26,7 +26,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('input', function(event)
     {
@@ -34,9 +34,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhInput' in node)
+            if('otInput' in node)
             {
-                node.dhInput(event);
+                node.otInput(event);
                 break;
             }
 

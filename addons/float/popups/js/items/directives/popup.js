@@ -1,4 +1,4 @@
-divhunt.AddonReady('directives', function(directives)
+onetype.AddonReady('directives', function(directives)
 {
     document.addEventListener('click', function(event)
     {
@@ -6,10 +6,10 @@ divhunt.AddonReady('directives', function(directives)
 
         while(node && node !== document)
         {
-            if('dhPopup' in node)
+            if('otPopup' in node)
             {
-                const show = node.dhItem.Get('show');
-                node.dhItem.Set('show', !show);
+                const show = node.otItem.Get('show');
+                node.otItem.Set('show', !show);
                 break;
             }
 
@@ -18,18 +18,18 @@ divhunt.AddonReady('directives', function(directives)
     });
 
     directives.ItemAdd({
-        id: 'dh-popup',
+        id: 'ot-popup',
         icon: 'smart_popup',
         name: 'Popup',
         description: 'Shows popup on click.',
         trigger: 'node',
         order: 600,
         attributes: {
-            'dh-popup': ['string|object']
+            'ot-popup': ['string|object']
         },
         code: function(data, item, compile, node)
         {
-            const value = data['dh-popup'].value;
+            const value = data['ot-popup'].value;
 
             let config = {};
 
@@ -47,8 +47,8 @@ divhunt.AddonReady('directives', function(directives)
                 config.target = node;
             }
 
-            node.dhPopup = true;
-            node.dhItem = popups.Item(config);
+            node.otPopup = true;
+            node.otItem = popups.Item(config);
         }
     });
 });

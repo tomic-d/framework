@@ -7,9 +7,9 @@ Everything in the framework is an addon. An addon is a typed, persistent entity 
 An addon is defined in an `addon.js` file:
 
 ```js
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const users = divhunt.Addon('users', (addon) => {
+const users = onetype.Addon('users', (addon) => {
     addon.Table('users');
 
     addon.Field('id', ['string']);
@@ -160,7 +160,7 @@ The `callback` parameter on `Set(key, value, callback)` controls whether lifecyc
 Wait for an addon to be loaded before using it:
 
 ```js
-divhunt.AddonReady('commands', (commands) => {
+onetype.AddonReady('commands', (commands) => {
     commands.Item({
         id: 'users:create',
         method: 'POST',
@@ -177,7 +177,7 @@ Import order doesn't matter. `AddonReady` handles async dependency resolution.
 Load database data into memory on startup:
 
 ```js
-divhunt.AddonReady('organizations', async function(organizations) {
+onetype.AddonReady('organizations', async function(organizations) {
     await organizations.Find()?.limit(50000).many(true);
     console.log(`Loaded ${Object.keys(organizations.Items()).length} items`);
 
@@ -213,7 +213,7 @@ Useful for attaching runtime state to items without persisting it.
 Register a named schema for use in command `in`/`out` validation:
 
 ```js
-divhunt.DataSchema('user', {
+onetype.DataSchema('user', {
     id: ['string'],
     name: ['string', null, true],
     email: ['string', null, true],
@@ -253,7 +253,7 @@ addons/users/
 The `load.js` file imports everything and is the single entry point:
 
 ```js
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import users from './addon.js';
 
 import './items/commands/create.js';
@@ -269,7 +269,7 @@ import './item/catch/set.js';
 
 import './events/ready.back.js';
 
-divhunt.DataSchema('user', {
+onetype.DataSchema('user', {
     id: ['string'],
     name: ['string', null, true],
     email: ['string', null, true],

@@ -1,4 +1,4 @@
-divhunt.AddonReady('directives', function(directives)
+onetype.AddonReady('directives', function(directives)
 {
     document.addEventListener('mouseover', function(event)
     {
@@ -6,10 +6,10 @@ divhunt.AddonReady('directives', function(directives)
 
         while(node && node !== document)
         {
-            if('dhConfig' in node && !node.dhShow)
+            if('otConfig' in node && !node.otShow)
             {
-                node.dhShow = true;
-                node.dhItem.Set('show', true);
+                node.otShow = true;
+                node.otItem.Set('show', true);
                 break;
             }
 
@@ -23,12 +23,12 @@ divhunt.AddonReady('directives', function(directives)
 
         while(node && node !== document)
         {
-            if('dhConfig' in node && node.dhShow)
+            if('otConfig' in node && node.otShow)
             {
                 if(!node.contains(event.relatedTarget))
                 {
-                    node.dhShow = false;
-                    node.dhItem.Set('show', false);
+                    node.otShow = false;
+                    node.otItem.Set('show', false);
                 }
                 break;
             }
@@ -38,18 +38,18 @@ divhunt.AddonReady('directives', function(directives)
     });
 
     directives.ItemAdd({
-        id: 'dh-tooltip',
+        id: 'ot-tooltip',
         icon: 'info',
         name: 'Tooltip',
         description: 'Shows tooltip on hover.',
         trigger: 'node',
         order: 600,
         attributes: {
-            'dh-tooltip': ['string|object']
+            'ot-tooltip': ['string|object']
         },
         code: function(data, item, compile, node)
         {
-            const value = data['dh-tooltip'].value;
+            const value = data['ot-tooltip'].value;
             let config = {};
 
             if(typeof value === 'string')
@@ -64,11 +64,11 @@ divhunt.AddonReady('directives', function(directives)
             config.target = node;
             config.show = false;
 
-            const tooltips = divhunt.Addon('tooltips');
+            const tooltips = onetype.Addon('tooltips');
 
-            node.dhConfig = config;
-            node.dhShow = false;
-            node.dhItem = tooltips.Item(config);
+            node.otConfig = config;
+            node.otShow = false;
+            node.otItem = tooltips.Item(config);
         }
     });
 });

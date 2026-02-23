@@ -1,7 +1,7 @@
 pages.Item({
     id: 'home',
     route: '/',
-    title: 'dh-command test',
+    title: 'ot-command test',
     grid: {
         template: '"content"',
         columns: '1fr',
@@ -14,14 +14,14 @@ pages.Item({
                 1
                 {{ state.user }}
 
-                <h1>dh-command test</h1>
-                <dh-command-submit command="test" :api="true" bind="test" :data='{"name": "dejan"}'>
+                <h1>ot-command test</h1>
+                <ot-command-submit command="test" :api="true" bind="test" :data='{"name": "dejan"}'>
                     <input name="name" placeholder="Name"/>
                     <button type="submit">Send</button>
-                    <p dh-if="test.loading">Loading...</p>
-                    <p dh-if="test.error">Error: {{test.error}}</p>
-                    <div dh-if="test.response">dsas<dh-page route="/2"></dh-page></div>
-                </dh-command-submit>
+                    <p ot-if="test.loading">Loading...</p>
+                    <p ot-if="test.error">Error: {{test.error}}</p>
+                    <div ot-if="test.response">dsas<ot-page route="/2"></ot-page></div>
+                </ot-command-submit>
             `;
         }
     }
@@ -31,7 +31,7 @@ pages.Item({
 pages.Item({
     id: 'hom2e',
     route: '/2',
-    title: 'dh-command test',
+    title: 'ot-command test',
     grid: {
         template: '"content"',
         columns: '1fr',
@@ -42,14 +42,14 @@ pages.Item({
         {
             return `
                 2
-                <h1>dh-command test</h1>
-                <dh-command-submit command="test" :api="true" bind="test" :data='{"name": "dejan"}'>
+                <h1>ot-command test</h1>
+                <ot-command-submit command="test" :api="true" bind="test" :data='{"name": "dejan"}'>
                     <input name="name" placeholder="Name"/>
                     <button type="submit">Send</button>
-                    <p dh-if="test.loading">Loading...</p>
-                    <p dh-if="test.error">Error: {{test.error}}</p>
-                    <div dh-if="test.response">dsas<dh-page route="/"></dh-page></div>
-                </dh-command-submit>
+                    <p ot-if="test.loading">Loading...</p>
+                    <p ot-if="test.error">Error: {{test.error}}</p>
+                    <div ot-if="test.response">dsas<ot-page route="/"></ot-page></div>
+                </ot-command-submit>
             `;
         }
     }

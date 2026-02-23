@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-text',
+    id: 'ot-text',
     icon: 'text_fields',
     name: 'Text',
     description: 'Set element text content dynamically. Updates text nodes based on data expressions.',
@@ -18,7 +18,7 @@ directives.ItemAdd({
         {
             try
             {
-                const result = divhunt.Function(expression, compile.data, false);
+                const result = onetype.Function(expression, compile.data, false);
 
                 if (result == null)
                 {

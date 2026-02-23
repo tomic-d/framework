@@ -1,6 +1,6 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 
-const schedules = divhunt.Addon('schedules', (addon) =>
+const schedules = onetype.Addon('schedules', (addon) =>
 {
     addon.Table('schedules');
 

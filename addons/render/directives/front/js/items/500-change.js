@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-change',
+    id: 'ot-change',
     icon: 'sync_alt',
     name: 'Change',
     description: 'Handle change events when form fields lose focus. Triggers after value is committed with modifiers support.',
@@ -7,22 +7,22 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-change': ['string']
+        'ot-change': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-change'].value;
+        const attribute = data['ot-change'].value;
 
-        node.dhChange = (event) =>
+        node.otChange = (event) =>
         {
             // Auto-apply modifiers
-            if (data['dh-change'].modifiers && data['dh-change'].modifiers.length > 0)
+            if (data['ot-change'].modifiers && data['ot-change'].modifiers.length > 0)
             {
-                if (data['dh-change'].modifiers.includes('prevent')) event.preventDefault();
-                if (data['dh-change'].modifiers.includes('stop')) event.stopPropagation();
+                if (data['ot-change'].modifiers.includes('prevent')) event.preventDefault();
+                if (data['ot-change'].modifiers.includes('stop')) event.stopPropagation();
             }
 
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -33,7 +33,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('change', function(event)
     {
@@ -41,9 +41,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhChange' in node)
+            if('otChange' in node)
             {
-                node.dhChange(event);
+                node.otChange(event);
                 break;
             }
 

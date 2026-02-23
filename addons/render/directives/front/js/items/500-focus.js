@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-focus',
+    id: 'ot-focus',
     icon: 'center_focus_strong',
     name: 'Focus',
     description: 'Handle focus events when elements receive focus. Enables focus-based interactions and accessibility features.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-focus': ['string']
+        'ot-focus': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-focus'].value;
+        const attribute = data['ot-focus'].value;
 
-        node.dhFocus = (event) =>
+        node.otFocus = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -26,7 +26,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('focus', function(event)
     {
@@ -34,9 +34,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhFocus' in node)
+            if('otFocus' in node)
             {
-                node.dhFocus(event);
+                node.otFocus(event);
                 break;
             }
 

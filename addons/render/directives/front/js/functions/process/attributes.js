@@ -17,7 +17,7 @@ directives.Fn('process.attributes', function(node, compile)
 
         try
         {
-            const value = divhunt.Function(expression, compile.data, false);
+            const value = onetype.Function(expression, compile.data, false);
 
             if (value === null || value === undefined || value === false)
             {

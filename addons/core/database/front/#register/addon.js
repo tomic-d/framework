@@ -1,4 +1,4 @@
-const database = divhunt.Addon('database', (addon) =>
+const database = onetype.Addon('database', (addon) =>
 {
 
 });

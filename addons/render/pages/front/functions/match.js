@@ -21,7 +21,7 @@ pages.Fn('match', function(path)
 
 		for(const r of routes)
 		{
-			const result = divhunt.RouteMatch(r, path || divhunt.RouteCurrent());
+			const result = onetype.RouteMatch(r, path || onetype.RouteCurrent());
 
 			if(result.match)
 			{

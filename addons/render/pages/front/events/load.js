@@ -21,5 +21,5 @@ const match = () =>
 	});
 };
 
-divhunt.EmitOn('document.load', match);
-divhunt.EmitOn('history.popstate', match);
+onetype.EmitOn('document.load', match);
+onetype.EmitOn('history.popstate', match);

@@ -49,12 +49,12 @@ html.Fn('item.render', function(item)
         Object.entries(attrs).forEach(([key, value]) =>
         {
             parts.push(' ');
-            parts.push(this.divhunt.StringSanitize(key));
+            parts.push(this.onetype.StringSanitize(key));
             
             if (value !== null && value !== undefined && value !== '')
             {
                 parts.push('="');
-                parts.push(this.divhunt.StringSanitize(value));
+                parts.push(this.onetype.StringSanitize(value));
                 parts.push('"');
             }
         });

@@ -7,6 +7,6 @@ html.Item({
     priority: -70,
     attributes: {
         name: 'description',
-        content: 'Modern web application built with Divhunt'
+        content: 'Modern web application built with OneType'
     }
 });

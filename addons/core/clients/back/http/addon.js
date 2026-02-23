@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const clients = divhunt.Addon('clients', (addon) =>
+const clients = onetype.Addon('clients', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('instance', ['object']);

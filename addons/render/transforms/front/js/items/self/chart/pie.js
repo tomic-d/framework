@@ -1,7 +1,7 @@
-divhunt.AddonReady('transforms', (transforms) =>
+onetype.AddonReady('transforms', (transforms) =>
 {
     transforms.ItemAdd({
-        id: 'dh-chart-pie',
+        id: 'ot-chart-pie',
         icon: 'pie_chart',
         name: 'Pie Chart',
         description: 'Circular pie chart visualization. Show proportions and percentages in a circle.',
@@ -18,7 +18,7 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.setup = () =>
             {
                 node.innerHTML = '';
-                node.classList.add('dh-chart-pie');
+                node.classList.add('ot-chart-pie');
 
                 const canvas = document.createElement('canvas');
                 this.canvas = canvas;
@@ -30,11 +30,11 @@ divhunt.AddonReady('transforms', (transforms) =>
                 const style = getComputedStyle(document.body);
 
                 return [
-                    style.getPropertyValue('--dh-brand').trim(),
-                    style.getPropertyValue('--dh-blue').trim(),
-                    style.getPropertyValue('--dh-green').trim(),
-                    style.getPropertyValue('--dh-orange').trim(),
-                    style.getPropertyValue('--dh-red').trim()
+                    style.getPropertyValue('--ot-brand').trim(),
+                    style.getPropertyValue('--ot-blue').trim(),
+                    style.getPropertyValue('--ot-green').trim(),
+                    style.getPropertyValue('--ot-orange').trim(),
+                    style.getPropertyValue('--ot-red').trim()
                 ];
             };
 
@@ -60,7 +60,7 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.config = () =>
             {
                 const style = getComputedStyle(document.body);
-                const textColor = style.getPropertyValue('--dh-text-1').trim();
+                const textColor = style.getPropertyValue('--ot-text-1').trim();
 
                 return {
                     type: 'pie',
@@ -78,7 +78,7 @@ divhunt.AddonReady('transforms', (transforms) =>
                                     color: textColor,
                                     padding: 20,
                                     font: {
-                                        family: style.getPropertyValue('--dh-font-primary').trim(),
+                                        family: style.getPropertyValue('--ot-font-primary').trim(),
                                         size: 13
                                     }
                                 }

@@ -1,4 +1,4 @@
-const modals = divhunt.Addon('modals', (addon) =>
+const modals = onetype.Addon('modals', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('backdrop', ['number', 0.5]);

@@ -1,6 +1,6 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 
-const shortcuts = divhunt.Addon('shortcuts', (addon) =>
+const shortcuts = onetype.Addon('shortcuts', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('name', ['string', null]);

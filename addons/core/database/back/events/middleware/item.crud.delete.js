@@ -1,7 +1,7 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
-divhunt.MiddlewareIntercept('item.crud.delete', async (middleware) =>
+onetype.MiddlewareIntercept('item.crud.delete', async (middleware) =>
 {
     let { item, table, connection } = middleware.value;
 
