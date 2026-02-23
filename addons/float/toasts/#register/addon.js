@@ -1,4 +1,4 @@
-const toasts = divhunt.Addon('toasts', (addon) =>
+const toasts = onetype.Addon('toasts', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('type', ['string', 'info']);

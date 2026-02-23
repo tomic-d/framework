@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-if',
+    id: 'ot-if',
     icon: 'rule',
     name: 'If',
     description: 'Conditionally render elements based on expressions. Removes elements from DOM when condition is false.',
@@ -8,16 +8,16 @@ directives.ItemAdd({
     order: 100,
     strict: false,
     attributes: {
-        'dh-if': ['string']
+        'ot-if': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const expression = data['dh-if'].value;
-        const result = divhunt.Function(expression, compile.data, false);
+        const expression = data['ot-if'].value;
+        const result = onetype.Function(expression, compile.data, false);
 
         if (!result)
         {
-            const placeholder = document.createComment('dh-if:' + identifier);
+            const placeholder = document.createComment('ot-if:' + identifier);
             node.replaceWith(placeholder);
             return false;
         }

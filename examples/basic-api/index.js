@@ -1,5 +1,5 @@
-import divhunt from 'divhunt';
-import commands from 'divhunt/commands';
+import onetype from 'onetype';
+import commands from 'onetype/commands';
 
 import './addons/tasks/load.js';
 

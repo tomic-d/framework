@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-slot',
+    id: 'ot-slot',
     icon: 'input',
     name: 'Slot',
     description: 'Insert slot content. Supports DOM elements and render instances.',

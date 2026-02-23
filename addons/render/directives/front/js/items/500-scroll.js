@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-scroll',
+    id: 'ot-scroll',
     icon: 'unfold_more',
     name: 'Scroll',
     description: 'Handle scroll events on elements or window. Track scroll position for infinite loading and animations.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-scroll': ['string']
+        'ot-scroll': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-scroll'].value;
+        const attribute = data['ot-scroll'].value;
 
-        node.dhScroll = (event) =>
+        node.otScroll = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -25,7 +25,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('scroll', function(event)
     {
@@ -33,9 +33,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhScroll' in node)
+            if('otScroll' in node)
             {
-                node.dhScroll(event);
+                node.otScroll(event);
                 break;
             }
 

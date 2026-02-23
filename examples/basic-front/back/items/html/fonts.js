@@ -1,4 +1,4 @@
-import html from 'divhunt/html';
+import html from 'onetype/html';
 
 html.Item({
     id: 'fonts',

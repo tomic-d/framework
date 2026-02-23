@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-mouse-leave',
+    id: 'ot-mouse-leave',
     icon: 'logout',
     name: 'Mouse Leave',
     description: 'Handle mouse leave events. Triggers when cursor exits element boundaries.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-mouse-leave': ['string']
+        'ot-mouse-leave': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-mouse-leave'].value;
+        const attribute = data['ot-mouse-leave'].value;
 
-        node.dhMouseLeave = (event) =>
+        node.otMouseLeave = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -25,7 +25,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('mouseout', function(event)
     {
@@ -33,10 +33,10 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhMouseLeave' in node && !node.dhMouseLeft)
+            if('otMouseLeave' in node && !node.otMouseLeft)
             {
-                node.dhMouseLeft = true;
-                node.dhMouseLeave(event);
+                node.otMouseLeft = true;
+                node.otMouseLeave(event);
                 break;
             }
 
@@ -50,9 +50,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhMouseLeave' in node && node.dhMouseLeft)
+            if('otMouseLeave' in node && node.otMouseLeft)
             {
-                node.dhMouseLeft = false;
+                node.otMouseLeft = false;
             }
 
             node = node.parentNode;

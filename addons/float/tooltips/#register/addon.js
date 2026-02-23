@@ -1,4 +1,4 @@
-const tooltips = divhunt.Addon('tooltips', (addon) =>
+const tooltips = onetype.Addon('tooltips', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('target', ['object', null]);

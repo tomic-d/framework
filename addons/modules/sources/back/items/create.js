@@ -1,7 +1,7 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 import sources from '../addon.js';
 
-divhunt.AddonReady('commands', (commands) =>
+onetype.AddonReady('commands', (commands) =>
 {
     commands.Item({
         id: 'sources:create',
@@ -27,7 +27,7 @@ divhunt.AddonReady('commands', (commands) =>
         },
         callback: async function(props)
         {
-            const id = props.id || divhunt.GenerateTID();
+            const id = props.id || onetype.GenerateTID();
 
             if(sources.ItemGet(id))
             {

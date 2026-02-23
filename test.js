@@ -25,7 +25,7 @@ commands.Item({
     }
 });
 
-console.log($dh.var('test'));
+console.log($ot.var('test'));
 
 commands.Item({
     id: 'test',

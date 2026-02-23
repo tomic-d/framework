@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const html = divhunt.Addon('html', (addon) =>
+const html = onetype.Addon('html', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('tag', ['string', 'div']);

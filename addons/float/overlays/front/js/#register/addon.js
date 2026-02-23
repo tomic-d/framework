@@ -1,4 +1,4 @@
-const overlays = divhunt.Addon('overlays', (addon) =>
+const overlays = onetype.Addon('overlays', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('render', ['function', null]);

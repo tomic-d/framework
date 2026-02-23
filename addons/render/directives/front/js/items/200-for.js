@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-for',
+    id: 'ot-for',
     icon: 'repeat',
     name: 'For',
     description: 'Loop through arrays and objects to render multiple elements. Supports item and index variables for complex iterations.',
@@ -7,16 +7,16 @@ directives.ItemAdd({
     trigger: 'node',
     order: 200,
     attributes: {
-        'dh-for': ['string']
+        'ot-for': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const expression = data['dh-for'].value;
+        const expression = data['ot-for'].value;
         const match = expression.match(/(\w+)(?:\s*,\s*(\w+))?\s+in\s+(.+)/);
 
         if (!match)
         {
-            console.error(`Invalid dh-for syntax: ${expression}. Expected format: "item in items" or "item, index in items"`);
+            console.error(`Invalid ot-for syntax: ${expression}. Expected format: "item in items" or "item, index in items"`);
             return;
         }
 
@@ -29,7 +29,7 @@ directives.ItemAdd({
 
         try
         {
-            let items = divhunt.Function(forExpression, compile.data, false);
+            let items = onetype.Function(forExpression, compile.data, false);
 
             if (!Array.isArray(items) && items && typeof items === 'object')
             {
@@ -44,7 +44,7 @@ directives.ItemAdd({
             }
             else if (!Array.isArray(items))
             {
-                throw(`dh-for expects an array or iterable, got: ${typeof items}`);
+                throw(`ot-for expects an array or iterable, got: ${typeof items}`);
             }
 
             const html = node.outerHTML;
@@ -57,7 +57,7 @@ directives.ItemAdd({
                 loopData[forIndex] = index;
 
                 const compiled = item.Compile(html, loopData);
-                const key = divhunt.GenerateHash(index + ':' + (typeof value === 'object' ? JSON.stringify(value) : String(value)));
+                const key = onetype.GenerateHash(index + ':' + (typeof value === 'object' ? JSON.stringify(value) : String(value)));
 
                 while(compiled.element.firstChild)
                 {
@@ -65,7 +65,7 @@ directives.ItemAdd({
 
                     if(child.nodeType === Node.ELEMENT_NODE)
                     {
-                        child.setAttribute('dh-key', key);
+                        child.setAttribute('ot-key', key);
                     }
 
                     fragment.appendChild(child);
@@ -77,7 +77,7 @@ directives.ItemAdd({
         }
         catch (error)
         {
-            console.error(`Error in dh-for directive for "${expression}":`, error);
+            console.error(`Error in ot-for directive for "${expression}":`, error);
         }
         finally
         {

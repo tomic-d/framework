@@ -1,12 +1,12 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 import actions from '../addon.js';
 
 actions.Fn('run', function(id, props = {})
 {
     this.resolve = null;
     this.item = null;
-    this.vars = divhunt.AddonGet('variables');
-    this.commands = divhunt.AddonGet('commands');
+    this.vars = onetype.AddonGet('variables');
+    this.commands = onetype.AddonGet('commands');
 
     this.methods.init = async (resolve) =>
     {
@@ -53,7 +53,7 @@ actions.Fn('run', function(id, props = {})
 
         try
         {
-            return divhunt.DataDefine(data, schema);
+            return onetype.DataDefine(data, schema);
         }
         catch(error)
         {

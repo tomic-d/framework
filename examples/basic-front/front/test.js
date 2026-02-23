@@ -1,4 +1,4 @@
-const commands = divhunt.Addon('commands');
+const commands = onetype.Addon('commands');
 
 (async () =>
 {

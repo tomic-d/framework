@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import clients from '#clients/addon.js';
 
 clients.Fn('item.http.create', function(item)
@@ -27,7 +27,7 @@ clients.Fn('item.http.create', function(item)
             item.Get('onConnect')(client);
         }
         
-        divhunt.Emit('clients.http.connect', client);
+        onetype.Emit('clients.http.connect', client);
     };
     
     this.methods.request = async (path, method = 'GET', data = {}, requestTimeout = timeout) =>
@@ -58,8 +58,8 @@ clients.Fn('item.http.create', function(item)
 
         try
         {
-            divhunt.Emit('clients.http.request.before', http);
-            await divhunt.Middleware('clients.http.request.before', http);
+            onetype.Emit('clients.http.request.before', http);
+            await onetype.Middleware('clients.http.request.before', http);
             
             if(item.Get('onRequest'))
             {
@@ -99,8 +99,8 @@ clients.Fn('item.http.create', function(item)
                 http.response.data = await response.text();
             }
             
-            divhunt.Emit('clients.http.request.after', http);
-            await divhunt.Middleware('clients.http.request.after', http);
+            onetype.Emit('clients.http.request.after', http);
+            await onetype.Middleware('clients.http.request.after', http);
             
             if(item.Get('onResponse'))
             {

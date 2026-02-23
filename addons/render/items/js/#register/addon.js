@@ -1,4 +1,4 @@
-const items = divhunt.Addon('items', (addon) =>
+const items = onetype.Addon('items', (addon) =>
 {
     addon.Field('id', ['string|number']);
 

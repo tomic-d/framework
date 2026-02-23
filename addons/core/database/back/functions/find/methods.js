@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
 database.Fn('find.methods', function(query, context = null, groupId = 'default')
@@ -120,7 +120,7 @@ database.Fn('find.methods', function(query, context = null, groupId = 'default')
                 throw new Error(`Group type must be 'AND' or 'OR', received: ${type}`);
             }
             
-            const TID = divhunt.GenerateTID();
+            const TID = onetype.GenerateTID();
             
             if (!query.filters)
             {
@@ -151,7 +151,7 @@ database.Fn('find.methods', function(query, context = null, groupId = 'default')
                 throw new Error(`Field '${field}' not found in addon`);
             }
 
-            const parsed = divhunt.DataParseConfig(config.define);
+            const parsed = onetype.DataParseConfig(config.define);
             const many = parsed.type.includes('array');
 
             query.joins.push({ addon, field, output: output || field, many });

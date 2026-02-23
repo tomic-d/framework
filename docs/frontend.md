@@ -88,7 +88,7 @@ pages.ItemAdd({
             return `
                 <div>
                     <h1>{{ offer.name }}</h1>
-                    <span dh-if="offer.stars">{{ offer.stars }} stars</span>
+                    <span ot-if="offer.stars">{{ offer.stars }} stars</span>
                 </div>
             `;
         }
@@ -130,8 +130,8 @@ areas: {
             <div>
                 <span>{{ total }} results</span>
 
-                <div dh-if="items.length > 0" class="grid">
-                    <a dh-for="offer in items" :href="'/offer/' + offer.id">
+                <div ot-if="items.length > 0" class="grid">
+                    <a ot-for="offer in items" :href="'/offer/' + offer.id">
                         <c-offer-card :offer="offer"></c-offer-card>
                     </a>
                 </div>
@@ -169,7 +169,7 @@ components.ItemAdd({
                 <div class="content">
                     <slot name="top"></slot>
                     <h1>{{ title }}</h1>
-                    <p dh-if="subtitle">{{ subtitle }}</p>
+                    <p ot-if="subtitle">{{ subtitle }}</p>
                 </div>
             </section>
         `;
@@ -224,9 +224,9 @@ components.ItemAdd({
 
         return `
             <div class="pagination">
-                <button dh-click="() => goToPage(page - 1)" :disabled="page === 1">Prev</button>
+                <button ot-click="() => goToPage(page - 1)" :disabled="page === 1">Prev</button>
                 <span>{{ page }} / {{ pages }}</span>
-                <button dh-click="() => goToPage(page + 1)" :disabled="page === pages">Next</button>
+                <button ot-click="() => goToPage(page + 1)" :disabled="page === pages">Next</button>
             </div>
         `;
     }
@@ -240,19 +240,19 @@ Vue-like syntax, processed during compile with priority ordering.
 ### Conditional rendering
 
 ```html
-<div dh-if="items.length > 0">Has items</div>
-<div dh-if="!loading">Content loaded</div>
+<div ot-if="items.length > 0">Has items</div>
+<div ot-if="!loading">Content loaded</div>
 ```
 
 ### List rendering
 
 ```html
-<a dh-for="offer in items" :href="'/offer/' + offer.id">
+<a ot-for="offer in items" :href="'/offer/' + offer.id">
     {{ offer.name }}
 </a>
 
 <!-- With index -->
-<div dh-for="item, index in items">
+<div ot-for="item, index in items">
     {{ index }}: {{ item.name }}
 </div>
 ```
@@ -260,8 +260,8 @@ Vue-like syntax, processed during compile with priority ordering.
 ### Event handlers
 
 ```html
-<button dh-click="submit">Send</button>
-<button dh-click="() => goToPage(3)">Page 3</button>
+<button ot-click="submit">Send</button>
+<button ot-click="() => goToPage(3)">Page 3</button>
 <input :_input="(e) => form.name = e.target.value">
 ```
 
@@ -285,7 +285,7 @@ Vue-like syntax, processed during compile with priority ordering.
 
 ### All directives
 
-`dh-if`, `dh-show`, `dh-for`, `dh-click`, `dh-text`, `dh-html`, `dh-fetch`, `dh-render`, `dh-form`, and all DOM event handlers.
+`ot-if`, `ot-show`, `ot-for`, `ot-click`, `ot-text`, `ot-html`, `ot-fetch`, `ot-render`, `ot-form`, and all DOM event handlers.
 
 ## Reactivity
 

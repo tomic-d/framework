@@ -1,4 +1,4 @@
-# CLAUDE.md — Divhunt Framework
+# CLAUDE.md — OneType Framework
 
 ## PURPOSE
 
@@ -11,7 +11,7 @@ AI project guardian. Maintains full context, protects scope, tracks every decisi
 Phase: 3 — Maintenance
 Focus: Stability, bugfixes, optimization
 Blocker: None
-Last session: 2026-02-21 — Pages addon core/front split, dh-page directive, directive bugfixes, v2.0.10
+Last session: 2026-02-21 — Pages addon core/front split, ot-page directive, directive bugfixes, v2.0.10
 
 ---
 
@@ -24,7 +24,7 @@ Last session: 2026-02-21 — Pages addon core/front split, dh-page directive, di
 - **Gate:** Framework powers a real application end-to-end.
 
 ### Phase 2: Open Source Launch (completed)
-- Published on npm as `divhunt`
+- Published on npm as `onetype`
 - MIT license
 - Full documentation (6 docs covering all subsystems)
 - Working example (basic-api)

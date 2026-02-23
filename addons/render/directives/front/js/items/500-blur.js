@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-blur',
+    id: 'ot-blur',
     icon: 'visibility_off',
     name: 'Blur',
     description: 'Handle blur events when elements lose focus. Useful for form validation and input state management.',
@@ -7,15 +7,15 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-blur': ['string']
+        'ot-blur': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-blur'].value;
+        const attribute = data['ot-blur'].value;
 
-        node.dhBlur = (event) =>
+        node.otBlur = (event) =>
         {
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -26,7 +26,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('blur', function(event)
     {
@@ -34,9 +34,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhBlur' in node)
+            if('otBlur' in node)
             {
-                node.dhBlur(event);
+                node.otBlur(event);
                 break;
             }
 

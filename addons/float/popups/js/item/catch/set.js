@@ -5,7 +5,7 @@ popups.ItemOn('set', function(item, key, value)
         return;
     }
 
-    const overlays = divhunt.Addon('overlays');
+    const overlays = onetype.Addon('overlays');
 
     if(value)
     {

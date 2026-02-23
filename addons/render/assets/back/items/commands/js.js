@@ -1,7 +1,7 @@
-import divhunt from "#framework/load.js";
+import onetype from "#framework/load.js";
 import assets from "#assets/addon.js";
 
-divhunt.AddonReady('commands', (commands) => 
+onetype.AddonReady('commands', (commands) => 
 {
     commands.Item({
         id: 'assets:js',

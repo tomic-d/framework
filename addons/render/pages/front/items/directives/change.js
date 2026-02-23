@@ -1,7 +1,7 @@
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
 	directives.ItemAdd({
-		id: 'dh-page',
+		id: 'ot-page',
 		icon: 'file',
 		name: 'Page',
 		description: 'Navigate to a page on render',
@@ -9,7 +9,7 @@ divhunt.AddonReady('directives', function()
 		trigger: 'node',
 		order: 666,
 		strict: false,
-		tag: 'dh-page',
+		tag: 'ot-page',
 		attributes: {
 			'route': ['string', null, true],
 			'parameters': ['object', {}],

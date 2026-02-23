@@ -1,7 +1,7 @@
-divhunt.AddonReady('transforms', (transforms) =>
+onetype.AddonReady('transforms', (transforms) =>
 {
     transforms.ItemAdd({
-        id: 'dh-chart-bar',
+        id: 'ot-chart-bar',
         icon: 'bar_chart',
         name: 'Bar Chart',
         description: 'Vertical or horizontal bar charts. Compare values across categories with bars.',
@@ -20,7 +20,7 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.setup = () =>
             {
                 node.innerHTML = '';
-                node.classList.add('dh-chart-bar');
+                node.classList.add('ot-chart-bar');
 
                 const canvas = document.createElement('canvas');
                 this.canvas = canvas;
@@ -32,11 +32,11 @@ divhunt.AddonReady('transforms', (transforms) =>
                 const style = getComputedStyle(document.body);
 
                 return {
-                    brand: style.getPropertyValue('--dh-brand').trim(),
-                    blue: style.getPropertyValue('--dh-blue').trim(),
-                    green: style.getPropertyValue('--dh-green').trim(),
-                    orange: style.getPropertyValue('--dh-orange').trim(),
-                    red: style.getPropertyValue('--dh-red').trim()
+                    brand: style.getPropertyValue('--ot-brand').trim(),
+                    blue: style.getPropertyValue('--ot-blue').trim(),
+                    green: style.getPropertyValue('--ot-green').trim(),
+                    orange: style.getPropertyValue('--ot-orange').trim(),
+                    red: style.getPropertyValue('--ot-red').trim()
                 };
             };
 
@@ -73,8 +73,8 @@ divhunt.AddonReady('transforms', (transforms) =>
             this.config = () =>
             {
                 const style = getComputedStyle(document.body);
-                const textColor = style.getPropertyValue('--dh-text-1').trim();
-                const gridColor = style.getPropertyValue('--dh-bg-3-border').trim();
+                const textColor = style.getPropertyValue('--ot-text-1').trim();
+                const gridColor = style.getPropertyValue('--ot-bg-3-border').trim();
                 const stacked = data['stacked'].value;
                 const horizontal = data['horizontal'].value;
 
@@ -93,7 +93,7 @@ divhunt.AddonReady('transforms', (transforms) =>
                                 labels: {
                                     color: textColor,
                                     font: {
-                                        family: style.getPropertyValue('--dh-font-primary').trim()
+                                        family: style.getPropertyValue('--ot-font-primary').trim()
                                     }
                                 }
                             }

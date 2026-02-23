@@ -2,6 +2,6 @@
     "name": "basic-api-example",
     "type": "module",
     "dependencies": {
-        "divhunt": "^2.0.0"
+        "onetype": "^2.0.0"
     }
 }

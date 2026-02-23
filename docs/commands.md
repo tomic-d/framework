@@ -5,10 +5,10 @@ Every API endpoint is a typed, named operation with validated input and output. 
 ## Defining a command
 
 ```js
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import users from './addon.js';
 
-divhunt.AddonReady('commands', (commands) => {
+onetype.AddonReady('commands', (commands) => {
     commands.Item({
         id: 'users:create',
         method: 'POST',

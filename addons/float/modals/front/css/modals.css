@@ -1,4 +1,4 @@
-.dh-modal
+.ot-modal
 {
     position: fixed;
     top: 0;
@@ -10,7 +10,7 @@
     justify-content: center;
 }
 
-.dh-modal > .backdrop
+.ot-modal > .backdrop
 {
     position: absolute;
     top: 0;
@@ -19,7 +19,7 @@
     bottom: 0;
 }
 
-.dh-modal > .content
+.ot-modal > .content
 {
     position: relative;
     z-index: 1;

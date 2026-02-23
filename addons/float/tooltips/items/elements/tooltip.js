@@ -1,4 +1,4 @@
-divhunt.AddonReady('elements', (elements) =>
+onetype.AddonReady('elements', (elements) =>
 {
     elements.ItemAdd({
         id: 'tooltip',
@@ -29,11 +29,11 @@ divhunt.AddonReady('elements', (elements) =>
         {
             return `
                 <div class="holder" :variant="variant">
-                    <i dh-if="icon" class="icon">{{ icon }}</i>
+                    <i ot-if="icon" class="icon">{{ icon }}</i>
 
                     <div class="content">
-                        <div dh-if="title" class="title">{{ title }}</div>
-                        <div dh-if="text" class="text">{{ text }}</div>
+                        <div ot-if="title" class="title">{{ title }}</div>
+                        <div ot-if="text" class="text">{{ text }}</div>
                     </div>
                 </div>
             `;

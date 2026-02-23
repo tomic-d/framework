@@ -1,4 +1,4 @@
-divhunt.AddonReady('transforms', (transforms) =>
+onetype.AddonReady('transforms', (transforms) =>
 {
     transforms.ItemAdd({
         id: 'sparkline',
@@ -51,7 +51,7 @@ divhunt.AddonReady('transforms', (transforms) =>
                 let lineColor = data['color'].value;
                 if (!lineColor)
                 {
-                    lineColor = style.getPropertyValue('--dh-brand').trim() || '#3b82f6';
+                    lineColor = style.getPropertyValue('--ot-brand').trim() || '#3b82f6';
                 }
 
                 // Extract RGB values for opacity

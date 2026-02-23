@@ -1,5 +1,5 @@
-import commands from 'divhunt/commands';
-import html from 'divhunt/html';
+import commands from 'onetype/commands';
+import html from 'onetype/html';
 
 commands.Item({
     id: 'html',

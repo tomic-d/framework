@@ -1,4 +1,4 @@
-# Divhunt Framework
+# OneType Framework
 
 Full-stack isomorphic JavaScript framework built from scratch. No React, no Express, no Vue — original architecture from zero.
 
@@ -9,12 +9,12 @@ Built by [Dejan Tomic](https://github.com/tomic-d). Powers multiple production a
 ## Quick Look
 
 ```js
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import database from '#database/load.js';
 import commands from '#commands/load.js';
 
 // Define an addon — typed, persistent, full CRUD
-const users = divhunt.Addon('users', (addon) => {
+const users = onetype.Addon('users', (addon) => {
     addon.Table('users');
     addon.Field('id', ['string']);
     addon.Field('name', ['string', null, true]);
@@ -37,7 +37,7 @@ commands.Fn('http.server', 3000, {
 });
 
 // Define an API endpoint with typed input/output
-divhunt.AddonReady('commands', (commands) => {
+onetype.AddonReady('commands', (commands) => {
     commands.Item({
         id: 'users:get:many',
         method: 'GET',
@@ -72,14 +72,14 @@ divhunt.AddonReady('commands', (commands) => {
 ## Install
 
 ```bash
-npm install divhunt
+npm install onetype
 ```
 
 Requires Node.js >= 18.
 
 ## Origin
 
-Originally built as the core of [Divhunt](https://divhunt.com), a cloud SaaS platform. The framework (v1) powered the entire platform — backend and frontend — serving thousands of users for 4+ years. This is v2: rebuilt with Proxy-based reactivity, improved addon architecture, gRPC transport, and a complete render system.
+Originally built as the core of [OneType](https://onetype.ai), a cloud SaaS platform. The framework (v1) powered the entire platform — backend and frontend — serving thousands of users for 4+ years. This is v2: rebuilt with Proxy-based reactivity, improved addon architecture, gRPC transport, and a complete render system.
 
 ## License
 

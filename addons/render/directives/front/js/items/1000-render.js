@@ -1,5 +1,5 @@
 directives.ItemAdd({
-	id: 'dh-render',
+	id: 'ot-render',
 	icon: 'code',
 	name: 'Render',
 	description: 'Render components or elements into the DOM. Use <render name="property"> to inject render instances from the parent context.',

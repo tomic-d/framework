@@ -1,6 +1,6 @@
-import divhunt from 'divhunt';
+import onetype from 'onetype';
 
-const tasks = divhunt.Addon('tasks', (addon) =>
+const tasks = onetype.Addon('tasks', (addon) =>
 {
     addon.Field('id', ['number']);
     addon.Field('title', ['string', null, true]);

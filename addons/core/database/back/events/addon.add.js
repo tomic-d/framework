@@ -1,12 +1,12 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-divhunt.EmitOn('addon.add', (addon) =>
+onetype.EmitOn('addon.add', (addon) =>
 {
     addon.expose = null;
 
     addon.Expose = function(config)
     {
-        config = divhunt.DataDefine(config, {
+        config = onetype.DataDefine(config, {
             filter: ['array', []],
             sort: ['array', []],
             select: ['array', []],

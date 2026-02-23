@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-submit',
+    id: 'ot-submit',
     icon: 'send',
     name: 'Submit',
     description: 'Handle form submission events. Prevents default behavior and executes custom submit logic.',
@@ -7,13 +7,13 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-submit': ['string']
+        'ot-submit': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-submit'];
+        const attribute = data['ot-submit'];
 
-        node.dhSubmit = (event) =>
+        node.otSubmit = (event) =>
         {
             // Auto-apply modifiers
             if (data.modifiers)
@@ -22,7 +22,7 @@ directives.ItemAdd({
                 if (data.modifiers.stop) event.stopPropagation();
             }
 
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -32,7 +32,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('submit', function(event)
     {
@@ -40,9 +40,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhSubmit' in node)
+            if('otSubmit' in node)
             {
-                node.dhSubmit(event);
+                node.otSubmit(event);
                 break;
             }
 

@@ -1,14 +1,14 @@
 import directives from '#directives/addon.js';
 
 directives.ItemAdd({
-	id: 'dh-fetch',
+	id: 'ot-fetch',
 	icon: 'cloud_download',
 	name: 'Fetch',
 	description: 'Fetch data from URL or endpoint and bind to component data',
 	category: 'data',
 	trigger: 'node',
 	order: 650,
-	tag: 'dh-fetch',
+	tag: 'ot-fetch',
 	attributes: {
 		'get': ['string'],
 		'endpoint': ['string'],
@@ -20,7 +20,7 @@ directives.ItemAdd({
 	},
 	code: function(data, item, compile, node, identifier)
 	{
-		const divhunt = item.GetDivhunt();
+		const onetype = item.GetOneType();
 		const config = {};
 		const methods = {};
 
@@ -65,7 +65,7 @@ directives.ItemAdd({
 			}
 			catch(e)
 			{
-				return divhunt.Function(paramsAttr, compile.data, false) || {};
+				return onetype.Function(paramsAttr, compile.data, false) || {};
 			}
 		};
 
@@ -139,7 +139,7 @@ directives.ItemAdd({
 
 			if(config.onSuccess)
 			{
-				const callback = divhunt.Function(config.onSuccess, compile.data, false);
+				const callback = onetype.Function(config.onSuccess, compile.data, false);
 
 				if(typeof callback === 'function')
 				{
@@ -161,7 +161,7 @@ directives.ItemAdd({
 
 			if(config.onError)
 			{
-				const callback = divhunt.Function(config.onError, compile.data, false);
+				const callback = onetype.Function(config.onError, compile.data, false);
 
 				if(typeof callback === 'function')
 				{

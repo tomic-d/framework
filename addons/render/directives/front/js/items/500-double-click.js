@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-double-click',
+    id: 'ot-double-click',
     icon: 'ads_click',
     name: 'Double Click',
     description: 'Handle double-click events on elements. Enables advanced click interactions.',
@@ -7,22 +7,22 @@ directives.ItemAdd({
     trigger: 'node',
     order: 500,
     attributes: {
-        'dh-double-click': ['string']
+        'ot-double-click': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
-        const attribute = data['dh-double-click'].value;
+        const attribute = data['ot-double-click'].value;
 
-        node.dhDoubleClick = (event) =>
+        node.otDoubleClick = (event) =>
         {
             // Auto-apply modifiers
-            if (data['dh-double-click'].modifiers && data['dh-double-click'].modifiers.length > 0)
+            if (data['ot-double-click'].modifiers && data['ot-double-click'].modifiers.length > 0)
             {
-                if (data['dh-double-click'].modifiers.includes('prevent')) event.preventDefault();
-                if (data['dh-double-click'].modifiers.includes('stop')) event.stopPropagation();
+                if (data['ot-double-click'].modifiers.includes('prevent')) event.preventDefault();
+                if (data['ot-double-click'].modifiers.includes('stop')) event.stopPropagation();
             }
 
-            const results = divhunt.Function(attribute, compile.data, false);
+            const results = onetype.Function(attribute, compile.data, false);
 
             if(typeof results === 'function')
             {
@@ -32,7 +32,7 @@ directives.ItemAdd({
     }
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
     document.addEventListener('dblclick', function(event)
     {
@@ -40,9 +40,9 @@ divhunt.AddonReady('directives', function()
 
         while(node && node !== document)
         {
-            if('dhDoubleClick' in node)
+            if('otDoubleClick' in node)
             {
-                node.dhDoubleClick(event);
+                node.otDoubleClick(event);
                 break;
             }
 

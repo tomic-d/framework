@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const assets = divhunt.Addon('assets', (addon) =>
+const assets = onetype.Addon('assets', (addon) =>
 {
     addon.Field('id', ['number']);
     addon.Field('order', ['number']);

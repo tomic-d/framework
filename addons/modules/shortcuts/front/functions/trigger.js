@@ -1,13 +1,13 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 import shortcuts from '../addon.js';
 
 shortcuts.Fn('trigger', function(id, props = {})
 {
     this.resolve = null;
     this.item = null;
-    this.events = divhunt.AddonGet('events');
-    this.commands = divhunt.AddonGet('commands');
-    this.actions = divhunt.AddonGet('actions');
+    this.events = onetype.AddonGet('events');
+    this.commands = onetype.AddonGet('commands');
+    this.actions = onetype.AddonGet('actions');
 
     this.methods.init = async (resolve) =>
     {

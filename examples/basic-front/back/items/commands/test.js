@@ -1,4 +1,4 @@
-import commands from 'divhunt/commands';
+import commands from 'onetype/commands';
 
 commands.Item({
     id: 'test',

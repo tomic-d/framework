@@ -3,7 +3,7 @@ import * as protoLoader from '@grpc/proto-loader'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import clients from '#clients/addon.js';
 
 clients.Fn('item.grpc.create', function(item)
@@ -57,7 +57,7 @@ clients.Fn('item.grpc.create', function(item)
             item.Get('onConnect')(wrapper);
         }
         
-        divhunt.Emit('clients.grpc.connect', wrapper);
+        onetype.Emit('clients.grpc.connect', wrapper);
     };
     
     this.methods.execute = async (functionName, data = {}, requestTimeout = timeout) =>
@@ -86,8 +86,8 @@ clients.Fn('item.grpc.create', function(item)
         
         try
         {
-            divhunt.Emit('clients.grpc.request.before', grpc);
-            await divhunt.Middleware('clients.grpc.request.before', grpc);
+            onetype.Emit('clients.grpc.request.before', grpc);
+            await onetype.Middleware('clients.grpc.request.before', grpc);
             
             if(item.Get('onRequest'))
             {
@@ -131,8 +131,8 @@ clients.Fn('item.grpc.create', function(item)
             
             grpc.response = response;
             
-            divhunt.Emit('clients.grpc.request.after', grpc);
-            await divhunt.Middleware('clients.grpc.request.after', grpc);
+            onetype.Emit('clients.grpc.request.after', grpc);
+            await onetype.Middleware('clients.grpc.request.after', grpc);
             
             if(item.Get('onResponse'))
             {

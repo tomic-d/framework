@@ -1,4 +1,4 @@
-divhunt.AddonReady('elements', (elements) =>
+onetype.AddonReady('elements', (elements) =>
 {
     elements.ItemAdd({
         id: 'toast',
@@ -44,14 +44,14 @@ divhunt.AddonReady('elements', (elements) =>
 
             return `
                 <div class="holder" :variant="type">
-                    <i dh-if="icon" class="icon">{{ icon }}</i>
+                    <i ot-if="icon" class="icon">{{ icon }}</i>
 
                     <div class="content">
-                        <div dh-if="title" class="title">{{ title }}</div>
-                        <div dh-if="message" class="message">{{ message }}</div>
+                        <div ot-if="title" class="title">{{ title }}</div>
+                        <div ot-if="message" class="message">{{ message }}</div>
                     </div>
 
-                    <button dh-if="closeable" class="close" dh-click="handleClose">
+                    <button ot-if="closeable" class="close" ot-click="handleClose">
                         <i class="icon">close</i>
                     </button>
                 </div>

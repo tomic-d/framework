@@ -1,14 +1,14 @@
 import directives from '#directives/addon.js';
 
 directives.ItemAdd({
-	id: 'dh-form',
+	id: 'ot-form',
 	icon: 'send',
 	name: 'Form',
 	description: 'Submit form data to endpoint and bind response to component data',
 	category: 'data',
 	trigger: 'node',
 	order: 660,
-	tag: 'dh-form',
+	tag: 'ot-form',
 	attributes: {
 		'post': ['string'],
 		'get': ['string'],
@@ -25,7 +25,7 @@ directives.ItemAdd({
 	},
 	code: function(data, item, compile, node, identifier)
 	{
-		const divhunt = item.GetDivhunt();
+		const onetype = item.GetOneType();
 		const config = {};
 		const methods = {};
 
@@ -70,7 +70,7 @@ directives.ItemAdd({
 			}
 			catch(e)
 			{
-				return divhunt.Function(dataAttr, compile.data, false) || {};
+				return onetype.Function(dataAttr, compile.data, false) || {};
 			}
 		};
 
@@ -128,7 +128,7 @@ directives.ItemAdd({
 
 		methods.handler = () =>
 		{
-			config.form.dhForm = async (event) =>
+			config.form.otForm = async (event) =>
 			{
 				event.preventDefault();
 
@@ -239,7 +239,7 @@ directives.ItemAdd({
 
 			if(config.onSuccess)
 			{
-				const callback = divhunt.Function(config.onSuccess, compile.data, false);
+				const callback = onetype.Function(config.onSuccess, compile.data, false);
 
 				if(typeof callback === 'function')
 				{
@@ -247,7 +247,7 @@ directives.ItemAdd({
 				}
 			}
 
-			divhunt.Emit('form.success', {
+			onetype.Emit('form.success', {
 				bind: config.bind,
 				response: compile.data[config.bind].response
 			});
@@ -259,7 +259,7 @@ directives.ItemAdd({
 
 			if(config.onError)
 			{
-				const callback = divhunt.Function(config.onError, compile.data, false);
+				const callback = onetype.Function(config.onError, compile.data, false);
 
 				if(typeof callback === 'function')
 				{
@@ -267,7 +267,7 @@ directives.ItemAdd({
 				}
 			}
 
-			divhunt.Emit('form.error', {
+			onetype.Emit('form.error', {
 				bind: config.bind,
 				error: err.message
 			});
@@ -277,15 +277,15 @@ directives.ItemAdd({
 	}
 });
 
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
 	document.addEventListener('submit', function(event)
 	{
 		const node = event.target;
 
-		if('dhForm' in node)
+		if('otForm' in node)
 		{
-			node.dhForm(event);
+			node.otForm(event);
 		}
 	});
 });

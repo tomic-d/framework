@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const clientsGRPC = divhunt.Addon('clients.grpc', (addon) =>
+const clientsGRPC = onetype.Addon('clients.grpc', (addon) =>
 {
     addon.Field('id', ['string|number']);
     addon.Field('instance', ['object']);

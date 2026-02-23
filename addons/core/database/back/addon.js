@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const database = divhunt.Addon('database', (addon) =>
+const database = onetype.Addon('database', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('port', ['number', 5432]);

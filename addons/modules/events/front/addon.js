@@ -1,6 +1,6 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 
-const events = divhunt.Addon('events', (addon) =>
+const events = onetype.Addon('events', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('group', ['string', null]);

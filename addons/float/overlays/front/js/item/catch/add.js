@@ -28,7 +28,7 @@ overlays.ItemOn('add', function(item)
     this.element = () =>
     {
         const element = document.createElement('div');
-        element.className = 'dh-overlay';
+        element.className = 'ot-overlay';
         element.setAttribute('data-id', item.Get('id'));
 
         return element;

@@ -1,6 +1,6 @@
-import divhunt from '#divhunt';
+import onetype from '#onetype';
 
-const sources = divhunt.Addon('sources', (addon) =>
+const sources = onetype.Addon('sources', (addon) =>
 {
     addon.Table('sources');
 

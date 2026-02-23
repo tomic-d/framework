@@ -1,7 +1,7 @@
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
 	directives.ItemAdd({
-		id: 'dh-command-submit',
+		id: 'ot-command-submit',
 		icon: 'terminal',
 		name: 'Command Submit',
 		description: 'Submit form data to a command via commands.Fn',
@@ -9,7 +9,7 @@ divhunt.AddonReady('directives', function()
 		trigger: 'node',
 		order: 665,
 		strict: false,
-		tag: 'dh-command-submit',
+		tag: 'ot-command-submit',
 		attributes: {
 			'command': ['string', null, true],
 			'bind': ['string', 'command'],
@@ -69,12 +69,12 @@ divhunt.AddonReady('directives', function()
 
 				node.appendChild(config.form);
 
-				requestAnimationFrame(() => divhunt.FormSet(config.form, config.data));
+				requestAnimationFrame(() => onetype.FormSet(config.form, config.data));
 			};
 
 			methods.handler = () =>
 			{
-				config.form.dhCommandSubmit = async (event) =>
+				config.form.otCommandSubmit = async (event) =>
 				{
 					event.preventDefault();
 
@@ -96,7 +96,7 @@ divhunt.AddonReady('directives', function()
 					return;
 				}
 
-				const formData = divhunt.FormGet(form);
+				const formData = onetype.FormGet(form);
 
 				compile.data[config.bind].loading = true;
 				compile.data[config.bind].error = null;
@@ -150,9 +150,9 @@ divhunt.AddonReady('directives', function()
 
 		while(node && node !== document)
 		{
-			if('dhCommandSubmit' in node)
+			if('otCommandSubmit' in node)
 			{
-				node.dhCommandSubmit(event);
+				node.otCommandSubmit(event);
 				break;
 			}
 

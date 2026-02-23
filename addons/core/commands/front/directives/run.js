@@ -1,7 +1,7 @@
-divhunt.AddonReady('directives', function()
+onetype.AddonReady('directives', function()
 {
 	directives.ItemAdd({
-		id: 'dh-command',
+		id: 'ot-command',
 		icon: 'terminal',
 		name: 'Command',
 		description: 'Execute a command instantly on render',
@@ -9,7 +9,7 @@ divhunt.AddonReady('directives', function()
 		trigger: 'node',
 		order: 664,
 		strict: false,
-		tag: 'dh-command',
+		tag: 'ot-command',
 		attributes: {
 			'command': ['string', null, true],
 			'bind': ['string', 'command'],
@@ -20,7 +20,7 @@ divhunt.AddonReady('directives', function()
 		},
 		code: function(data, item, compile, node, identifier)
 		{
-			if(node.tagName.toLowerCase() !== 'dh-command')
+			if(node.tagName.toLowerCase() !== 'ot-command')
 			{
 				return;
 			}

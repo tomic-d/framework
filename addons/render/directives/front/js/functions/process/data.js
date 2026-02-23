@@ -52,7 +52,7 @@ directives.Fn('process.data', function(attributes, node, compile)
         {
             try 
             {
-                attribute.value = divhunt.Function(attribute.value, compile.data, false);
+                attribute.value = onetype.Function(attribute.value, compile.data, false);
             }
             catch(error)
             {
@@ -61,7 +61,7 @@ directives.Fn('process.data', function(attributes, node, compile)
         }
 
 
-        attribute.value = divhunt.DataDefineOne(attribute.value, definition);
+        attribute.value = onetype.DataDefineOne(attribute.value, definition);
         data[attribute.name] = attribute;
 
         if(find && node.removeAttribute)

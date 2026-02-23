@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const pages = divhunt.Addon('pages', (addon) =>
+const pages = onetype.Addon('pages', (addon) =>
 {
 	addon.Field('id', ['string']);
 	addon.Field('route', ['string|array']);

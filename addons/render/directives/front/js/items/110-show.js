@@ -1,5 +1,5 @@
 directives.ItemAdd({
-    id: 'dh-show',
+    id: 'ot-show',
     icon: 'visibility',
     name: 'Show',
     description: 'Toggle element visibility with CSS display property. Hides elements when condition is false without removing from DOM.',
@@ -7,13 +7,13 @@ directives.ItemAdd({
     trigger: 'node',
     order: 110,
     attributes: {
-        'dh-show': ['string']
+        'ot-show': ['string']
     },
     code: function(data, item, compile, node, identifier)
     {
         const originalDisplay = node.style.display || '';
 
-        if (!divhunt.Function(data['dh-show'].value, compile.data, false))
+        if (!onetype.Function(data['ot-show'].value, compile.data, false))
         {
             node.style.display = 'none';
         }

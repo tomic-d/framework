@@ -1,4 +1,4 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 import queue from '#queue/addon.js';
 
 queue.Fn('item.add', function(item, id, data, callback)
@@ -7,7 +7,7 @@ queue.Fn('item.add', function(item, id, data, callback)
 
     if(id === null)
     {
-        id = divhunt.GenerateUID();
+        id = onetype.GenerateUID();
     }
 
     tasks.push({id, data, callback});

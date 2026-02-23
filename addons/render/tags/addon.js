@@ -1,6 +1,6 @@
-import divhunt from '#framework/load.js';
+import onetype from '#framework/load.js';
 
-const tags = divhunt.Addon('tags', (addon) =>
+const tags = onetype.Addon('tags', (addon) =>
 {
     addon.Field('id', ['string']);
     addon.Field('closeable', ['boolean', true]);

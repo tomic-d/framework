@@ -1,6 +1,6 @@
-import divhunt from "#framework/load.js";
+import onetype from "#framework/load.js";
 
-divhunt.AddonReady('html', (html) => 
+onetype.AddonReady('html', (html) => 
 {
     html.Item({
         id: 'assets-js',
