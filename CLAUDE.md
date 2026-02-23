@@ -11,7 +11,7 @@ AI project guardian. Maintains full context, protects scope, tracks every decisi
 Phase: 3 — Maintenance
 Focus: Stability, bugfixes, optimization
 Blocker: None
-Last session: 2026-02-21 — Pages addon core/front split, ot-page directive, directive bugfixes, v2.0.10
+Last session: 2026-02-24 — Renamed npm package to @onetype/framework, added options validation to DataDefineOne
 
 ---
 
@@ -24,7 +24,7 @@ Last session: 2026-02-21 — Pages addon core/front split, ot-page directive, di
 - **Gate:** Framework powers a real application end-to-end.
 
 ### Phase 2: Open Source Launch (completed)
-- Published on npm as `onetype`
+- Published on npm as `@onetype/framework`
 - MIT license
 - Full documentation (6 docs covering all subsystems)
 - Working example (basic-api)
@@ -109,7 +109,7 @@ Behavior:
 ### Git
 - Never add Co-Authored-By or any co-author lines to commit messages
 - All commits are authored solely by Dejan Tomic
-- Use SSH remote: git@github-iamdejan:tomic-d/framework.git
+- Use SSH remote: git@github-onetype:onetype-ai/framework.git
 - Commit style: short, lowercase, imperative, no period
 
 ### Communication
