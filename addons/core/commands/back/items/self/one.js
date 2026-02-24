@@ -3,6 +3,7 @@ import commands from '#commands/core/addon.js';
 
 commands.Item({
     id: 'commands:get:one',
+    exposed: true,
     method: 'GET',
     type: 'JSON',
     in: {
