@@ -41,7 +41,7 @@ pages.Fn('change', function(target, parameters = {}, options = {})
 
         if(this.options.push !== false)
         {
-            history.pushState(null, '', url);
+            history.pushState(null, '', url + (this.options.search || ''));
         }
 
         const result = this.Fn('open', this.id, this.parameters);
