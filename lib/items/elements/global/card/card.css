@@ -1,0 +1,57 @@
+.e-4e321da
+{
+	display: flex;
+}
+
+.e-4e321da > .holder
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-s);
+	padding: var(--ot-spacing-m);
+	border-radius: 8px;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	width: 100%;
+}
+
+.e-4e321da > .holder.link
+{
+	text-decoration: none;
+	transition: border-color 0.15s ease, background 0.15s ease;
+	cursor: pointer;
+}
+
+.e-4e321da > .holder.link:hover
+{
+	border-color: var(--ot-brand);
+	background: var(--ot-bg-3);
+}
+
+/* Icon */
+
+.e-4e321da > .holder > .icon
+{
+	font-size: 24px;
+	color: var(--ot-brand);
+}
+
+/* Title */
+
+.e-4e321da > .holder > .title
+{
+	font-size: var(--ot-size-m);
+	font-weight: 600;
+	color: var(--ot-text-1);
+	margin: 0;
+}
+
+/* Description */
+
+.e-4e321da > .holder > .description
+{
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-2);
+	line-height: 1.5;
+	margin: 0;
+}

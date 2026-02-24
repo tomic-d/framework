@@ -1,0 +1,36 @@
+/* Sizes */
+.r53095678 > .holder[size="s"] .radio-mark
+{
+    width: 16px;
+    height: 16px;
+}
+
+.r53095678 > .holder[size="s"] .radio-mark::after
+{
+    width: 6px;
+    height: 6px;
+}
+
+.r53095678 > .holder[size="m"] .radio-mark
+{
+    width: 20px;
+    height: 20px;
+}
+
+.r53095678 > .holder[size="m"] .radio-mark::after
+{
+    width: 8px;
+    height: 8px;
+}
+
+.r53095678 > .holder[size="l"] .radio-mark
+{
+    width: 24px;
+    height: 24px;
+}
+
+.r53095678 > .holder[size="l"] .radio-mark::after
+{
+    width: 10px;
+    height: 10px;
+}

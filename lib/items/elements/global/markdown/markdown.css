@@ -1,0 +1,248 @@
+.e-56f2e505
+{
+	display: flex;
+	width: 100%;
+}
+
+.e-56f2e505 > .holder
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-m);
+	width: 100%;
+}
+
+/* Line wrapper */
+
+.e-56f2e505 > .holder > .line:empty
+{
+	height: var(--ot-spacing-m);
+}
+
+/* Headings */
+
+.e-56f2e505 > .holder h1
+{
+	font-size: 32px;
+	font-weight: 800;
+	color: var(--ot-text-1);
+	line-height: 1.2;
+	letter-spacing: -0.5px;
+	margin: 0;
+}
+
+.e-56f2e505 > .holder h2
+{
+	font-size: 24px;
+	font-weight: 700;
+	color: var(--ot-text-1);
+	line-height: 1.3;
+	letter-spacing: -0.3px;
+	margin: 0;
+}
+
+.e-56f2e505 > .holder h3
+{
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--ot-text-1);
+	line-height: 1.4;
+	margin: 0;
+}
+
+.e-56f2e505 > .holder h4
+{
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--ot-text-1);
+	line-height: 1.4;
+	margin: 0;
+}
+
+/* Paragraph */
+
+.e-56f2e505 > .holder p
+{
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-2);
+	line-height: 1.8;
+	margin: 0;
+}
+
+/* Links */
+
+.e-56f2e505 > .holder a
+{
+	color: var(--ot-brand);
+	text-decoration: none;
+	font-weight: 500;
+	transition: opacity 0.15s ease;
+}
+
+.e-56f2e505 > .holder a:hover
+{
+	opacity: 0.8;
+}
+
+/* Bold & Italic */
+
+.e-56f2e505 > .holder strong
+{
+	font-weight: 600;
+	color: var(--ot-text-1);
+}
+
+.e-56f2e505 > .holder em
+{
+	font-style: italic;
+}
+
+.e-56f2e505 > .holder del
+{
+	text-decoration: line-through;
+	opacity: 0.6;
+}
+
+/* Lists */
+
+.e-56f2e505 > .holder ul,
+.e-56f2e505 > .holder ol
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-x);
+	padding-left: 24px;
+	margin: 0;
+}
+
+.e-56f2e505 > .holder li
+{
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-2);
+	line-height: 1.7;
+}
+
+.e-56f2e505 > .holder ul > li
+{
+	list-style-type: disc;
+}
+
+.e-56f2e505 > .holder ol > li
+{
+	list-style-type: decimal;
+}
+
+.e-56f2e505 > .holder li::marker
+{
+	color: var(--ot-brand);
+}
+
+/* Blockquote */
+
+.e-56f2e505 > .holder blockquote
+{
+	border-left: 3px solid var(--ot-brand);
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	background: var(--ot-bg-2);
+	border-radius: 0 8px 8px 0;
+	margin: 0;
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-2);
+	line-height: 1.7;
+	font-style: italic;
+}
+
+/* Inline code */
+
+.e-56f2e505 > .holder code.inline
+{
+	padding: 2px 7px;
+	border-radius: 4px;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	font-family: 'JetBrains Mono', 'Fira Code', monospace;
+	font-size: 0.88em;
+	color: var(--ot-brand);
+}
+
+/* Code block */
+
+.e-56f2e505 > .holder .codeblock
+{
+	position: relative;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: 8px;
+	padding: var(--ot-spacing-m);
+	overflow-x: auto;
+	margin: 0;
+}
+
+.e-56f2e505 > .holder .codeblock > code
+{
+	font-family: 'JetBrains Mono', 'Fira Code', monospace;
+	font-size: 13px;
+	line-height: 1.7;
+	color: var(--ot-text-1);
+	tab-size: 4;
+}
+
+/* Table */
+
+.e-56f2e505 > .holder table
+{
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 8px;
+	background-color: var(--ot-bg-2);
+	overflow: hidden;
+}
+
+.e-56f2e505 > .holder table th
+{
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	background: var(--ot-bg-2);
+	font-size: var(--ot-size-s);
+	font-weight: 600;
+	color: var(--ot-text-1);
+	text-align: left;
+	border-bottom: 1px solid var(--ot-bg-2-border);
+}
+
+.e-56f2e505 > .holder table td
+{
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-2);
+	line-height: 1.6;
+	border-bottom: 1px solid var(--ot-bg-2-border);
+}
+
+.e-56f2e505 > .holder table tr:last-child td
+{
+	border-bottom: none;
+}
+
+.e-56f2e505 > .holder table tr:hover td
+{
+	background: var(--ot-bg-2-hover);
+}
+
+/* Horizontal rule */
+
+.e-56f2e505 > .holder hr
+{
+	border: none;
+	border-top: 1px solid var(--ot-bg-2-border);
+	margin: 0;
+}
+
+/* Images */
+
+.e-56f2e505 > .holder img
+{
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+	border: 1px solid var(--ot-bg-2-border);
+}
