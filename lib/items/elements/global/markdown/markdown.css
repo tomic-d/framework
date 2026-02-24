@@ -1,10 +1,10 @@
-.e-56f2e505
+.e-4696d703
 {
 	display: flex;
 	width: 100%;
 }
 
-.e-56f2e505 > .holder
+.e-4696d703 > .holder
 {
 	display: flex;
 	flex-direction: column;
@@ -14,14 +14,14 @@
 
 /* Line wrapper */
 
-.e-56f2e505 > .holder > .line:empty
+.e-4696d703 > .holder > .line:empty
 {
 	height: var(--ot-spacing-m);
 }
 
 /* Headings */
 
-.e-56f2e505 > .holder h1
+.e-4696d703 > .holder h1
 {
 	font-size: 32px;
 	font-weight: 800;
@@ -31,7 +31,7 @@
 	margin: 0;
 }
 
-.e-56f2e505 > .holder h2
+.e-4696d703 > .holder h2
 {
 	font-size: 24px;
 	font-weight: 700;
@@ -41,7 +41,7 @@
 	margin: 0;
 }
 
-.e-56f2e505 > .holder h3
+.e-4696d703 > .holder h3
 {
 	font-size: 18px;
 	font-weight: 600;
@@ -50,7 +50,7 @@
 	margin: 0;
 }
 
-.e-56f2e505 > .holder h4
+.e-4696d703 > .holder h4
 {
 	font-size: 15px;
 	font-weight: 600;
@@ -61,7 +61,7 @@
 
 /* Paragraph */
 
-.e-56f2e505 > .holder p
+.e-4696d703 > .holder p
 {
 	font-size: var(--ot-size-m);
 	color: var(--ot-text-2);
@@ -71,7 +71,7 @@
 
 /* Links */
 
-.e-56f2e505 > .holder a
+.e-4696d703 > .holder a
 {
 	color: var(--ot-brand);
 	text-decoration: none;
@@ -79,25 +79,25 @@
 	transition: opacity 0.15s ease;
 }
 
-.e-56f2e505 > .holder a:hover
+.e-4696d703 > .holder a:hover
 {
 	opacity: 0.8;
 }
 
 /* Bold & Italic */
 
-.e-56f2e505 > .holder strong
+.e-4696d703 > .holder strong
 {
 	font-weight: 600;
 	color: var(--ot-text-1);
 }
 
-.e-56f2e505 > .holder em
+.e-4696d703 > .holder em
 {
 	font-style: italic;
 }
 
-.e-56f2e505 > .holder del
+.e-4696d703 > .holder del
 {
 	text-decoration: line-through;
 	opacity: 0.6;
@@ -105,8 +105,8 @@
 
 /* Lists */
 
-.e-56f2e505 > .holder ul,
-.e-56f2e505 > .holder ol
+.e-4696d703 > .holder ul,
+.e-4696d703 > .holder ol
 {
 	display: flex;
 	flex-direction: column;
@@ -115,31 +115,31 @@
 	margin: 0;
 }
 
-.e-56f2e505 > .holder li
+.e-4696d703 > .holder li
 {
 	font-size: var(--ot-size-m);
 	color: var(--ot-text-2);
 	line-height: 1.7;
 }
 
-.e-56f2e505 > .holder ul > li
+.e-4696d703 > .holder ul > li
 {
 	list-style-type: disc;
 }
 
-.e-56f2e505 > .holder ol > li
+.e-4696d703 > .holder ol > li
 {
 	list-style-type: decimal;
 }
 
-.e-56f2e505 > .holder li::marker
+.e-4696d703 > .holder li::marker
 {
 	color: var(--ot-brand);
 }
 
 /* Blockquote */
 
-.e-56f2e505 > .holder blockquote
+.e-4696d703 > .holder blockquote
 {
 	border-left: 3px solid var(--ot-brand);
 	padding: var(--ot-spacing-s) var(--ot-spacing-m);
@@ -154,7 +154,7 @@
 
 /* Inline code */
 
-.e-56f2e505 > .holder code.inline
+.e-4696d703 > .holder code.inline
 {
 	padding: 2px 7px;
 	border-radius: 4px;
@@ -167,7 +167,7 @@
 
 /* Code block */
 
-.e-56f2e505 > .holder .codeblock
+.e-4696d703 > .holder .codeblock
 {
 	position: relative;
 	background: var(--ot-bg-2);
@@ -178,7 +178,7 @@
 	margin: 0;
 }
 
-.e-56f2e505 > .holder .codeblock > code
+.e-4696d703 > .holder .codeblock > code
 {
 	font-family: 'JetBrains Mono', 'Fira Code', monospace;
 	font-size: 13px;
@@ -189,7 +189,7 @@
 
 /* Table */
 
-.e-56f2e505 > .holder table
+.e-4696d703 > .holder table
 {
 	width: 100%;
 	border-collapse: collapse;
@@ -198,7 +198,7 @@
 	overflow: hidden;
 }
 
-.e-56f2e505 > .holder table th
+.e-4696d703 > .holder table th
 {
 	padding: var(--ot-spacing-s) var(--ot-spacing-m);
 	background: var(--ot-bg-2);
@@ -209,7 +209,7 @@
 	border-bottom: 1px solid var(--ot-bg-2-border);
 }
 
-.e-56f2e505 > .holder table td
+.e-4696d703 > .holder table td
 {
 	padding: var(--ot-spacing-s) var(--ot-spacing-m);
 	font-size: var(--ot-size-m);
@@ -218,19 +218,19 @@
 	border-bottom: 1px solid var(--ot-bg-2-border);
 }
 
-.e-56f2e505 > .holder table tr:last-child td
+.e-4696d703 > .holder table tr:last-child td
 {
 	border-bottom: none;
 }
 
-.e-56f2e505 > .holder table tr:hover td
+.e-4696d703 > .holder table tr:hover td
 {
 	background: var(--ot-bg-2-hover);
 }
 
 /* Horizontal rule */
 
-.e-56f2e505 > .holder hr
+.e-4696d703 > .holder hr
 {
 	border: none;
 	border-top: 1px solid var(--ot-bg-2-border);
@@ -239,7 +239,7 @@
 
 /* Images */
 
-.e-56f2e505 > .holder img
+.e-4696d703 > .holder img
 {
 	max-width: 100%;
 	height: auto;

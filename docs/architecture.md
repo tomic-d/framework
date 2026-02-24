@@ -4,8 +4,7 @@
 
 ```
 lib/                     Core OneType class + mixins
-  load.js                Entry point — creates OneType instance, handles signals
-  assets.js              Centralized asset path registry (all Assets() calls)
+  load.js                Entry point — creates OneType instance, registers all assets, handles signals
   src/
     onetype.js           Main class (mixin-composed)
     mixins/              Addons, Emitter, Middleware, Data, DOM, Route,
@@ -17,10 +16,11 @@ lib/                     Core OneType class + mixins
           render/        OneTypeAddonRender + mixins (compile, dom, process, events)
   styles/                Shared CSS (variables, reset, queries, utility classes)
   items/
-    elements/            Shared UI elements
+    elements/            Shared UI elements (grouped, IDs are group-prefixed)
       form/              button, checkbox, field, input, radio, rating, section, slider, textarea
-      global/            card, code, faq, heading, markdown, parameters, tabs, tags
+      global/            card, code, faq, heading, markdown, notice, parameters, tabs, tags
       sections/          footer, hero, navbar, stats
+      status/            code, empty, error, loading
     transforms/          Shared transforms
                          accordion, chart, codeflask, codemirror, comparison,
                          heatmap, interact, particles, sparkline, swiper, tabs, typed
@@ -193,21 +193,37 @@ Transparent binary transport over the same stream.
 
 ### Centralized asset registry
 
-All asset paths are registered centrally in `lib/assets.js` via `onetype.Assets(id, url, config)`. This decouples asset path knowledge from individual addons — the framework controls what gets bundled, regardless of whether a backend addon is loaded.
+All asset paths are registered centrally in `lib/load.js` via `onetype.Assets(id, url, config)`. This decouples asset path knowledge from individual addons — the framework controls what gets bundled, regardless of whether a backend addon is loaded.
 
 ```js
-// lib/assets.js
-onetype.Assets('framework', import.meta.url, { js: { path: '.', exclude: ['lib/load.js', 'lib/assets.js'] } });
+// lib/load.js — top-level registrations
+onetype.Assets('framework', import.meta.url, { js: { path: '.', exclude: ['load.js', 'items', 'styles'] } });
 onetype.Assets('styles', import.meta.url, { css: 'styles' });
-onetype.Assets('commands', import.meta.url, { js: { path: '../addons/core/commands', exclude: ['commands/back'] } });
-onetype.Assets('elements/input', import.meta.url, { js: 'items/elements/form/input', css: 'items/elements/form/input/styles' });
-onetype.Assets('transforms/swiper', import.meta.url, { js: 'items/transforms/swiper' });
+onetype.Assets('commands', import.meta.url, { js: { path: '../addons/core/commands', exclude: ['../addons/core/commands/back'] } });
 ```
 
-The import function reads from this registry to resolve paths:
+Shared elements and transforms use `onetype.AddonReady` to register only after their parent addon is loaded. The JS files themselves contain the wrapper:
 
 ```js
-assets.Fn('import', ['framework', 'styles', 'commands', 'elements/input', 'transforms/swiper']);
+// lib/items/elements/form/button/button.js
+onetype.AddonReady('elements', (elements) =>
+{
+    elements.ItemAdd({ id: 'form-button', ... });
+});
+
+// lib/items/transforms/swiper/swiper.js
+onetype.AddonReady('transforms', (transforms) =>
+{
+    transforms.ItemAdd({ id: 'swiper', ... });
+});
+```
+
+Element IDs are group-prefixed: `form-button`, `global-card`, `sections-navbar`, `status-loading`. HTML tags follow the same pattern: `<e-form-button>`, `<e-global-card>`, `<e-status-loading>`.
+
+The import function reads from the registry to resolve paths:
+
+```js
+assets.Fn('import', ['framework', 'styles', 'commands', 'elements/form/input', 'transforms/swiper']);
 ```
 
 ### Convention-based bundling

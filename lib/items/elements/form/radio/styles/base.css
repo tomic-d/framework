@@ -1,4 +1,4 @@
-.r53095678 > .holder
+.e-206433b8 > .holder
 {
     position: relative;
     display: inline-flex;
@@ -6,7 +6,7 @@
     cursor: pointer;
 }
 
-.r53095678 input[type="radio"]
+.e-206433b8 input[type="radio"]
 {
     position: absolute;
     opacity: 0;
@@ -16,7 +16,7 @@
     z-index: 1;
 }
 
-.r53095678 .radio-mark
+.e-206433b8 .radio-mark
 {
     display: block;
     border-radius: 50%;
@@ -25,7 +25,7 @@
     position: relative;
 }
 
-.r53095678 .radio-mark::after
+.e-206433b8 .radio-mark::after
 {
     content: '';
     position: absolute;
@@ -36,12 +36,12 @@
     transition: all 0.2s ease;
 }
 
-.r53095678 input[type="radio"]:checked ~ .radio-mark::after
+.e-206433b8 input[type="radio"]:checked ~ .radio-mark::after
 {
     transform: translate(-50%, -50%) scale(1);
 }
 
-.r53095678 input[type="radio"]:disabled ~ .radio-mark
+.e-206433b8 input[type="radio"]:disabled ~ .radio-mark
 {
     opacity: 0.5;
     cursor: not-allowed;

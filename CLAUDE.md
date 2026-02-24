@@ -11,7 +11,7 @@ AI project guardian. Maintains full context, protects scope, tracks every decisi
 Phase: 3 — Maintenance
 Focus: Stability, bugfixes, optimization
 Blocker: None
-Last session: 2026-02-24 — Centralized asset registry (onetype.Assets), shared UI elements + transforms in lib/items/, shared styles in lib/styles/, moved assets addon to core, reorganized transforms addon, removed unused render/items
+Last session: 2026-02-24 — Elements grouped (form/global/sections/status), IDs group-prefixed (form-button, global-card, etc.), CSS hashes updated for all elements, 4 status elements added (loading, empty, error, not-found), auth-app element tags updated
 
 ---
 
@@ -118,6 +118,54 @@ Behavior:
 - When user is wrong — say it
 - When user is right — confirm it
 - Code style: follow existing conventions with maximum precision
+
+---
+
+## ELEMENTS
+
+Shared UI elements in `lib/items/elements/`. IDs are group-prefixed. HTML tags: `<e-{id}>`.
+
+### Form
+| ID | Tag | Description |
+|---|---|---|
+| `form-button` | `<e-form-button>` | Button with variants, sizes, loading state |
+| `form-checkbox` | `<e-form-checkbox>` | Checkbox with custom styling, indeterminate state |
+| `form-field` | `<e-form-field>` | Form field wrapper with label, description, error |
+| `form-input` | `<e-form-input>` | Text input with variants, sizes, types |
+| `form-radio` | `<e-form-radio>` | Radio button with custom styling |
+| `form-rating` | `<e-form-rating>` | Star rating input |
+| `form-section` | `<e-form-section>` | Form section with title, description, border |
+| `form-slider` | `<e-form-slider>` | Range slider |
+| `form-textarea` | `<e-form-textarea>` | Textarea with variants, sizes |
+
+### Global
+| ID | Tag | Description |
+|---|---|---|
+| `global-card` | `<e-global-card>` | Content card |
+| `global-code` | `<e-global-code>` | Code block display |
+| `global-faq` | `<e-global-faq>` | FAQ accordion |
+| `global-heading` | `<e-global-heading>` | Section heading with title, description, align |
+| `global-markdown` | `<e-global-markdown>` | Markdown renderer |
+| `global-notice` | `<e-global-notice>` | Notice/alert with icon, text, variant colors |
+| `global-parameters` | `<e-global-parameters>` | Parameter list display |
+| `global-tabs` | `<e-global-tabs>` | Tab navigation |
+| `global-tags` | `<e-global-tags>` | Tag list |
+
+### Sections
+| ID | Tag | Description |
+|---|---|---|
+| `sections-footer` | `<e-sections-footer>` | Page footer |
+| `sections-hero` | `<e-sections-hero>` | Hero section |
+| `sections-navbar` | `<e-sections-navbar>` | Navigation bar |
+| `sections-stats` | `<e-sections-stats>` | Statistics display |
+
+### Status
+| ID | Tag | Description |
+|---|---|---|
+| `status-empty` | `<e-status-empty>` | Empty state with icon, message, optional action |
+| `status-error` | `<e-status-error>` | Error state with icon, message, retry button |
+| `status-loading` | `<e-status-loading>` | Loading spinner with optional text, color variants |
+| `status-code` | `<e-status-code>` | Status code page (404, 403, 500) with large number, message, action |
 
 ---
 

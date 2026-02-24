@@ -1,5 +1,5 @@
 /* Small */
-.e-593be338 > .holder[variant*="size-s"]
+.e-64e877b > .holder[variant*="size-s"]
 {
 	height: var(--ot-height-s);
 	padding: 0 var(--ot-spacing-s);
@@ -7,19 +7,19 @@
 	gap: var(--ot-spacing-x);
 }
 
-.e-593be338 > .holder[variant*="size-s"] > .content
+.e-64e877b > .holder[variant*="size-s"] > .content
 {
 	gap: var(--ot-spacing-x);
 }
 
-.e-593be338 > .holder[variant*="size-s"] > .content > i,
-.e-593be338 > .holder[variant*="size-s"] > .spinner > i
+.e-64e877b > .holder[variant*="size-s"] > .content > i,
+.e-64e877b > .holder[variant*="size-s"] > .spinner > i
 {
 	font-size: 14px;
 }
 
 /* Medium (default) */
-.e-593be338 > .holder[variant*="size-m"]
+.e-64e877b > .holder[variant*="size-m"]
 {
 	height: var(--ot-height-m);
 	padding: 0 var(--ot-spacing-m);
@@ -27,19 +27,19 @@
 	gap: var(--ot-spacing-s);
 }
 
-.e-593be338 > .holder[variant*="size-m"] > .content
+.e-64e877b > .holder[variant*="size-m"] > .content
 {
 	gap: var(--ot-spacing-s);
 }
 
-.e-593be338 > .holder[variant*="size-m"] > .content > i,
-.e-593be338 > .holder[variant*="size-m"] > .spinner > i
+.e-64e877b > .holder[variant*="size-m"] > .content > i,
+.e-64e877b > .holder[variant*="size-m"] > .spinner > i
 {
 	font-size: 18px;
 }
 
 /* Large */
-.e-593be338 > .holder[variant*="size-l"]
+.e-64e877b > .holder[variant*="size-l"]
 {
 	height: var(--ot-height-l);
 	padding: 0 var(--ot-spacing-l);
@@ -47,31 +47,31 @@
 	gap: var(--ot-spacing-m);
 }
 
-.e-593be338 > .holder[variant*="size-l"] > .content
+.e-64e877b > .holder[variant*="size-l"] > .content
 {
 	gap: var(--ot-spacing-m);
 }
 
-.e-593be338 > .holder[variant*="size-l"] > .content > i,
-.e-593be338 > .holder[variant*="size-l"] > .spinner > i
+.e-64e877b > .holder[variant*="size-l"] > .content > i,
+.e-64e877b > .holder[variant*="size-l"] > .spinner > i
 {
 	font-size: 22px;
 }
 
 /* Icon-only size adjustments */
-.e-593be338 > .holder[variant*="icon-only"][variant*="size-s"]
+.e-64e877b > .holder[variant*="icon-only"][variant*="size-s"]
 {
 	width: var(--ot-height-s);
 	padding: 0;
 }
 
-.e-593be338 > .holder[variant*="icon-only"][variant*="size-m"]
+.e-64e877b > .holder[variant*="icon-only"][variant*="size-m"]
 {
 	width: var(--ot-height-m);
 	padding: 0;
 }
 
-.e-593be338 > .holder[variant*="icon-only"][variant*="size-l"]
+.e-64e877b > .holder[variant*="icon-only"][variant*="size-l"]
 {
 	width: var(--ot-height-l);
 	padding: 0;

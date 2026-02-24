@@ -3,14 +3,10 @@ import onetype from '#framework/load.js';
 
 assets.Fn('import', function(modules)
 {
-
-        console.log(onetype.AssetsGet());
-
     for (let i = 0; i < modules.length; i++)
     {
         const entry = modules[i];
         const registered = onetype.AssetsGet(entry);
-
 
         if (registered)
         {

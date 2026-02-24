@@ -1,5 +1,5 @@
 /* Base */
-.e-68d95774 > .holder
+.e-20dcefe9 > .holder
 {
     width: 100%;
     padding: 0 var(--ot-spacing-m);
@@ -11,101 +11,101 @@
     color: var(--ot-text-1);
 }
 
-.e-68d95774 > .holder::placeholder
+.e-20dcefe9 > .holder::placeholder
 {
     color: var(--ot-text-2);
 }
 
-.e-68d95774 > .holder:disabled
+.e-20dcefe9 > .holder:disabled
 {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 /* Variants - Background */
-.e-68d95774 > .holder[variant*="bg-1"]
+.e-20dcefe9 > .holder[variant*="bg-1"]
 {
     background: var(--ot-bg-1);
 }
 
-.e-68d95774 > .holder[variant*="bg-1"]:hover
+.e-20dcefe9 > .holder[variant*="bg-1"]:hover
 {
     background: var(--ot-bg-1-hover);
 }
 
-.e-68d95774 > .holder[variant*="bg-2"]
+.e-20dcefe9 > .holder[variant*="bg-2"]
 {
     background: var(--ot-bg-2);
 }
 
-.e-68d95774 > .holder[variant*="bg-2"]:hover
+.e-20dcefe9 > .holder[variant*="bg-2"]:hover
 {
     background: var(--ot-bg-2-hover);
 }
 
-.e-68d95774 > .holder[variant*="bg-3"]
+.e-20dcefe9 > .holder[variant*="bg-3"]
 {
     background: var(--ot-bg-3);
 }
 
-.e-68d95774 > .holder[variant*="bg-3"]:hover
+.e-20dcefe9 > .holder[variant*="bg-3"]:hover
 {
     background: var(--ot-bg-3-hover);
 }
 
-.e-68d95774 > .holder[variant*="bg-4"]
+.e-20dcefe9 > .holder[variant*="bg-4"]
 {
     background: var(--ot-bg-4);
 }
 
-.e-68d95774 > .holder[variant*="bg-4"]:hover
+.e-20dcefe9 > .holder[variant*="bg-4"]:hover
 {
     background: var(--ot-bg-4-hover);
 }
 
 /* Variants - Border */
-.e-68d95774 > .holder[variant*="border-full"]
+.e-20dcefe9 > .holder[variant*="border-full"]
 {
     border: 1px solid var(--ot-bg-2-border);
 }
 
-.e-68d95774 > .holder[variant*="bg-1"][variant*="border-full"]
+.e-20dcefe9 > .holder[variant*="bg-1"][variant*="border-full"]
 {
     border: 1px solid var(--ot-bg-1-border);
 }
 
-.e-68d95774 > .holder[variant*="bg-2"][variant*="border-full"]
+.e-20dcefe9 > .holder[variant*="bg-2"][variant*="border-full"]
 {
     border: 1px solid var(--ot-bg-2-border);
 }
 
-.e-68d95774 > .holder[variant*="bg-3"][variant*="border-full"]
+.e-20dcefe9 > .holder[variant*="bg-3"][variant*="border-full"]
 {
     border: 1px solid var(--ot-bg-3-border);
 }
 
-.e-68d95774 > .holder[variant*="bg-4"][variant*="border-full"]
+.e-20dcefe9 > .holder[variant*="bg-4"][variant*="border-full"]
 {
     border: 1px solid var(--ot-bg-4-border);
 }
 
-.e-68d95774 > .holder[variant*="border-full"]:focus
+.e-20dcefe9 > .holder[variant*="border-full"]:focus
 {
     border-color: var(--ot-brand);
 }
 
 /* Sizes */
-.e-68d95774 > .holder[size="s"]
+.e-20dcefe9 > .holder[size="s"]
 {
     height: var(--ot-height-s);
 }
 
-.e-68d95774 > .holder[size="m"]
+.e-20dcefe9 > .holder[size="m"]
 {
     height: var(--ot-height-m);
 }
 
-.e-68d95774 > .holder[size="l"]
+.e-20dcefe9 > .holder[size="l"]
 {
     height: var(--ot-height-l);
 }
