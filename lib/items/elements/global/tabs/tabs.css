@@ -1,0 +1,47 @@
+.e-4db696c
+{
+	display: flex;
+}
+
+.e-4db696c > .holder
+{
+	display: flex;
+	align-items: center;
+	gap: 0;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: 8px;
+	padding: 4px;
+}
+
+.e-4db696c > .holder > .tab
+{
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 20px;
+	border-radius: 6px;
+	font-size: var(--ot-size-m);
+	font-weight: 500;
+	color: var(--ot-text-2);
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.e-4db696c > .holder > .tab > i
+{
+	font-size: 16px;
+}
+
+.e-4db696c > .holder > .tab.active
+{
+	background: var(--ot-bg-3);
+	color: var(--ot-text-1);
+}
+
+.e-4db696c > .holder > .tab:hover:not(.active)
+{
+	color: var(--ot-text-1);
+}

@@ -1,0 +1,36 @@
+/* Flex utilities */
+.ot-flex { display: flex; }
+.ot-flex-col { flex-direction: column; }
+.ot-flex-row { flex-direction: row; }
+.ot-flex-wrap { flex-wrap: wrap; }
+.ot-flex-1 { flex: 1; }
+.ot-items-start { align-items: flex-start; }
+.ot-items-center { align-items: center; }
+.ot-items-end { align-items: flex-end; }
+.ot-justify-start { justify-content: flex-start; }
+.ot-justify-center { justify-content: center; }
+.ot-justify-end { justify-content: flex-end; }
+.ot-justify-between { justify-content: space-between; }
+
+/* Grid solutions */
+.ot-grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--ot-spacing-m); }
+.ot-grid-auto-s { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--ot-spacing-s); }
+.ot-grid-auto-m { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--ot-spacing-m); }
+.ot-grid-auto-l { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ot-spacing-l); }
+.ot-grid-cols-2 { display: grid; grid-template-columns: repeat(2, 1fr); }
+.ot-grid-cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+.ot-grid-cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
+
+/* Container layouts */
+.ot-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
+.ot-container-s { width: 100%; max-width: 768px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
+.ot-container-m { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
+.ot-container-l { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
+.ot-container-full { width: 100%; padding: 0 calc(var(--ot-spacing-m) * 2); }
+
+/* Scrollbar */
+.ot-scrollbar { overflow: auto; }
+.ot-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+.ot-scrollbar::-webkit-scrollbar-track { background: var(--ot-bg-1); }
+.ot-scrollbar::-webkit-scrollbar-thumb { background: var(--ot-bg-4); border-radius: 4px; }
+.ot-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--ot-bg-4-hover); }

@@ -1,0 +1,34 @@
+.e-6968c449
+{
+	display: flex;
+}
+
+.e-6968c449 > .holder
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--ot-spacing-l);
+	width: 100%;
+}
+
+.e-6968c449 > .holder > .item
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--ot-spacing-x);
+}
+
+.e-6968c449 > .holder > .item > .value
+{
+	font-size: var(--ot-size-l);
+	font-weight: 700;
+	color: var(--ot-brand);
+}
+
+.e-6968c449 > .holder > .item > .label
+{
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-2);
+}

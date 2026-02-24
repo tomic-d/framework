@@ -1,0 +1,96 @@
+.ot-p-0 { padding: 0; }
+.ot-p-x { padding: var(--ot-spacing-x); }
+.ot-p-s { padding: var(--ot-spacing-s); }
+.ot-p-m { padding: var(--ot-spacing-m); }
+.ot-p-l { padding: var(--ot-spacing-l); }
+
+.ot-px-0 { padding-left: 0; padding-right: 0; }
+.ot-px-x { padding-left: var(--ot-spacing-x); padding-right: var(--ot-spacing-x); }
+.ot-px-s { padding-left: var(--ot-spacing-s); padding-right: var(--ot-spacing-s); }
+.ot-px-m { padding-left: var(--ot-spacing-m); padding-right: var(--ot-spacing-m); }
+.ot-px-l { padding-left: var(--ot-spacing-l); padding-right: var(--ot-spacing-l); }
+
+.ot-py-0 { padding-top: 0; padding-bottom: 0; }
+.ot-py-x { padding-top: var(--ot-spacing-x); padding-bottom: var(--ot-spacing-x); }
+.ot-py-s { padding-top: var(--ot-spacing-s); padding-bottom: var(--ot-spacing-s); }
+.ot-py-m { padding-top: var(--ot-spacing-m); padding-bottom: var(--ot-spacing-m); }
+.ot-py-l { padding-top: var(--ot-spacing-l); padding-bottom: var(--ot-spacing-l); }
+
+.ot-pt-0 { padding-top: 0; }
+.ot-pt-x { padding-top: var(--ot-spacing-x); }
+.ot-pt-s { padding-top: var(--ot-spacing-s); }
+.ot-pt-m { padding-top: var(--ot-spacing-m); }
+.ot-pt-l { padding-top: var(--ot-spacing-l); }
+
+.ot-pr-0 { padding-right: 0; }
+.ot-pr-x { padding-right: var(--ot-spacing-x); }
+.ot-pr-s { padding-right: var(--ot-spacing-s); }
+.ot-pr-m { padding-right: var(--ot-spacing-m); }
+.ot-pr-l { padding-right: var(--ot-spacing-l); }
+
+.ot-pb-0 { padding-bottom: 0; }
+.ot-pb-x { padding-bottom: var(--ot-spacing-x); }
+.ot-pb-s { padding-bottom: var(--ot-spacing-s); }
+.ot-pb-m { padding-bottom: var(--ot-spacing-m); }
+.ot-pb-l { padding-bottom: var(--ot-spacing-l); }
+
+.ot-pl-0 { padding-left: 0; }
+.ot-pl-x { padding-left: var(--ot-spacing-x); }
+.ot-pl-s { padding-left: var(--ot-spacing-s); }
+.ot-pl-m { padding-left: var(--ot-spacing-m); }
+.ot-pl-l { padding-left: var(--ot-spacing-l); }
+
+.ot-m-0 { margin: 0; }
+.ot-m-auto { margin: auto; }
+.ot-m-x { margin: var(--ot-spacing-x); }
+.ot-m-s { margin: var(--ot-spacing-s); }
+.ot-m-m { margin: var(--ot-spacing-m); }
+.ot-m-l { margin: var(--ot-spacing-l); }
+
+.ot-mx-0 { margin-left: 0; margin-right: 0; }
+.ot-mx-auto { margin-left: auto; margin-right: auto; }
+.ot-mx-x { margin-left: var(--ot-spacing-x); margin-right: var(--ot-spacing-x); }
+.ot-mx-s { margin-left: var(--ot-spacing-s); margin-right: var(--ot-spacing-s); }
+.ot-mx-m { margin-left: var(--ot-spacing-m); margin-right: var(--ot-spacing-m); }
+.ot-mx-l { margin-left: var(--ot-spacing-l); margin-right: var(--ot-spacing-l); }
+
+.ot-my-0 { margin-top: 0; margin-bottom: 0; }
+.ot-my-auto { margin-top: auto; margin-bottom: auto; }
+.ot-my-x { margin-top: var(--ot-spacing-x); margin-bottom: var(--ot-spacing-x); }
+.ot-my-s { margin-top: var(--ot-spacing-s); margin-bottom: var(--ot-spacing-s); }
+.ot-my-m { margin-top: var(--ot-spacing-m); margin-bottom: var(--ot-spacing-m); }
+.ot-my-l { margin-top: var(--ot-spacing-l); margin-bottom: var(--ot-spacing-l); }
+
+.ot-mt-0 { margin-top: 0; }
+.ot-mt-auto { margin-top: auto; }
+.ot-mt-x { margin-top: var(--ot-spacing-x); }
+.ot-mt-s { margin-top: var(--ot-spacing-s); }
+.ot-mt-m { margin-top: var(--ot-spacing-m); }
+.ot-mt-l { margin-top: var(--ot-spacing-l); }
+
+.ot-mr-0 { margin-right: 0; }
+.ot-mr-auto { margin-right: auto; }
+.ot-mr-x { margin-right: var(--ot-spacing-x); }
+.ot-mr-s { margin-right: var(--ot-spacing-s); }
+.ot-mr-m { margin-right: var(--ot-spacing-m); }
+.ot-mr-l { margin-right: var(--ot-spacing-l); }
+
+.ot-mb-0 { margin-bottom: 0; }
+.ot-mb-auto { margin-bottom: auto; }
+.ot-mb-x { margin-bottom: var(--ot-spacing-x); }
+.ot-mb-s { margin-bottom: var(--ot-spacing-s); }
+.ot-mb-m { margin-bottom: var(--ot-spacing-m); }
+.ot-mb-l { margin-bottom: var(--ot-spacing-l); }
+
+.ot-ml-0 { margin-left: 0; }
+.ot-ml-auto { margin-left: auto; }
+.ot-ml-x { margin-left: var(--ot-spacing-x); }
+.ot-ml-s { margin-left: var(--ot-spacing-s); }
+.ot-ml-m { margin-left: var(--ot-spacing-m); }
+.ot-ml-l { margin-left: var(--ot-spacing-l); }
+
+.ot-gap-0 { gap: 0; }
+.ot-gap-x { gap: var(--ot-spacing-x); }
+.ot-gap-s { gap: var(--ot-spacing-s); }
+.ot-gap-m { gap: var(--ot-spacing-m); }
+.ot-gap-l { gap: var(--ot-spacing-l); }
