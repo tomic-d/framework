@@ -1,37 +1,37 @@
 /* Sizes */
-.r51d47f16 > .holder[size="s"] .checkbox-mark
+.e-f249baa > .holder[size="s"] .checkbox-mark
 {
     width: 16px;
     height: 16px;
 }
 
-.r51d47f16 > .holder[size="s"] .checkbox-mark::after
+.e-f249baa > .holder[size="s"] .checkbox-mark::after
 {
     width: 3px;
     height: 6px;
     border-width: 0 1.5px 1.5px 0;
 }
 
-.r51d47f16 > .holder[size="m"] .checkbox-mark
+.e-f249baa > .holder[size="m"] .checkbox-mark
 {
     width: 20px;
     height: 20px;
 }
 
-.r51d47f16 > .holder[size="m"] .checkbox-mark::after
+.e-f249baa > .holder[size="m"] .checkbox-mark::after
 {
     width: 4px;
     height: 8px;
     border-width: 0 2px 2px 0;
 }
 
-.r51d47f16 > .holder[size="l"] .checkbox-mark
+.e-f249baa > .holder[size="l"] .checkbox-mark
 {
     width: 24px;
     height: 24px;
 }
 
-.r51d47f16 > .holder[size="l"] .checkbox-mark::after
+.e-f249baa > .holder[size="l"] .checkbox-mark::after
 {
     width: 5px;
     height: 10px;

@@ -1,9 +1,9 @@
-.e-45daee5a
+.e-7eb56bb9
 {
 	display: flex;
 }
 
-.e-45daee5a > .holder
+.e-7eb56bb9 > .holder
 {
 	display: flex;
 	align-items: center;
@@ -16,7 +16,7 @@
 
 /* Logo */
 
-.e-45daee5a > .holder > .logo
+.e-7eb56bb9 > .holder > .logo
 {
 	display: flex;
 	align-items: center;
@@ -26,7 +26,7 @@
 	flex-shrink: 0;
 }
 
-.e-45daee5a > .holder > .logo > .logo-icon
+.e-7eb56bb9 > .holder > .logo > .logo-icon
 {
 	height: 16px;
 }
@@ -34,7 +34,7 @@
 
 /* Tabs */
 
-.e-45daee5a > .holder > .tabs
+.e-7eb56bb9 > .holder > .tabs
 {
 	display: flex;
 	align-items: center;
@@ -43,7 +43,7 @@
 	height: 100%;
 }
 
-.e-45daee5a > .holder .tab
+.e-7eb56bb9 > .holder .tab
 {
 	display: flex;
 	align-items: center;
@@ -57,12 +57,12 @@
 	color: var(--ot-text-2);
 }
 
-.e-45daee5a > .holder .tab > i
+.e-7eb56bb9 > .holder .tab > i
 {
 	font-size: 16px;
 }
 
-.e-45daee5a > .holder .tab:hover
+.e-7eb56bb9 > .holder .tab:hover
 {
 	color: var(--ot-text-1);
 	background: var(--ot-bg-2);
@@ -70,7 +70,7 @@
 
 /* Right */
 
-.e-45daee5a > .holder > .right
+.e-7eb56bb9 > .holder > .right
 {
 	display: flex;
 	align-items: center;

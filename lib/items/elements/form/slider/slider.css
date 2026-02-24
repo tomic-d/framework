@@ -1,5 +1,5 @@
 /* Base */
-.e-3cbd9189 > .holder
+.e-162fca34 > .holder
 {
 	position: relative;
 	width: 100%;
@@ -8,7 +8,7 @@
 	gap: var(--ot-spacing-m);
 }
 
-.e-3cbd9189 > .holder > .track
+.e-162fca34 > .holder > .track
 {
 	position: absolute;
 	left: 0;
@@ -19,7 +19,7 @@
 	pointer-events: none;
 }
 
-.e-3cbd9189 > .holder > .track > .fill
+.e-162fca34 > .holder > .track > .fill
 {
 	height: 100%;
 	background: var(--ot-brand);
@@ -27,7 +27,7 @@
 	transition: width 0.2s ease-out;
 }
 
-.e-3cbd9189 > .holder > .input
+.e-162fca34 > .holder > .input
 {
 	position: relative;
 	width: 100%;
@@ -39,7 +39,7 @@
 	z-index: 1;
 }
 
-.e-3cbd9189 > .holder > .input::-webkit-slider-thumb
+.e-162fca34 > .holder > .input::-webkit-slider-thumb
 {
 	-webkit-appearance: none;
 	appearance: none;
@@ -52,12 +52,12 @@
 	transition: transform 0.2s ease;
 }
 
-.e-3cbd9189 > .holder > .input::-webkit-slider-thumb:hover
+.e-162fca34 > .holder > .input::-webkit-slider-thumb:hover
 {
 	transform: scale(1.1);
 }
 
-.e-3cbd9189 > .holder > .input::-moz-range-thumb
+.e-162fca34 > .holder > .input::-moz-range-thumb
 {
 	width: 18px;
 	height: 18px;
@@ -68,12 +68,12 @@
 	transition: transform 0.2s ease;
 }
 
-.e-3cbd9189 > .holder > .input::-moz-range-thumb:hover
+.e-162fca34 > .holder > .input::-moz-range-thumb:hover
 {
 	transform: scale(1.1);
 }
 
-.e-3cbd9189 > .holder > .value
+.e-162fca34 > .holder > .value
 {
 	min-width: 40px;
 	text-align: center;
@@ -83,161 +83,161 @@
 }
 
 /* Variants - Colors */
-.e-3cbd9189 > .holder[variant*="brand"] > .track > .fill
+.e-162fca34 > .holder[variant*="brand"] > .track > .fill
 {
 	background: var(--ot-brand);
 }
 
-.e-3cbd9189 > .holder[variant*="brand"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="brand"] > .input::-webkit-slider-thumb
 {
 	background: var(--ot-brand);
 }
 
-.e-3cbd9189 > .holder[variant*="brand"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="brand"] > .input::-moz-range-thumb
 {
 	background: var(--ot-brand);
 }
 
-.e-3cbd9189 > .holder[variant*="blue"] > .track > .fill
+.e-162fca34 > .holder[variant*="blue"] > .track > .fill
 {
 	background: var(--ot-blue);
 }
 
-.e-3cbd9189 > .holder[variant*="blue"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="blue"] > .input::-webkit-slider-thumb
 {
 	background: var(--ot-blue);
 }
 
-.e-3cbd9189 > .holder[variant*="blue"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="blue"] > .input::-moz-range-thumb
 {
 	background: var(--ot-blue);
 }
 
-.e-3cbd9189 > .holder[variant*="red"] > .track > .fill
+.e-162fca34 > .holder[variant*="red"] > .track > .fill
 {
 	background: var(--ot-red);
 }
 
-.e-3cbd9189 > .holder[variant*="red"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="red"] > .input::-webkit-slider-thumb
 {
 	background: var(--ot-red);
 }
 
-.e-3cbd9189 > .holder[variant*="red"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="red"] > .input::-moz-range-thumb
 {
 	background: var(--ot-red);
 }
 
-.e-3cbd9189 > .holder[variant*="orange"] > .track > .fill
+.e-162fca34 > .holder[variant*="orange"] > .track > .fill
 {
 	background: var(--ot-orange);
 }
 
-.e-3cbd9189 > .holder[variant*="orange"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="orange"] > .input::-webkit-slider-thumb
 {
 	background: var(--ot-orange);
 }
 
-.e-3cbd9189 > .holder[variant*="orange"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="orange"] > .input::-moz-range-thumb
 {
 	background: var(--ot-orange);
 }
 
-.e-3cbd9189 > .holder[variant*="green"] > .track > .fill
+.e-162fca34 > .holder[variant*="green"] > .track > .fill
 {
 	background: var(--ot-green);
 }
 
-.e-3cbd9189 > .holder[variant*="green"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="green"] > .input::-webkit-slider-thumb
 {
 	background: var(--ot-green);
 }
 
-.e-3cbd9189 > .holder[variant*="green"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="green"] > .input::-moz-range-thumb
 {
 	background: var(--ot-green);
 }
 
 /* Variants - Sizes */
-.e-3cbd9189 > .holder[variant*="size-s"] > .track
+.e-162fca34 > .holder[variant*="size-s"] > .track
 {
 	height: 4px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-s"] > .input
+.e-162fca34 > .holder[variant*="size-s"] > .input
 {
 	height: 16px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-s"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="size-s"] > .input::-webkit-slider-thumb
 {
 	width: 14px;
 	height: 14px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-s"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="size-s"] > .input::-moz-range-thumb
 {
 	width: 14px;
 	height: 14px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-s"] > .value
+.e-162fca34 > .holder[variant*="size-s"] > .value
 {
 	font-size: 11px;
 	min-width: 35px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-m"] > .track
+.e-162fca34 > .holder[variant*="size-m"] > .track
 {
 	height: 6px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-m"] > .input
+.e-162fca34 > .holder[variant*="size-m"] > .input
 {
 	height: 20px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-m"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="size-m"] > .input::-webkit-slider-thumb
 {
 	width: 18px;
 	height: 18px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-m"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="size-m"] > .input::-moz-range-thumb
 {
 	width: 18px;
 	height: 18px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-m"] > .value
+.e-162fca34 > .holder[variant*="size-m"] > .value
 {
 	font-size: var(--ot-size-s);
 	min-width: 40px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-l"] > .track
+.e-162fca34 > .holder[variant*="size-l"] > .track
 {
 	height: 8px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-l"] > .input
+.e-162fca34 > .holder[variant*="size-l"] > .input
 {
 	height: 24px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-l"] > .input::-webkit-slider-thumb
+.e-162fca34 > .holder[variant*="size-l"] > .input::-webkit-slider-thumb
 {
 	width: 22px;
 	height: 22px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-l"] > .input::-moz-range-thumb
+.e-162fca34 > .holder[variant*="size-l"] > .input::-moz-range-thumb
 {
 	width: 22px;
 	height: 22px;
 }
 
-.e-3cbd9189 > .holder[variant*="size-l"] > .value
+.e-162fca34 > .holder[variant*="size-l"] > .value
 {
 	font-size: var(--ot-size-m);
 	min-width: 45px;

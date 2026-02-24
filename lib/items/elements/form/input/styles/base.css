@@ -1,9 +1,9 @@
-.r538212a9 > .holder
+.e-20dcefe9 > .holder
 {
     position: relative;
 }
 
-.r538212a9 input
+.e-20dcefe9 input
 {
     width: 100%;
     padding: 0 var(--ot-spacing-m);
@@ -14,12 +14,12 @@
     outline: none;
 }
 
-.r538212a9 input::placeholder
+.e-20dcefe9 input::placeholder
 {
     color: var(--ot-text-2);
 }
 
-.r538212a9 input:disabled
+.e-20dcefe9 input:disabled
 {
     opacity: 0.5;
     cursor: not-allowed;

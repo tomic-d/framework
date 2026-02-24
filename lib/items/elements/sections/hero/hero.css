@@ -1,9 +1,9 @@
-.e-4e0ccf0
+.e-59eb0a1d
 {
 	display: flex;
 }
 
-.e-4e0ccf0 > .holder
+.e-59eb0a1d > .holder
 {
 	display: flex;
 	flex-direction: column;
@@ -16,7 +16,7 @@
 
 /* Badge */
 
-.e-4e0ccf0 > .holder > .badge
+.e-59eb0a1d > .holder > .badge
 {
 	display: inline-flex;
 	align-items: center;
@@ -30,7 +30,7 @@
 	color: var(--ot-text-2);
 }
 
-.e-4e0ccf0 > .holder > .badge > i
+.e-59eb0a1d > .holder > .badge > i
 {
 	font-size: 14px;
 	color: var(--ot-brand);
@@ -38,7 +38,7 @@
 
 /* Title */
 
-.e-4e0ccf0 > .holder > .title
+.e-59eb0a1d > .holder > .title
 {
 	font-size: 52px;
 	font-weight: 800;
@@ -48,14 +48,14 @@
 	margin: 0;
 }
 
-.e-4e0ccf0 > .holder > .title > .highlight
+.e-59eb0a1d > .holder > .title > .highlight
 {
 	color: var(--ot-brand);
 }
 
 /* Description */
 
-.e-4e0ccf0 > .holder > .description
+.e-59eb0a1d > .holder > .description
 {
 	max-width: 480px;
 	font-size: var(--ot-size-m);
@@ -66,7 +66,7 @@
 
 /* Buttons */
 
-.e-4e0ccf0 > .holder > .buttons
+.e-59eb0a1d > .holder > .buttons
 {
 	display: flex;
 	align-items: center;
@@ -76,7 +76,7 @@
 
 /* Trust */
 
-.e-4e0ccf0 > .holder > .trust
+.e-59eb0a1d > .holder > .trust
 {
 	display: flex;
 	align-items: center;
@@ -84,7 +84,7 @@
 	margin-top: var(--ot-spacing-x);
 }
 
-.e-4e0ccf0 > .holder > .trust > .trust-item
+.e-59eb0a1d > .holder > .trust > .trust-item
 {
 	display: flex;
 	align-items: center;
@@ -93,7 +93,7 @@
 	color: var(--ot-text-2);
 }
 
-.e-4e0ccf0 > .holder > .trust > .trust-item > i
+.e-59eb0a1d > .holder > .trust > .trust-item > i
 {
 	font-size: 14px;
 	color: var(--ot-green);

@@ -1,4 +1,4 @@
-.r51d47f16 > .holder
+.e-f249baa > .holder
 {
     position: relative;
     display: inline-flex;
@@ -6,7 +6,7 @@
     cursor: pointer;
 }
 
-.r51d47f16 input[type="checkbox"]
+.e-f249baa input[type="checkbox"]
 {
     position: absolute;
     opacity: 0;
@@ -16,7 +16,7 @@
     z-index: 1;
 }
 
-.r51d47f16 .checkbox-mark
+.e-f249baa .checkbox-mark
 {
     display: block;
     border-radius: var(--ot-radius-s);
@@ -25,7 +25,7 @@
     position: relative;
 }
 
-.r51d47f16 .checkbox-mark::after
+.e-f249baa .checkbox-mark::after
 {
     content: '';
     position: absolute;
@@ -40,12 +40,12 @@
     transition: all 0.2s ease;
 }
 
-.r51d47f16 input[type="checkbox"]:checked ~ .checkbox-mark::after
+.e-f249baa input[type="checkbox"]:checked ~ .checkbox-mark::after
 {
     transform: translate(-50%, -60%) rotate(45deg) scale(1);
 }
 
-.r51d47f16 input[type="checkbox"]:disabled ~ .checkbox-mark
+.e-f249baa input[type="checkbox"]:disabled ~ .checkbox-mark
 {
     opacity: 0.5;
     cursor: not-allowed;

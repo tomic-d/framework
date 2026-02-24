@@ -1,12 +1,12 @@
 /* Base */
-.e-3f0858cd > .holder
+.e-13e502f0 > .holder
 {
 	display: inline-flex;
 	align-items: center;
 	gap: var(--ot-spacing-x);
 }
 
-.e-3f0858cd > .holder > .star
+.e-13e502f0 > .holder > .star
 {
 	font-size: 24px;
 	color: var(--ot-bg-3);
@@ -15,81 +15,81 @@
 	user-select: none;
 }
 
-.e-3f0858cd > .holder > .star.filled
+.e-13e502f0 > .holder > .star.filled
 {
 	color: var(--ot-brand);
 }
 
-.e-3f0858cd > .holder > .star:hover
+.e-13e502f0 > .holder > .star:hover
 {
 	transform: scale(1.1);
 }
 
 /* Variants - Readonly */
-.e-3f0858cd > .holder[variant*="readonly"] > .star
+.e-13e502f0 > .holder[variant*="readonly"] > .star
 {
 	cursor: default;
 	pointer-events: none;
 }
 
-.e-3f0858cd > .holder[variant*="readonly"] > .star:hover
+.e-13e502f0 > .holder[variant*="readonly"] > .star:hover
 {
 	transform: none;
 }
 
 /* Variants - Colors */
-.e-3f0858cd > .holder[variant*="brand"] > .star.filled
+.e-13e502f0 > .holder[variant*="brand"] > .star.filled
 {
 	color: var(--ot-brand);
 }
 
-.e-3f0858cd > .holder[variant*="blue"] > .star.filled
+.e-13e502f0 > .holder[variant*="blue"] > .star.filled
 {
 	color: var(--ot-blue);
 }
 
-.e-3f0858cd > .holder[variant*="red"] > .star.filled
+.e-13e502f0 > .holder[variant*="red"] > .star.filled
 {
 	color: var(--ot-red);
 }
 
-.e-3f0858cd > .holder[variant*="orange"] > .star.filled
+.e-13e502f0 > .holder[variant*="orange"] > .star.filled
 {
 	color: var(--ot-orange);
 }
 
-.e-3f0858cd > .holder[variant*="green"] > .star.filled
+.e-13e502f0 > .holder[variant*="green"] > .star.filled
 {
 	color: var(--ot-green);
 }
 
 /* Variants - Sizes */
-.e-3f0858cd > .holder[variant*="size-s"]
+.e-13e502f0 > .holder[variant*="size-s"]
 {
 	gap: 2px;
 }
 
-.e-3f0858cd > .holder[variant*="size-s"] > .star
+.e-13e502f0 > .holder[variant*="size-s"] > .star
 {
 	font-size: 16px;
 }
 
-.e-3f0858cd > .holder[variant*="size-m"]
+.e-13e502f0 > .holder[variant*="size-m"]
 {
 	gap: var(--ot-spacing-x);
 }
 
-.e-3f0858cd > .holder[variant*="size-m"] > .star
+.e-13e502f0 > .holder[variant*="size-m"] > .star
 {
 	font-size: 24px;
 }
 
-.e-3f0858cd > .holder[variant*="size-l"]
+.e-13e502f0 > .holder[variant*="size-l"]
 {
 	gap: var(--ot-spacing-s);
 }
 
-.e-3f0858cd > .holder[variant*="size-l"] > .star
+.e-13e502f0 > .holder[variant*="size-l"] > .star
 {
 	font-size: 32px;
 }

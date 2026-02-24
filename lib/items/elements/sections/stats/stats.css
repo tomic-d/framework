@@ -1,9 +1,9 @@
-.e-6968c449
+.e-1d2b5bd6
 {
 	display: flex;
 }
 
-.e-6968c449 > .holder
+.e-1d2b5bd6 > .holder
 {
 	display: flex;
 	align-items: center;
@@ -12,7 +12,7 @@
 	width: 100%;
 }
 
-.e-6968c449 > .holder > .item
+.e-1d2b5bd6 > .holder > .item
 {
 	display: flex;
 	flex-direction: column;
@@ -20,14 +20,14 @@
 	gap: var(--ot-spacing-x);
 }
 
-.e-6968c449 > .holder > .item > .value
+.e-1d2b5bd6 > .holder > .item > .value
 {
 	font-size: var(--ot-size-l);
 	font-weight: 700;
 	color: var(--ot-brand);
 }
 
-.e-6968c449 > .holder > .item > .label
+.e-1d2b5bd6 > .holder > .item > .label
 {
 	font-size: var(--ot-size-s);
 	color: var(--ot-text-2);

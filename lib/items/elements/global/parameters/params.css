@@ -1,17 +1,17 @@
-.e-427310e4
+.e-29179902
 {
 	display: flex;
 	width: 100%;
 }
 
-.e-427310e4 > .holder
+.e-29179902 > .holder
 {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 }
 
-.e-427310e4 > .holder > .param
+.e-29179902 > .holder > .param
 {
 	display: flex;
 	align-items: center;
@@ -21,19 +21,19 @@
 	border-bottom: 1px solid var(--ot-bg-2-border);
 }
 
-.e-427310e4 > .holder > .param:last-child
+.e-29179902 > .holder > .param:last-child
 {
 	border-bottom: none;
 }
 
-.e-427310e4 > .holder > .param > .left
+.e-29179902 > .holder > .param > .left
 {
 	display: flex;
 	align-items: center;
 	gap: var(--ot-spacing-s);
 }
 
-.e-427310e4 > .holder > .param > .left > .name
+.e-29179902 > .holder > .param > .left > .name
 {
 	font-size: var(--ot-size-m);
 	font-weight: 600;
@@ -41,7 +41,7 @@
 	color: var(--ot-text-1);
 }
 
-.e-427310e4 > .holder > .param > .left > .type
+.e-29179902 > .holder > .param > .left > .type
 {
 	font-size: 10px;
 	font-weight: 500;
@@ -51,7 +51,7 @@
 	color: var(--ot-blue);
 }
 
-.e-427310e4 > .holder > .param > .left > .required
+.e-29179902 > .holder > .param > .left > .required
 {
 	font-size: 10px;
 	font-weight: 500;
@@ -61,7 +61,7 @@
 	color: var(--ot-orange);
 }
 
-.e-427310e4 > .holder > .param > .desc
+.e-29179902 > .holder > .param > .desc
 {
 	font-size: var(--ot-size-s);
 	color: var(--ot-text-2);

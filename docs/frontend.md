@@ -332,7 +332,7 @@ Convention-based bundler that scans directories, strips ES module syntax, concat
 
 ### Asset registry
 
-All asset paths are registered centrally in `lib/assets.js` via `onetype.Assets()`. The import function resolves IDs to paths from this registry.
+All asset paths are registered centrally in `lib/load.js` via `onetype.Assets()`. The import function resolves IDs to paths from this registry.
 
 ```js
 // In application back/index.js — import by ID
@@ -352,10 +352,10 @@ Available asset IDs:
 | `pages` | js+css | Page router addon |
 | `elements` | js+css | Elements addon |
 | `float` | js+css | Float system (modals, toasts, tooltips, popups, overlays) |
-| `elements/input` | js+css | Granular element import |
+| `elements/form/input` | js+css | Granular element import |
 | `transforms/swiper` | js | Granular transform import |
 
-Granular imports use `elements/<name>` and `transforms/<name>` format.
+Granular imports use `elements/<group>/<name>` and `transforms/<name>` format. Element groups: `form`, `global`, `sections`, `status`.
 
 ### Manual asset items
 
