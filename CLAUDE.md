@@ -11,7 +11,7 @@ AI project guardian. Maintains full context, protects scope, tracks every decisi
 Phase: 3 — Maintenance
 Focus: Stability, bugfixes, optimization
 Blocker: None
-Last session: 2026-02-24 — Renamed npm package to @onetype/framework, added options validation to DataDefineOne
+Last session: 2026-02-24 — Centralized asset registry (onetype.Assets), shared UI elements + transforms in lib/items/, shared styles in lib/styles/, moved assets addon to core, reorganized transforms addon, removed unused render/items
 
 ---
 

@@ -330,22 +330,39 @@ Usage:
 
 Convention-based bundler that scans directories, strips ES module syntax, concatenates, and minifies.
 
+### Asset registry
+
+All asset paths are registered centrally in `lib/assets.js` via `onetype.Assets()`. The import function resolves IDs to paths from this registry.
+
 ```js
-import assets from '#assets/load.js';
+// In application back/index.js — import by ID
+assets.Fn('import', ['framework', 'styles', 'commands', 'elements/input', 'transforms/swiper']);
+```
 
-// Scan directories in order
-assets.Item({ type: 'js', order: 0, path: 'framework' });
-assets.Item({ type: 'js', order: 1, path: 'addons/core/commands/front' });
-assets.Item({ type: 'js', order: 1, path: 'addons/render/directives/front' });
-assets.Item({ type: 'js', order: 1, path: 'addons/render/pages/front' });
+Available asset IDs:
 
-// CSS
-assets.Item({ type: 'css', order: 0, path: 'styles' });
-assets.Item({ type: 'css', order: 1, path: 'addons/render/elements/front' });
-assets.Item({ type: 'css', order: 2, path: 'projects/travel/site/front' });
+| ID | Type | Description |
+|---|---|---|
+| `framework` | js | Core framework library |
+| `styles` | css | Shared CSS (variables, reset, queries, utilities) |
+| `commands` | js | Command system (front-end) |
+| `database` | js | Database (front-end) |
+| `directives` | js | Directives addon |
+| `transforms` | js | Transforms addon |
+| `pages` | js+css | Page router addon |
+| `elements` | js+css | Elements addon |
+| `float` | js+css | Float system (modals, toasts, tooltips, popups, overlays) |
+| `elements/input` | js+css | Granular element import |
+| `transforms/swiper` | js | Granular transform import |
 
-// Ignore specific files
-assets.Item({ type: 'js', order: 0, path: 'framework', ignore: ['framework/load.js'] });
+Granular imports use `elements/<name>` and `transforms/<name>` format.
+
+### Manual asset items
+
+```js
+// Scan a custom directory
+assets.Item({ type: 'js', order: 2, path: resolve(root, 'front') });
+assets.Item({ type: 'css', order: 2, path: resolve(root, 'front') });
 ```
 
 ### Dynamic content injection
