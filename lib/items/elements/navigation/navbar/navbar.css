@@ -1,9 +1,9 @@
-.e-7eb56bb9
+.e-64d8716d
 {
 	display: flex;
 }
 
-.e-7eb56bb9 > .holder
+.e-64d8716d > .holder
 {
 	display: flex;
 	align-items: center;
@@ -16,7 +16,7 @@
 
 /* Logo */
 
-.e-7eb56bb9 > .holder > .logo
+.e-64d8716d > .holder > .logo
 {
 	display: flex;
 	align-items: center;
@@ -26,7 +26,7 @@
 	flex-shrink: 0;
 }
 
-.e-7eb56bb9 > .holder > .logo > .logo-icon
+.e-64d8716d > .holder > .logo > .logo-icon
 {
 	height: 16px;
 }
@@ -34,7 +34,7 @@
 
 /* Tabs */
 
-.e-7eb56bb9 > .holder > .tabs
+.e-64d8716d > .holder > .tabs
 {
 	display: flex;
 	align-items: center;
@@ -43,7 +43,7 @@
 	height: 100%;
 }
 
-.e-7eb56bb9 > .holder .tab
+.e-64d8716d > .holder .tab
 {
 	display: flex;
 	align-items: center;
@@ -57,12 +57,12 @@
 	color: var(--ot-text-2);
 }
 
-.e-7eb56bb9 > .holder .tab > i
+.e-64d8716d > .holder .tab > i
 {
 	font-size: 16px;
 }
 
-.e-7eb56bb9 > .holder .tab:hover
+.e-64d8716d > .holder .tab:hover
 {
 	color: var(--ot-text-1);
 	background: var(--ot-bg-2);
@@ -70,7 +70,7 @@
 
 /* Right */
 
-.e-7eb56bb9 > .holder > .right
+.e-64d8716d > .holder > .right
 {
 	display: flex;
 	align-items: center;
