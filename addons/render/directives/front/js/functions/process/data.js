@@ -60,7 +60,6 @@ directives.Fn('process.data', function(attributes, node, compile)
             }
         }
 
-
         attribute.value = onetype.DataDefineOne(attribute.value, definition);
         data[attribute.name] = attribute;
 
