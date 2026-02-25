@@ -8,4 +8,6 @@ const transforms = onetype.Addon('transforms', (addon) =>
     addon.Field('css', ['array', []]);
     addon.Field('config', ['object', {}]);
     addon.Field('code', ['function']);
+    addon.Field('destroy', ['function', null]);
+    addon.Field('structure', ['function', null]);
 });
