@@ -7,9 +7,9 @@ transforms.Fn('data', function(config, node)
         name = name.toLowerCase();
 
         const raw = node.getAttribute(name);
-        const value = raw !== null ? onetype.Function(raw, {}, false) : raw;
+        const value = raw !== null ? onetype.Function(raw, {}, false) : undefined;
 
-        data[name] = onetype.DataDefineOne(value, definition);
+        data[name] = onetype.DataDefineOne(typeof value === 'undefined' ? raw : value, definition);
 
         if(raw !== null)
         {

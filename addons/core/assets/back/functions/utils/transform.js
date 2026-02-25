@@ -18,7 +18,7 @@ assets.Fn('utils.transform', function(contents, type = 'js')
             return code;
         });
 
-        return code.filter(content => content && content.trim()).join('\n\n');
+        return '(function(){\n' + code.filter(content => content && content.trim()).join('\n\n') + '\n})();';
     }
 
     if (type === 'css')
