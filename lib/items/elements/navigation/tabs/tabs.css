@@ -1,9 +1,9 @@
-.e-4a1d3792
+.e-1a8b6ac1
 {
 	display: flex;
 }
 
-.e-4a1d3792 > .holder
+.e-1a8b6ac1 > .holder
 {
 	display: flex;
 	align-items: center;
@@ -14,7 +14,7 @@
 	padding: 4px;
 }
 
-.e-4a1d3792 > .holder > .tab
+.e-1a8b6ac1 > .holder > .tab
 {
 	display: flex;
 	align-items: center;
@@ -30,18 +30,18 @@
 	transition: all 0.2s ease;
 }
 
-.e-4a1d3792 > .holder > .tab > i
+.e-1a8b6ac1 > .holder > .tab > i
 {
 	font-size: 16px;
 }
 
-.e-4a1d3792 > .holder > .tab.active
+.e-1a8b6ac1 > .holder > .tab.active
 {
 	background: var(--ot-bg-3);
 	color: var(--ot-text-1);
 }
 
-.e-4a1d3792 > .holder > .tab:hover:not(.active)
+.e-1a8b6ac1 > .holder > .tab:hover:not(.active)
 {
 	color: var(--ot-text-1);
 }
