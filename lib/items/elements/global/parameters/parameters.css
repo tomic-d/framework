@@ -11,6 +11,14 @@
 	width: 100%;
 }
 
+.e-29179902 > .holder[variant="bg-2"]
+{
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-m);
+	padding: var(--ot-spacing-m);
+}
+
 .e-29179902 > .holder > .param
 {
 	display: flex;

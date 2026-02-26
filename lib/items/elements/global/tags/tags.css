@@ -40,3 +40,25 @@
 	background: var(--ot-brand);
 	border-color: var(--ot-brand);
 }
+
+/* Dot */
+
+.e-4a1d382d > .holder > .tag > .dot
+{
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	margin-right: 6px;
+	flex-shrink: 0;
+}
+
+.e-4a1d382d > .holder > .tag > .dot-brand { background: var(--ot-brand); }
+.e-4a1d382d > .holder > .tag > .dot-blue { background: var(--ot-blue); }
+.e-4a1d382d > .holder > .tag > .dot-red { background: var(--ot-red); }
+.e-4a1d382d > .holder > .tag > .dot-orange { background: var(--ot-orange); }
+.e-4a1d382d > .holder > .tag > .dot-green { background: var(--ot-green); }
+
+.e-4a1d382d > .holder > .tag.active > .dot
+{
+	background: white;
+}

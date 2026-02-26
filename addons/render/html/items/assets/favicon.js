@@ -7,6 +7,6 @@ html.Item({
     priority: -60,
     attributes: {
         rel: 'icon',
-        href: '/favicon.png'
+        href: 'https://cdn.onetype.ai/brand/logo/icon-orange.svg'
     }
 });

@@ -20,15 +20,20 @@
 {
 	display: flex;
 	align-items: center;
-	gap: var(--ot-spacing-s);
 	text-decoration: none;
-	color: var(--ot-text-1);
 	flex-shrink: 0;
 }
 
 .e-64d8716d > .holder > .logo > .logo-icon
 {
 	height: 16px;
+}
+
+.e-64d8716d > .holder > .logo > .logo-arrow
+{
+	display: none;
+	font-size: 16px;
+	color: var(--ot-text-2);
 }
 
 
@@ -38,8 +43,8 @@
 {
 	display: flex;
 	align-items: center;
-	gap: var(--ot-spacing-x);
-	margin-left: var(--ot-spacing-l);
+	margin-left: var(--ot-spacing-m);
+	border-left: 1px solid var(--ot-bg-2-border);
 	height: 100%;
 }
 
@@ -49,7 +54,8 @@
 	align-items: center;
 	height: 100%;
 	gap: 6px;
-	padding: 0 var(--ot-spacing-s);
+	padding: 0 var(--ot-spacing-m);
+	border-right: 1px solid var(--ot-bg-2-border);
 	text-decoration: none;
 	white-space: nowrap;
 	transition: color 0.2s ease, background 0.2s ease;
@@ -75,7 +81,7 @@
 {
 	display: flex;
 	align-items: center;
-	gap: var(--ot-spacing-s);
 	margin-left: auto;
+	border-left: 1px solid var(--ot-bg-2-border);
 	height: 100%;
 }
