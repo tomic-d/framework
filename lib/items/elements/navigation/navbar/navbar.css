@@ -62,7 +62,8 @@
 	font-size: 16px;
 }
 
-.e-64d8716d > .holder .tab:hover
+.e-64d8716d > .holder .tab:hover,
+.e-64d8716d > .holder .tab.active
 {
 	color: var(--ot-text-1);
 	background: var(--ot-bg-2);
