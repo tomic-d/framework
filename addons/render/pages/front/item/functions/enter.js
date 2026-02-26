@@ -1,11 +1,15 @@
-pages.Fn('item.enter', async function(item, parameters = {})
+pages.Fn('item.enter', async function(item, parameters = {}, preloaded = null)
 {
 	const onEnter = item.Get('onEnter');
 	const onBeforeEnter = item.Get('onBeforeEnter');
 
 	const data = {};
 
-	if(item.Get('data'))
+	if(preloaded)
+	{
+		Object.assign(data, preloaded);
+	}
+	else if(item.Get('data'))
 	{
 		Object.assign(data, await item.Get('data').call(item, parameters));
 	}
