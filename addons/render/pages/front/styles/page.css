@@ -14,9 +14,17 @@
 {
 	position: relative;
 	overflow: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--ot-bg-4) var(--ot-bg-1);
 }
+
+.ot-page-area::-webkit-scrollbar { width: 8px; height: 8px; }
+.ot-page-area::-webkit-scrollbar-track { background: var(--ot-bg-1); }
+.ot-page-area::-webkit-scrollbar-thumb { background: var(--ot-bg-4); border-radius: 4px; }
+.ot-page-area::-webkit-scrollbar-thumb:hover { background: var(--ot-bg-4-hover); }
 
 .ot-page-area > div
 {
-	height: 100%;
+	height: fit-content;
+	min-height: 100%;
 }
