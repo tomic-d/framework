@@ -19,7 +19,8 @@
 /* Group */
 
 .e-210c16c7 > .holder > .group,
-.e-210c16c7 > .holder > .bottom > .group
+.e-210c16c7 > .holder > .bottom > .group,
+.e-210c16c7 > .drawer > .group
 {
 	display: flex;
 	flex-direction: column;
@@ -29,7 +30,8 @@
 }
 
 .e-210c16c7 > .holder > .group:first-child,
-.e-210c16c7 > .holder > .bottom > .group:first-child
+.e-210c16c7 > .holder > .bottom > .group:first-child,
+.e-210c16c7 > .drawer > .group:first-child
 {
 	padding-top: 0;
 	border-top: none;
@@ -38,7 +40,8 @@
 /* Title */
 
 .e-210c16c7 > .holder > .group > .title,
-.e-210c16c7 > .holder > .bottom > .group > .title
+.e-210c16c7 > .holder > .bottom > .group > .title,
+.e-210c16c7 > .drawer > .group > .title
 {
 	font-size: 10px;
 	font-weight: 600;
@@ -52,7 +55,8 @@
 /* Item */
 
 .e-210c16c7 > .holder > .group > .item,
-.e-210c16c7 > .holder > .bottom > .group > .item
+.e-210c16c7 > .holder > .bottom > .group > .item,
+.e-210c16c7 > .drawer > .group > .item
 {
 	display: flex;
 	align-items: center;
@@ -70,7 +74,8 @@
 }
 
 .e-210c16c7 > .holder > .group > .item > i,
-.e-210c16c7 > .holder > .bottom > .group > .item > i
+.e-210c16c7 > .holder > .bottom > .group > .item > i,
+.e-210c16c7 > .drawer > .group > .item > i
 {
 	font-size: 20px;
 	opacity: 0.4;
@@ -78,7 +83,8 @@
 }
 
 .e-210c16c7 > .holder > .group > .item > span,
-.e-210c16c7 > .holder > .bottom > .group > .item > span
+.e-210c16c7 > .holder > .bottom > .group > .item > span,
+.e-210c16c7 > .drawer > .group > .item > span
 {
 	white-space: nowrap;
 	overflow: hidden;
@@ -86,7 +92,8 @@
 }
 
 .e-210c16c7 > .holder > .group > .item > .count,
-.e-210c16c7 > .holder > .bottom > .group > .item > .count
+.e-210c16c7 > .holder > .bottom > .group > .item > .count,
+.e-210c16c7 > .drawer > .group > .item > .count
 {
 	margin-left: auto;
 	font-size: var(--ot-size-s);
@@ -104,14 +111,16 @@
 /* Hover */
 
 .e-210c16c7 > .holder > .group > .item:hover,
-.e-210c16c7 > .holder > .bottom > .group > .item:hover
+.e-210c16c7 > .holder > .bottom > .group > .item:hover,
+.e-210c16c7 > .drawer > .group > .item:hover
 {
 	color: var(--ot-text-1);
 	background: var(--ot-bg-3);
 }
 
 .e-210c16c7 > .holder > .group > .item:hover > i,
-.e-210c16c7 > .holder > .bottom > .group > .item:hover > i
+.e-210c16c7 > .holder > .bottom > .group > .item:hover > i,
+.e-210c16c7 > .drawer > .group > .item:hover > i
 {
 	opacity: 0.6;
 }
@@ -119,7 +128,8 @@
 /* Active */
 
 .e-210c16c7 > .holder > .group > .item.active,
-.e-210c16c7 > .holder > .bottom > .group > .item.active
+.e-210c16c7 > .holder > .bottom > .group > .item.active,
+.e-210c16c7 > .drawer > .group > .item.active
 {
 	color: var(--ot-text-1);
 	background: var(--ot-bg-3);
@@ -128,7 +138,8 @@
 }
 
 .e-210c16c7 > .holder > .group > .item.active > i,
-.e-210c16c7 > .holder > .bottom > .group > .item.active > i
+.e-210c16c7 > .holder > .bottom > .group > .item.active > i,
+.e-210c16c7 > .drawer > .group > .item.active > i
 {
 	opacity: 0.9;
 }
@@ -152,4 +163,111 @@
 .e-210c16c7 > .holder.border
 {
 	border-right: 1px solid var(--ot-bg-2-border);
+}
+
+/* Bar, Overlay, Drawer — hidden on desktop */
+
+.e-210c16c7 > .bar,
+.e-210c16c7 > .overlay,
+.e-210c16c7 > .drawer
+{
+	display: none;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 900px)
+{
+	.e-210c16c7
+	{
+		width: 100%;
+		height: auto;
+	}
+
+	.e-210c16c7 > .holder
+	{
+		display: none;
+	}
+
+	.e-210c16c7 > .bar
+	{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100vw;
+		height: 40px;
+		background: var(--ot-bg-1);
+		border-top: 1px solid var(--ot-bg-2-border);
+		z-index: 999;
+		cursor: pointer;
+	}
+
+	.e-210c16c7 > .bar > .toggle
+	{
+		font-size: 20px;
+		color: var(--ot-text-2);
+	}
+
+	.e-210c16c7 > .drawer > .toggle
+	{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		background: none;
+		border: none;
+		color: var(--ot-text-2);
+		cursor: pointer;
+	}
+
+	.e-210c16c7 > .drawer > .toggle > i
+	{
+		font-size: 20px;
+	}
+
+	.e-210c16c7 > .overlay
+	{
+		display: block;
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 1000;
+	}
+
+	.e-210c16c7 > .drawer
+	{
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100vw;
+		max-height: 80vh;
+		background: var(--ot-bg-1);
+		border-top: 1px solid var(--ot-bg-2-border);
+		padding: var(--ot-spacing-m) var(--ot-spacing-s);
+		overflow-y: auto;
+		z-index: 1001;
+	}
+
+	.e-210c16c7 > .drawer > .toggle
+	{
+		align-self: flex-end;
+		margin-bottom: var(--ot-spacing-s);
+	}
+
+	.e-210c16c7 > .drawer > .group
+	{
+		border-top: none;
+		border-bottom: 1px solid var(--ot-bg-2-border);
+	}
+
+	.e-210c16c7 > .drawer > .group:last-of-type
+	{
+		border-bottom: none;
+	}
 }
