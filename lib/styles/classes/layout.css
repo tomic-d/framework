@@ -41,7 +41,7 @@
 }
 
 /* Scrollbar */
-.ot-scrollbar { overflow: auto; }
+.ot-scrollbar { overflow: auto; scrollbar-width: thin; scrollbar-color: var(--ot-bg-4) var(--ot-bg-1); }
 .ot-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
 .ot-scrollbar::-webkit-scrollbar-track { background: var(--ot-bg-1); }
 .ot-scrollbar::-webkit-scrollbar-thumb { background: var(--ot-bg-4); border-radius: 4px; }
