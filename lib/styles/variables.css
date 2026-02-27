@@ -69,3 +69,11 @@
     --ot-green-opacity: rgba(52, 211, 153, 0.12);
     --ot-green-hover: rgba(16, 185, 129, 1);
 }
+
+@media screen and (max-width: 900px)
+{
+    :root
+    {
+        --ot-spacing-l: 16px;
+    }
+}

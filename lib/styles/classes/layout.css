@@ -28,6 +28,18 @@
 .ot-container-l { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
 .ot-container-full { width: 100%; padding: 0 calc(var(--ot-spacing-m) * 2); }
 
+@media screen and (max-width: 900px)
+{
+    .ot-container,
+    .ot-container-s,
+    .ot-container-m,
+    .ot-container-l,
+    .ot-container-full
+    {
+        padding: 0 var(--ot-spacing-m);
+    }
+}
+
 /* Scrollbar */
 .ot-scrollbar { overflow: auto; }
 .ot-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
