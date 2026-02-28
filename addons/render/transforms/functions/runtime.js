@@ -4,12 +4,12 @@ transforms.Fn('runtime', function()
     {
         const id = node.getAttribute('ot');
 
-        if(!id)
+        if(!id || node.hasAttribute('ot-init'))
         {
             return;
         }
 
-        node.removeAttribute('ot');
+        node.setAttribute('ot-init', '');
         transforms.Fn('run', id, node);
     };
 
