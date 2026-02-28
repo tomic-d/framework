@@ -8,7 +8,11 @@ transforms.Fn('item.run', function(item, node, data = null)
     item.Fn('load').then(() =>
     {
         item.Get('code').call({}, data, node, item);
-        node.removeAttribute('ot-init');
-        node.removeAttribute('ot');
+
+        requestAnimationFrame(() =>
+        {
+            node.removeAttribute('ot');
+            node.removeAttribute('ot-init');
+        });
     });
 });
