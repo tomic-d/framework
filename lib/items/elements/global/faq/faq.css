@@ -1,16 +1,20 @@
+/* Root */
+
 .e-e204b7e
 {
 	display: flex;
 	width: 100%;
 }
 
+/* Holder */
+
 .e-e204b7e > .holder
 {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	border: 1px solid var(--ot-bg-2-border);
-	border-radius: 8px;
+	border: 1px solid transparent;
+	border-radius: var(--ot-radius-m);
 	overflow: hidden;
 }
 
@@ -21,23 +25,13 @@
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
-	border-bottom: 1px solid var(--ot-bg-2-border);
+	border-bottom: 1px solid transparent;
 	transition: background 0.15s ease;
 }
 
 .e-e204b7e > .holder > .item:last-child
 {
 	border-bottom: none;
-}
-
-.e-e204b7e > .holder > .item:hover
-{
-	background: var(--ot-bg-2);
-}
-
-.e-e204b7e > .holder > .item.active
-{
-	background: var(--ot-bg-2);
 }
 
 /* Question */
@@ -48,7 +42,7 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: var(--ot-spacing-s);
-	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	padding: var(--ot-spacing-m);
 }
 
 .e-e204b7e > .holder > .item > .question > .text
@@ -60,7 +54,7 @@
 
 .e-e204b7e > .holder > .item > .question > .icon
 {
-	font-size: 20px;
+	font-size: var(--ot-size-l);
 	color: var(--ot-text-2);
 	flex-shrink: 0;
 }
@@ -69,8 +63,36 @@
 
 .e-e204b7e > .holder > .item > .answer
 {
-	padding: 0 var(--ot-spacing-m) var(--ot-spacing-s);
+	padding: 0 var(--ot-spacing-m) var(--ot-spacing-m);
 	font-size: var(--ot-size-m);
 	color: var(--ot-text-2);
 	line-height: 1.6;
 }
+
+/* Background variants */
+
+.e-e204b7e > .holder.bg-1 { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
+.e-e204b7e > .holder.bg-1 > .item { border-bottom-color: var(--ot-bg-1-border); }
+.e-e204b7e > .holder.bg-1 > .item:hover, .e-e204b7e > .holder.bg-1 > .item.active { background: var(--ot-bg-1-hover); }
+.e-e204b7e > .holder.bg-2 { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
+.e-e204b7e > .holder.bg-2 > .item { border-bottom-color: var(--ot-bg-2-border); }
+.e-e204b7e > .holder.bg-2 > .item:hover, .e-e204b7e > .holder.bg-2 > .item.active { background: var(--ot-bg-2-hover); }
+.e-e204b7e > .holder.bg-3 { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
+.e-e204b7e > .holder.bg-3 > .item { border-bottom-color: var(--ot-bg-3-border); }
+.e-e204b7e > .holder.bg-3 > .item:hover, .e-e204b7e > .holder.bg-3 > .item.active { background: var(--ot-bg-3-hover); }
+.e-e204b7e > .holder.bg-4 { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
+.e-e204b7e > .holder.bg-4 > .item { border-bottom-color: var(--ot-bg-4-border); }
+.e-e204b7e > .holder.bg-4 > .item:hover, .e-e204b7e > .holder.bg-4 > .item.active { background: var(--ot-bg-4-hover); }
+
+/* Size variants */
+
+.e-e204b7e > .holder.size-s > .item > .question { padding: var(--ot-spacing-s); }
+.e-e204b7e > .holder.size-s > .item > .answer { padding: 0 var(--ot-spacing-s) var(--ot-spacing-s); font-size: var(--ot-size-s); }
+.e-e204b7e > .holder.size-m > .item > .question { padding: var(--ot-spacing-m); }
+.e-e204b7e > .holder.size-m > .item > .answer { padding: 0 var(--ot-spacing-m) var(--ot-spacing-m); }
+.e-e204b7e > .holder.size-l > .item > .question { padding: var(--ot-spacing-l); }
+.e-e204b7e > .holder.size-l > .item > .answer { padding: 0 var(--ot-spacing-l) var(--ot-spacing-l); }
+
+/* Border variant */
+
+.e-e204b7e > .holder.border { border: 1px solid var(--ot-bg-2-border); }

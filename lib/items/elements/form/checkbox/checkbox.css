@@ -1,0 +1,109 @@
+/* Root */
+
+.e-f249baa
+{
+	display: inline-flex;
+}
+
+/* Holder */
+
+.e-f249baa > .holder
+{
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	cursor: pointer;
+}
+
+/* Input */
+
+.e-f249baa > .holder > input
+{
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	width: 0;
+	height: 0;
+	margin: 0;
+}
+
+/* Label */
+
+.e-f249baa > .holder > .label
+{
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-1);
+	user-select: none;
+}
+
+/* Mark */
+
+.e-f249baa > .holder > .mark
+{
+	display: block;
+	border-radius: var(--ot-radius-s);
+	border: 1px solid transparent;
+	position: relative;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.e-f249baa > .holder > .mark::after
+{
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border: solid white;
+	transform: translate(-50%, -60%) rotate(45deg) scale(0);
+	transition: transform 0.15s ease;
+}
+
+.e-f249baa > .holder > input:checked ~ .mark::after
+{
+	transform: translate(-50%, -60%) rotate(45deg) scale(1);
+}
+
+.e-f249baa > .holder > input:disabled ~ .mark
+{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Size variants */
+
+.e-f249baa > .holder.size-s > .mark { width: 16px; height: 16px; }
+.e-f249baa > .holder.size-s > .mark::after { width: 3px; height: 6px; border-width: 0 1.5px 1.5px 0; }
+.e-f249baa > .holder.size-s > .label { font-size: var(--ot-size-s); }
+.e-f249baa > .holder.size-m > .mark { width: 20px; height: 20px; }
+.e-f249baa > .holder.size-m > .mark::after { width: 4px; height: 8px; border-width: 0 2px 2px 0; }
+.e-f249baa > .holder.size-m > .label { font-size: var(--ot-size-m); }
+.e-f249baa > .holder.size-l > .mark { width: 24px; height: 24px; }
+.e-f249baa > .holder.size-l > .mark::after { width: 5px; height: 10px; border-width: 0 2.5px 2.5px 0; }
+.e-f249baa > .holder.size-l > .label { font-size: var(--ot-size-m); }
+
+/* Transparent variant */
+
+.e-f249baa > .holder.transparent > .mark { background: transparent; border-color: transparent; }
+.e-f249baa > .holder.transparent > .mark::after { border-color: var(--ot-text-1); }
+
+/* Border variant */
+
+.e-f249baa > .holder.border > .mark { background: transparent; border-color: var(--ot-bg-1-border); }
+.e-f249baa > .holder.border:hover > .mark { border-color: var(--ot-bg-2-border); }
+.e-f249baa > .holder.border > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+
+/* Background variants */
+
+.e-f249baa > .holder.bg-1 > .mark { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
+.e-f249baa > .holder.bg-1:hover > .mark { background: var(--ot-bg-1-hover); }
+.e-f249baa > .holder.bg-1 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-f249baa > .holder.bg-2 > .mark { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
+.e-f249baa > .holder.bg-2:hover > .mark { background: var(--ot-bg-2-hover); }
+.e-f249baa > .holder.bg-2 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-f249baa > .holder.bg-3 > .mark { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
+.e-f249baa > .holder.bg-3:hover > .mark { background: var(--ot-bg-3-hover); }
+.e-f249baa > .holder.bg-3 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-f249baa > .holder.bg-4 > .mark { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
+.e-f249baa > .holder.bg-4:hover > .mark { background: var(--ot-bg-4-hover); }
+.e-f249baa > .holder.bg-4 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }

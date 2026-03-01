@@ -1,0 +1,152 @@
+/* Root */
+
+.e-283fbe2c
+{
+	display: flex;
+	width: 100%;
+}
+
+/* Holder */
+
+.e-283fbe2c > .holder
+{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 100%;
+	border-radius: var(--ot-radius-m);
+	border: 1px solid transparent;
+	background: transparent;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* Tags */
+
+.e-283fbe2c > .holder > .tags
+{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--ot-spacing-x);
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	min-height: var(--ot-height-m);
+}
+
+/* Tag */
+
+.e-283fbe2c > .holder > .tags > .tag
+{
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ot-spacing-x);
+	padding: 2px var(--ot-spacing-s);
+	border-radius: var(--ot-radius-s);
+	background: var(--ot-bg-4);
+	border: 1px solid var(--ot-bg-4-border);
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-1);
+	line-height: 1;
+}
+
+.e-283fbe2c > .holder > .tags > .tag > .remove
+{
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-2);
+	cursor: pointer;
+	transition: color 0.15s ease;
+}
+
+.e-283fbe2c > .holder > .tags > .tag > .remove:hover
+{
+	color: var(--ot-red);
+}
+
+/* Input */
+
+.e-283fbe2c > .holder > .tags > .input
+{
+	flex: 1;
+	min-width: 80px;
+	border: none;
+	outline: none;
+	background: transparent;
+	color: var(--ot-text-1);
+	font-size: var(--ot-size-m);
+	font-family: inherit;
+	padding: 0;
+}
+
+.e-283fbe2c > .holder > .tags > .input::placeholder
+{
+	color: var(--ot-text-2);
+}
+
+.e-283fbe2c > .holder > .tags > .input:disabled
+{
+	cursor: not-allowed;
+}
+
+/* Dropdown */
+
+.e-283fbe2c > .holder > .dropdown
+{
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	margin-top: var(--ot-spacing-x);
+	padding: var(--ot-spacing-x) 0;
+	background: var(--ot-bg-3);
+	border: 1px solid var(--ot-bg-3-border);
+	border-radius: var(--ot-radius-m);
+	z-index: 10;
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+.e-283fbe2c > .holder > .dropdown > .option
+{
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-1);
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.e-283fbe2c > .holder > .dropdown > .option:hover
+{
+	background: var(--ot-bg-3-hover);
+}
+
+/* Background variants */
+
+.e-283fbe2c > .holder.bg-1 { background: var(--ot-bg-1); }
+.e-283fbe2c > .holder.bg-1:focus-within { background: var(--ot-bg-1-hover); }
+.e-283fbe2c > .holder.bg-1.border { border-color: var(--ot-bg-1-border); }
+.e-283fbe2c > .holder.bg-2 { background: var(--ot-bg-2); }
+.e-283fbe2c > .holder.bg-2:focus-within { background: var(--ot-bg-2-hover); }
+.e-283fbe2c > .holder.bg-2.border { border-color: var(--ot-bg-2-border); }
+.e-283fbe2c > .holder.bg-3 { background: var(--ot-bg-3); }
+.e-283fbe2c > .holder.bg-3:focus-within { background: var(--ot-bg-3-hover); }
+.e-283fbe2c > .holder.bg-3.border { border-color: var(--ot-bg-3-border); }
+.e-283fbe2c > .holder.bg-4 { background: var(--ot-bg-4); }
+.e-283fbe2c > .holder.bg-4:focus-within { background: var(--ot-bg-4-hover); }
+.e-283fbe2c > .holder.bg-4.border { border-color: var(--ot-bg-4-border); }
+
+/* Transparent variant */
+
+.e-283fbe2c > .holder.transparent { background: transparent; }
+
+/* Border variant */
+
+.e-283fbe2c > .holder.border { border: 1px solid var(--ot-bg-2-border); }
+.e-283fbe2c > .holder.border:focus-within { border-color: var(--ot-brand); }
+
+/* Size variants */
+
+.e-283fbe2c > .holder.size-s > .tags { padding: var(--ot-spacing-x) var(--ot-spacing-s); min-height: var(--ot-height-s); gap: 2px; }
+.e-283fbe2c > .holder.size-s > .tags > .tag { font-size: 10px; }
+.e-283fbe2c > .holder.size-s > .tags > .input { font-size: var(--ot-size-s); }
+.e-283fbe2c > .holder.size-m > .tags { padding: var(--ot-spacing-s) var(--ot-spacing-m); min-height: var(--ot-height-m); }
+.e-283fbe2c > .holder.size-l > .tags { padding: var(--ot-spacing-m) var(--ot-spacing-l); min-height: var(--ot-height-l); }
+.e-283fbe2c > .holder.size-l > .tags > .input { font-size: var(--ot-size-m); }

@@ -1,0 +1,118 @@
+/* Root */
+
+.e-206433b8
+{
+	display: flex;
+}
+
+/* Holder */
+
+.e-206433b8 > .holder
+{
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	cursor: pointer;
+}
+
+/* Input */
+
+.e-206433b8 > .holder > input
+{
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	width: 0;
+	height: 0;
+}
+
+/* Label */
+
+.e-206433b8 > .holder > .label
+{
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-1);
+	user-select: none;
+}
+
+/* Mark */
+
+.e-206433b8 > .holder > .mark
+{
+	display: block;
+	border-radius: 50%;
+	border: 1px solid;
+	position: relative;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.e-206433b8 > .holder > .mark::after
+{
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	border-radius: 50%;
+	transition: transform 0.15s ease;
+}
+
+.e-206433b8 > .holder > input:checked ~ .mark::after
+{
+	transform: translate(-50%, -50%) scale(1);
+}
+
+.e-206433b8 > .holder > input:disabled ~ .mark
+{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Transparent variant */
+
+.e-206433b8 > .holder.transparent > .mark { background: transparent; border-color: transparent; }
+.e-206433b8 > .holder.transparent > .mark::after { background: var(--ot-text-1); }
+
+/* Border variant */
+
+.e-206433b8 > .holder.border > .mark { background: transparent; border-color: var(--ot-bg-1-border); }
+.e-206433b8 > .holder.border:hover > .mark { border-color: var(--ot-bg-2-border); }
+.e-206433b8 > .holder.border > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-206433b8 > .holder.border > .mark::after { background: white; }
+
+/* Background variants */
+
+.e-206433b8 > .holder.bg-1 > .mark { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
+.e-206433b8 > .holder.bg-1:hover > .mark { background: var(--ot-bg-1-hover); }
+.e-206433b8 > .holder.bg-1 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-206433b8 > .holder.bg-1 > .mark::after { background: white; }
+
+.e-206433b8 > .holder.bg-2 > .mark { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
+.e-206433b8 > .holder.bg-2:hover > .mark { background: var(--ot-bg-2-hover); }
+.e-206433b8 > .holder.bg-2 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-206433b8 > .holder.bg-2 > .mark::after { background: white; }
+
+.e-206433b8 > .holder.bg-3 > .mark { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
+.e-206433b8 > .holder.bg-3:hover > .mark { background: var(--ot-bg-3-hover); }
+.e-206433b8 > .holder.bg-3 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-206433b8 > .holder.bg-3 > .mark::after { background: white; }
+
+.e-206433b8 > .holder.bg-4 > .mark { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
+.e-206433b8 > .holder.bg-4:hover > .mark { background: var(--ot-bg-4-hover); }
+.e-206433b8 > .holder.bg-4 > input:checked ~ .mark { border-color: var(--ot-brand); background: var(--ot-brand); }
+.e-206433b8 > .holder.bg-4 > .mark::after { background: white; }
+
+/* Size variants */
+
+.e-206433b8 > .holder.size-s > .mark { width: 16px; height: 16px; }
+.e-206433b8 > .holder.size-s > .mark::after { width: 6px; height: 6px; }
+.e-206433b8 > .holder.size-s > .label { font-size: var(--ot-size-s); }
+
+.e-206433b8 > .holder.size-m > .mark { width: 20px; height: 20px; }
+.e-206433b8 > .holder.size-m > .mark::after { width: 8px; height: 8px; }
+.e-206433b8 > .holder.size-m > .label { font-size: var(--ot-size-m); }
+
+.e-206433b8 > .holder.size-l > .mark { width: 24px; height: 24px; }
+.e-206433b8 > .holder.size-l > .mark::after { width: 10px; height: 10px; }
+.e-206433b8 > .holder.size-l > .label { font-size: var(--ot-size-m); }
