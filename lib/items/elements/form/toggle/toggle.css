@@ -1,0 +1,101 @@
+/* Root */
+
+.e-180e0ca7
+{
+	display: flex;
+}
+
+/* Holder */
+
+.e-180e0ca7 > .holder
+{
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	cursor: pointer;
+	user-select: none;
+}
+
+.e-180e0ca7 > .holder.disabled
+{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Input */
+
+.e-180e0ca7 > .holder > input
+{
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* Track */
+
+.e-180e0ca7 > .holder > .track
+{
+	position: relative;
+	display: flex;
+	align-items: center;
+	border-radius: 100px;
+	transition: background 0.15s ease;
+}
+
+/* Thumb */
+
+.e-180e0ca7 > .holder > .track > .thumb
+{
+	position: absolute;
+	border-radius: 50%;
+	background: var(--ot-text-2);
+	transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* Active */
+
+.e-180e0ca7 > .holder.active > .track > .thumb
+{
+	background: var(--ot-brand);
+}
+
+/* Label */
+
+.e-180e0ca7 > .holder > .label
+{
+	font-size: var(--ot-size-m);
+	color: var(--ot-text-1);
+}
+
+/* Background variants */
+
+.e-180e0ca7 > .holder.bg-1 > .track { background: var(--ot-bg-1); }
+.e-180e0ca7 > .holder.bg-1.active > .track { background: var(--ot-brand-opacity); }
+.e-180e0ca7 > .holder.bg-2 > .track { background: var(--ot-bg-2); }
+.e-180e0ca7 > .holder.bg-2.active > .track { background: var(--ot-brand-opacity); }
+.e-180e0ca7 > .holder.bg-3 > .track { background: var(--ot-bg-3); }
+.e-180e0ca7 > .holder.bg-3.active > .track { background: var(--ot-brand-opacity); }
+.e-180e0ca7 > .holder.bg-4 > .track { background: var(--ot-bg-4); }
+.e-180e0ca7 > .holder.bg-4.active > .track { background: var(--ot-brand-opacity); }
+
+/* Size small */
+
+.e-180e0ca7 > .holder.size-s > .track { width: 28px; height: 16px; }
+.e-180e0ca7 > .holder.size-s > .track > .thumb { width: 12px; height: 12px; left: 2px; }
+.e-180e0ca7 > .holder.size-s.active > .track > .thumb { transform: translateX(12px); }
+.e-180e0ca7 > .holder.size-s > .label { font-size: var(--ot-size-s); }
+
+/* Size medium */
+
+.e-180e0ca7 > .holder.size-m > .track { width: 36px; height: 20px; }
+.e-180e0ca7 > .holder.size-m > .track > .thumb { width: 16px; height: 16px; left: 2px; }
+.e-180e0ca7 > .holder.size-m.active > .track > .thumb { transform: translateX(16px); }
+.e-180e0ca7 > .holder.size-m > .label { font-size: var(--ot-size-m); }
+
+/* Size large */
+
+.e-180e0ca7 > .holder.size-l > .track { width: 44px; height: 24px; }
+.e-180e0ca7 > .holder.size-l > .track > .thumb { width: 20px; height: 20px; left: 2px; }
+.e-180e0ca7 > .holder.size-l.active > .track > .thumb { transform: translateX(20px); }
+.e-180e0ca7 > .holder.size-l > .label { font-size: var(--ot-size-m); }

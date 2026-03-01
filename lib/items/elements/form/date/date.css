@@ -1,0 +1,84 @@
+/* Root */
+
+.e-283879c1
+{
+	display: flex;
+	width: 100%;
+}
+
+/* Holder */
+
+.e-283879c1 > .holder
+{
+	display: flex;
+	width: 100%;
+	border-radius: var(--ot-radius-m);
+	border: 1px solid transparent;
+	background: transparent;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* Input */
+
+.e-283879c1 > .holder > .input
+{
+	width: 100%;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--ot-text-1);
+	font-family: inherit;
+	padding: 0 var(--ot-spacing-m);
+	color-scheme: dark;
+}
+
+.e-283879c1 > .holder > .input:disabled
+{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.e-283879c1 > .holder > .input::-webkit-calendar-picker-indicator
+{
+	cursor: pointer;
+	opacity: 0.5;
+	transition: opacity 0.15s ease;
+}
+
+.e-283879c1 > .holder > .input::-webkit-calendar-picker-indicator:hover
+{
+	opacity: 1;
+}
+
+/* Background variants */
+
+.e-283879c1 > .holder.bg-1 { background: var(--ot-bg-1); }
+.e-283879c1 > .holder.bg-1:hover { background: var(--ot-bg-1-hover); }
+.e-283879c1 > .holder.bg-1.border { border-color: var(--ot-bg-1-border); }
+.e-283879c1 > .holder.bg-2 { background: var(--ot-bg-2); }
+.e-283879c1 > .holder.bg-2:hover { background: var(--ot-bg-2-hover); }
+.e-283879c1 > .holder.bg-2.border { border-color: var(--ot-bg-2-border); }
+.e-283879c1 > .holder.bg-3 { background: var(--ot-bg-3); }
+.e-283879c1 > .holder.bg-3:hover { background: var(--ot-bg-3-hover); }
+.e-283879c1 > .holder.bg-3.border { border-color: var(--ot-bg-3-border); }
+.e-283879c1 > .holder.bg-4 { background: var(--ot-bg-4); }
+.e-283879c1 > .holder.bg-4:hover { background: var(--ot-bg-4-hover); }
+.e-283879c1 > .holder.bg-4.border { border-color: var(--ot-bg-4-border); }
+
+/* Transparent variant */
+
+.e-283879c1 > .holder.transparent { background: transparent; }
+
+/* Border variant */
+
+.e-283879c1 > .holder.border { border: 1px solid var(--ot-bg-2-border); }
+.e-283879c1 > .holder.border:focus-within { border-color: var(--ot-brand); }
+
+/* Size variants */
+
+.e-283879c1 > .holder.size-s { height: var(--ot-height-s); }
+.e-283879c1 > .holder.size-s > .input { font-size: var(--ot-size-s); padding: 0 var(--ot-spacing-s); }
+.e-283879c1 > .holder.size-m { height: var(--ot-height-m); }
+.e-283879c1 > .holder.size-m > .input { font-size: var(--ot-size-m); }
+.e-283879c1 > .holder.size-l { height: var(--ot-height-l); }
+.e-283879c1 > .holder.size-l > .input { font-size: var(--ot-size-m); padding: 0 var(--ot-spacing-l); }

@@ -1,0 +1,128 @@
+/* Root */
+
+.e-21311850
+{
+	display: flex;
+	width: 100%;
+}
+
+/* Holder */
+
+.e-21311850 > .holder
+{
+	display: flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	width: 100%;
+	padding: var(--ot-spacing-x);
+	border-radius: var(--ot-radius-m);
+	border: 1px solid transparent;
+	background: transparent;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* Swatch */
+
+.e-21311850 > .holder > .swatch
+{
+	position: relative;
+	flex-shrink: 0;
+	border-radius: var(--ot-radius-s);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	cursor: pointer;
+	overflow: hidden;
+	transition: border-color 0.15s ease, transform 0.15s ease;
+	padding: 0;
+	outline: none;
+}
+
+.e-21311850 > .holder > .swatch:hover
+{
+	border-color: rgba(255, 255, 255, 0.25);
+	transform: scale(1.05);
+}
+
+.e-21311850 > .holder > .swatch:disabled
+{
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none;
+}
+
+/* Native color input — hidden inside swatch */
+
+.e-21311850 > .holder > .swatch > .native
+{
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+	border: none;
+	padding: 0;
+}
+
+/* Hex input */
+
+.e-21311850 > .holder > .input
+{
+	flex: 1;
+	min-width: 0;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--ot-text-1);
+	font-family: monospace;
+	letter-spacing: 0.5px;
+	padding: 0;
+}
+
+.e-21311850 > .holder > .input::placeholder
+{
+	color: var(--ot-text-2);
+}
+
+.e-21311850 > .holder > .input:disabled
+{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Background variants */
+
+.e-21311850 > .holder.bg-1 { background: var(--ot-bg-1); }
+.e-21311850 > .holder.bg-1:hover { background: var(--ot-bg-1-hover); }
+.e-21311850 > .holder.bg-1.border { border-color: var(--ot-bg-1-border); }
+.e-21311850 > .holder.bg-2 { background: var(--ot-bg-2); }
+.e-21311850 > .holder.bg-2:hover { background: var(--ot-bg-2-hover); }
+.e-21311850 > .holder.bg-2.border { border-color: var(--ot-bg-2-border); }
+.e-21311850 > .holder.bg-3 { background: var(--ot-bg-3); }
+.e-21311850 > .holder.bg-3:hover { background: var(--ot-bg-3-hover); }
+.e-21311850 > .holder.bg-3.border { border-color: var(--ot-bg-3-border); }
+.e-21311850 > .holder.bg-4 { background: var(--ot-bg-4); }
+.e-21311850 > .holder.bg-4:hover { background: var(--ot-bg-4-hover); }
+.e-21311850 > .holder.bg-4.border { border-color: var(--ot-bg-4-border); }
+
+/* Transparent variant */
+
+.e-21311850 > .holder.transparent { background: transparent; padding: 0; }
+
+/* Border variant */
+
+.e-21311850 > .holder.border { border: 1px solid var(--ot-bg-2-border); }
+.e-21311850 > .holder.border:focus-within { border-color: var(--ot-brand); }
+
+/* Size variants */
+
+.e-21311850 > .holder.size-s { height: var(--ot-height-s); padding: 0 var(--ot-spacing-s); }
+.e-21311850 > .holder.size-s > .swatch { width: 18px; height: 18px; }
+.e-21311850 > .holder.size-s > .input { font-size: var(--ot-size-s); }
+
+.e-21311850 > .holder.size-m { height: var(--ot-height-m); padding: 0 var(--ot-spacing-s); }
+.e-21311850 > .holder.size-m > .swatch { width: 22px; height: 22px; }
+.e-21311850 > .holder.size-m > .input { font-size: var(--ot-size-m); }
+
+.e-21311850 > .holder.size-l { height: var(--ot-height-l); padding: 0 var(--ot-spacing-m); }
+.e-21311850 > .holder.size-l > .swatch { width: 28px; height: 28px; }
+.e-21311850 > .holder.size-l > .input { font-size: var(--ot-size-m); }

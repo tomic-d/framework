@@ -1,25 +1,30 @@
+/* Root */
+
 .e-471f3f12
 {
-	width: 100%;
-	min-height: calc(100vh - 48px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+	min-height: calc(100vh - 48px);
 	padding: var(--ot-spacing-l);
 }
 
-.e-471f3f12 .holder
+/* Holder */
+
+.e-471f3f12 > .holder
 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 20px;
+	gap: var(--ot-spacing-m);
 	text-align: center;
 	max-width: 400px;
 }
 
-/* Large code number */
-.e-471f3f12 .holder > .code
+/* Code number */
+
+.e-471f3f12 > .holder > .code
 {
 	font-size: 120px;
 	font-weight: 700;
@@ -30,19 +35,23 @@
 	user-select: none;
 }
 
-.e-471f3f12 .holder > .title
+/* Title */
+
+.e-471f3f12 > .holder > .title
 {
-	font-size: 20px;
+	font-size: var(--ot-size-l);
 	font-weight: 600;
 	color: var(--ot-text-1);
 	line-height: 1.3;
-	margin-top: -8px;
+	margin: 0;
 }
 
-.e-471f3f12 .holder > .description
+/* Description */
+
+.e-471f3f12 > .holder > .description
 {
-	font-size: 14px;
+	font-size: var(--ot-size-m);
 	line-height: 1.6;
 	color: var(--ot-text-2);
-	margin-top: -4px;
+	margin: 0;
 }

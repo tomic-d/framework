@@ -1,3 +1,5 @@
+/* Root */
+
 .e-210c16c7
 {
 	display: flex;
@@ -6,13 +8,14 @@
 	height: 100%;
 }
 
+/* Holder */
+
 .e-210c16c7 > .holder
 {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	padding: var(--ot-spacing-m) var(--ot-spacing-s);
-	gap: 0;
 	overflow-y: auto;
 }
 
@@ -24,7 +27,7 @@
 {
 	display: flex;
 	flex-direction: column;
-	gap: 2px;
+	gap: var(--ot-spacing-x);
 	padding: var(--ot-spacing-s) 0;
 	border-top: 1px solid var(--ot-bg-3-border);
 }
@@ -43,7 +46,7 @@
 .e-210c16c7 > .holder > .bottom > .group > .title,
 .e-210c16c7 > .drawer > .group > .title
 {
-	font-size: 10px;
+	font-size: var(--ot-size-s);
 	font-weight: 600;
 	color: var(--ot-text-2);
 	text-transform: uppercase;
@@ -70,14 +73,14 @@
 	border: 1px solid transparent;
 	border-radius: var(--ot-radius-m);
 	cursor: pointer;
-	transition: all 0.15s ease;
+	transition: color 0.15s ease, background 0.15s ease;
 }
 
 .e-210c16c7 > .holder > .group > .item > i,
 .e-210c16c7 > .holder > .bottom > .group > .item > i,
 .e-210c16c7 > .drawer > .group > .item > i
 {
-	font-size: 20px;
+	font-size: var(--ot-size-l);
 	opacity: 0.4;
 	transition: opacity 0.15s ease;
 }
@@ -91,18 +94,20 @@
 	text-overflow: ellipsis;
 }
 
+/* Count badge */
+
 .e-210c16c7 > .holder > .group > .item > .count,
 .e-210c16c7 > .holder > .bottom > .group > .item > .count,
 .e-210c16c7 > .drawer > .group > .item > .count
 {
 	margin-left: auto;
 	font-size: var(--ot-size-s);
-	min-width: 20px;
-	height: 20px;
+	min-width: var(--ot-height-x);
+	height: var(--ot-height-x);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 10px;
+	border-radius: var(--ot-radius-m);
 	background: var(--ot-bg-4);
 	color: var(--ot-text-2);
 	font-weight: 500;
@@ -153,17 +158,16 @@
 	margin-top: auto;
 }
 
-/* Variants */
+/* Background variants */
 
-.e-210c16c7 > .holder.bg-2
-{
-	background: var(--ot-bg-2);
-}
+.e-210c16c7 > .holder.bg-1 { background: var(--ot-bg-1); }
+.e-210c16c7 > .holder.bg-2 { background: var(--ot-bg-2); }
+.e-210c16c7 > .holder.bg-3 { background: var(--ot-bg-3); }
+.e-210c16c7 > .holder.bg-4 { background: var(--ot-bg-4); }
 
-.e-210c16c7 > .holder.border
-{
-	border-right: 1px solid var(--ot-bg-2-border);
-}
+/* Border variant */
+
+.e-210c16c7 > .holder.border { border-right: 1px solid var(--ot-bg-2-border); }
 
 /* Bar, Overlay, Drawer — hidden on desktop */
 
@@ -198,7 +202,7 @@
 		bottom: 0;
 		left: 0;
 		width: 100vw;
-		height: 40px;
+		height: var(--ot-height-l);
 		background: var(--ot-bg-1);
 		border-top: 1px solid var(--ot-bg-2-border);
 		border-bottom: 1px solid var(--ot-bg-2-border);
@@ -208,27 +212,9 @@
 
 	.e-210c16c7 > .bar > .toggle
 	{
-		font-size: 20px;
+		font-size: var(--ot-size-l);
 		color: var(--ot-brand);
 		pointer-events: none;
-	}
-
-	.e-210c16c7 > .drawer > .toggle
-	{
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 34px;
-		height: 34px;
-		background: none;
-		border: none;
-		color: var(--ot-text-2);
-		cursor: pointer;
-	}
-
-	.e-210c16c7 > .drawer > .toggle > i
-	{
-		font-size: 20px;
 	}
 
 	.e-210c16c7 > .overlay
@@ -262,7 +248,7 @@
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		height: 40px;
+		height: var(--ot-height-l);
 		background: none;
 		border: none;
 		border-bottom: 1px solid var(--ot-bg-2-border);
@@ -273,7 +259,7 @@
 
 	.e-210c16c7 > .drawer > .toggle > i
 	{
-		font-size: 20px;
+		font-size: var(--ot-size-l);
 	}
 
 	.e-210c16c7 > .drawer > .group

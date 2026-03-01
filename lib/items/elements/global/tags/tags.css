@@ -1,7 +1,12 @@
+/* Root */
+
 .e-4a1d382d
 {
 	display: flex;
+	width: 100%;
 }
+
+/* Holder */
 
 .e-4a1d382d > .holder
 {
@@ -11,11 +16,13 @@
 	flex-wrap: wrap;
 }
 
+/* Tag */
+
 .e-4a1d382d > .holder > .tag
 {
 	display: flex;
 	align-items: center;
-	padding: 6px 14px;
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
 	font-size: var(--ot-size-s);
 	font-weight: 500;
 	color: var(--ot-text-2);
@@ -25,7 +32,7 @@
 	cursor: pointer;
 	outline: none;
 	white-space: nowrap;
-	transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+	transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
 .e-4a1d382d > .holder > .tag:hover
@@ -45,10 +52,10 @@
 
 .e-4a1d382d > .holder > .tag > .dot
 {
-	width: 6px;
-	height: 6px;
+	width: var(--ot-spacing-s);
+	height: var(--ot-spacing-s);
 	border-radius: 50%;
-	margin-right: 6px;
+	margin-right: var(--ot-spacing-s);
 	flex-shrink: 0;
 }
 
@@ -62,3 +69,9 @@
 {
 	background: white;
 }
+
+/* Size variants */
+
+.e-4a1d382d > .holder.size-s > .tag { padding: var(--ot-spacing-x) var(--ot-spacing-s); font-size: var(--ot-size-s); }
+.e-4a1d382d > .holder.size-m > .tag { padding: var(--ot-spacing-s) var(--ot-spacing-m); font-size: var(--ot-size-s); }
+.e-4a1d382d > .holder.size-l > .tag { padding: var(--ot-spacing-m) var(--ot-spacing-l); font-size: var(--ot-size-m); }

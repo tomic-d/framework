@@ -1,111 +1,86 @@
-/* Base */
+/* Root */
+
+.e-20dcefe9
+{
+	display: flex;
+	width: 100%;
+}
+
+/* Holder */
+
 .e-20dcefe9 > .holder
 {
-    width: 100%;
-    padding: 0 var(--ot-spacing-m);
-    border-radius: var(--ot-radius-m);
-    border: none;
-    background: transparent;
-    transition: all 0.2s;
-    outline: none;
-    color: var(--ot-text-1);
+	display: flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	width: 100%;
+	height: var(--ot-height-m);
+	padding: 0 var(--ot-spacing-m);
+	border-radius: var(--ot-radius-m);
+	border: 1px solid transparent;
+	background: transparent;
+	font-size: var(--ot-size-m);
+	transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.e-20dcefe9 > .holder::placeholder
+/* Input */
+
+.e-20dcefe9 > .holder > input
 {
-    color: var(--ot-text-2);
+	flex: 1;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--ot-text-1);
+	font-size: inherit;
+	font-family: inherit;
+	padding: 0;
 }
 
-.e-20dcefe9 > .holder:disabled
+.e-20dcefe9 > .holder > input::placeholder
 {
-    opacity: 0.5;
-    cursor: not-allowed;
+	color: var(--ot-text-2);
 }
 
-/* Variants - Background */
-.e-20dcefe9 > .holder[variant*="bg-1"]
+.e-20dcefe9 > .holder > input:disabled
 {
-    background: var(--ot-bg-1);
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
-.e-20dcefe9 > .holder[variant*="bg-1"]:hover
+/* Icon */
+
+.e-20dcefe9 > .holder > .icon
 {
-    background: var(--ot-bg-1-hover);
+	font-size: inherit;
+	color: var(--ot-text-2);
+	flex-shrink: 0;
 }
 
-.e-20dcefe9 > .holder[variant*="bg-2"]
-{
-    background: var(--ot-bg-2);
-}
+/* Background variants */
 
-.e-20dcefe9 > .holder[variant*="bg-2"]:hover
-{
-    background: var(--ot-bg-2-hover);
-}
+.e-20dcefe9 > .holder.bg-1 { background: var(--ot-bg-1); }
+.e-20dcefe9 > .holder.bg-1:hover { background: var(--ot-bg-1-hover); }
+.e-20dcefe9 > .holder.bg-1.border { border-color: var(--ot-bg-1-border); }
+.e-20dcefe9 > .holder.bg-2 { background: var(--ot-bg-2); }
+.e-20dcefe9 > .holder.bg-2:hover { background: var(--ot-bg-2-hover); }
+.e-20dcefe9 > .holder.bg-2.border { border-color: var(--ot-bg-2-border); }
+.e-20dcefe9 > .holder.bg-3 { background: var(--ot-bg-3); }
+.e-20dcefe9 > .holder.bg-3:hover { background: var(--ot-bg-3-hover); }
+.e-20dcefe9 > .holder.bg-3.border { border-color: var(--ot-bg-3-border); }
+.e-20dcefe9 > .holder.bg-4 { background: var(--ot-bg-4); }
+.e-20dcefe9 > .holder.bg-4:hover { background: var(--ot-bg-4-hover); }
+.e-20dcefe9 > .holder.bg-4.border { border-color: var(--ot-bg-4-border); }
 
-.e-20dcefe9 > .holder[variant*="bg-3"]
-{
-    background: var(--ot-bg-3);
-}
+/* Border variant */
 
-.e-20dcefe9 > .holder[variant*="bg-3"]:hover
-{
-    background: var(--ot-bg-3-hover);
-}
+.e-20dcefe9 > .holder.border { border: 1px solid var(--ot-bg-2-border); }
+.e-20dcefe9 > .holder.border:focus-within { border-color: var(--ot-brand); }
 
-.e-20dcefe9 > .holder[variant*="bg-4"]
-{
-    background: var(--ot-bg-4);
-}
+/* Size variants */
 
-.e-20dcefe9 > .holder[variant*="bg-4"]:hover
-{
-    background: var(--ot-bg-4-hover);
-}
-
-/* Variants - Border */
-.e-20dcefe9 > .holder[variant*="border-full"]
-{
-    border: 1px solid var(--ot-bg-2-border);
-}
-
-.e-20dcefe9 > .holder[variant*="bg-1"][variant*="border-full"]
-{
-    border: 1px solid var(--ot-bg-1-border);
-}
-
-.e-20dcefe9 > .holder[variant*="bg-2"][variant*="border-full"]
-{
-    border: 1px solid var(--ot-bg-2-border);
-}
-
-.e-20dcefe9 > .holder[variant*="bg-3"][variant*="border-full"]
-{
-    border: 1px solid var(--ot-bg-3-border);
-}
-
-.e-20dcefe9 > .holder[variant*="bg-4"][variant*="border-full"]
-{
-    border: 1px solid var(--ot-bg-4-border);
-}
-
-.e-20dcefe9 > .holder[variant*="border-full"]:focus
-{
-    border-color: var(--ot-brand);
-}
-
-/* Sizes */
-.e-20dcefe9 > .holder[size="s"]
-{
-    height: var(--ot-height-s);
-}
-
-.e-20dcefe9 > .holder[size="m"]
-{
-    height: var(--ot-height-m);
-}
-
-.e-20dcefe9 > .holder[size="l"]
-{
-    height: var(--ot-height-l);
-}
+.e-20dcefe9 > .holder.size-s { height: var(--ot-height-s); padding: 0 var(--ot-spacing-s); font-size: var(--ot-size-s); }
+.e-20dcefe9 > .holder.size-m { height: var(--ot-height-m); padding: 0 var(--ot-spacing-m); font-size: var(--ot-size-m); }
+.e-20dcefe9 > .holder.size-l { height: var(--ot-height-l); padding: 0 var(--ot-spacing-m); font-size: var(--ot-size-m); }

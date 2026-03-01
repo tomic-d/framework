@@ -1,55 +1,65 @@
+/* Root */
+
 .e-63199a7d
 {
-	width: 100%;
-	min-height: calc(100vh - 48px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+	min-height: calc(100vh - 48px);
 	padding: var(--ot-spacing-l);
 }
 
-.e-63199a7d .holder
+/* Holder */
+
+.e-63199a7d > .holder
 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 20px;
+	gap: var(--ot-spacing-m);
 	text-align: center;
 	max-width: 400px;
 }
 
 /* Icon circle */
-.e-63199a7d .holder > .icon-wrap
+
+.e-63199a7d > .holder > .circle
 {
 	width: 80px;
 	height: 80px;
 	border-radius: 50%;
 	background: var(--ot-red-opacity);
-	border: 1px solid rgba(244, 63, 94, 0.15);
+	border: 1px solid var(--ot-red-border);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.e-63199a7d .holder > .icon-wrap > i
+.e-63199a7d > .holder > .circle > i
 {
 	font-size: 36px;
 	color: var(--ot-red);
 	opacity: 0.8;
 }
 
-.e-63199a7d .holder > .title
+/* Title */
+
+.e-63199a7d > .holder > .title
 {
-	font-size: 20px;
+	font-size: var(--ot-size-l);
 	font-weight: 600;
 	color: var(--ot-text-1);
 	line-height: 1.3;
+	margin: 0;
 }
 
-.e-63199a7d .holder > .description
+/* Description */
+
+.e-63199a7d > .holder > .description
 {
-	font-size: 14px;
+	font-size: var(--ot-size-m);
 	line-height: 1.6;
 	color: var(--ot-text-2);
-	margin-top: -4px;
+	margin: 0;
 }

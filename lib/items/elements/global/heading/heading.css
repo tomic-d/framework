@@ -8,40 +8,63 @@
 {
 	width: 100%;
 	display: flex;
-	flex-direction: column;
-	gap: var(--ot-spacing-x);
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--ot-spacing-m);
 	border-bottom: 1px solid var(--ot-bg-2-border);
 	padding-bottom: var(--ot-spacing-m);
 }
 
-.e-49fb116e > .holder > .icon
+.e-49fb116e > .holder > .text
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-x);
+}
+
+.e-49fb116e > .holder > .text > .icon
 {
 	font-size: 36px;
 	color: var(--ot-text-2);
 }
 
-.e-49fb116e > .holder > .title
+.e-49fb116e > .holder > .text > .title
 {
 	font-size: 18px;
 	font-weight: 600;
 	color: var(--ot-text-1);
 }
 
-.e-49fb116e > .holder > .description
+.e-49fb116e > .holder > .text > .description
 {
 	font-size: var(--ot-size-m);
 	color: var(--ot-text-2);
+}
+
+.e-49fb116e > .holder > .right
+{
+	flex-shrink: 0;
+}
+
+.e-49fb116e > .holder > .right:empty
+{
+	display: none;
 }
 
 /* Alignment */
 
 .e-49fb116e > .holder.center
 {
+	justify-content: center;
+}
+
+.e-49fb116e > .holder.center > .text
+{
 	align-items: center;
 	text-align: center;
 }
 
-.e-49fb116e > .holder.right
+.e-49fb116e > .holder.right > .text
 {
 	align-items: flex-end;
 	text-align: right;
@@ -61,7 +84,7 @@
 	padding-bottom: 0;
 }
 
-.e-49fb116e > .holder.page > .title
+.e-49fb116e > .holder.page > .text > .title
 {
 	font-size: 36px;
 	font-weight: 800;
@@ -69,36 +92,36 @@
 
 /* Sizes */
 
-.e-49fb116e > .holder.size-s > .title
+.e-49fb116e > .holder.size-s > .text > .title
 {
 	font-size: 16px;
 }
 
-.e-49fb116e > .holder.size-s > .description
+.e-49fb116e > .holder.size-s > .text > .description
 {
 	font-size: var(--ot-size-s);
 }
 
-.e-49fb116e > .holder.size-m > .title
+.e-49fb116e > .holder.size-m > .text > .title
 {
 	font-size: 25px;
 	font-weight: 700;
 }
 
-.e-49fb116e > .holder.size-m > .description
+.e-49fb116e > .holder.size-m > .text > .description
 {
 	font-size: var(--ot-size-m);
 	line-height: 1.6;
 	max-width: 500px;
 }
 
-.e-49fb116e > .holder.size-l > .title
+.e-49fb116e > .holder.size-l > .text > .title
 {
 	font-size: 36px;
 	font-weight: 800;
 }
 
-.e-49fb116e > .holder.size-l > .description
+.e-49fb116e > .holder.size-l > .text > .description
 {
 	font-size: var(--ot-size-l);
 	line-height: 1.6;

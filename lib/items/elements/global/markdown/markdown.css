@@ -1,8 +1,12 @@
+/* Root */
+
 .e-4696d703
 {
 	display: flex;
 	width: 100%;
 }
+
+/* Holder */
 
 .e-4696d703 > .holder
 {
@@ -12,13 +16,16 @@
 	width: 100%;
 }
 
-.e-4696d703 > .holder[variant="bg-2"]
-{
-	background: var(--ot-bg-2);
-	border: 1px solid var(--ot-bg-2-border);
-	border-radius: var(--ot-radius-m);
-	padding: var(--ot-spacing-m);
-}
+/* Background variants */
+
+.e-4696d703 > .holder.bg-1 { background: var(--ot-bg-1); border: 1px solid var(--ot-bg-1-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-4696d703 > .holder.bg-2 { background: var(--ot-bg-2); border: 1px solid var(--ot-bg-2-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-4696d703 > .holder.bg-3 { background: var(--ot-bg-3); border: 1px solid var(--ot-bg-3-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-4696d703 > .holder.bg-4 { background: var(--ot-bg-4); border: 1px solid var(--ot-bg-4-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+
+/* Border variant */
+
+.e-4696d703 > .holder.border { border: 1px solid var(--ot-bg-2-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
 
 /* Line wrapper */
 
@@ -119,7 +126,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: var(--ot-spacing-x);
-	padding-left: 24px;
+	padding-left: var(--ot-spacing-l);
 	margin: 0;
 }
 
@@ -152,7 +159,7 @@
 	border-left: 3px solid var(--ot-brand);
 	padding: var(--ot-spacing-s) var(--ot-spacing-m);
 	background: var(--ot-bg-2);
-	border-radius: 0 8px 8px 0;
+	border-radius: 0 var(--ot-radius-m) var(--ot-radius-m) 0;
 	margin: 0;
 	font-size: var(--ot-size-m);
 	color: var(--ot-text-2);
@@ -164,8 +171,8 @@
 
 .e-4696d703 > .holder code.inline
 {
-	padding: 2px 7px;
-	border-radius: 4px;
+	padding: var(--ot-spacing-x) var(--ot-spacing-s);
+	border-radius: var(--ot-radius-s);
 	background: var(--ot-bg-2);
 	border: 1px solid var(--ot-bg-2-border);
 	font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -180,7 +187,7 @@
 	position: relative;
 	background: var(--ot-bg-2);
 	border: 1px solid var(--ot-bg-2-border);
-	border-radius: 8px;
+	border-radius: var(--ot-radius-m);
 	padding: var(--ot-spacing-m);
 	overflow-x: auto;
 	margin: 0;
@@ -189,7 +196,7 @@
 .e-4696d703 > .holder .codeblock > code
 {
 	font-family: 'JetBrains Mono', 'Fira Code', monospace;
-	font-size: 13px;
+	font-size: var(--ot-size-m);
 	line-height: 1.7;
 	color: var(--ot-text-1);
 	tab-size: 4;
@@ -201,7 +208,7 @@
 {
 	width: 100%;
 	border-collapse: collapse;
-	border-radius: 8px;
+	border-radius: var(--ot-radius-m);
 	background-color: var(--ot-bg-2);
 	overflow: hidden;
 }
@@ -251,6 +258,6 @@
 {
 	max-width: 100%;
 	height: auto;
-	border-radius: 8px;
+	border-radius: var(--ot-radius-m);
 	border: 1px solid var(--ot-bg-2-border);
 }

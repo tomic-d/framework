@@ -1,47 +1,66 @@
+/* Root */
+
 .e-1a8b6ac1
 {
 	display: flex;
+	width: 100%;
 }
+
+/* Holder */
 
 .e-1a8b6ac1 > .holder
 {
 	display: flex;
 	align-items: center;
-	gap: 0;
-	background: var(--ot-bg-2);
-	border: 1px solid var(--ot-bg-2-border);
-	border-radius: 8px;
-	padding: 4px;
+	border: 1px solid transparent;
+	border-radius: var(--ot-radius-m);
+	padding: var(--ot-spacing-x);
 }
+
+/* Tab */
 
 .e-1a8b6ac1 > .holder > .tab
 {
 	display: flex;
 	align-items: center;
-	gap: 6px;
-	padding: 8px 20px;
-	border-radius: 6px;
+	gap: var(--ot-spacing-s);
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	border-radius: var(--ot-radius-m);
 	font-size: var(--ot-size-m);
 	font-weight: 500;
 	color: var(--ot-text-2);
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: all 0.2s ease;
+	transition: color 0.15s ease, background 0.15s ease;
 }
 
 .e-1a8b6ac1 > .holder > .tab > i
 {
-	font-size: 16px;
-}
-
-.e-1a8b6ac1 > .holder > .tab.active
-{
-	background: var(--ot-bg-3);
-	color: var(--ot-text-1);
+	font-size: var(--ot-size-m);
 }
 
 .e-1a8b6ac1 > .holder > .tab:hover:not(.active)
 {
 	color: var(--ot-text-1);
 }
+
+/* Active — relative to bg variant */
+
+.e-1a8b6ac1 > .holder.bg-1 > .tab.active { background: var(--ot-bg-2); color: var(--ot-text-1); }
+.e-1a8b6ac1 > .holder.bg-2 > .tab.active { background: var(--ot-bg-3); color: var(--ot-text-1); }
+.e-1a8b6ac1 > .holder.bg-3 > .tab.active { background: var(--ot-bg-4); color: var(--ot-text-1); }
+.e-1a8b6ac1 > .holder.bg-4 > .tab.active { background: var(--ot-bg-4-hover); color: var(--ot-text-1); }
+
+/* Background variants */
+
+.e-1a8b6ac1 > .holder.bg-1 { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
+.e-1a8b6ac1 > .holder.bg-2 { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
+.e-1a8b6ac1 > .holder.bg-3 { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
+.e-1a8b6ac1 > .holder.bg-4 { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
+
+/* Size variants */
+
+.e-1a8b6ac1 > .holder.size-s > .tab { padding: var(--ot-spacing-x) var(--ot-spacing-s); font-size: var(--ot-size-s); }
+.e-1a8b6ac1 > .holder.size-m > .tab { padding: var(--ot-spacing-s) var(--ot-spacing-m); font-size: var(--ot-size-m); }
+.e-1a8b6ac1 > .holder.size-l > .tab { padding: var(--ot-spacing-m) var(--ot-spacing-l); font-size: var(--ot-size-m); }
