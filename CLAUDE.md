@@ -72,6 +72,10 @@ addons/
     tooltips/                Tooltip system
     popups/                  Popup menus
     overlays/                Overlay backdrops
+  ai/
+    agents/back/             AI agent runner (definition, execution, JSON parsing)
+    orchestrator/back/       Multi-agent orchestration (state machine, built-in agents)
+    providers/back/          AI provider abstraction (Nue Tools built-in)
 
 docs/                        6 docs: addons, architecture, commands, database, frontend, servers
 examples/
@@ -121,6 +125,9 @@ Defined in `package.json` under `imports`:
 | `#tags/*` | `./addons/render/tags/*` |
 | `#sources/*` | `./addons/modules/sources/*` |
 | `#variables/*` | `./addons/modules/variables/*` |
+| `#agents/*` | `./addons/ai/agents/back/*` |
+| `#orchestrator/*` | `./addons/ai/orchestrator/back/*` |
+| `#providers/*` | `./addons/ai/providers/back/*` |
 
 ## Dependencies
 

@@ -20,7 +20,10 @@
         "./html": "./addons/render/html/load.js",
         "./tags": "./addons/render/tags/load.js",
         "./sources": "./addons/modules/sources/back/load.js",
-        "./variables": "./addons/modules/variables/core/load.js"
+        "./variables": "./addons/modules/variables/core/load.js",
+        "./agents": "./addons/ai/agents/load.js",
+        "./orchestrator": "./addons/ai/orchestrator/load.js",
+        "./providers": "./addons/ai/providers/load.js"
     },
     "imports": {
         "#framework/*": "./lib/*",
@@ -36,7 +39,10 @@
         "#elements/*": "./addons/render/elements/*",
         "#tags/*": "./addons/render/tags/*",
         "#sources/*": "./addons/modules/sources/*",
-        "#variables/*": "./addons/modules/variables/*"
+        "#variables/*": "./addons/modules/variables/*",
+        "#agents/*": "./addons/ai/agents/*",
+        "#orchestrator/*": "./addons/ai/orchestrator/*",
+        "#providers/*": "./addons/ai/providers/*"
     },
     "dependencies": {
         "@grpc/grpc-js": "^1.13.3",
