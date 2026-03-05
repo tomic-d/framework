@@ -1,12 +1,25 @@
 # Orchestrator Research & Analysis
 
-Research and implementation notes. Updated March 3, 2026.
+Research and implementation notes. Updated March 5, 2026.
 
 ---
 
 ## Architecture
 
-### State Machine Loop
+### Pre-Execution Pipeline (NEW — March 5, 2026)
+
+```
+1. planner     → splits user prompt into logical steps with ordering
+2. achievable  → checks if available agents can handle all planned tasks
+   → if not achievable: log rejected tasks, stop
+   → if achievable: proceed to execution loop
+```
+
+**Planner** (`orchestrator-planner`) — takes user prompt, outputs `[{task, order}]`. Logical steps, no duplication for unknown quantities. Same order = parallel batch, higher order = depends on earlier results.
+
+**Achievable** (`orchestrator-achievable`) — takes planned tasks + available agents, outputs `{achievable, rejected[{task, reason}]}`. Understands agent chaining — only rejects when the action type itself has no matching agent. Orchestrator handles filtering, looping, conditionals.
+
+### Execution Loop
 
 ```
 while steps < max:
@@ -39,6 +52,8 @@ Each step = 4 LLM calls (was 6). First iteration = 3 calls (done skipped).
 | `orchestrator/items/agents/input.js` | Agent: extracts literal values from goal text |
 | `orchestrator/items/agents/conclusion.js` | Agent: dense paragraph, all fields/values from output, task-aware |
 | `orchestrator/items/agents/summary.js` | Agent: final user-facing summary, max 40 words |
+| `orchestrator/items/agents/planner.js` | Agent: splits prompt into logical steps [{task, order}] |
+| `orchestrator/items/agents/achievable.js` | Agent: checks if tasks are achievable by available agents |
 
 ### Agents & Providers
 
@@ -237,17 +252,37 @@ Task: Rename Blog to Tech Blog, remove Merriweather, delete Shop drafts, remove 
 
 ## Deferred Ideas
 
-- **Task Splitting** — top-level LLM splits into independent sub-tasks, each gets own run
+- ~~**Task Splitting** — top-level LLM splits into independent sub-tasks, each gets own run~~ ✅ IMPLEMENTED as planner
 - **Refs System** — conclusion tags data with `@key`, input resolves `@`-prefixed values
 - **Agent Type Field** — `list`, `get`, `create`, `update`, `remove` types for ordering hints
 - **History Pruning** — summarize old entries at 20+ steps, keep last 5 in full
 
 ---
 
+## Implemented — March 5, 2026
+
+### Planner + Achievable Pipeline
+
+Added pre-execution pipeline: planner splits prompt into ordered tasks, achievable validates against available agents before execution starts.
+
+**Key design decisions:**
+- Planner outputs logical steps, not duplicated atomic tasks — orchestrator handles iteration
+- Order number implies parallelism: same order = parallel batch
+- Achievable understands agent chaining — filtering/looping/conditionals handled by orchestrator
+- Achievable only rejects when action type has no matching agent
+- Instructions kept minimal — shorter prompts = better model compliance (especially on smaller models)
+
+**Test results (Qwen3 via Nue Tools):**
+- Simple: "create site + 6 pages" → 7 tasks, correct ordering ✅
+- Medium: "duplicate site, rename, add pages" → 5 tasks ✅
+- Hard: "list sites, delete test pages, add 404, add fonts, conditional publish, open editor" → 6 tasks, achievable ✅
+- Not achievable: "delete pages" without site context → correctly rejected ✅
+
 ## Next Steps
 
-1. **Run 11-step test 5x** with final prompts — verify consistency
-2. **Per-step retry** — try/catch around execute, 1 retry on parse failure
-3. **Stuck detection** — same actions 3x = force escalation
-4. **Monitor SGLang** — #19406 fix for AWQ migration
-5. **2x RTX 3090** — Q5_K_M for quality + speed boost
+1. **Wire planner into execution loop** — remove early return, execute tasks by order batch
+2. **Parallel execution** — Promise.all for tasks in same order group
+3. **Per-step retry** — try/catch around execute, 1 retry on parse failure
+4. **Stuck detection** — same actions 3x = force escalation
+5. **Monitor SGLang** — #19406 fix for AWQ migration
+6. **2x RTX 3090** — Q5_K_M for quality + speed boost

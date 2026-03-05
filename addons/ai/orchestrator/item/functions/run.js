@@ -62,7 +62,7 @@ orchestrator.Fn('item.run', async function(item)
 
     console.log('');
     console.log(bold('ORCHESTRATOR') + dim(` — ${state.task}`));
-    console.log(dim(`agents: ${state.agents.map(a => a.id).join(', ')}`));
+    // console.log(dim(`agents: ${state.agents.map(a => a.id).join(', ')}`));
     console.log(dim(`max steps: ${state.steps.total}`));
     console.log('');
 
@@ -73,6 +73,58 @@ orchestrator.Fn('item.run', async function(item)
 
     try
     {
+        /* Planner */
+
+        const planner = await agents.ItemGet('orchestrator-planner').Fn('run', {
+            prompt: state.task
+        });
+
+        state.plan = planner.tasks;
+        state.tokens.input += planner._meta.tokens.input;
+        state.tokens.output += planner._meta.tokens.output;
+
+        console.log(bold(yellow('PLAN')) + dim(` — ${state.plan.length} tasks`));
+
+        for (const task of state.plan)
+        {
+            console.log(dim(`  [${task.order}] `) + dim(task.task));
+        }
+
+        console.log('');
+
+        /* Achievable */
+
+        const check = await agents.ItemGet('orchestrator-achievable').Fn('run', {
+            tasks: state.plan,
+            agents: state.agents.map(a => ({ id: a.id, description: a.description }))
+        });
+
+        state.tokens.input += check._meta.tokens.input;
+        state.tokens.output += check._meta.tokens.output;
+
+        if (!check.achievable)
+        {
+            const rejected = check.rejected || [];
+
+            console.log(bold(red('NOT ACHIEVABLE')));
+
+            for (const r of rejected)
+            {
+                console.log(red('  ✗ ') + dim(r.task) + dim(` — ${r.reason}`));
+            }
+
+            console.log('');
+
+            item.Set('status', 'failed');
+
+            return state;
+        }
+
+        console.log(bold(green('ACHIEVABLE')));
+        console.log('');
+
+        return state;
+
         while (state.steps.count < state.steps.total)
         {
             if (state.history.length > 0)
