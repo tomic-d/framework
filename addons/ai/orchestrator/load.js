@@ -8,6 +8,8 @@ import '#orchestrator/items/agents/agent.js';
 import '#orchestrator/items/agents/conclusion.js';
 import '#orchestrator/items/agents/input.js';
 import '#orchestrator/items/agents/summary.js';
+import '#orchestrator/items/agents/planner.js';
+import '#orchestrator/items/agents/achievable.js';
 
 
 /* Functions */
