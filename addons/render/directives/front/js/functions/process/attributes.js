@@ -1,6 +1,11 @@
 directives.Fn('process.attributes', function(node, compile)
 {
-    if (node.nodeType !== Node.ELEMENT_NODE || !node.__attributes)
+    if(node.nodeType !== Node.ELEMENT_NODE || !node.__attributes)
+    {
+        return;
+    }
+
+    if(!node.__attributes.some(attr => attr.name.startsWith(':')))
     {
         return;
     }

@@ -15,18 +15,18 @@ const directives = onetype.Addon('directives', (addon) =>
 
     /* Trigers */
     
-    onetype.EmitOn('addon.render.compile.before', (...data) =>
+    onetype.EmitOn('addon.render.compile.before', (item, compile, node, identifier) =>
     {
-        directives.Fn('process', 'before', ...data);
+        directives.Fn('process', 'before', item, compile, node, identifier);
     })
-    
-    onetype.EmitOn('addon.render.compile.after', (...data) =>
+
+    onetype.EmitOn('addon.render.compile.after', (item, compile, node, identifier) =>
     {
-        directives.Fn('process', 'after', ...data);
+        directives.Fn('process', 'after', item, compile, node, identifier);
     })
-    
-    onetype.EmitOn('addon.render.compile.node', (...data) =>
+
+    onetype.EmitOn('addon.render.compile.node', (item, compile, node, identifier) =>
     {
-        directives.Fn('process', 'node', ...data);
+        directives.Fn('process', 'node', item, compile, node, identifier);
     })
 });
