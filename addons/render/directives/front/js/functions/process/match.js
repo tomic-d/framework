@@ -1,20 +1,20 @@
-directives.Fn('process.match', function(directive, node)
-{   
-    const tag = directive.Get('tag');
-    const type = directive.Get('type');
-    const attributes = directive.Get('attributes');
+directives.Fn('process.match', function(d, node)
+{
+    const tag = d.tag;
+    const type = d.type;
+    const attributes = d.attributes;
 
     const matches = {
         count: 0,
         total: Object.keys(attributes).length + (tag ? 1 : 0) + (type ? 1 : 0),
     };
 
-    if (tag && node.tagName && node.tagName.toLowerCase() === tag.toLowerCase())
+    if(tag && node.tagName && node.tagName.toLowerCase() === tag.toLowerCase())
     {
         matches.count++;
     }
 
-    if (type && node.nodeType.toString() === type)
+    if(type && node.nodeType.toString() === type)
     {
         matches.count++;
     }
@@ -34,7 +34,7 @@ directives.Fn('process.match', function(directive, node)
         }
     });
 
-    if(directive.Get('strict'))
+    if(d.strict)
     {
         return matches.count === matches.total && matches.total > 0;
     }
