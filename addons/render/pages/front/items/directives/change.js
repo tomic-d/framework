@@ -25,7 +25,7 @@ onetype.AddonReady('directives', function()
 
 			const change = () =>
 			{
-				pages.Fn('change', route, parameters, { path: true, push });
+				pages.Fn('change', null, route, parameters, push);
 			};
 
 			if(timeout > 0)

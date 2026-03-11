@@ -3,7 +3,7 @@ import pages from './addon.js';
 
 onetype.$ot.page = function(route, parameters = {})
 {
-	return pages.Fn('change', route, parameters, { path: true });
+	return pages.Fn('change', null, route, parameters);
 };
 
 export default pages;

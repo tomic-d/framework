@@ -23,5 +23,5 @@ document.addEventListener('click', (e) =>
 
 	e.preventDefault();
 
-	pages.Fn('change', match.page.Get('id'), match.parameters, { search: url.search });
+	pages.Fn('change', match.page.Get('id'), null, match.parameters, true, url.search);
 });

@@ -1,119 +1,30 @@
-pages.Fn('change', function(target, parameters = {}, options = {})
+pages.Fn('change', async function(id, path = null, parameters = {}, push = true, search = '')
 {
-    this.resolve = null;
-    this.page = null;
-    this.id = null;
-    this.parameters = parameters;
-    this.options = options;
+	this.methods.route = (page) =>
+	{
+		const route = page.Get('route');
 
-    this.methods.init = async (resolve) =>
-    {
-        this.resolve = resolve;
+		if(!Array.isArray(route))
+		{
+			return route;
+		}
 
-        if(this.options.path)
-        {
-            this.methods.match();
-        }
-        else
-        {
-            this.page = this.ItemGet(target);
-            this.id = target;
-        }
+		return route.findLast(pattern => (pattern.match(/:(\w+)/g) || []).every(param => Object.keys(parameters).includes(param.slice(1)))) || route[0];
+	};
 
-        if(!this.page)
-        {
-            // Try to find a 404 page
-            const notFoundPage = Object.values(this.Items()).find(p => p.Get('404'));
+	const resolved = this.Fn('resolve', id, path, parameters);
 
-            if(notFoundPage)
-            {
-                this.page = notFoundPage;
-                this.id = notFoundPage.Get('id');
-            }
-            else
-            {
-                return this.methods.done(null, `Page "${target}" not found.`, 404);
-            }
-        }
+	if(!resolved)
+	{
+		return null;
+	}
 
-        const route = this.page.Get('route');
-        const url = this.methods.url(this.methods.route(route, this.parameters), this.parameters);
+	if(push !== false)
+	{
+		history.pushState(null, '', onetype.RouteBuild(this.methods.route(resolved.page), resolved.parameters) + search);
+	}
 
-        if(this.options.push !== false)
-        {
-            history.pushState(null, '', url + (this.options.search || ''));
-        }
+	const result = await this.Fn('open', resolved.id, resolved.parameters);
 
-        const result = this.Fn('open', this.id, this.parameters);
-
-        if(result === false)
-        {
-            return this.methods.done(null, 'Navigation prevented.', 403);
-        }
-
-        return this.methods.done({ id: this.id, parameters: this.parameters, url }, 'Page changed.', 200);
-    };
-
-    this.methods.match = () =>
-    {
-        const result = this.Fn('match', target);
-
-        if(result)
-        {
-            this.page = result.page;
-            this.id = result.page.Get('id');
-            this.parameters = { ...result.parameters, ...this.parameters };
-        }
-    };
-
-    this.methods.route = (route, parameters) =>
-    {
-        if(!Array.isArray(route))
-        {
-            return route;
-        }
-
-        const keys = Object.keys(parameters);
-
-        for(let i = route.length - 1; i >= 0; i--)
-        {
-            const params = (route[i].match(/:(\w+)/g) || []).map(p => p.slice(1));
-
-            if(params.length && params.every(p => keys.includes(p)))
-            {
-                return route[i];
-            }
-        }
-
-        return route[0];
-    };
-
-    this.methods.url = (route, parameters) =>
-    {
-        let url = route;
-
-        for(const key in parameters)
-        {
-            url = url.replace(`:${key}`, parameters[key]);
-        }
-
-        return url;
-    };
-
-    this.methods.done = (data, message, code) =>
-    {
-        this.resolve({ data, message, code });
-    };
-
-    return new Promise((resolve) =>
-    {
-        try
-        {
-            this.methods.init(resolve);
-        }
-        catch(error)
-        {
-            resolve({ data: null, message: error.message, code: 500 });
-        }
-    });
+	return result === false ? null : resolved.page;
 });

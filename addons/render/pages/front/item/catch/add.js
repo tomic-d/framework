@@ -1,14 +1,12 @@
 pages.ItemOn('add', (item) =>
 {
-	const map = item.Get('areas');
+	const areas = item.Get('areas');
 
-	if(map)
+	if(areas)
 	{
-		Object.keys(map).forEach(name =>
+		for(const [name, value] of Object.entries(areas))
 		{
-			const id = map[name];
-
-			if(typeof id === 'function')
+			if(typeof value === 'function')
 			{
 				pages.RenderAdd(item.Get('id') + ':' + name, function(parameters)
 				{
@@ -16,9 +14,9 @@ pages.ItemOn('add', (item) =>
 						parameters: ['object', {}]
 					});
 
-					return id.call(this, parameters);
+					return value.call(this, parameters);
 				});
 			}
-		});
+		}
 	}
 });
