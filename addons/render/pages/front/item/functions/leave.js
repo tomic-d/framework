@@ -1,19 +1,17 @@
 pages.Fn('item.leave', function(item)
 {
-	const onLeave = item.Get('onLeave');
-	const onBeforeLeave = item.Get('onBeforeLeave');
-
-	if(onBeforeLeave && onBeforeLeave.call(item) === false)
+	if(item.Get('onBeforeLeave') && item.Get('onBeforeLeave').call(item) === false)
 	{
 		return false;
 	}
 
 	pages.StoreSet('active', null);
 
-	if(onLeave)
-	{
-		onLeave.call(item);
-	}
+	onetype.StateSet('page', null);
+
+	item.Get('onLeave') && item.Get('onLeave').call(item);
+
+	onetype.Emit('pages:leave', { page: item });
 
 	const element = item.Get('element');
 

@@ -1,17 +1,15 @@
 pages.ItemOn('removed', (item) =>
 {
-	const map = item.Get('layouts');
+	const areas = item.Get('areas');
 
-	if(map)
+	if(areas)
 	{
-		Object.keys(map).forEach(name =>
+		for(const [name, value] of Object.entries(areas))
 		{
-			const id = map[name];
-
-			if(typeof id === 'function')
+			if(typeof value === 'function')
 			{
 				pages.RenderRemove(item.Get('id') + ':' + name);
 			}
-		});
+		}
 	}
 });

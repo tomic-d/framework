@@ -1,7 +1,0 @@
-{
-    "name": "basic-front-example",
-    "type": "module",
-    "dependencies": {
-        "onetype": "^2.0.6"
-    }
-}

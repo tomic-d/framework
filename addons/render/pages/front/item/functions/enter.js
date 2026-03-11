@@ -1,38 +1,26 @@
-pages.Fn('item.enter', async function(item, parameters = {}, preloaded = null)
+pages.Fn('item.enter', async function(item, parameters = {}, data = null)
 {
-	const onEnter = item.Get('onEnter');
-	const onBeforeEnter = item.Get('onBeforeEnter');
-
-	const data = {};
-
-	if(preloaded)
-	{
-		Object.assign(data, preloaded);
-	}
-	else if(item.Get('data'))
-	{
-		Object.assign(data, await item.Get('data').call(item, parameters));
-	}
-
-	if(onBeforeEnter && onBeforeEnter.call(item, parameters, data) === false)
+	if(item.Get('onBeforeEnter') && item.Get('onBeforeEnter').call(item, parameters, data) === false)
 	{
 		return false;
 	}
 
 	pages.StoreSet('active', item);
 
+	onetype.StateSet('page', { 
+		id: item.Get('id'), 
+		route: item.Get('route'), 
+		meta: item.Get('meta'),
+		parameters,
+		data, 
+		'404': item.Get('404') 
+	});
+
 	const title = item.Get('title');
 
 	if(title)
 	{
-		if(typeof title === 'function')
-		{
-			document.title = title.call(item, parameters, data);
-		}
-		else
-		{
-			document.title = title;
-		}
+		document.title = typeof title === 'function' ? title.call(item, parameters, data) : title;
 	}
 
 	const element = item.Fn('render', parameters, data);
@@ -40,10 +28,9 @@ pages.Fn('item.enter', async function(item, parameters = {}, preloaded = null)
 
 	document.body.appendChild(element);
 
-	if(onEnter)
-	{
-		onEnter.call(item, parameters, data);
-	}
+	item.Get('onEnter') && item.Get('onEnter').call(item, parameters, data);
+
+	onetype.Emit('pages:enter', { page: item, parameters, data });
 
 	return true;
 });

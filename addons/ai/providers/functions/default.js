@@ -2,13 +2,7 @@ import providers from '#providers/addon.js';
 
 providers.Fn('default', function()
 {
-    const items = Object.values(providers.Items());
-    const defaults = items.filter(p => p.Get('default'));
+	const items = Object.values(providers.Items());
 
-    if (defaults.length === 0)
-    {
-        return items[0] || null;
-    }
-
-    return defaults[Math.floor(Math.random() * defaults.length)];
+	return items.find(p => p.Get('default')) || items[0] || null;
 });

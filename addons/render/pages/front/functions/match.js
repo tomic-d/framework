@@ -4,7 +4,6 @@ pages.Fn('match', function(path)
 
 	for(const item of items)
 	{
-		// Skip 404 pages during normal matching
 		if(item.Get('404'))
 		{
 			continue;
@@ -19,9 +18,9 @@ pages.Fn('match', function(path)
 
 		const routes = Array.isArray(route) ? route : [route];
 
-		for(const r of routes)
+		for(const part of routes)
 		{
-			const result = onetype.RouteMatch(r, path || onetype.RouteCurrent());
+			const result = onetype.RouteMatch(part, path || onetype.RouteCurrent());
 
 			if(result.match)
 			{
