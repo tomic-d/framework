@@ -11,7 +11,7 @@ pages.Fn('item.leave', function(item)
 
 	item.Get('onLeave') && item.Get('onLeave').call(item);
 
-	onetype.Emit('pages:leave', { page: item });
+	onetype.Emit('@pages.leave', { page: item });
 
 	const element = item.Get('element');
 

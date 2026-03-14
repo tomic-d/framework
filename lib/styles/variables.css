@@ -3,7 +3,7 @@
     --ot-spacing-x: 4px;
     --ot-spacing-s: 8px;
     --ot-spacing-m: 16px;
-    --ot-spacing-l: 34px;
+    --ot-spacing-l: 32px;
 
     --ot-radius-s: 4px;
     --ot-radius-m: 8px;
@@ -43,6 +43,7 @@
 
     --ot-text-1: rgba(225, 228, 232, 1);
     --ot-text-2: rgba(156, 156, 156, 1);
+    --ot-text-3: rgba(100, 100, 100, 1);
 
     --ot-brand: rgba(226, 112, 85, 1);
     --ot-brand-border: rgba(236, 142, 120, 1);

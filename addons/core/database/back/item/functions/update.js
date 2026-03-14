@@ -12,7 +12,7 @@ database.Fn('item.update', async function(item, connection = null)
 
     if(!table.name)
     {
-        throw new Error('Addon must have table name set.');
+        throw onetype.Error(400, 'Addon must have table name set.');
     }
 
     const fields = {};
@@ -28,7 +28,7 @@ database.Fn('item.update', async function(item, connection = null)
             }
             catch(error)
             {
-                throw new Error('Item Update GET Error. ' + error.message);
+                throw onetype.Error(500, 'Item update get error.');
             }
         }
     });
@@ -67,7 +67,7 @@ database.Fn('item.update', async function(item, connection = null)
             }
             catch(error)
             {
-                throw new Error('Item Update SET Error. ' + error.message);
+                throw onetype.Error(500, 'Item update set error.');
             }
         });
 

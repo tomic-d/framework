@@ -12,7 +12,7 @@ database.Fn('item.find', function(item, connection = null)
     
     if(!table.name)
     {
-        throw new Error('Addon must have table name set.');
+        throw onetype.Error(400, 'Addon must have table name set.');
     }
 
     return database.Fn('find', connection, table, addon);

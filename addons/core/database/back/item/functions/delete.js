@@ -12,7 +12,7 @@ database.Fn('item.delete', async function(item, connection = null)
 
     if(!table.name)
     {
-        throw new Error('Addon must have table name set.');
+        throw onetype.Error(400, 'Addon must have table name set.');
     }
 
     const key = table.prefix ? table.prefix + 'id' : 'id';

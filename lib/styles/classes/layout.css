@@ -22,15 +22,13 @@
 .ot-grid-cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
 
 /* Container layouts */
-.ot-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
-.ot-container-s { width: 100%; max-width: 768px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
 .ot-container-m { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
+.ot-container-s { width: 100%; max-width: 768px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
 .ot-container-l { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 calc(var(--ot-spacing-m) * 2); }
 .ot-container-full { width: 100%; padding: 0 calc(var(--ot-spacing-m) * 2); }
 
 @media screen and (max-width: 900px)
 {
-    .ot-container,
     .ot-container-s,
     .ot-container-m,
     .ot-container-l,

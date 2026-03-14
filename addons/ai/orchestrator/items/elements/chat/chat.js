@@ -111,13 +111,13 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* Input */
 
-			this.input = (event, context) =>
+			this.input = ({ event, value }) =>
 			{
-				this.prompt = context.value;
+				this.prompt = value;
 				this.resize(event.target);
 			};
 
-			this.keydown = (event) =>
+			this.keydown = ({ event }) =>
 			{
 				if (event.key === 'Enter' && !event.shiftKey)
 				{

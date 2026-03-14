@@ -81,17 +81,17 @@ commands.Fn('grpc.client', async function(host, port, metadata = {}, prefix = 'r
 
                         if(!command)
                         {
-                            throw new Error('Command does not exist.');
+                            throw onetype.Error(404, 'Command does not exist.');
                         }
 
                         if(store.has(payload.name))
                         {
-                            throw new Error('Cannot execute remote commands recursively.');
+                            throw onetype.Error(400, 'Cannot execute remote commands recursively.');
                         }
 
                         if(payload.name.startsWith(prefix + ':'))
                         {
-                            throw new Error('Cannot execute ' + prefix + ' commands recursively.');
+                            throw onetype.Error(400, 'Cannot execute :prefix: commands recursively.', {prefix});
                         }
 
                         const result = await command.Fn('run', payload.data, (chunk) =>

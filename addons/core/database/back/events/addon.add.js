@@ -1,6 +1,6 @@
 import onetype from '#framework/load.js';
 
-onetype.EmitOn('addon.add', (addon) =>
+onetype.EmitOn('@addon.add', (addon) =>
 {
     addon.expose = null;
 

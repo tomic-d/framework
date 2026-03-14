@@ -30,7 +30,7 @@ pages.Fn('item.enter', async function(item, parameters = {}, data = null)
 
 	item.Get('onEnter') && item.Get('onEnter').call(item, parameters, data);
 
-	onetype.Emit('pages:enter', { page: item, parameters, data });
+	onetype.Emit('@pages.enter', { page: item, parameters, data });
 
 	return true;
 });
