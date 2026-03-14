@@ -27,7 +27,7 @@ clients.Fn('item.http.create', function(item)
             item.Get('onConnect')(client);
         }
         
-        onetype.Emit('clients.http.connect', client);
+        onetype.Emit('@clients.http.connect', client);
     };
     
     this.methods.request = async (path, method = 'GET', data = {}, requestTimeout = timeout) =>
@@ -58,7 +58,7 @@ clients.Fn('item.http.create', function(item)
 
         try
         {
-            onetype.Emit('clients.http.request.before', http);
+            onetype.Emit('@clients.http.request.before', http);
             await onetype.Middleware('clients.http.request.before', http);
             
             if(item.Get('onRequest'))
@@ -99,7 +99,7 @@ clients.Fn('item.http.create', function(item)
                 http.response.data = await response.text();
             }
             
-            onetype.Emit('clients.http.request.after', http);
+            onetype.Emit('@clients.http.request.after', http);
             await onetype.Middleware('clients.http.request.after', http);
             
             if(item.Get('onResponse'))

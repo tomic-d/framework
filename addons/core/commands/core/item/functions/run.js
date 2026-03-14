@@ -27,7 +27,7 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
                 }
                 catch(error)
                 {
-                    throw new Error('Command OUT Error. ' + error.message);
+                    throw onetype.Error(500, 'Command OUT error.', {command: item.Get('id')});
                 }
             }
 

@@ -1,4 +1,4 @@
-onetype.EmitOn('addon.add', (addon) =>
+onetype.EmitOn('@addon.add', (addon) =>
 {
 	/* Silent Errors */
 	addon.Expose = function() 

@@ -7,7 +7,7 @@ onetype.MiddlewareIntercept('addon.items.find', (middleware) =>
 
     if(!table.name)
     {
-        throw new Error('Addon must have table name set.');
+        throw onetype.Error(400, 'Addon must have table name set.');
     }
 
     if(typeof connection === 'string')
@@ -17,7 +17,7 @@ onetype.MiddlewareIntercept('addon.items.find', (middleware) =>
 
     if(!connection)
     {
-        throw new Error('Database connection is not present.');
+        throw onetype.Error(500, 'Database connection is not present.');
     }
 
     middleware.value.response = database.Fn('find', connection, table, addon);

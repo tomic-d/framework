@@ -57,7 +57,7 @@ clients.Fn('item.grpc.create', function(item)
             item.Get('onConnect')(wrapper);
         }
         
-        onetype.Emit('clients.grpc.connect', wrapper);
+        onetype.Emit('@clients.grpc.connect', wrapper);
     };
     
     this.methods.execute = async (functionName, data = {}, requestTimeout = timeout) =>
@@ -86,7 +86,7 @@ clients.Fn('item.grpc.create', function(item)
         
         try
         {
-            onetype.Emit('clients.grpc.request.before', grpc);
+            onetype.Emit('@clients.grpc.request.before', grpc);
             await onetype.Middleware('clients.grpc.request.before', grpc);
             
             if(item.Get('onRequest'))
@@ -131,7 +131,7 @@ clients.Fn('item.grpc.create', function(item)
             
             grpc.response = response;
             
-            onetype.Emit('clients.grpc.request.after', grpc);
+            onetype.Emit('@clients.grpc.request.after', grpc);
             await onetype.Middleware('clients.grpc.request.after', grpc);
             
             if(item.Get('onResponse'))

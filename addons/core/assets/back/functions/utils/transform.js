@@ -2,31 +2,29 @@ import assets from '../../addon.js';
 
 assets.Fn('utils.transform', function(contents, type = 'js')
 {
-    if (!Array.isArray(contents))
-    {
-        return '';
-    }
+	if (!Array.isArray(contents))
+	{
+		return '';
+	}
 
-    if (type === 'js')
-    {
-        const code = contents.map(code => 
-        {
-            code = code.replace(/^import\s+.*?;?\s*$/gm, '');
-            code = code.replace(/^export\s+.*?;?\s*$/gm, '');
-            code = code.replace(/^\s*[\r\n]/gm, '');
+	if (type === 'js')
+	{
+		contents = contents.map(content =>
+		{
+			content = content.replace(/^import\s+.*?;?\s*$/gm, '');
+			content = content.replace(/^export\s+.*?;?\s*$/gm, '');
+			content = content.replace(/^\s*[\r\n]/gm, '');
 
-            return code;
-        });
+			return content;
+		});
 
-        return '(function(){\n' + code.filter(content => content && content.trim()).join('\n\n') + '\n})();';
-    }
+		return '(function(){\n' + contents.filter(content => content?.trim()).join('\n\n') + '\n})();';
+	}
 
-    if (type === 'css')
-    {
-        const code = contents.map(code => code ? code.trim() : '');
+	if (type === 'css')
+	{
+		contents = contents.map(content => content ? content.trim() : '');
+	}
 
-        return code.filter(content => content && content.trim()).join('\n');
-    }
-
-    return code.filter(content => content && content.trim()).join('\n');
+	return contents.filter(content => content?.trim()).join('\n');
 });

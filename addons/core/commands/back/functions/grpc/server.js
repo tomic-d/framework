@@ -28,12 +28,12 @@ commands.Fn('grpc.server', async function(port = 50000, callbacks = {})
             {
                 if(!command)
                 {
-                    throw new Error('Command does not exist.');
+                    throw onetype.Error(404, 'Command does not exist.');
                 }
 
                 if(!command.Get('exposed'))
                 {
-                    throw new Error('Command is not exposed.');
+                    throw onetype.Error(403, 'Command is not exposed.');
                 }
 
                 const result = await command.Fn('run', payload.data, (chunk) =>

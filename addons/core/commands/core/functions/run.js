@@ -6,7 +6,7 @@ commands.Fn('run', async function(id, data = {})
 
 	if(!command)
 	{
-		throw new Error(`Command '${id}' not found.`);
+		throw onetype.Error(404, 'Command :id: not found.', {id});
 	}
 
 	return await command.Fn('run', data);

@@ -11,7 +11,7 @@ database.Fn('item.create', async function(item, addon, connection = null)
 
     if(!table.name)
     {
-        throw new Error('Addon must have table name set.');
+        throw onetype.Error(400, 'Addon must have table name set.');
     }
 
     const fields = {};
@@ -28,7 +28,7 @@ database.Fn('item.create', async function(item, addon, connection = null)
             }
             catch(error)
             {
-                throw new Error('Item Create GET Error. ' + error.message);
+                throw onetype.Error(500, 'Item create get error.');
             }
         }
     });
@@ -77,7 +77,7 @@ database.Fn('item.create', async function(item, addon, connection = null)
             }
             catch(error)
             {
-                throw new Error('Item Create SET Error. ' + error.message);
+                throw onetype.Error(500, 'Item create set error.');
             }
         });
 

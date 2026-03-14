@@ -1,0 +1,197 @@
+/* Root */
+
+.e-d62eba0
+{
+	display: flex;
+	width: 100%;
+}
+
+/* Holder */
+
+.e-d62eba0 > .holder
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-s);
+	width: 100%;
+	border-radius: var(--ot-radius-m);
+	border: 1px solid transparent;
+}
+
+/* Rows */
+
+.e-d62eba0 > .holder > .rows
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-s);
+}
+
+/* Row */
+
+.e-d62eba0 > .holder > .rows > .row
+{
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	padding: var(--ot-spacing-s);
+	background: var(--ot-bg-1);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-m);
+	transition: border-color 0.15s ease;
+}
+
+.e-d62eba0 > .holder > .rows > .row:hover
+{
+	border-color: var(--ot-bg-3-border);
+}
+
+/* Fields */
+
+.e-d62eba0 > .holder > .rows > .row > .fields
+{
+	display: flex;
+	flex: 1;
+	gap: var(--ot-spacing-s);
+	min-width: 0;
+}
+
+.e-d62eba0 > .holder > .rows > .row > .fields > .column
+{
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 1;
+	min-width: 0;
+}
+
+.e-d62eba0 > .holder > .rows > .row > .fields > .column > .label
+{
+	font-size: var(--ot-size-s);
+	font-weight: 500;
+	color: var(--ot-text-2);
+	line-height: 1;
+}
+
+.e-d62eba0 > .holder > .rows:not(:first-child) > .row > .fields > .column > .label
+{
+	display: none;
+}
+
+.e-d62eba0 > .holder > .rows > .row:not(:first-child) > .fields > .column > .label
+{
+	display: none;
+}
+
+.e-d62eba0 > .holder > .rows > .row > .fields > .column > .field
+{
+	flex: 1;
+	min-width: 0;
+}
+
+/* Actions */
+
+.e-d62eba0 > .holder > .rows > .row > .actions
+{
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 2px;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-s);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.15s ease;
+}
+
+.e-d62eba0 > .holder > .rows > .row:hover > .actions
+{
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.e-d62eba0 > .holder > .rows > .row > .actions > .action
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	font-size: 14px;
+	color: var(--ot-text-2);
+	opacity: 0.5;
+	border-radius: var(--ot-radius-s);
+	cursor: pointer;
+	transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.e-d62eba0 > .holder > .rows > .row > .actions > .action:hover
+{
+	opacity: 1;
+	background: var(--ot-bg-3);
+}
+
+.e-d62eba0 > .holder > .rows > .row > .actions > .action.remove:hover
+{
+	color: var(--ot-red);
+	background: var(--ot-red-opacity);
+}
+
+/* Empty */
+
+.e-d62eba0 > .holder > .empty
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--ot-spacing-m);
+	border: 1px dashed var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-m);
+}
+
+.e-d62eba0 > .holder > .empty > span
+{
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-2);
+	opacity: 0.5;
+}
+
+/* Footer */
+
+.e-d62eba0 > .holder > .footer
+{
+	display: flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+}
+
+/* Background variants */
+
+.e-d62eba0 > .holder.bg-1 > .rows > .row { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
+.e-d62eba0 > .holder.bg-2 > .rows > .row { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
+.e-d62eba0 > .holder.bg-3 > .rows > .row { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
+.e-d62eba0 > .holder.bg-4 > .rows > .row { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
+
+.e-d62eba0 > .holder.bg-1 > .rows > .row:hover { border-color: var(--ot-bg-2-border); }
+.e-d62eba0 > .holder.bg-2 > .rows > .row:hover { border-color: var(--ot-bg-3-border); }
+.e-d62eba0 > .holder.bg-3 > .rows > .row:hover { border-color: var(--ot-bg-4-border); }
+.e-d62eba0 > .holder.bg-4 > .rows > .row:hover { border-color: var(--ot-bg-4-border); }
+
+/* Border variant */
+
+.e-d62eba0 > .holder.border { border: 1px solid var(--ot-bg-2-border); padding: var(--ot-spacing-s); }
+
+/* Size variants */
+
+.e-d62eba0 > .holder.size-s > .rows > .row { padding: 4px; }
+.e-d62eba0 > .holder.size-s > .rows > .row > .fields { gap: 4px; }
+
+.e-d62eba0 > .holder.size-m > .rows > .row { padding: var(--ot-spacing-s); }
+.e-d62eba0 > .holder.size-m > .rows > .row > .fields { gap: var(--ot-spacing-s); }
+
+.e-d62eba0 > .holder.size-l > .rows > .row { padding: var(--ot-spacing-m); }
+.e-d62eba0 > .holder.size-l > .rows > .row > .fields { gap: var(--ot-spacing-m); }

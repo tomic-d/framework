@@ -53,7 +53,7 @@ serversGRPC.Fn('item.start', async function(item)
             item.Set('instance', server);
             item.Get('onStart') && item.Get('onStart').call(item, server);
             
-            onetype.Emit('servers.grpc.start', server);
+            onetype.Emit('@servers.grpc.start', server);
         });
     }
     catch(error)
