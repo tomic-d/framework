@@ -1,6 +1,6 @@
 import onetype from "#framework/load.js";
 
-onetype.AddonReady('html', (html) => 
+onetype.AddonReady('html', (html) =>
 {
     html.Item({
         id: 'assets-css',
@@ -10,7 +10,7 @@ onetype.AddonReady('html', (html) =>
         order: 90,
         attributes: {
             rel: 'stylesheet',
-            href: '/assets/build.css?v=18'
+            href: onetype.StateGet('base', '') + '/assets/build.css?v=18'
         }
     });
 });
