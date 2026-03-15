@@ -2,7 +2,7 @@ popup.Fn('modal', function(render, options = {})
 {
 	const id = 'modal-' + onetype.GenerateUID();
 
-	const overlay = overlays.Item({
+	return overlays.Item({
 		id: options.id || id,
 		position: {x: 'center', y: 'center'},
 		backdrop: options.backdrop ?? 0.5,
@@ -13,12 +13,12 @@ popup.Fn('modal', function(render, options = {})
 		{
 			const element = item.Get('element');
 
-			if (element)
+			if(element)
 			{
 				element.classList.add('ot-modal');
 			}
 
-			if (options.onOpen)
+			if(options.onOpen)
 			{
 				options.onOpen(item);
 			}
@@ -28,11 +28,4 @@ popup.Fn('modal', function(render, options = {})
 			return render;
 		}
 	});
-
-	return overlay;
 });
-
-onetype.$ot.modal = function(render, options)
-{
-	return popup.Fn('modal', render, options);
-};

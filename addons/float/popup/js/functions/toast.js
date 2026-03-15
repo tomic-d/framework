@@ -40,11 +40,11 @@ popup.Fn('toast', function(message, options = {})
 		}
 	});
 
-	if (duration > 0)
+	if(duration > 0)
 	{
 		setTimeout(() =>
 		{
-			if (overlays.ItemGet(overlay.Get('id')))
+			if(overlays.ItemGet(overlay.Get('id')))
 			{
 				overlay.Remove();
 			}
@@ -53,8 +53,3 @@ popup.Fn('toast', function(message, options = {})
 
 	return overlay;
 });
-
-onetype.$ot.toast = function(message, options)
-{
-	return popup.Fn('toast', message, options);
-};

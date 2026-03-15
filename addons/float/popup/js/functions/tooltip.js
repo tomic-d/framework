@@ -1,7 +1,6 @@
 popup.Fn('tooltip', function(target, text, options = {})
 {
 	const config = typeof text === 'object' ? text : {text};
-
 	const id = 'tooltip-' + onetype.GenerateUID();
 
 	return overlays.Item({
@@ -33,8 +32,3 @@ popup.Fn('tooltip', function(target, text, options = {})
 		}
 	});
 });
-
-onetype.$ot.tooltip = function(target, text, options)
-{
-	return popup.Fn('tooltip', target, text, options);
-};
