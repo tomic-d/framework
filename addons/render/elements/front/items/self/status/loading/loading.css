@@ -6,7 +6,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	min-height: calc(100vh - 48px);
+	min-height: 320px;
 	padding: var(--ot-spacing-l);
 }
 
@@ -63,6 +63,13 @@
 {
 	from { transform: rotate(0deg); }
 	to { transform: rotate(360deg); }
+}
+
+/* Auto height */
+
+.e-691b81f7.auto
+{
+	min-height: auto;
 }
 
 @keyframes e-691b81f7-pulse

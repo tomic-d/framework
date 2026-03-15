@@ -19,8 +19,3 @@ popup.Fn('popup', function(target, render, options = {})
 		}
 	});
 });
-
-onetype.$ot.popup = function(target, render, options)
-{
-	return popup.Fn('popup', target, render, options);
-};

@@ -1,10 +1,10 @@
 popup.Fn('close', function(id)
 {
-	if (id)
+	if(id)
 	{
 		const item = overlays.ItemGet(id);
 
-		if (item)
+		if(item)
 		{
 			item.Remove();
 		}
@@ -14,13 +14,8 @@ popup.Fn('close', function(id)
 
 	const items = Object.values(overlays.Items()).sort((a, b) => b.Get('index') - a.Get('index'));
 
-	if (items.length)
+	if(items.length)
 	{
 		items[0].Remove();
 	}
 });
-
-onetype.$ot.close = function(id)
-{
-	return popup.Fn('close', id);
-};

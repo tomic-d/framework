@@ -26,6 +26,10 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			_click: {
 				type: 'function'
+			},
+			variant: {
+				type: 'array',
+				value: []
 			}
 		},
 		render: function()
