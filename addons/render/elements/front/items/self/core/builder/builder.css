@@ -120,7 +120,8 @@
 
 .e-7d599f7d > .holder > .section > .fields > .field.left > .control
 {
-	flex-shrink: 0;
+	flex: 2;
+	min-width: 0;
 }
 
 /* Label */

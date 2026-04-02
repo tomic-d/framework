@@ -1,0 +1,235 @@
+/* Root */
+
+.e-15fd40b6
+{
+	display: flex;
+	width: calc(100vw - 80px);
+	height: calc(100vh - 80px);
+	max-width: 1200px;
+}
+
+/* Holder */
+
+.e-15fd40b6 > .holder
+{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	background: var(--ot-bg-1);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-l);
+	overflow: hidden;
+}
+
+/* ─── Header ─── */
+
+.e-15fd40b6 .header
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	border-bottom: 1px solid var(--ot-bg-2-border);
+	flex-shrink: 0;
+}
+
+.e-15fd40b6 .header > .left
+{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.e-15fd40b6 .header > .left > .icon
+{
+	font-size: 18px;
+	color: var(--ot-text-2);
+}
+
+.e-15fd40b6 .header > .left > .title
+{
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--ot-text-1);
+}
+
+.e-15fd40b6 .header > .left > .count
+{
+	font-size: 10px;
+	font-weight: 700;
+	color: var(--ot-text-3);
+	padding: 2px 6px;
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: 100px;
+}
+
+.e-15fd40b6 .header > .right
+{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.e-15fd40b6 .header > .right > .close
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: none;
+	background: transparent;
+	color: var(--ot-text-3);
+	border-radius: var(--ot-radius-s);
+	cursor: pointer;
+	transition: color 0.12s, background 0.12s;
+}
+
+.e-15fd40b6 .header > .right > .close:hover
+{
+	color: var(--ot-text-1);
+	background: var(--ot-bg-2);
+}
+
+.e-15fd40b6 .header > .right > .close > i
+{
+	font-size: 18px;
+}
+
+/* ─── Body ─── */
+
+.e-15fd40b6 .body
+{
+	flex: 1;
+	overflow-y: auto;
+	padding: 20px;
+	transition: background 0.15s;
+}
+
+.e-15fd40b6 .body.dragging
+{
+	background: var(--ot-brand-opacity);
+	outline: 2px dashed var(--ot-brand);
+	outline-offset: -8px;
+	border-radius: var(--ot-radius-m);
+}
+
+/* ─── Empty ─── */
+
+.e-15fd40b6 .empty
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+/* ─── Grid ─── */
+
+.e-15fd40b6 .grid
+{
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 12px;
+}
+
+/* ─── Card ─── */
+
+.e-15fd40b6 .card
+{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--ot-radius-m);
+	background: var(--ot-bg-2);
+	border: 1px solid transparent;
+	cursor: pointer;
+	overflow: hidden;
+	transition: border-color 0.15s;
+}
+
+.e-15fd40b6 .card:hover
+{
+	border-color: var(--ot-bg-2-border);
+}
+
+/* ─── Preview ─── */
+
+.e-15fd40b6 .preview
+{
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	background: var(--ot-bg-3);
+}
+
+.e-15fd40b6 .preview > img
+{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* ─── Info ─── */
+
+.e-15fd40b6 .info
+{
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 8px 10px;
+}
+
+.e-15fd40b6 .name
+{
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--ot-text-1);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.e-15fd40b6 .meta
+{
+	font-size: 10px;
+	color: var(--ot-text-3);
+}
+
+/* ─── Delete ─── */
+
+.e-15fd40b6 .delete
+{
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border: none;
+	background: var(--ot-bg-1);
+	color: var(--ot-text-3);
+	border-radius: var(--ot-radius-s);
+	cursor: pointer;
+	opacity: 0;
+	transition: color 0.12s, background 0.12s, opacity 0.12s;
+}
+
+.e-15fd40b6 .card:hover .delete
+{
+	opacity: 1;
+}
+
+.e-15fd40b6 .delete:hover
+{
+	color: var(--ot-red);
+	background: var(--ot-red-opacity);
+}
+
+.e-15fd40b6 .delete > i
+{
+	font-size: 15px;
+}

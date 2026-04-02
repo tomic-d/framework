@@ -53,6 +53,9 @@ onetype.AddonReady('elements', (elements) =>
 				value: ['size-m'],
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
 			},
+			_input: {
+				type: 'function'
+			},
 			_change: {
 				type: 'function'
 			},
@@ -102,6 +105,17 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				this.collapsed[index] = !this.collapsed[index];
 				this.Update();
+			};
+
+			this.input = (key, data) =>
+			{
+				this.values[key] = data.value;
+				this.Update();
+
+				if (this._input)
+				{
+					this._input({ key, value: data.value });
+				}
 			};
 
 			this.change = (key, data) =>
@@ -172,7 +186,7 @@ onetype.AddonReady('elements', (elements) =>
 
 					// Element tag
 
-					const element = `<${tag} :value="val('${field.key}')" :_change="(data) => change('${field.key}', data)"${attrs}></${tag}>`;
+					const element = `<${tag} :value="val('${field.key}')" :_input="(data) => input('${field.key}', data)" :_change="(data) => change('${field.key}', data)"${attrs}></${tag}>`;
 
 					// Label
 

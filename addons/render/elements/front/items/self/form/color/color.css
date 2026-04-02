@@ -4,6 +4,7 @@
 {
 	display: flex;
 	width: 100%;
+	min-width: 0;
 }
 
 /* Holder */
@@ -87,6 +88,33 @@
 {
 	opacity: 0.5;
 	cursor: not-allowed;
+}
+
+/* Clear button */
+
+.e-21311850 > .holder > .clear
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: var(--ot-text-3);
+	cursor: pointer;
+	transition: color 0.15s ease;
+	outline: none;
+}
+
+.e-21311850 > .holder > .clear:hover
+{
+	color: var(--ot-text-1);
+}
+
+.e-21311850 > .holder > .clear > i
+{
+	font-size: 14px;
 }
 
 /* Background variants */

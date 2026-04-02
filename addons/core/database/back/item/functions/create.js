@@ -1,3 +1,4 @@
+import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
 database.Fn('item.create', async function(item, addon, connection = null)
@@ -28,7 +29,7 @@ database.Fn('item.create', async function(item, addon, connection = null)
             }
             catch(error)
             {
-                throw onetype.Error(500, 'Item create get error.');
+                throw onetype.Error(500, 'Error in field: ' + field.name + ': ' + error.message);
             }
         }
     });

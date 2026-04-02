@@ -17,7 +17,7 @@ directives.ItemAdd({
 
         if (slot && slot.Element)
         {
-            slot.Element.__otExternal = true;
+            slot.Element.__otExternal = { name: 'slot', key: name };
             node.replaceWith(slot.Element);
         }
         else if (slot && slot.html && slot.data)

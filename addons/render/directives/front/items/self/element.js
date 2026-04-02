@@ -61,11 +61,16 @@ onetype.AddonReady('directives', (directives) =>
 				});
 			}
 
+			const key = attributes.wrapper['ot-key'] || attributes.data['ot-key'] || identifier;
+
+			delete attributes.wrapper['ot-key'];
+			delete attributes.data['ot-key'];
+
 			const render = onetype.Addon('elements').Render(elementName, attributes.data, attributes.wrapper, slots);
 
 			if(render)
 			{
-				render.Element.__otExternal = true;
+				render.Element.__otExternal = { render, name: elementName, key, data: attributes.data };
 				node.replaceWith(render.Element);
 			}
 			else

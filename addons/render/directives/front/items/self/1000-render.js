@@ -23,6 +23,7 @@ directives.ItemAdd({
 
 		if(item[name] && item[name].Element)
 		{
+			item[name].Element.__otExternal = { name: 'render', key: name };
 			node.replaceWith(item[name].Element);
 		}
 		else
