@@ -24,11 +24,20 @@ onetype.AddonReady('directives', function()
 
 			if(result instanceof Node)
 			{
-				result.__otExternal = true;
+				let key = node.getAttribute('ot-key');
+
+				if(!key && node.hasAttribute(':ot-key'))
+				{
+					key = onetype.Function(node.getAttribute(':ot-key'), compile.data, false);
+				}
+
+				result.__otExternal = { name: 'node', key: key || value };
 				node.replaceWith(result);
 			}
 
 			node.removeAttribute('ot-node');
+			node.removeAttribute('ot-key');
+			node.removeAttribute(':ot-key');
 		}
 	});
 });

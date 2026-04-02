@@ -18,7 +18,7 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			placeholder: {
 				type: 'string',
-				value: '#000000'
+				value: 'transparent'
 			},
 			disabled: {
 				type: 'boolean',
@@ -29,6 +29,9 @@ onetype.AddonReady('elements', (elements) =>
 				value: ['bg-2', 'border', 'size-m'],
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent', 'border', 'size-s', 'size-m', 'size-l']
 			},
+			_input: {
+				type: 'function'
+			},
 			_change: {
 				type: 'function'
 			}
@@ -36,6 +39,16 @@ onetype.AddonReady('elements', (elements) =>
 		render: function()
 		{
 			this.pick = ({ event, value }) =>
+			{
+				this.value = value;
+
+				if (this._input)
+				{
+					this._input({ event, value });
+				}
+			};
+
+			this.commit = ({ event, value }) =>
 			{
 				this.value = value;
 
@@ -72,11 +85,21 @@ onetype.AddonReady('elements', (elements) =>
 				event.target.closest('.holder').querySelector('.native').click();
 			};
 
+			this.clear = () =>
+			{
+				this.value = '';
+
+				if (this._change)
+				{
+					this._change({ event: null, value: '' });
+				}
+			};
+
 			return `
 				<div :class="'holder ' + variant.join(' ')">
 					<input type="hidden" :name="name" :value="value" />
-					<button class="swatch" :style="'background: ' + value" ot-click="open" :disabled="disabled">
-						<input class="native" type="color" :value="value" ot-input="pick" tabindex="-1" />
+					<button class="swatch" :style="'background: ' + (value || 'transparent')" ot-click="open" :disabled="disabled">
+						<input class="native" type="color" :value="value" ot-input="pick" ot-change="commit" tabindex="-1" />
 					</button>
 					<input
 						class="input"
@@ -89,6 +112,9 @@ onetype.AddonReady('elements', (elements) =>
 						spellcheck="false"
 						ot-change="input"
 					/>
+					<button ot-if="value && !disabled" class="clear" ot-click.stop="clear">
+						<i>close</i>
+					</button>
 				</div>
 			`;
 		}

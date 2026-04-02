@@ -1,14 +1,14 @@
 onetype.AddonReady('directives', function()
 {
-	const handlers = new Set();
+	const tracked = new Set();
 
 	document.addEventListener('click', function(event)
 	{
-		handlers.forEach((entry) =>
+		tracked.forEach((entry) =>
 		{
 			if(!document.contains(entry.element))
 			{
-				handlers.delete(entry);
+				tracked.delete(entry);
 				return;
 			}
 
@@ -21,30 +21,25 @@ onetype.AddonReady('directives', function()
 
 	directives.ItemAdd({
 		id: 'ot-click-outside',
-		icon: 'close_fullscreen',
-		name: 'Click Outside',
-		description: 'Detect clicks outside the element.',
-		category: 'events',
 		trigger: 'node',
 		order: 500,
-		attributes: {
-			'ot-click-outside': ['string']
-		},
-		code: function(data, item, compile, node, identifier)
+		attributes: { 'ot-click-outside': ['string'] },
+		code: function(data, item, compile, node)
 		{
 			const attribute = data['ot-click-outside'].value;
 
-			const handler = (event) =>
-			{
-				const results = onetype.Function(attribute, compile.data, false);
-
-				if(typeof results === 'function')
+			tracked.add({
+				element: node,
+				handler: (event) =>
 				{
-					results({ event });
-				}
-			};
+					const result = onetype.Function(attribute, compile.data, false);
 
-			handlers.add({element: node, handler});
+					if(typeof result === 'function')
+					{
+						result({ event });
+					}
+				}
+			});
 		}
 	});
 });

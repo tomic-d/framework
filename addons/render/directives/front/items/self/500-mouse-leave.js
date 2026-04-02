@@ -1,74 +1,62 @@
-directives.ItemAdd({
-    id: 'ot-mouse-leave',
-    icon: 'logout',
-    name: 'Mouse Leave',
-    description: 'Handle mouse leave events. Triggers when cursor exits element boundaries.',
-    category: 'events',
-    trigger: 'node',
-    order: 500,
-    attributes: {
-        'ot-mouse-leave': ['string']
-    },
-    code: function(data, item, compile, node, identifier)
-    {
-        const attribute = data['ot-mouse-leave'].value;
-
-        node.otMouseLeave = (event) =>
-        {
-            if (data['ot-mouse-leave'].modifiers && data['ot-mouse-leave'].modifiers.length > 0)
-            {
-                if (data['ot-mouse-leave'].modifiers.includes('prevent'))
-                {
-                    event.preventDefault();
-                }
-
-                if (data['ot-mouse-leave'].modifiers.includes('stop'))
-                {
-                    event.stopPropagation();
-                }
-            }
-
-            const results = onetype.Function(attribute, compile.data, false);
-
-            if(typeof results === 'function')
-            {
-                results({ event });
-            }
-        }
-    }
-});
-
 onetype.AddonReady('directives', function()
 {
-    document.addEventListener('mouseout', function(event)
-    {
-        let node = event.target;
+	directives.ItemAdd({
+		id: 'ot-mouse-leave',
+		trigger: 'node',
+		order: 500,
+		attributes: { 'ot-mouse-leave': ['string'] },
+		code: function(data, item, compile, node)
+		{
+			const attribute = data['ot-mouse-leave'].value;
+			const modifiers = data['ot-mouse-leave'].modifiers;
 
-        while(node && node !== document)
-        {
-            if('otMouseLeave' in node && !node.otMouseLeft)
-            {
-                node.otMouseLeft = true;
-                node.otMouseLeave(event);
-                break;
-            }
+			node.otMouseLeave = (event) =>
+			{
+				if(modifiers && modifiers.length)
+				{
+					if(modifiers.includes('prevent')) event.preventDefault();
+					if(modifiers.includes('stop')) event.stopPropagation();
+				}
 
-            node = node.parentNode;
-        }
-    });
+				const result = onetype.Function(attribute, compile.data, false);
 
-    document.addEventListener('mouseover', function(event)
-    {
-        let node = event.target;
+				if(typeof result === 'function')
+				{
+					result({ event });
+				}
+			};
+		}
+	});
 
-        while(node && node !== document)
-        {
-            if('otMouseLeave' in node && node.otMouseLeft)
-            {
-                node.otMouseLeft = false;
-            }
+	document.addEventListener('mouseout', function(event)
+	{
+		let node = event.target;
 
-            node = node.parentNode;
-        }
-    });
+		while(node && node !== document)
+		{
+			if('otMouseLeave' in node && !node.__left)
+			{
+				node.__left = true;
+				node.otMouseLeave(event);
+				break;
+			}
+
+			node = node.parentNode;
+		}
+	});
+
+	document.addEventListener('mouseover', function(event)
+	{
+		let node = event.target;
+
+		while(node && node !== document)
+		{
+			if('otMouseLeave' in node && node.__left)
+			{
+				node.__left = false;
+			}
+
+			node = node.parentNode;
+		}
+	});
 });

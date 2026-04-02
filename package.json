@@ -21,9 +21,8 @@
         "./tags": "./addons/render/tags/load.js",
         "./sources": "./addons/modules/sources/back/load.js",
         "./variables": "./addons/modules/variables/core/load.js",
-        "./agents": "./addons/ai/agents/load.js",
-        "./orchestrator": "./addons/ai/orchestrator/load.js",
-        "./providers": "./addons/ai/providers/load.js"
+        "./ai": "./addons/ai/load.js",
+        "./services/cloudflare/images": "./addons/services/cloudflare/images/back/load.js"
     },
     "imports": {
         "#framework/*": "./lib/*",
@@ -40,9 +39,8 @@
         "#tags/*": "./addons/render/tags/*",
         "#sources/*": "./addons/modules/sources/*",
         "#variables/*": "./addons/modules/variables/*",
-        "#agents/*": "./addons/ai/agents/*",
-        "#orchestrator/*": "./addons/ai/orchestrator/*",
-        "#providers/*": "./addons/ai/providers/*"
+        "#ai/*": "./addons/ai/*",
+        "#cloudflare-images/*": "./addons/services/cloudflare/images/back/*"
     },
     "dependencies": {
         "@grpc/grpc-js": "^1.13.3",

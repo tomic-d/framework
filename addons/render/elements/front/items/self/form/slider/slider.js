@@ -33,6 +33,9 @@ onetype.AddonReady('elements', (elements) =>
 				value: ['brand', 'size-m'],
 				options: ['brand', 'blue', 'red', 'orange', 'green', 'size-s', 'size-m', 'size-l']
 			},
+			_input: {
+				type: 'function'
+			},
 			_change: {
 				type: 'function'
 			}
@@ -40,6 +43,16 @@ onetype.AddonReady('elements', (elements) =>
 		render: function()
 		{
 			this.handle = ({ event }) =>
+			{
+				this.value = parseFloat(event.target.value);
+
+				if (this._input)
+				{
+					this._input({ event, value: this.value });
+				}
+			};
+
+			this.commit = ({ event }) =>
 			{
 				this.value = parseFloat(event.target.value);
 
@@ -67,6 +80,7 @@ onetype.AddonReady('elements', (elements) =>
 						:step="step"
 						:disabled="disabled"
 						ot-input="handle"
+						ot-change="commit"
 					/>
 				</div>
 			`;

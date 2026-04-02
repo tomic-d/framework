@@ -1,0 +1,43 @@
+CREATE SEQUENCE IF NOT EXISTS cloudflare_images_id_seq;
+
+CREATE TABLE IF NOT EXISTS public.cloudflare_images
+(
+    id bigint NOT NULL DEFAULT nextval('cloudflare_images_id_seq'::regclass),
+    team_id bigint NOT NULL,
+    site_id bigint NOT NULL,
+    cloudflare_id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    filename character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    url text COLLATE pg_catalog."default",
+    variants jsonb NOT NULL DEFAULT '{}'::jsonb,
+    alt character varying(255) COLLATE pg_catalog."default",
+    size integer,
+    type character varying(50) COLLATE pg_catalog."default",
+    width integer,
+    height integer,
+    updated_at timestamp with time zone NOT NULL DEFAULT now(),
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    CONSTRAINT cloudflare_images_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.cloudflare_images
+    OWNER to onetype;
+
+CREATE INDEX IF NOT EXISTS idx_cloudflare_images_team_id
+    ON public.cloudflare_images USING btree
+    (team_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+CREATE INDEX IF NOT EXISTS idx_cloudflare_images_site_id
+    ON public.cloudflare_images USING btree
+    (site_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+CREATE INDEX IF NOT EXISTS idx_cloudflare_images_cloudflare_id
+    ON public.cloudflare_images USING btree
+    (cloudflare_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;

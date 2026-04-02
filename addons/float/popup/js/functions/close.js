@@ -7,9 +7,10 @@ popup.Fn('close', function(id)
 		if(item)
 		{
 			item.Remove();
+			return true;
 		}
 
-		return;
+		return false;
 	}
 
 	const items = Object.values(overlays.Items()).sort((a, b) => b.Get('index') - a.Get('index'));
@@ -17,5 +18,8 @@ popup.Fn('close', function(id)
 	if(items.length)
 	{
 		items[0].Remove();
+		return true;
 	}
+
+	return false;
 });
