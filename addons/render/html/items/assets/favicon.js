@@ -7,6 +7,6 @@ html.Item({
     priority: -60,
     attributes: {
         rel: 'icon',
-        href: 'https://cdn.onetype.ai/brand/logo/icon-orange.svg'
+        href: 'https://images.onetype.ai/96752e47-1bea-4313-025c-5b76dc174200/public'
     }
 });
