@@ -2,6 +2,8 @@ import onetype from "#framework/load.js";
 
 onetype.AddonReady('html', (html) =>
 {
+    console.log(onetype.Base());
+    
     html.Item({
         id: 'assets-css',
         exposed: true,
