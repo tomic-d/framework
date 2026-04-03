@@ -6,7 +6,7 @@ onetype.AddonReady('directives', function()
 		name: 'Node Mount',
 		description: 'Mount a DOM node into the element.',
 		trigger: 'node',
-		order: 50,
+		order: 750,
 		strict: false,
 		attributes: {
 			'ot-node': ['string', null, true]

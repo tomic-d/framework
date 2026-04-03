@@ -10,7 +10,7 @@ onetype.AddonReady('html', (html) =>
         order: 90,
         attributes: {
             rel: 'stylesheet',
-            href: onetype.StateGet('base', '') + '/assets/build.css?v=18'
+            href: onetype.Base() + '/assets/build.css?v=18'
         }
     });
 });

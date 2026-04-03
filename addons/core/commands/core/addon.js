@@ -23,9 +23,7 @@ const commands = onetype.Addon('commands', (addon) =>
             return null;
         }
 
-        const base = onetype.StateGet('base', '');
-
-        return base + '/' + value.replace(/^\/+/, '').replace(/\/+/g, '/').toLowerCase();
+        return onetype.Base() + '/' + value.replace(/^\/+/, '').replace(/\/+/g, '/').toLowerCase();
     });
 });
 

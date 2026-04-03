@@ -3,7 +3,22 @@ import onetype from '#framework/load.js';
 const pages = onetype.Addon('pages', (addon) =>
 {
 	addon.Field('id', ['string']);
-	addon.Field('route', ['string|array']);
+	addon.Field('route', ['string|array'], null, (value) =>
+	{
+		const base = onetype.Base();
+
+		if(!base)
+		{
+			return value;
+		}
+
+		if(Array.isArray(value))
+		{
+			return value.map(route => base + route);
+		}
+
+		return base + value;
+	});
 	addon.Field('title', ['string|function']);
 	addon.Field('meta', ['object', {}]);
 	addon.Field('data', ['function']);

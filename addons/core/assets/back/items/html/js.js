@@ -9,7 +9,7 @@ onetype.AddonReady('html', (html) =>
         position: 'head',
         order: 90,
         attributes: {
-            src: onetype.StateGet('base', '') + '/assets/build.js?v=18',
+            src: onetype.Base() + '/assets/build.js?v=18',
             defer: null
         }
     });

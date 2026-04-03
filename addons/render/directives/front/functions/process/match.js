@@ -34,9 +34,14 @@ directives.Fn('process.match', function(d, node)
         }
     });
 
+    if(matches.total === 0 && d.trigger !== 'node')
+    {
+        return true;
+    }
+
     if(d.strict)
     {
-        return matches.count === matches.total && matches.total > 0;
+        return matches.count === matches.total;
     }
 
     return matches.count > 0;
