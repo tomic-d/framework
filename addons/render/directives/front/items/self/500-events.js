@@ -1,4 +1,4 @@
-onetype.AddonReady('directives', function()
+onetype.AddonReady('directives', function(directives)
 {
 	const register = (config) =>
 	{

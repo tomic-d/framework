@@ -1,4 +1,4 @@
-onetype.AddonReady('directives', function()
+onetype.AddonReady('directives', function(directives)
 {
     directives.ItemAdd({
         id: 'ot-transform',
