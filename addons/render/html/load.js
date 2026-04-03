@@ -21,6 +21,5 @@ import '#html/items/fonts/outfit.js';
 
 /* Essential Items - SEO */
 import '#html/items/seo/robots.js';
-import '#html/items/seo/theme-color.js';
 
 export default html;
