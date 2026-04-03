@@ -1,4 +1,4 @@
-onetype.AddonReady('directives', (directives) =>
+onetype.AddonReady('directives', function(directives)
 {
 	directives.ItemAdd({
 		id: 'ot-element',
@@ -6,7 +6,7 @@ onetype.AddonReady('directives', (directives) =>
 		name: 'Element Load',
 		description: 'Load and render elements using custom tag syntax. Automatically detects <e-{name}> tags and renders corresponding elements.',
 		trigger: 'node',
-		order: 1100,
+		order: 2500,
 		strict: false,
 		type: '1',
 		code: function(data, item, compile, node, identifier)

@@ -1,188 +1,189 @@
-import directives from '#directives/addon.js';
-
-directives.ItemAdd({
-	id: 'ot-fetch',
-	icon: 'cloud_download',
-	name: 'Fetch',
-	description: 'Fetch data from URL or endpoint and bind to component data',
-	category: 'data',
-	trigger: 'node',
-	order: 650,
-	tag: 'ot-fetch',
-	attributes: {
-		'get': ['string'],
-		'endpoint': ['string'],
-		'url': ['string'],
-		'bind': ['string'],
-		'params': ['string'],
-		'on-success': ['string'],
-		'on-error': ['string']
-	},
-	code: function(data, item, compile, node, identifier)
-	{
-		const config = {};
-		const methods = {};
-
-		methods.init = () =>
+onetype.AddonReady('directives', function(directives)
+{
+	directives.ItemAdd({
+		id: 'ot-fetch',
+		icon: 'cloud_download',
+		name: 'Fetch',
+		description: 'Fetch data from URL or endpoint and bind to component data',
+		category: 'data',
+		trigger: 'node',
+		order: 650,
+		tag: 'ot-fetch',
+		attributes: {
+			'get': ['string'],
+			'endpoint': ['string'],
+			'url': ['string'],
+			'bind': ['string'],
+			'params': ['string'],
+			'on-success': ['string'],
+			'on-error': ['string']
+		},
+		code: function(data, item, compile, node, identifier)
 		{
-			methods.config();
+			const config = {};
+			const methods = {};
 
-			if(methods.fetched())
+			methods.init = () =>
 			{
-				return;
-			}
+				methods.config();
 
-			methods.state();
-			methods.execute();
-		};
+				if(methods.fetched())
+				{
+					return;
+				}
 
-		methods.config = () =>
-		{
-			const get = node.getAttribute('get');
-
-			config.endpoint = get || node.getAttribute('endpoint') || node.getAttribute('url') || '';
-			config.bind = node.getAttribute('bind') || 'fetch';
-			config.onSuccess = node.getAttribute('on-success');
-			config.onError = node.getAttribute('on-error');
-			config.params = methods.parseParams();
-			config.url = methods.buildUrl();
-			config.html = node.innerHTML;
-		};
-
-		methods.parseParams = () =>
-		{
-			const paramsAttr = node.getAttribute('params');
-
-			if(!paramsAttr)
-			{
-				return {};
-			}
-
-			try
-			{
-				return JSON.parse(paramsAttr);
-			}
-			catch(e)
-			{
-				return onetype.Function(paramsAttr, compile.data, false) || {};
-			}
-		};
-
-		methods.buildUrl = () =>
-		{
-			let url = config.endpoint;
-
-			if(!/^https?:\/\//.test(url))
-			{
-				url = url.startsWith('/') ? url : '/' + url;
-			}
-
-			if(Object.keys(config.params).length > 0)
-			{
-				const query = Object.entries(config.params)
-					.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-					.join('&');
-
-				url += (url.includes('?') ? '&' : '?') + query;
-			}
-
-			return url;
-		};
-
-		methods.fetched = () =>
-		{
-			return compile.data[config.bind] && compile.data[config.bind].fetched;
-		};
-
-		methods.state = () =>
-		{
-			compile.data[config.bind] = {
-				response: null,
-				error: null,
-				loading: true,
-				success: false,
-				fetched: true
+				methods.state();
+				methods.execute();
 			};
 
-			node.innerHTML = '';
-			compile.children = false;
-		};
-
-		methods.execute = () =>
-		{
-			fetch(config.url)
-				.then(methods.response)
-				.then(methods.success)
-				.catch(methods.error)
-				.finally(methods.complete);
-		};
-
-		methods.response = (response) =>
-		{
-			if(!response.ok)
+			methods.config = () =>
 			{
-				throw onetype.Error(response.status, 'HTTP :status:.', {status: response.status});
-			}
+				const get = node.getAttribute('get');
 
-			return response.json();
-		};
+				config.endpoint = get || node.getAttribute('endpoint') || node.getAttribute('url') || '';
+				config.bind = node.getAttribute('bind') || 'fetch';
+				config.onSuccess = node.getAttribute('on-success');
+				config.onError = node.getAttribute('on-error');
+				config.params = methods.parseParams();
+				config.url = methods.buildUrl();
+				config.html = node.innerHTML;
+			};
 
-		methods.success = (result) =>
-		{
-			const state = compile.data[config.bind];
-
-			state.response = result.data !== undefined ? result.data : result;
-			state.error = null;
-			state.loading = false;
-			state.success = true;
-
-			if(config.onSuccess)
+			methods.parseParams = () =>
 			{
-				const callback = onetype.Function(config.onSuccess, compile.data, false);
+				const paramsAttr = node.getAttribute('params');
 
-				if(typeof callback === 'function')
+				if(!paramsAttr)
 				{
-					callback(state.response);
+					return {};
 				}
-			}
-		};
 
-		methods.error = (err) =>
-		{
-			const state = compile.data[config.bind];
-
-			state.response = null;
-			state.error = err.message;
-			state.loading = false;
-			state.success = false;
-
-			onetype.Error(500, 'Fetch error.', {bind: config.bind});
-
-			if(config.onError)
-			{
-				const callback = onetype.Function(config.onError, compile.data, false);
-
-				if(typeof callback === 'function')
+				try
 				{
-					callback(err.message);
+					return JSON.parse(paramsAttr);
 				}
-			}
-		};
+				catch(e)
+				{
+					return onetype.Function(paramsAttr, compile.data, false) || {};
+				}
+			};
 
-		methods.complete = () =>
-		{
-			const compiled = item.Compile(config.html, compile.data);
-			const fragment = document.createDocumentFragment();
-
-			while(compiled.element.firstChild)
+			methods.buildUrl = () =>
 			{
-				fragment.appendChild(compiled.element.firstChild);
-			}
+				let url = config.endpoint;
 
-			node.replaceWith(fragment);
-			compile.data.Update();
-		};
+				if(!/^https?:\/\//.test(url))
+				{
+					url = url.startsWith('/') ? url : '/' + url;
+				}
 
-		methods.init();
-	}
+				if(Object.keys(config.params).length > 0)
+				{
+					const query = Object.entries(config.params)
+						.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+						.join('&');
+
+					url += (url.includes('?') ? '&' : '?') + query;
+				}
+
+				return url;
+			};
+
+			methods.fetched = () =>
+			{
+				return compile.data[config.bind] && compile.data[config.bind].fetched;
+			};
+
+			methods.state = () =>
+			{
+				compile.data[config.bind] = {
+					response: null,
+					error: null,
+					loading: true,
+					success: false,
+					fetched: true
+				};
+
+				node.innerHTML = '';
+				compile.children = false;
+			};
+
+			methods.execute = () =>
+			{
+				fetch(config.url)
+					.then(methods.response)
+					.then(methods.success)
+					.catch(methods.error)
+					.finally(methods.complete);
+			};
+
+			methods.response = (response) =>
+			{
+				if(!response.ok)
+				{
+					throw onetype.Error(response.status, 'HTTP :status:.', {status: response.status});
+				}
+
+				return response.json();
+			};
+
+			methods.success = (result) =>
+			{
+				const state = compile.data[config.bind];
+
+				state.response = result.data !== undefined ? result.data : result;
+				state.error = null;
+				state.loading = false;
+				state.success = true;
+
+				if(config.onSuccess)
+				{
+					const callback = onetype.Function(config.onSuccess, compile.data, false);
+
+					if(typeof callback === 'function')
+					{
+						callback(state.response);
+					}
+				}
+			};
+
+			methods.error = (err) =>
+			{
+				const state = compile.data[config.bind];
+
+				state.response = null;
+				state.error = err.message;
+				state.loading = false;
+				state.success = false;
+
+				onetype.Error(500, 'Fetch error.', {bind: config.bind});
+
+				if(config.onError)
+				{
+					const callback = onetype.Function(config.onError, compile.data, false);
+
+					if(typeof callback === 'function')
+					{
+						callback(err.message);
+					}
+				}
+			};
+
+			methods.complete = () =>
+			{
+				const compiled = item.Compile(config.html, compile.data);
+				const fragment = document.createDocumentFragment();
+
+				while(compiled.element.firstChild)
+				{
+					fragment.appendChild(compiled.element.firstChild);
+				}
+
+				node.replaceWith(fragment);
+				compile.data.Update();
+			};
+
+			methods.init();
+		}
+	});
 });
