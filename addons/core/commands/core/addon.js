@@ -23,6 +23,11 @@ const commands = onetype.Addon('commands', (addon) =>
             return null;
         }
 
+        if(value === '*')
+        {
+            return '/*';
+        }
+
         return onetype.Base() + '/' + value.replace(/^\/+/, '').replace(/\/+/g, '/').toLowerCase();
     });
 });
