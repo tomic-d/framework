@@ -1,15 +1,17 @@
 transforms.Fn('runtime', function()
 {
+    this.methods.pending = new WeakSet();
+
     this.methods.process = (node) =>
     {
         const id = node.getAttribute('ot');
 
-        if(!id || node.hasAttribute('ot-init'))
+        if(!id || node.hasAttribute('ot-init') || this.methods.pending.has(node))
         {
             return;
         }
 
-        node.setAttribute('ot-init', '');
+        this.methods.pending.add(node);
         transforms.Fn('run', id, node);
     };
 
