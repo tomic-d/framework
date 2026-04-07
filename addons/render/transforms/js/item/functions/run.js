@@ -7,6 +7,13 @@ transforms.Fn('item.run', function(item, node, data = null)
 
 	item.Fn('load').then(() =>
 	{
+		if(!document.contains(node))
+		{
+			return;
+		}
+
+		node.setAttribute('ot-init', '');
+
 		const context = {
 			scroll: { progress: 0, direction: 'down', speed: 0, top: 0, bottom: 0, visible: false },
 			hover: { active: false, x: 0, y: 0, offset: 0 },
