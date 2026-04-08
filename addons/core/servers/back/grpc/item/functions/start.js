@@ -42,7 +42,19 @@ serversGRPC.Fn('item.start', async function(item)
             stream: (...data) => item.Fn('stream', ...data)
         });
         
-        server.bindAsync(`${item.Get('host')}:${item.Get('port')}`, grpc.ServerCredentials.createInsecure(), (error) => 
+        let credentials = grpc.ServerCredentials.createInsecure();
+
+        if(item.Get('secure'))
+        {
+            const cert = item.Get('cert') || {};
+
+            credentials = grpc.ServerCredentials.createSsl(cert.ca || null, [{
+                private_key: cert.key,
+                cert_chain: cert.cert
+            }], cert.checkClientCertificate || false);
+        }
+
+        server.bindAsync(`${item.Get('host')}:${item.Get('port')}`, credentials, (error) =>
         {
             if(error) 
             {

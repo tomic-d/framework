@@ -31,7 +31,9 @@ clientsGRPC.Fn('item.connect', async function(item)
 
         const universalPackage = grpc.loadPackageDefinition(definition).universal;
         
-        const client = new universalPackage.UniversalService(`${item.Get('host')}:${item.Get('port')}`, grpc.credentials.createSsl(), {
+        const credentials = item.Get('secure') ? grpc.credentials.createSsl() : grpc.credentials.createInsecure();
+
+        const client = new universalPackage.UniversalService(`${item.Get('host')}:${item.Get('port')}`, credentials, {
             'grpc.max_send_message_length': 1024 * 1024 * 100,
             'grpc.max_receive_message_length': 1024 * 1024 * 100,
             'grpc.keepalive_time_ms': 30000,

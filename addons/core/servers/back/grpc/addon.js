@@ -6,6 +6,8 @@ const serversGRPC = onetype.Addon('servers.grpc', (addon) =>
     addon.Field('instance', ['object']);
     addon.Field('port', ['number', 50000]);
     addon.Field('host', ['string', '0.0.0.0']);
+    addon.Field('secure', ['boolean', false]);
+    addon.Field('cert', ['object']);
 
     addon.Field('onError', ['function']);
     addon.Field('onStart', ['function']);

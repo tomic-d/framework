@@ -1,6 +1,6 @@
 import commands from '#commands/core/addon.js';
 
-commands.Fn('grpc.client', async function(host, port, metadata = {}, prefix = 'remote', bidirectional = false, callbacks = {})
+commands.Fn('grpc.client', async function(host, port, metadata = {}, prefix = 'remote', bidirectional = false, callbacks = {}, options = {})
 {
     const grpcClients = (await import('#clients/grpc/load.js')).default;
     const store = new Set();
@@ -18,6 +18,7 @@ commands.Fn('grpc.client', async function(host, port, metadata = {}, prefix = 'r
         {
             host,
             port,
+            secure: options.secure !== false,
             metadata,
             onConnect: function(client)
             {
