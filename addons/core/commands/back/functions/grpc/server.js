@@ -1,10 +1,12 @@
 import commands from '#commands/core/addon.js';
 
-commands.Fn('grpc.server', async function(port = 50000, callbacks = {})
+commands.Fn('grpc.server', async function(port = 50000, callbacks = {}, options = {})
 {
     const grpcServers = (await import('#servers/grpc/load.js')).default;
     const server = grpcServers.Item({
         port: port,
+        secure: options.secure === true,
+        cert: options.cert,
         onStart: function()
         {
             callbacks['onStart'] && callbacks['onStart']();

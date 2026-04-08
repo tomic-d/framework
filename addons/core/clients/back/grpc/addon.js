@@ -6,6 +6,7 @@ const clientsGRPC = onetype.Addon('clients.grpc', (addon) =>
     addon.Field('instance', ['object']);
     addon.Field('host', ['string', 'localhost']);
     addon.Field('port', ['number', 50000]);
+    addon.Field('secure', ['boolean', true]);
     addon.Field('timeout', ['number', 5]);
     addon.Field('metadata', ['object', {}]);
     
