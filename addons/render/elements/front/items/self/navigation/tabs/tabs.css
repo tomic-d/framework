@@ -61,6 +61,11 @@
 
 /* Size variants */
 
-.e-1a8b6ac1 > .holder.size-s > .tab { padding: var(--ot-spacing-x) var(--ot-spacing-s); font-size: var(--ot-size-s); }
-.e-1a8b6ac1 > .holder.size-m > .tab { padding: var(--ot-spacing-s) var(--ot-spacing-m); font-size: var(--ot-size-m); }
-.e-1a8b6ac1 > .holder.size-l > .tab { padding: var(--ot-spacing-m) var(--ot-spacing-l); font-size: var(--ot-size-m); }
+.e-1a8b6ac1 > .holder.size-s { height: var(--ot-height-s); }
+.e-1a8b6ac1 > .holder.size-s > .tab { height: 100%; padding: 0 var(--ot-spacing-s); font-size: var(--ot-size-s); }
+
+.e-1a8b6ac1 > .holder.size-m { height: var(--ot-height-m); }
+.e-1a8b6ac1 > .holder.size-m > .tab { height: 100%; padding: 0 var(--ot-spacing-m); font-size: var(--ot-size-m); }
+
+.e-1a8b6ac1 > .holder.size-l { height: var(--ot-height-l); }
+.e-1a8b6ac1 > .holder.size-l > .tab { height: 100%; padding: 0 var(--ot-spacing-l); font-size: var(--ot-size-m); }

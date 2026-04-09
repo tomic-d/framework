@@ -84,5 +84,8 @@ directives.Fn('process', function(trigger, item, compile, node, identifier)
         }
     }
 
-    directives.StoreGet('fn.attributes')(node, compile);
+    if(node.isConnected || node.parentNode)
+    {
+        directives.StoreGet('fn.attributes')(node, compile);
+    }
 });

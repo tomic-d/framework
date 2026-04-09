@@ -16,6 +16,11 @@ onetype.AddonReady('elements', (elements) =>
 				type: 'string',
 				value: ''
 			},
+			position: {
+				type: 'string',
+				value: 'right',
+				options: ['right', 'bottom']
+			},
 			variant: {
 				type: 'array',
 				value: [],
@@ -25,7 +30,7 @@ onetype.AddonReady('elements', (elements) =>
 		render: function()
 		{
 			return `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="'holder ' + position + ' ' + variant.join(' ')">
 					<div class="info">
 						<label ot-if="label" class="label">{{ label }}</label>
 						<p ot-if="description" class="description">{{ description }}</p>

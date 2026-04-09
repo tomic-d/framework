@@ -8,7 +8,7 @@ onetype.AddonReady('directives', function(directives)
 		category: 'navigation',
 		trigger: 'node',
 		order: 666,
-		strict: false,
+		strict: true,
 		tag: 'ot-page',
 		attributes: {
 			'route': ['string', null, true],
