@@ -8,9 +8,28 @@ transforms.Fn('data', function(config, node)
 
         const attribute = 'ot-' + name;
         const raw = node.getAttribute(attribute);
-        const value = raw !== null ? onetype.Function(raw, {}, false) : undefined;
+        let value = raw;
 
-        data[name] = onetype.DataDefineOne(typeof value === 'undefined' ? raw : value, definition);
+        if(raw !== null)
+        {
+            const type = Array.isArray(definition) ? definition[0] : (definition && definition.type);
+
+            if(type !== 'string')
+            {
+                try
+                {
+                    const evaluated = onetype.Function(raw, {}, false);
+
+                    if(evaluated !== undefined)
+                    {
+                        value = evaluated;
+                    }
+                }
+                catch(e) {}
+            }
+        }
+
+        data[name] = onetype.DataDefineOne(value, definition);
 
         if(raw !== null)
         {

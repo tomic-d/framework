@@ -46,7 +46,7 @@ onetype.AddonReady('elements', (elements) =>
 				type: 'array',
 				value: ['brand', 'size-m'],
 				options: [
-					'brand', 'blue', 'red', 'orange', 'green',
+					'brand', 'blue', 'red', 'orange', 'green', 'dark',
 					'soft-brand', 'soft-blue', 'soft-red', 'soft-orange', 'soft-green',
 					'outline-brand', 'outline-blue', 'outline-red', 'outline-orange', 'outline-green',
 					'bg-1', 'bg-2', 'bg-3', 'bg-4',

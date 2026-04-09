@@ -14,7 +14,7 @@ commands.Fn('api', async function(id, data = {})
 
         if(result.code !== 200)
         {
-            throw result.data;
+            throw new Error(result.message);
         }
 
         return { time: result.time, ...result.data };

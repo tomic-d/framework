@@ -13,7 +13,7 @@
 	display: flex;
 	align-items: flex-start;
 	gap: var(--ot-spacing-l);
-	padding: var(--ot-spacing-m);
+	padding: calc(var(--ot-spacing-m) * 1.3) var(--ot-spacing-m);
 	width: 100%;
 }
 
@@ -54,10 +54,21 @@
 	max-width: 420px;
 }
 
-/* Border variant */
 
-.e-2109a6b9 > .holder.border-bottom { border-bottom: 1px solid var(--ot-bg-2-border); }
-.e-2109a6b9:last-child > .holder.border-bottom { border-bottom: none; }
+/* Position bottom */
+
+.e-2109a6b9 > .holder.bottom
+{
+	flex-direction: column;
+	gap: var(--ot-spacing-m);
+}
+
+.e-2109a6b9 > .holder.bottom > .input
+{
+	min-width: 0;
+	max-width: none;
+	width: 100%;
+}
 
 /* Size variants */
 
