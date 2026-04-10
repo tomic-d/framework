@@ -4,24 +4,25 @@ onetype.AddonReady('directives', function(directives)
 		id: 'ot-form',
 		icon: 'send',
 		name: 'Form',
-		description: 'Submit form data to endpoint and bind response to component data',
+		description: 'Submit form data to endpoint or callback and bind response to component data.',
 		category: 'data',
 		trigger: 'node',
 		order: 660,
+		strict: false,
 		tag: 'ot-form',
 		attributes: {
 			'post': ['string'],
 			'get': ['string'],
 			'endpoint': ['string'],
-			'url': ['string'],
-			'bind': ['string'],
+			'bind': ['string', 'form'],
 			'method': ['string'],
 			'redirect': ['string'],
-			'on-success': ['string'],
-			'on-error': ['string'],
-			'reset': ['boolean'],
-			'stop': ['boolean'],
-			'data': ['string']
+			'_submit': ['function'],
+			'_success': ['function'],
+			'_error': ['function'],
+			'reset': ['boolean', false],
+			'stop': ['boolean', false],
+			'data': ['object', {}]
 		},
 		code: function(data, item, compile, node, identifier)
 		{
@@ -33,7 +34,6 @@ onetype.AddonReady('directives', function(directives)
 				methods.config();
 				methods.state();
 				methods.element();
-				methods.compile();
 				methods.handler();
 			};
 
@@ -42,45 +42,16 @@ onetype.AddonReady('directives', function(directives)
 				const post = data['post']?.value;
 				const get = data['get']?.value;
 
-				config.endpoint = post || get || data['endpoint']?.value || data['url']?.value || '';
+				config.endpoint = post || get || data['endpoint']?.value || '';
 				config.bind = data['bind']?.value || 'form';
 				config.method = get ? 'GET' : (data['method']?.value || 'POST').toUpperCase();
 				config.redirect = data['redirect']?.value;
-				config.onSuccess = data['on-success']?.value;
-				config.onError = data['on-error']?.value;
+				config.onSubmit = data['_submit']?.value;
+				config.onSuccess = data['_success']?.value;
+				config.onError = data['_error']?.value;
 				config.reset = data['reset']?.value || false;
 				config.stop = data['stop']?.value || false;
-				config.data = methods.parseData();
-				config.url = methods.normalizeUrl(config.endpoint);
-			};
-
-			methods.parseData = () =>
-			{
-				const dataAttr = data['data']?.value;
-
-				if(!dataAttr)
-				{
-					return {};
-				}
-
-				try
-				{
-					return JSON.parse(dataAttr);
-				}
-				catch(e)
-				{
-					return onetype.Function(dataAttr, compile.data, false) || {};
-				}
-			};
-
-			methods.normalizeUrl = (endpoint) =>
-			{
-				if(/^https?:\/\//.test(endpoint))
-				{
-					return endpoint;
-				}
-
-				return endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+				config.data = data['data']?.value || {};
 			};
 
 			methods.state = () =>
@@ -97,32 +68,21 @@ onetype.AddonReady('directives', function(directives)
 
 			methods.element = () =>
 			{
-				config.html = node.innerHTML;
 				config.form = document.createElement('form');
 				config.form.setAttribute('autocomplete', 'off');
 
-				const reserved = ['endpoint', 'url', 'bind', 'method', 'on-success', 'on-error', 'reset', 'stop', 'data', 'redirect', 'post', 'get'];
-
-				Array.from(node.attributes).forEach(attr =>
+				while(node.firstChild)
 				{
-					if(!reserved.includes(attr.name))
-					{
-						config.form.setAttribute(attr.name, attr.value);
-					}
-				});
-			};
-
-			methods.compile = () =>
-			{
-				const compiled = item.Compile(config.html, compile.data);
-
-				while(compiled.element.firstChild)
-				{
-					config.form.appendChild(compiled.element.firstChild);
+					config.form.appendChild(node.firstChild);
 				}
 
-				node.replaceWith(config.form);
-				compile.children = false;
+				node.appendChild(config.form);
+
+				if(config.data && typeof config.data === 'object' && Object.keys(config.data).length)
+				{
+					Object.assign(compile.data, config.data);
+					requestAnimationFrame(() => onetype.FormSet(config.form, config.data));
+				}
 			};
 
 			methods.handler = () =>
@@ -136,36 +96,86 @@ onetype.AddonReady('directives', function(directives)
 						event.stopPropagation();
 					}
 
-					await methods.submit();
+					const form = event.target.closest('form') || event.target;
+
+					await methods.submit(form);
 				};
 			};
 
-			methods.submit = async () =>
+			methods.submit = async (form) =>
 			{
 				const state = compile.data[config.bind];
-				const formData = methods.extract();
+
+				if(state.loading)
+				{
+					return;
+				}
+
+				const formData = onetype.FormGet(form);
+				const submitData = Object.assign({}, config.data, formData);
+
+				if(config.onSubmit)
+				{
+					const result = await config.onSubmit(submitData);
+
+					if(result === false)
+					{
+						compile.data.Update();
+						return;
+					}
+				}
+
+				if(!config.endpoint)
+				{
+					state.response = submitData;
+					config.onSuccess && await config.onSuccess(submitData);
+					config.reset && form.reset();
+					compile.data.Update();
+					return;
+				}
 
 				state.loading = true;
 				state.error = null;
+				compile.data.Update();
 
 				try
 				{
-					const submitData = Object.assign({}, formData, config.data);
-					const response = await methods.fetch(submitData);
+					const url = config.endpoint.startsWith('/') ? config.endpoint : '/' + config.endpoint;
 
-					state.response = response.data !== undefined ? response.data : response;
+					const response = await fetch(url, {
+						method: config.method,
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(submitData)
+					});
+
+					if(!response.ok)
+					{
+						throw onetype.Error(response.status, 'HTTP :status:.', { status: response.status });
+					}
+
+					const result = await response.json();
+
+					state.response = result.data !== undefined ? result.data : result;
 					state.error = null;
 					state.loading = false;
 
-					methods.success();
+					config.reset && form.reset();
+
+					if(config.redirect)
+					{
+						onetype.AddonGet('pages')?.Fn('change', null, config.redirect);
+						return;
+					}
+
+					config.onSuccess && config.onSuccess(state);
 				}
-				catch(err)
+				catch(error)
 				{
 					state.response = null;
-					state.error = err.message;
+					state.error = error.message;
 					state.loading = false;
 
-					methods.error(err);
+					config.onError && config.onError(state);
 				}
 				finally
 				{
@@ -173,109 +183,10 @@ onetype.AddonReady('directives', function(directives)
 				}
 			};
 
-			methods.extract = () =>
-			{
-				const formData = {};
-				const inputs = config.form.querySelectorAll('input[name], textarea[name], select[name]');
-
-				inputs.forEach(input =>
-				{
-					const name = input.getAttribute('name');
-
-					if(!name)
-					{
-						return;
-					}
-
-					if(input.type === 'checkbox')
-					{
-						formData[name] = input.checked;
-					}
-					else if(input.type === 'radio')
-					{
-						if(input.checked)
-						{
-							formData[name] = input.value;
-						}
-					}
-					else
-					{
-						formData[name] = input.value;
-					}
-				});
-
-				return formData;
-			};
-
-			methods.fetch = async (data) =>
-			{
-				const response = await fetch(config.url, {
-					method: config.method,
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(data)
-				});
-
-				if(!response.ok)
-				{
-					throw onetype.Error(response.status, 'HTTP :status:.', {status: response.status});
-				}
-
-				return response.json();
-			};
-
-			methods.success = () =>
-			{
-				if(config.reset)
-				{
-					config.form.reset();
-				}
-
-				if(config.redirect)
-				{
-					onetype.AddonGet('pages')?.Fn('change', null, config.redirect);
-					return;
-				}
-
-				if(config.onSuccess)
-				{
-					const callback = onetype.Function(config.onSuccess, compile.data, false);
-
-					if(typeof callback === 'function')
-					{
-						callback(compile.data[config.bind].response);
-					}
-				}
-
-				onetype.Emit('@form.success', {
-					bind: config.bind,
-					response: compile.data[config.bind].response
-				});
-			};
-
-			methods.error = (err) =>
-			{
-				onetype.Error(500, 'Form submit error.', {bind: config.bind});
-
-				if(config.onError)
-				{
-					const callback = onetype.Function(config.onError, compile.data, false);
-
-					if(typeof callback === 'function')
-					{
-						callback(err.message);
-					}
-				}
-
-				onetype.Emit('@form.error', {
-					bind: config.bind,
-					error: err.message
-				});
-			};
-
 			methods.init();
 		}
 	});
-	
+
 	document.addEventListener('submit', function(event)
 	{
 		const node = event.target;

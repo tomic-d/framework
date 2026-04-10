@@ -148,7 +148,7 @@
 .e-21311850 > .holder.size-s > .input { font-size: var(--ot-size-s); }
 
 .e-21311850 > .holder.size-m { height: var(--ot-height-m); padding: 0 var(--ot-spacing-s); }
-.e-21311850 > .holder.size-m > .swatch { width: 22px; height: 22px; }
+.e-21311850 > .holder.size-m > .swatch { width: 22px; height: 22px; border: 1px solid var(--ot-bg-2-border); }
 .e-21311850 > .holder.size-m > .input { font-size: var(--ot-size-m); }
 
 .e-21311850 > .holder.size-l { height: var(--ot-height-l); padding: 0 var(--ot-spacing-m); }

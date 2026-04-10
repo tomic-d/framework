@@ -1,6 +1,6 @@
 popup.Fn('toast', function(message, options = {})
 {
-	const config = typeof message === 'object' ? message : {message};
+	const config = typeof message === 'object' ? message : { message, type: 'success' };
 	const id = 'toast-' + onetype.GenerateUID();
 	const duration = config.duration ?? options.duration ?? 5000;
 

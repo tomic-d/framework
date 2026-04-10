@@ -10,6 +10,7 @@
 .e-64e877b > .holder
 {
 	position: relative;
+	width: inherit;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -147,9 +148,13 @@
 
 /* ---- Solid color variants ---- */
 
-.e-64e877b > .holder.dark { background: var(--ot-text-1); border-color: var(--ot-text-1); color: white; }
-.e-64e877b > .holder.dark:hover { background: #000; border-color: #000; }
-.e-64e877b > .holder.dark:focus-visible { box-shadow: 0 0 0 2px var(--ot-bg-1), 0 0 0 4px var(--ot-text-1); }
+.e-64e877b > .holder.dark { background: #000; border-color: #000; color: #fff; }
+.e-64e877b > .holder.dark:hover { background: #1a1a1a; border-color: #1a1a1a; }
+.e-64e877b > .holder.dark:focus-visible { box-shadow: 0 0 0 2px var(--ot-bg-1), 0 0 0 4px #000; }
+
+body.dark .e-64e877b > .holder.dark { background: #fff; border-color: #fff; color: #000; }
+body.dark .e-64e877b > .holder.dark:hover { background: #e5e5e5; border-color: #e5e5e5; }
+body.dark .e-64e877b > .holder.dark:focus-visible { box-shadow: 0 0 0 2px var(--ot-bg-1), 0 0 0 4px #fff; }
 
 .e-64e877b > .holder.brand { background: var(--ot-brand); border-color: var(--ot-brand); color: white; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 8px var(--ot-brand-opacity); }
 .e-64e877b > .holder.brand:hover { background: var(--ot-brand-hover); border-color: var(--ot-brand-hover); box-shadow: 0 4px 12px var(--ot-brand-opacity), 0 2px 4px rgba(0, 0, 0, 0.1); }

@@ -8,7 +8,7 @@ onetype.AddonReady('directives', function(directives)
 		category: 'data',
 		trigger: 'node',
 		order: 664,
-		strict: false,
+		strict: true,
 		tag: 'ot-command',
 		attributes: {
 			'command': ['string', null, true],

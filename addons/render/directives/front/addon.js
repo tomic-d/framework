@@ -17,6 +17,11 @@ const directives = onetype.Addon('directives', (addon) =>
     
     onetype.EmitOn('@addon.render.compile.before', (item, compile, node, identifier) =>
     {
+        if(compile.locale !== false)
+        {
+            directives.Fn('process.locale', node);
+        }
+
         directives.Fn('process', 'before', item, compile, node, identifier);
     })
 
