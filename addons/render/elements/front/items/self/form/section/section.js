@@ -24,9 +24,11 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			this.hasHeader = !!this.title || !!this.description;
+
 			return `
 				<div :class="'holder ' + variant.join(' ')">
-					<div class="header">
+					<div ot-if="hasHeader" class="header">
 						<h3 ot-if="title" class="title">{{ title }}</h3>
 						<p ot-if="description" class="description">{{ description }}</p>
 					</div>

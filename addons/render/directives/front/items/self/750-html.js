@@ -26,7 +26,7 @@ onetype.AddonReady('directives', function(directives)
                     const originalChildren = compile.children;
                     compile.children = false;
 
-                    const compiled = item.Compile(results, compile.data);
+                    const compiled = item.Compile(results, compile.data, {locale: false});
                     const fragment = document.createDocumentFragment();
 
                     while(compiled.element.firstChild)

@@ -9,7 +9,11 @@ onetype.AddonReady('directives', function(directives)
 			if ('otTooltipConfig' in node && !node.otTooltipShow)
 			{
 				node.otTooltipShow = true;
-				node.otTooltipOverlay = popup.Fn('tooltip', node, node.otTooltipConfig);
+				const cfg = node.otTooltipConfig;
+				const opts = {};
+				if(cfg.position) opts.position = cfg.position;
+				if(cfg.offset) opts.offset = cfg.offset;
+				node.otTooltipOverlay = popup.Fn('tooltip', node, cfg, opts);
 				break;
 			}
 

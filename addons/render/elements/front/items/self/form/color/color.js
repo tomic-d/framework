@@ -10,7 +10,7 @@ onetype.AddonReady('elements', (elements) =>
 		config: {
 			value: {
 				type: 'string',
-				value: '#E27055'
+				value: ''
 			},
 			name: {
 				type: 'string',
@@ -38,21 +38,34 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			this.sync = () =>
+			{
+				const input = this.Element?.querySelector('input.input');
+				if(input) input.value = this.value || '';
+			};
+
 			this.pick = ({ event, value }) =>
 			{
 				this.value = value;
+				this.sync();
 
-				if (this._input)
+				if(this._input)
 				{
 					this._input({ event, value });
+				}
+
+				if(this._change)
+				{
+					this._change({ event, value });
 				}
 			};
 
 			this.commit = ({ event, value }) =>
 			{
 				this.value = value;
+				this.sync();
 
-				if (this._change)
+				if(this._change)
 				{
 					this._change({ event, value });
 				}
@@ -62,14 +75,15 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				let hex = value.trim();
 
-				if (hex && hex.charAt(0) !== '#')
+				if(hex && hex.charAt(0) !== '#')
 				{
 					hex = '#' + hex;
 				}
 
 				this.value = hex;
+				this.sync();
 
-				if (this._change)
+				if(this._change)
 				{
 					this._change({ event, value: hex });
 				}
@@ -88,6 +102,7 @@ onetype.AddonReady('elements', (elements) =>
 			this.clear = () =>
 			{
 				this.value = '';
+				this.sync();
 
 				if (this._change)
 				{
@@ -97,12 +112,12 @@ onetype.AddonReady('elements', (elements) =>
 
 			return `
 				<div :class="'holder ' + variant.join(' ')">
-					<input type="hidden" :name="name" :value="value" />
-					<button class="swatch" :style="'background: ' + (value || 'transparent')" ot-click="open" :disabled="disabled">
+					<div class="swatch" :style="'background: ' + (value || 'transparent')" ot-click="open" :disabled="disabled">
 						<input class="native" type="color" :value="value" ot-input="pick" ot-change="commit" tabindex="-1" />
-					</button>
+					</div>
 					<input
 						class="input"
+						:name="name"
 						type="text"
 						:value="value"
 						:placeholder="placeholder"
@@ -112,9 +127,9 @@ onetype.AddonReady('elements', (elements) =>
 						spellcheck="false"
 						ot-change="input"
 					/>
-					<button ot-if="value && !disabled" class="clear" ot-click.stop="clear">
+					<div ot-if="value && !disabled" class="clear" ot-click.stop="clear">
 						<i>close</i>
-					</button>
+					</div>
 				</div>
 			`;
 		}

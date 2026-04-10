@@ -2,7 +2,7 @@ import onetype from '#framework/load.js';
 
 const pages = onetype.Addon('pages', (addon) =>
 {
-	addon.Field('id', ['string']);
+	addon.Field('id', ['string|number']);
 	addon.Field('route', ['string|array'], null, (value) =>
 	{
 		const base = onetype.Base();

@@ -38,23 +38,35 @@
 .ot-toast
 {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	gap: var(--ot-spacing-m);
-	padding: var(--ot-spacing-m);
-	background: var(--ot-bg-2);
-	border: 1px solid var(--ot-bg-2-border);
-	border-radius: var(--ot-radius-m);
+	padding: 16px 20px;
+	background: var(--ot-bg-1);
+	border: 1px solid var(--ot-bg-1-border);
+	border-radius: var(--ot-radius-l);
 	color: var(--ot-text-1);
 	font-size: var(--ot-size-m);
-	min-width: 280px;
-	max-width: 400px;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+	min-width: 320px;
+	max-width: 420px;
+	animation: toast-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes toast-in
+{
+	from { opacity: 0; transform: translateY(-12px) scale(0.96); }
+	to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .ot-toast > .icon
 {
-	font-size: 20px;
-	margin-top: 1px;
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+	flex-shrink: 0;
 }
 
 .ot-toast > .content
@@ -65,29 +77,140 @@
 .ot-toast > .content > .title
 {
 	font-weight: 600;
-	margin-bottom: 2px;
+	font-size: 13.5px;
+	margin-bottom: 3px;
+	color: var(--ot-text-1);
 }
 
 .ot-toast > .content > .message
 {
-	color: var(--ot-text-2);
+	font-size: var(--ot-size-m);
+	font-weight: 600;
+	line-height: 1.45;
+	color: var(--ot-text-1);
 }
 
 .ot-toast > .close
 {
+	width: 28px;
+	height: 28px;
 	background: none;
 	border: none;
-	color: var(--ot-text-2);
+	color: var(--ot-text-3);
 	cursor: pointer;
-	padding: 0;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	transition: background 0.15s ease, color 0.15s ease;
 }
 
 .ot-toast > .close:hover
 {
+	background: var(--ot-bg-2);
 	color: var(--ot-text-1);
 }
 
-.ot-toast.info > .icon { color: var(--ot-blue); }
-.ot-toast.success > .icon { color: var(--ot-green); }
-.ot-toast.warning > .icon { color: var(--ot-orange); }
-.ot-toast.error > .icon { color: var(--ot-red); }
+.ot-toast > .close > i
+{
+	font-size: 16px;
+}
+
+.ot-toast.info > .icon { background: var(--ot-blue-opacity); color: var(--ot-blue); }
+.ot-toast.success > .icon { background: var(--ot-green-opacity); color: var(--ot-green); }
+.ot-toast.warning > .icon { background: var(--ot-orange-opacity); color: var(--ot-orange); }
+.ot-toast.error > .icon { background: var(--ot-red-opacity); color: var(--ot-red); }
+
+/* Confirm */
+
+.ot-confirm
+{
+	display: flex;
+	flex-direction: column;
+	padding: 28px 32px 24px;
+	background: var(--ot-bg-1);
+	border: 1px solid var(--ot-bg-1-border);
+	border-radius: 20px;
+	min-width: 400px;
+	max-width: 460px;
+	animation: confirm-in 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes confirm-in
+{
+	from { opacity: 0; transform: scale(0.95) translateY(8px); }
+	to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Icon */
+
+.ot-confirm > .icon
+{
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 18px;
+}
+
+.ot-confirm > .icon > i
+{
+	font-size: 22px;
+}
+
+.ot-confirm > .icon.default { background: var(--ot-brand-opacity); color: var(--ot-brand); }
+.ot-confirm > .icon.danger { background: var(--ot-red-opacity); color: var(--ot-red); }
+.ot-confirm > .icon.warning { background: var(--ot-orange-opacity); color: var(--ot-orange); }
+.ot-confirm > .icon.info { background: var(--ot-blue-opacity); color: var(--ot-blue); }
+.ot-confirm > .icon.success { background: var(--ot-green-opacity); color: var(--ot-green); }
+
+/* Title */
+
+.ot-confirm > .title
+{
+	font-family: var(--ot-font-secondary);
+	font-size: 22px;
+	font-weight: 500;
+	letter-spacing: -0.015em;
+	line-height: 1.15;
+	color: var(--ot-text-1);
+	margin-bottom: 8px;
+}
+
+/* Description */
+
+.ot-confirm > .description
+{
+	font-size: 13.5px;
+	line-height: 1.55;
+	color: var(--ot-text-2);
+	margin-bottom: 24px;
+}
+
+/* Input */
+
+.ot-confirm > .input
+{
+	width: 100%;
+	margin-bottom: 24px;
+}
+
+/* Actions */
+
+.ot-confirm > .actions
+{
+	display: flex;
+	gap: 10px;
+	width: 100%;
+	padding-top: 20px;
+	border-top: 1px solid var(--ot-bg-1-border);
+}
+
+.ot-confirm > .actions > *
+{
+	flex: 1;
+	width: 100%;
+}

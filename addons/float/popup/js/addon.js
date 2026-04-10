@@ -32,3 +32,8 @@ onetype.$ot.toast = function(message, options)
 onetype.$ot.toast.open = onetype.$ot.toast;
 onetype.$ot.toast.close = (id) => popup.Fn('close', id);
 
+onetype.$ot.confirm = function(title, description, options)
+{
+	return popup.Fn('confirm', title, description, options);
+};
+
