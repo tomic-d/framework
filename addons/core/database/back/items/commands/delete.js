@@ -35,19 +35,19 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, 'Delete is not allowed.', 403);
 			}
 
-			if(!properties.data?.id || (typeof properties.data.id !== 'string' && typeof properties.data.id !== 'number'))
+			if(!properties.id || (typeof properties.id !== 'string' && typeof properties.id !== 'number'))
 			{
 				return resolve(null, 'Invalid or missing id.', 400);
 			}
 
-			const item = await addon.Find().filter('id', properties.data.id).one(true);
+			const item = await addon.Find().filter('id', properties.id).one(true);
 
 			if(!item)
 			{
 				return resolve(null, 'Item not found.', 404);
 			}
 
-			const allowed = expose.delete.call({http: this.http, properties, item});
+			const allowed = await expose.delete.call({http: this.http, properties, item});
 
 			if(allowed !== true)
 			{

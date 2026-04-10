@@ -38,7 +38,7 @@ onetype.AddonReady('commands', (commands) =>
 
 			const item = addon.Item(properties.data);
 
-			const allowed = expose.create.call({http: this.http, properties, item});
+			const allowed = await expose.create.call({http: this.http, properties, item});
 
 			if(allowed !== true)
 			{

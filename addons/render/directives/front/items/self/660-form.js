@@ -59,8 +59,9 @@ onetype.AddonReady('directives', function(directives)
 				if(!compile.data[config.bind])
 				{
 					compile.data[config.bind] = {
-						response: null,
-						error: null,
+						data: null,
+						message: null,
+						code: null,
 						loading: false
 					};
 				}
@@ -127,7 +128,7 @@ onetype.AddonReady('directives', function(directives)
 
 				if(!config.endpoint)
 				{
-					state.response = submitData;
+					state.data = submitData;
 					config.onSuccess && await config.onSuccess(submitData);
 					config.reset && form.reset();
 					compile.data.Update();
@@ -135,7 +136,8 @@ onetype.AddonReady('directives', function(directives)
 				}
 
 				state.loading = true;
-				state.error = null;
+				state.message = null;
+				state.code = null;
 				compile.data.Update();
 
 				try
@@ -148,16 +150,19 @@ onetype.AddonReady('directives', function(directives)
 						body: JSON.stringify(submitData)
 					});
 
-					if(!response.ok)
-					{
-						throw onetype.Error(response.status, 'HTTP :status:.', { status: response.status });
-					}
-
 					const result = await response.json();
 
-					state.response = result.data !== undefined ? result.data : result;
-					state.error = null;
+					state.data = result.data || null;
+					state.message = result.message || null;
+					state.code = result.code || response.status;
 					state.loading = false;
+
+					if(!response.ok)
+					{
+						config.onError && config.onError(state);
+						compile.data.Update();
+						return;
+					}
 
 					config.reset && form.reset();
 
@@ -171,8 +176,9 @@ onetype.AddonReady('directives', function(directives)
 				}
 				catch(error)
 				{
-					state.response = null;
-					state.error = error.message;
+					state.data = null;
+					state.message = error.message;
+					state.code = 0;
 					state.loading = false;
 
 					config.onError && config.onError(state);

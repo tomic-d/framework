@@ -54,7 +54,7 @@ onetype.AddonReady('commands', (commands) =>
 				item.Set(key, value);
 			});
 
-			const allowed = expose.update.call({http: this.http, properties, item});
+			const allowed = await expose.update.call({http: this.http, properties, item});
 
 			if(allowed !== true)
 			{
