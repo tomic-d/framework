@@ -66,7 +66,7 @@ onetype.AddonReady('elements', (elements) =>
 				this.open = !this.open;
 			};
 
-			return `
+			return /* html */ `
 				<nav :class="'holder ' + variant.join(' ')">
 					<a class="logo" href="/">
 						<img class="logo-icon" :src="logo" alt="OneType" />

@@ -4,40 +4,55 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-heading',
 		icon: 'title',
 		name: 'Heading',
-		description: 'Page heading with title and description.',
+		description: 'Page or section heading with eyebrow, icon, serif title, description and right/bottom slots.',
 		category: 'Global',
 		author: 'OneType',
 		config: {
+			eyebrow: {
+				type: 'string'
+			},
 			icon: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			title: {
-				type: 'string',
-				value: 'Title'
+				type: 'string'
 			},
 			description: {
+				type: 'string'
+			},
+			element: {
 				type: 'string',
-				value: ''
+				value: 'h2',
+				options: ['h1', 'h2']
 			},
 			variant: {
 				type: 'array',
 				value: ['left', 'size-m'],
-				options: ['left', 'center', 'right', 'page', 'clean', 'size-s', 'size-m', 'size-l']
+				options: ['left', 'center', 'right', 'border-bottom', 'size-s', 'size-m', 'size-l']
 			}
 		},
 		render: function()
 		{
-			return `
+			this.hasRight = !!this.Slots.right;
+			this.hasBottom = !!this.Slots.bottom;
+			this.isH1 = this.element === 'h1';
+
+			return /* html */ `
 				<div :class="'holder ' + variant.join(' ')">
-					<div class="text">
-						<i ot-if="icon" class="icon">{{ icon }}</i>
-						<h2 ot-if="!variant.includes('page')" class="title">{{ title }}</h2>
-						<h1 ot-if="variant.includes('page')" class="title">{{ title }}</h1>
-						<p ot-if="description" class="description">{{ description }}</p>
+					<div class="top">
+						<div ot-if="icon" class="icon"><i>{{ icon }}</i></div>
+						<div class="text">
+							<div ot-if="eyebrow" class="eyebrow">{{ eyebrow }}</div>
+							<h1 ot-if="isH1" class="title"><span ot-html="title"></span></h1>
+							<h2 ot-if="!isH1" class="title"><span ot-html="title"></span></h2>
+							<p ot-if="description" class="description">{{ description }}</p>
+						</div>
+						<div ot-if="hasRight" class="right">
+							<slot name="right"></slot>
+						</div>
 					</div>
-					<div class="right">
-						<slot name="right"></slot>
+					<div ot-if="hasBottom" class="bottom">
+						<slot name="bottom"></slot>
 					</div>
 				</div>
 			`;

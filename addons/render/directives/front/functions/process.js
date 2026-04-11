@@ -24,7 +24,9 @@ directives.Fn('process', function(trigger, item, compile, node, identifier)
 
     if(node.nodeType === 1)
     {
-        if(!node.attributes.length && !node.tagName.includes('-'))
+        const tagLower = node.tagName.toLowerCase();
+
+        if(!node.attributes.length && !tagLower.includes('-') && tagLower !== 'slot' && tagLower !== 'render')
         {
             return;
         }

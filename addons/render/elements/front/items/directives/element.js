@@ -24,21 +24,26 @@ onetype.AddonReady('directives', function(directives)
 				data: {}
 			};
 
+			const toCamel = (name) =>
+			{
+				return name.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
+			};
+
 			for (let i = 0; i < node.attributes.length; i++)
 			{
 				const attr = node.attributes[i];
 
 				if (attr.name.startsWith('#'))
 				{
-					attributes.wrapper[attr.name.substring(1)] = attr.value;
+					attributes.wrapper[toCamel(attr.name.substring(1))] = attr.value;
 				}
 				else if(attr.name.startsWith(':'))
 				{
-					attributes.data[attr.name.substring(1)] = onetype.Function(attr.value, compile.data, false);
+					attributes.data[toCamel(attr.name.substring(1))] = onetype.Function(attr.value, compile.data, false);
 				}
 				else
 				{
-					attributes.data[attr.name] = attr.value;
+					attributes.data[toCamel(attr.name)] = attr.value;
 				}
 			}
 

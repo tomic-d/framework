@@ -24,30 +24,40 @@ onetype.AddonReady('elements', (elements) =>
 				type: 'string',
 				value: 'Try Again'
 			},
+			variant: {
+				type: 'array',
+				value: ['red', 'size-m'],
+				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			},
 			_click: {
 				type: 'function'
 			}
 		},
 		render: function()
 		{
-			this.retry = () =>
+			this.retry = (event) =>
 			{
-				if (this._click)
+				if(this._click)
 				{
-					this._click({});
+					this._click({ event });
+					return;
 				}
-				else
-				{
-					window.location.reload();
-				}
+
+				window.location.reload();
 			};
 
-			return `
-				<div class="holder">
+			return /* html */ `
+				<div :class="'holder ' + variant.join(' ')">
 					<div class="circle"><i>{{ icon }}</i></div>
-					<h2 class="title">{{ title }}</h2>
+					<h2 ot-if="title" class="title">{{ title }}</h2>
 					<p ot-if="description" class="description">{{ description }}</p>
-					<e-form-button ot-if="action" :text="action" icon="refresh" :variant="['brand', 'size-m']" :_click="retry"></e-form-button>
+					<e-form-button
+						ot-if="action"
+						:text="action"
+						icon="refresh"
+						:variant="['brand', 'size-m']"
+						:_click="retry"
+					></e-form-button>
 				</div>
 			`;
 		}

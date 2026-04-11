@@ -17,29 +17,34 @@ onetype.AddonReady('elements', (elements) =>
 				value: 'Nothing here yet'
 			},
 			description: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			action: {
-				type: 'string',
-				value: ''
-			},
-			_click: {
-				type: 'function'
+				type: 'string'
 			},
 			variant: {
 				type: 'array',
-				value: []
+				value: ['brand', 'size-m'],
+				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			},
+			_click: {
+				type: 'function'
 			}
 		},
 		render: function()
 		{
-			return `
-				<div class="holder">
+			return /* html */ `
+				<div :class="'holder ' + variant.join(' ')">
 					<div class="circle"><i>{{ icon }}</i></div>
-					<h2 class="title">{{ title }}</h2>
+					<h2 ot-if="title" class="title">{{ title }}</h2>
 					<p ot-if="description" class="description">{{ description }}</p>
-					<e-form-button ot-if="action" :text="action" icon="add" :variant="['brand', 'size-m']" :_click="_click"></e-form-button>
+					<e-form-button
+						ot-if="action"
+						:text="action"
+						icon="add"
+						:variant="['brand', 'size-m']"
+						:_click="_click"
+					></e-form-button>
 				</div>
 			`;
 		}

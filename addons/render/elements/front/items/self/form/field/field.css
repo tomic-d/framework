@@ -11,13 +11,25 @@
 .e-2109a6b9 > .holder
 {
 	display: flex;
-	align-items: flex-start;
-	gap: var(--ot-spacing-l);
-	padding: calc(var(--ot-spacing-m) * 1.3) var(--ot-spacing-m);
 	width: 100%;
+	padding: var(--ot-spacing-m);
+	gap: var(--ot-spacing-l);
 }
 
-/* Info */
+.e-2109a6b9 > .holder.horizontal
+{
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.e-2109a6b9 > .holder.vertical
+{
+	flex-direction: column;
+	gap: var(--ot-spacing-s);
+}
+
+/* Info (label + description) */
 
 .e-2109a6b9 > .holder > .info
 {
@@ -28,59 +40,178 @@
 	flex: 1;
 }
 
+.e-2109a6b9 > .holder.horizontal > .info
+{
+	padding-top: 6px;
+	max-width: 320px;
+}
+
 .e-2109a6b9 > .holder > .info > .label
 {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ot-spacing-x);
+	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-m);
 	font-weight: 500;
 	color: var(--ot-text-1);
 	line-height: 1.3;
+	cursor: default;
+}
+
+.e-2109a6b9 > .holder > .info > .label > .required
+{
+	color: var(--ot-red);
+	font-weight: 600;
+}
+
+.e-2109a6b9 > .holder > .info > .label > .hint
+{
+	font-size: 16px;
+	color: var(--ot-text-3);
+	cursor: help;
+	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-2109a6b9 > .holder > .info > .label > .hint:hover
+{
+	color: var(--ot-text-1);
 }
 
 .e-2109a6b9 > .holder > .info > .description
 {
 	margin: 0;
+	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-s);
-	color: var(--ot-text-2);
-	line-height: 1.4;
-	max-width: 320px;
+	color: var(--ot-text-3);
+	line-height: 1.5;
 }
 
-/* Input */
+/* Control (input + error) */
 
-.e-2109a6b9 > .holder > .input
+.e-2109a6b9 > .holder > .control
 {
-	flex: 1;
-	min-width: 200px;
-	max-width: 420px;
 	display: flex;
-	justify-content: flex-end;
-	width: inherit;
-}
-
-
-/* Position bottom */
-
-.e-2109a6b9 > .holder.bottom
-{
 	flex-direction: column;
-	gap: var(--ot-spacing-m);
+	gap: var(--ot-spacing-x);
+	flex: 1;
+	min-width: 0;
 }
 
-.e-2109a6b9 > .holder.bottom > .input
+.e-2109a6b9 > .holder.horizontal > .control
 {
-	min-width: 0;
-	max-width: none;
+	flex: 1.5;
+}
+
+.e-2109a6b9 > .holder.vertical > .control
+{
 	width: 100%;
 }
 
-/* Size variants */
+/* Input slot */
 
-.e-2109a6b9 > .holder.size-s { padding: var(--ot-spacing-s); }
-.e-2109a6b9 > .holder.size-s > .info > .label { font-size: var(--ot-size-s); }
-.e-2109a6b9 > .holder.size-s > .info > .description { font-size: var(--ot-size-s); }
-.e-2109a6b9 > .holder.size-s > .input { min-width: 160px; max-width: 220px; }
+.e-2109a6b9 > .holder > .control > .input
+{
+	display: flex;
+	width: 100%;
+}
 
-.e-2109a6b9 > .holder.size-l { padding: var(--ot-spacing-l); }
-.e-2109a6b9 > .holder.size-l > .info > .label { font-size: var(--ot-size-l); }
-.e-2109a6b9 > .holder.size-l > .info > .description { font-size: var(--ot-size-m); }
-.e-2109a6b9 > .holder.size-l > .input { min-width: 240px; max-width: 320px; }
+.e-2109a6b9 > .holder > .control > .input > *
+{
+	width: 100%;
+}
+
+/* Error message */
+
+.e-2109a6b9 > .holder > .control > .error-message
+{
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ot-spacing-x);
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-s);
+	color: var(--ot-red);
+	animation: e-2109a6b9-shake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.e-2109a6b9 > .holder > .control > .error-message > i
+{
+	font-size: 14px;
+	font-variation-settings: 'FILL' 1;
+}
+
+@keyframes e-2109a6b9-shake
+{
+	0%, 100% { transform: translateX(0); }
+	25% { transform: translateX(-3px); }
+	75% { transform: translateX(3px); }
+}
+
+/* Error state — border tint on inner inputs */
+
+.e-2109a6b9 > .holder.error > .control > .input > *
+{
+	--ot-brand: var(--ot-red);
+	--ot-brand-opacity: var(--ot-red-opacity);
+}
+
+/* ===== VARIANTS ===== */
+
+.e-2109a6b9 > .holder.clean
+{
+	padding: 0;
+}
+
+.e-2109a6b9 > .holder.border-bottom
+{
+	border-bottom: 1px solid var(--ot-bg-2-border);
+}
+
+/* ===== SIZES ===== */
+
+.e-2109a6b9 > .holder.size-s
+{
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	gap: var(--ot-spacing-m);
+}
+
+.e-2109a6b9 > .holder.size-s > .info > .label
+{
+	font-size: var(--ot-size-s);
+}
+
+.e-2109a6b9 > .holder.size-s > .info > .description
+{
+	font-size: 10.5px;
+}
+
+.e-2109a6b9 > .holder.size-m
+{
+	padding: var(--ot-spacing-m);
+	gap: var(--ot-spacing-l);
+}
+
+.e-2109a6b9 > .holder.size-l
+{
+	padding: var(--ot-spacing-l) var(--ot-spacing-m);
+	gap: var(--ot-spacing-l);
+}
+
+.e-2109a6b9 > .holder.size-l > .info > .label
+{
+	font-size: 15px;
+}
+
+.e-2109a6b9 > .holder.size-l > .info > .description
+{
+	font-size: var(--ot-size-m);
+}
+
+/* Clean overrides size padding */
+
+.e-2109a6b9 > .holder.clean.size-s,
+.e-2109a6b9 > .holder.clean.size-m,
+.e-2109a6b9 > .holder.clean.size-l
+{
+	padding: 0;
+}

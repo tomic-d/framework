@@ -4,7 +4,7 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'core-builder',
 		icon: 'dashboard_customize',
 		name: 'Builder',
-		description: 'Config-driven form builder with sections, conditions, and any element.',
+		description: 'Config-driven form builder with steps, sections, grid columns, conditions and reusable form-section / form-field elements.',
 		category: 'Core',
 		author: 'OneType',
 		config: {
@@ -12,46 +12,41 @@ onetype.AddonReady('elements', (elements) =>
 				type: 'object',
 				value: {}
 			},
-			sections: {
+			steps: {
 				type: 'array',
 				value: [],
 				each: {
 					type: 'object',
 					config: {
-						title: { type: 'string', value: '' },
-						collapsed: { type: 'boolean', value: false },
-						condition: { type: 'function' },
-						fields: {
-							type: 'array',
-							value: [],
-							each: {
-								type: 'object',
-								config: {
-									key: { type: 'string', value: '' },
-									label: { type: 'string', value: '' },
-									description: { type: 'string', value: '' },
-									position: { type: 'string', value: 'top' },
-									element: { type: 'string', value: '' },
-									properties: { type: 'object', value: {} },
-									condition: { type: 'function' }
-								}
-							}
-						}
+						id: { type: 'string' },
+						label: { type: 'string' },
+						description: { type: 'string' },
+						icon: { type: 'string' },
+						sections: { type: 'array', value: [] }
 					}
 				}
 			},
+			sections: {
+				type: 'array',
+				value: [],
+				each: {
+					type: 'object'
+				}
+			},
 			save: {
-				type: 'string',
-				value: ''
+				type: 'string'
+			},
+			saveVariant: {
+				type: 'array',
+				value: ['brand', 'size-m']
 			},
 			disabled: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			variant: {
 				type: 'array',
 				value: ['size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'clean', 'size-s', 'size-m', 'size-l']
 			},
 			_input: {
 				type: 'function'
@@ -65,23 +60,73 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
-			// State
+			// Step state
 
-			this.collapsed = {};
+			this.hasSteps = this.steps.length > 0;
+			this.activeStep = this.hasSteps ? this.steps[0].id : '';
 
-			this.sections.forEach((section, index) =>
+			// Current sections depend on step or flat sections
+
+			this.currentSections = () =>
 			{
-				if (section.collapsed)
+				if(this.hasSteps)
 				{
-					this.collapsed[index] = true;
+					const step = this.steps.find(s => s.id === this.activeStep) || this.steps[0];
+					return step.sections || [];
 				}
-			});
+
+				return this.sections;
+			};
+
+			// Detect conditions — if any exist we re-render on change
+
+			this.hasConditions = (() =>
+			{
+				const scan = (sections) =>
+				{
+					for(const section of sections)
+					{
+						if(section.condition)
+						{
+							return true;
+						}
+
+						if(section.fields)
+						{
+							for(const field of section.fields)
+							{
+								if(field.condition)
+								{
+									return true;
+								}
+							}
+						}
+					}
+
+					return false;
+				};
+
+				if(this.hasSteps)
+				{
+					for(const step of this.steps)
+					{
+						if(scan(step.sections || []))
+						{
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+				return scan(this.sections);
+			})();
 
 			// Helpers
 
 			this.visible = (condition) =>
 			{
-				if (!condition)
+				if(!condition)
 				{
 					return true;
 				}
@@ -91,7 +136,7 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.val = (key) =>
 			{
-				if (!this.values)
+				if(!this.values)
 				{
 					return null;
 				}
@@ -101,18 +146,21 @@ onetype.AddonReady('elements', (elements) =>
 
 			// Actions
 
-			this.toggle = (index) =>
+			this.selectStep = ({ value }) =>
 			{
-				this.collapsed[index] = !this.collapsed[index];
-				this.Update();
+				this.activeStep = value;
 			};
 
 			this.input = (key, data) =>
 			{
 				this.values[key] = data.value;
-				this.Update();
 
-				if (this._input)
+				if(this.hasConditions)
+				{
+					this.Update();
+				}
+
+				if(this._input)
 				{
 					this._input({ key, value: data.value });
 				}
@@ -121,9 +169,13 @@ onetype.AddonReady('elements', (elements) =>
 			this.change = (key, data) =>
 			{
 				this.values[key] = data.value;
-				this.Update();
 
-				if (this._change)
+				if(this.hasConditions)
+				{
+					this.Update();
+				}
+
+				if(this._change)
 				{
 					this._change({ key, value: data.value });
 				}
@@ -131,124 +183,156 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.submit = () =>
 			{
-				if (this._save)
+				if(this._save)
 				{
 					this._save({ value: this.values });
 				}
 			};
 
-			// Build sections
+			// Escape attr value safely
 
-			const html = this.sections.map((section, sectionIndex) =>
+			const escape = (value) =>
 			{
-				// Section condition
+				return String(value).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			};
+
+			// Build field element tag with properties
+
+			const buildField = (field, sectionIndex, fieldIndex, scope) =>
+			{
+				const tag = 'e-' + field.element;
+				const props = field.properties || {};
+				const span = field.span || 1;
+
+				let attrs = '';
+
+				Object.keys(props).forEach((key) =>
+				{
+					const value = props[key];
+
+					if(typeof value === 'string')
+					{
+						attrs += ` ${key}="${escape(value)}"`;
+					}
+					else
+					{
+						attrs += ` :${key}='${escape(JSON.stringify(value))}'`;
+					}
+				});
+
+				const input = `
+					<${tag}
+						:value="val('${field.key}')"
+						:_input="(data) => input('${field.key}', data)"
+						:_change="(data) => change('${field.key}', data)"
+						${attrs}
+					></${tag}>
+				`;
+
+				const fieldCondition = field.condition
+					? `ot-if="visible(${scope}[${sectionIndex}].fields[${fieldIndex}].condition)"`
+					: '';
+
+				const fieldVariant = field.variant ? JSON.stringify(field.variant) : JSON.stringify(['size-m']);
+
+				return `
+					<e-form-field
+						${fieldCondition}
+						#class="field"
+						#style="grid-column: span ${span};"
+						label="${escape(field.label || '')}"
+						description="${escape(field.description || '')}"
+						hint="${escape(field.hint || '')}"
+						:required="${field.required ? 'true' : 'false'}"
+						orientation="${field.orientation || 'horizontal'}"
+						:variant='${escape(fieldVariant)}'
+					>
+						<div slot="input">
+							${input}
+						</div>
+					</e-form-field>
+				`;
+			};
+
+			// Build a single section
+
+			const buildSection = (section, sectionIndex, scope) =>
+			{
+				const columns = section.columns || 1;
+				const fields = (section.fields || []).map((field, fieldIndex) => buildField(field, sectionIndex, fieldIndex, scope)).join('');
 
 				const sectionCondition = section.condition
-					? `ot-if="visible(sections[${sectionIndex}].condition)"`
+					? `ot-if="visible(${scope}[${sectionIndex}].condition)"`
 					: '';
 
-				// Section header
+				const sectionVariant = section.variant ? JSON.stringify(section.variant) : JSON.stringify(['clean']);
 
-				const header = section.title
-					? `
-						<div class="header" ot-click="() => toggle(${sectionIndex})">
-							<span class="title">{{ sections[${sectionIndex}].title }}</span>
-							<i :class="'chevron' + (collapsed[${sectionIndex}] ? ' collapsed' : '')">expand_more</i>
-						</div>
-					`
-					: '';
-
-				// Fields
-
-				const fields = section.fields.map((field, fieldIndex) =>
-				{
-					const tag = 'e-' + field.element;
-					const props = field.properties || {};
-					const position = field.position || 'top';
-
-					// Build properties attributes
-
-					let attrs = '';
-
-					Object.keys(props).forEach((key) =>
-					{
-						const val = props[key];
-
-						if (typeof val === 'string')
-						{
-							attrs += ` ${key}="${val}"`;
-						}
-						else
-						{
-							attrs += ` :${key}='${JSON.stringify(val)}'`;
-						}
-					});
-
-					// Element tag
-
-					const element = `<${tag} :value="val('${field.key}')" :_input="(data) => input('${field.key}', data)" :_change="(data) => change('${field.key}', data)"${attrs}></${tag}>`;
-
-					// Label
-
-					const label = field.label
-						? `<span class="label">{{ sections[${sectionIndex}].fields[${fieldIndex}].label }}</span>`
-						: '';
-
-					// Description
-
-					const description = field.description
-						? `<span class="description">{{ sections[${sectionIndex}].fields[${fieldIndex}].description }}</span>`
-						: '';
-
-					// Field condition
-
-					const fieldCondition = field.condition
-						? `ot-if="visible(sections[${sectionIndex}].fields[${fieldIndex}].condition)"`
-						: '';
-
-					// Position layout
-
-					if (position === 'left')
-					{
-						return `
-							<div class="field left" ${fieldCondition}>
-								<div class="info">
-									${label}
-									${description}
-								</div>
-								<div class="control">
-									${element}
-								</div>
+				return `
+					<e-form-section
+						${sectionCondition}
+						eyebrow="${escape(section.eyebrow || '')}"
+						icon="${escape(section.icon || '')}"
+						title="${escape(section.title || '')}"
+						description="${escape(section.description || '')}"
+						:collapsible="${section.collapsible ? 'true' : 'false'}"
+						:collapsed="${section.collapsed ? 'true' : 'false'}"
+						:variant='${escape(sectionVariant)}'
+					>
+						<div slot="content">
+							<div class="grid" style="grid-template-columns: repeat(${columns}, minmax(0, 1fr));">
+								${fields}
 							</div>
-						`;
-					}
+						</div>
+					</e-form-section>
+				`;
+			};
+
+			// Build all sections for current step (or flat)
+
+			let sectionsHtml = '';
+
+			if(this.hasSteps)
+			{
+				sectionsHtml = this.steps.map((step, stepIndex) =>
+				{
+					const sections = (step.sections || []).map((section, sectionIndex) => buildSection(section, sectionIndex, `steps[${stepIndex}].sections`)).join('');
 
 					return `
-						<div class="field top" ${fieldCondition}>
-							<div class="info">
-								${label}
-								${description}
-							</div>
-							${element}
+						<div ot-if="activeStep === '${step.id}'" class="step-panel">
+							${sections}
 						</div>
 					`;
 				}).join('');
+			}
+			else
+			{
+				sectionsHtml = this.sections.map((section, sectionIndex) => buildSection(section, sectionIndex, 'sections')).join('');
+			}
 
-				return `
-					<div class="section" ${sectionCondition}>
-						${header}
-						<div ot-if="!collapsed[${sectionIndex}]" class="fields">
-							${fields}
+			return /* html */ `
+				<div :class="'holder ' + variant.join(' ') + (hasSteps ? ' has-steps' : '')">
+					<e-navigation-steps
+						ot-if="hasSteps"
+						#class="steps"
+						:items="steps"
+						:active="activeStep"
+						orientation="vertical"
+						:variant="['bg-1', 'border', 'connected', 'size-m']"
+						:_change="selectStep"
+					></e-navigation-steps>
+
+					<div class="main">
+						<div class="sections">
+							${sectionsHtml}
 						</div>
-					</div>
-				`;
-			}).join('');
-
-			return `
-				<div :class="'holder ' + variant.join(' ')">
-					${html}
-					<div ot-if="save" class="footer">
-						<e-form-button :text="save" :_click="submit" :disabled="disabled" :variant="['brand', 'size-s']"></e-form-button>
+						<div ot-if="save" class="footer">
+							<e-form-button
+								:text="save"
+								:_click="submit"
+								:disabled="disabled"
+								:variant="saveVariant"
+							></e-form-button>
+						</div>
 					</div>
 				</div>
 			`;

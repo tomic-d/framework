@@ -1,0 +1,252 @@
+/* Root */
+
+.e-5511e8fd
+{
+	display: block;
+	width: 100%;
+}
+
+/* Editor */
+
+.e-5511e8fd > .ot-editor
+{
+	position: relative;
+	max-width: 720px;
+	margin: 0 auto;
+	padding: var(--ot-spacing-l) 0;
+}
+
+/* Blocks Container */
+
+.e-5511e8fd > .ot-editor > .ot-editor-blocks
+{
+	display: flex;
+	flex-direction: column;
+}
+
+/* Placeholder */
+
+.e-5511e8fd > .ot-editor > .ot-editor-placeholder
+{
+	color: var(--ot-text-3);
+	font-size: var(--ot-size-m);
+	padding: 0 var(--ot-spacing-m);
+	padding-left: 44px;
+	pointer-events: none;
+}
+
+/* Block */
+
+.e-5511e8fd .ot-block
+{
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	padding: 2px 0;
+	border-radius: var(--ot-radius-m);
+	outline: none;
+	transition: background 0.1s ease;
+}
+
+.e-5511e8fd .ot-block:hover
+{
+	background: var(--ot-bg-1-hover);
+}
+
+/* Gutter */
+
+.e-5511e8fd .ot-block-gutter
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 44px;
+	flex-shrink: 0;
+	opacity: 0;
+	transition: opacity 0.15s ease;
+	padding-top: 2px;
+}
+
+.e-5511e8fd .ot-block:hover > .ot-block-gutter
+{
+	opacity: 1;
+}
+
+.e-5511e8fd .ot-block-handle,
+.e-5511e8fd .ot-block-add
+{
+	width: 24px;
+	height: 24px;
+	border-radius: var(--ot-radius-s);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--ot-text-3);
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.e-5511e8fd .ot-block-handle:hover,
+.e-5511e8fd .ot-block-add:hover
+{
+	background: var(--ot-bg-3);
+	color: var(--ot-text-1);
+}
+
+.e-5511e8fd .ot-block-handle > i,
+.e-5511e8fd .ot-block-add > i
+{
+	font-size: 16px;
+}
+
+.e-5511e8fd .ot-block-handle
+{
+	cursor: grab;
+}
+
+.e-5511e8fd .ot-block-handle:active
+{
+	cursor: grabbing;
+}
+
+/* Content */
+
+.e-5511e8fd .ot-block-content
+{
+	flex: 1;
+	min-width: 0;
+	min-height: 24px;
+	outline: none;
+}
+
+.e-5511e8fd .ot-block-content > [contenteditable]
+{
+	outline: none;
+	min-height: 24px;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+
+.e-5511e8fd .ot-block-content > [contenteditable]:empty::before
+{
+	content: attr(data-placeholder);
+	color: var(--ot-text-3);
+	pointer-events: none;
+}
+
+/* Paragraph */
+
+.e-5511e8fd .ot-block-content > p
+{
+	margin: 0;
+	font-size: var(--ot-size-m);
+	line-height: 1.7;
+	color: var(--ot-text-1);
+}
+
+/* Inline Formats */
+
+.e-5511e8fd .ot-block-content strong
+{
+	font-weight: 600;
+	color: var(--ot-text-1);
+}
+
+.e-5511e8fd .ot-block-content em
+{
+	font-style: italic;
+}
+
+.e-5511e8fd .ot-block-content code
+{
+	font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+	font-size: 0.9em;
+	padding: 0.15em 0.4em;
+	border-radius: var(--ot-radius-s);
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+}
+
+.e-5511e8fd .ot-block-content a
+{
+	color: var(--ot-brand);
+	text-decoration: underline;
+	text-decoration-color: var(--ot-brand-opacity);
+	text-underline-offset: 3px;
+}
+
+/* Actions */
+
+.e-5511e8fd .ot-block-actions
+{
+	display: flex;
+	align-items: flex-start;
+	flex-shrink: 0;
+	opacity: 0;
+	transition: opacity 0.15s ease;
+	padding-top: 2px;
+}
+
+.e-5511e8fd .ot-block:hover > .ot-block-actions
+{
+	opacity: 1;
+}
+
+.e-5511e8fd .ot-block-settings
+{
+	width: 24px;
+	height: 24px;
+	border-radius: var(--ot-radius-s);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--ot-text-3);
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.e-5511e8fd .ot-block-settings:hover
+{
+	background: var(--ot-bg-3);
+	color: var(--ot-text-1);
+}
+
+.e-5511e8fd .ot-block-settings > i
+{
+	font-size: 16px;
+}
+
+/* Selection */
+
+.e-5511e8fd .ot-block-selected
+{
+	background: var(--ot-brand-opacity);
+}
+
+.e-5511e8fd .ot-block-focused
+{
+	background: transparent;
+}
+
+/* Bordered variant */
+
+.e-5511e8fd > .ot-editor.bordered
+{
+	border: 1px solid var(--ot-bg-1-border);
+	border-radius: var(--ot-radius-l);
+	padding: var(--ot-spacing-l);
+}
+
+/* Compact variant */
+
+.e-5511e8fd > .ot-editor.compact
+{
+	max-width: 100%;
+	padding: var(--ot-spacing-m) 0;
+}

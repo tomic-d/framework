@@ -15,82 +15,325 @@
 	width: 100%;
 }
 
-/* Param */
+/* List */
 
-.e-29179902 > .holder > .param
+.e-29179902 .list
 {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: var(--ot-spacing-m);
-	padding: var(--ot-spacing-s) 0;
+	flex-direction: column;
+	width: 100%;
+}
+
+/* Param */
+
+.e-29179902 .param
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-s);
+	padding: var(--ot-spacing-m) 0;
 	border-bottom: 1px solid var(--ot-bg-2-border);
 }
 
-.e-29179902 > .holder > .param:last-child
+.e-29179902 .list > .param:last-child
 {
 	border-bottom: none;
 }
 
-/* Left */
+.e-29179902 .param.is-deprecated > .head > .name
+{
+	text-decoration: line-through;
+	opacity: 0.55;
+}
 
-.e-29179902 > .holder > .param > .left
+/* Head */
+
+.e-29179902 .param > .head
 {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 	gap: var(--ot-spacing-s);
 }
 
 /* Name */
 
-.e-29179902 > .holder > .param > .left > .name
+.e-29179902 .param > .head > .name
 {
-	font-size: var(--ot-size-m);
+	font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+	font-size: 13.5px;
 	font-weight: 600;
-	font-family: monospace;
 	color: var(--ot-text-1);
 }
 
-/* Type badge */
+/* Type */
 
-.e-29179902 > .holder > .param > .left > .type
+.e-29179902 .param > .head > .type
 {
-	font-size: var(--ot-size-s);
-	font-weight: 500;
-	padding: var(--ot-spacing-x) var(--ot-spacing-s);
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 8px;
 	border-radius: var(--ot-radius-s);
 	background: var(--ot-blue-opacity);
 	color: var(--ot-blue);
+	font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+	font-size: 11px;
+	font-weight: 600;
 }
 
-/* Required badge */
+/* Badges */
 
-.e-29179902 > .holder > .param > .left > .required
+.e-29179902 .param > .head > .badge
 {
-	font-size: var(--ot-size-s);
-	font-weight: 500;
-	padding: var(--ot-spacing-x) var(--ot-spacing-s);
-	border-radius: var(--ot-radius-s);
-	background: var(--ot-orange-opacity);
-	color: var(--ot-orange);
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 8px;
+	border-radius: 100px;
+	font-family: var(--ot-font-primary);
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.e-29179902 .param > .head > .badge.required
+{
+	background: var(--ot-brand-opacity);
+	color: var(--ot-brand);
+}
+
+.e-29179902 .param > .head > .badge.deprecated
+{
+	background: var(--ot-red-opacity);
+	color: var(--ot-red);
+}
+
+.e-29179902 .param > .head > .badge.since
+{
+	background: var(--ot-green-opacity);
+	color: var(--ot-green);
 }
 
 /* Description */
 
-.e-29179902 > .holder > .param > .description
+.e-29179902 .param > .description
 {
-	font-size: var(--ot-size-s);
+	font-size: 13px;
+	line-height: 1.6;
 	color: var(--ot-text-2);
-	text-align: right;
+	font-family: var(--ot-font-primary);
 }
 
-/* Background variants */
+.e-29179902 .param > .description code
+{
+	font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+	font-size: 0.88em;
+	padding: 1px 6px;
+	border-radius: var(--ot-radius-s);
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	color: var(--ot-text-1);
+}
 
-.e-29179902 > .holder.bg-1 { background: var(--ot-bg-1); border: 1px solid var(--ot-bg-1-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
-.e-29179902 > .holder.bg-2 { background: var(--ot-bg-2); border: 1px solid var(--ot-bg-2-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
-.e-29179902 > .holder.bg-3 { background: var(--ot-bg-3); border: 1px solid var(--ot-bg-3-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
-.e-29179902 > .holder.bg-4 { background: var(--ot-bg-4); border: 1px solid var(--ot-bg-4-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+/* Meta rows (default, options) */
 
-/* Border variant */
+.e-29179902 .param > .meta
+{
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--ot-spacing-s);
+	font-size: 12px;
+}
+
+.e-29179902 .param > .meta > .meta-label
+{
+	font-family: var(--ot-font-primary);
+	font-size: 10.5px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--ot-text-3);
+}
+
+.e-29179902 .param > .meta > .options
+{
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--ot-spacing-x);
+}
+
+.e-29179902 .param .mono
+{
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 8px;
+	border-radius: var(--ot-radius-s);
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	color: var(--ot-text-1);
+	font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+	font-size: 11px;
+	font-weight: 500;
+}
+
+/* Nested children */
+
+.e-29179902 .param > .children
+{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin-top: var(--ot-spacing-s);
+	padding-left: var(--ot-spacing-m);
+	border-left: 2px solid var(--ot-bg-2-border);
+}
+
+.e-29179902 .param > .children > .param
+{
+	padding: var(--ot-spacing-s) 0;
+	border-bottom: 1px dashed var(--ot-bg-2-border);
+}
+
+.e-29179902 .param > .children > .param:last-child
+{
+	border-bottom: none;
+}
+
+/* ===== STYLE: ROWS (default) ===== */
+
+.e-29179902 > .holder.rows
+{
+	padding: 0;
+}
+
+/* ===== STYLE: COMPACT (single-line) ===== */
+
+.e-29179902 > .holder.compact .param
+{
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--ot-spacing-m);
+	padding: var(--ot-spacing-s) 0;
+}
+
+.e-29179902 > .holder.compact .param > .head
+{
+	flex-shrink: 0;
+}
+
+.e-29179902 > .holder.compact .param > .description
+{
+	flex: 1;
+	min-width: 200px;
+	font-size: 12.5px;
+}
+
+.e-29179902 > .holder.compact .param > .meta
+{
+	flex-basis: 100%;
+}
+
+/* ===== STYLE: CARDS ===== */
+
+.e-29179902 > .holder.cards .list
+{
+	gap: var(--ot-spacing-m);
+}
+
+.e-29179902 > .holder.cards .list > .param
+{
+	padding: var(--ot-spacing-m);
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-m);
+	transition: border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-29179902 > .holder.cards .list > .param:hover
+{
+	border-color: var(--ot-bg-3-border);
+}
+
+.e-29179902 > .holder.cards .list > .param:last-child
+{
+	border-bottom: 1px solid var(--ot-bg-2-border);
+}
+
+/* ===== BACKGROUNDS ===== */
+
+.e-29179902 > .holder.bg-1 { background: var(--ot-bg-1); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-29179902 > .holder.bg-1 .param { border-bottom-color: var(--ot-bg-1-border); }
+.e-29179902 > .holder.bg-1 .param > .head > .type,
+.e-29179902 > .holder.bg-1 .param .mono { background: var(--ot-bg-2); border-color: var(--ot-bg-1-border); }
+.e-29179902 > .holder.bg-1.cards .list > .param { background: var(--ot-bg-2); border-color: var(--ot-bg-1-border); }
+.e-29179902 > .holder.bg-1.cards .list > .param:hover { border-color: var(--ot-bg-2-border); }
+
+.e-29179902 > .holder.bg-2 { background: var(--ot-bg-2); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-29179902 > .holder.bg-2 .param { border-bottom-color: var(--ot-bg-2-border); }
+.e-29179902 > .holder.bg-2 .param > .head > .type,
+.e-29179902 > .holder.bg-2 .param .mono { background: var(--ot-bg-1); border-color: var(--ot-bg-2-border); }
+.e-29179902 > .holder.bg-2.cards .list > .param { background: var(--ot-bg-1); border-color: var(--ot-bg-2-border); }
+
+.e-29179902 > .holder.bg-3 { background: var(--ot-bg-3); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-29179902 > .holder.bg-3 .param { border-bottom-color: var(--ot-bg-3-border); }
+.e-29179902 > .holder.bg-3 .param > .head > .type,
+.e-29179902 > .holder.bg-3 .param .mono { background: var(--ot-bg-2); border-color: var(--ot-bg-3-border); }
+.e-29179902 > .holder.bg-3.cards .list > .param { background: var(--ot-bg-2); border-color: var(--ot-bg-3-border); }
+
+.e-29179902 > .holder.bg-4 { background: var(--ot-bg-4); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-29179902 > .holder.bg-4 .param { border-bottom-color: var(--ot-bg-4-border); }
+.e-29179902 > .holder.bg-4 .param > .head > .type,
+.e-29179902 > .holder.bg-4 .param .mono { background: var(--ot-bg-3); border-color: var(--ot-bg-4-border); }
+.e-29179902 > .holder.bg-4.cards .list > .param { background: var(--ot-bg-3); border-color: var(--ot-bg-4-border); }
+
+/* ===== BORDERS ===== */
 
 .e-29179902 > .holder.border { border: 1px solid var(--ot-bg-2-border); border-radius: var(--ot-radius-m); padding: var(--ot-spacing-m); }
+.e-29179902 > .holder.border-top { border-top: 1px solid var(--ot-bg-2-border); }
+.e-29179902 > .holder.border-right { border-right: 1px solid var(--ot-bg-2-border); }
+.e-29179902 > .holder.border-bottom { border-bottom: 1px solid var(--ot-bg-2-border); }
+.e-29179902 > .holder.border-left { border-left: 1px solid var(--ot-bg-2-border); }
+
+.e-29179902 > .holder.bg-1.border,
+.e-29179902 > .holder.bg-1.border-top,
+.e-29179902 > .holder.bg-1.border-right,
+.e-29179902 > .holder.bg-1.border-bottom,
+.e-29179902 > .holder.bg-1.border-left { border-color: var(--ot-bg-1-border); }
+
+.e-29179902 > .holder.bg-2.border,
+.e-29179902 > .holder.bg-2.border-top,
+.e-29179902 > .holder.bg-2.border-right,
+.e-29179902 > .holder.bg-2.border-bottom,
+.e-29179902 > .holder.bg-2.border-left { border-color: var(--ot-bg-2-border); }
+
+.e-29179902 > .holder.bg-3.border,
+.e-29179902 > .holder.bg-3.border-top,
+.e-29179902 > .holder.bg-3.border-right,
+.e-29179902 > .holder.bg-3.border-bottom,
+.e-29179902 > .holder.bg-3.border-left { border-color: var(--ot-bg-3-border); }
+
+.e-29179902 > .holder.bg-4.border,
+.e-29179902 > .holder.bg-4.border-top,
+.e-29179902 > .holder.bg-4.border-right,
+.e-29179902 > .holder.bg-4.border-bottom,
+.e-29179902 > .holder.bg-4.border-left { border-color: var(--ot-bg-4-border); }
+
+/* ===== SIZES ===== */
+
+.e-29179902 > .holder.size-s .param { padding: var(--ot-spacing-s) 0; gap: var(--ot-spacing-x); }
+.e-29179902 > .holder.size-s .param > .head { gap: var(--ot-spacing-x); }
+.e-29179902 > .holder.size-s .param > .head > .name { font-size: 12.5px; }
+.e-29179902 > .holder.size-s .param > .head > .type { font-size: 10px; padding: 1px 6px; }
+.e-29179902 > .holder.size-s .param > .head > .badge { font-size: 9px; padding: 1px 6px; }
+.e-29179902 > .holder.size-s .param > .description { font-size: 12px; }
+.e-29179902 > .holder.size-s .param .mono { font-size: 10px; padding: 1px 6px; }
+
+.e-29179902 > .holder.size-l .param { padding: var(--ot-spacing-l) 0; gap: var(--ot-spacing-m); }
+.e-29179902 > .holder.size-l .param > .head > .name { font-size: 15px; }
+.e-29179902 > .holder.size-l .param > .head > .type { font-size: 12px; padding: 3px 10px; }
+.e-29179902 > .holder.size-l .param > .head > .badge { font-size: 11px; padding: 3px 10px; }
+.e-29179902 > .holder.size-l .param > .description { font-size: 14px; }
+.e-29179902 > .holder.size-l .param .mono { font-size: 12px; padding: 3px 10px; }

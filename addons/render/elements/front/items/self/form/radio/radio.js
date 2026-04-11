@@ -4,34 +4,38 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-radio',
 		icon: 'radio_button_checked',
 		name: 'Radio',
-		description: 'Radio button with custom styling and group support.',
+		description: 'Premium radio button with label, description, color variants and group support.',
 		category: 'Form',
 		author: 'OneType',
 		config: {
 			label: {
-				type: 'string',
-				value: ''
+				type: 'string'
+			},
+			description: {
+				type: 'string'
 			},
 			name: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			option: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			value: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			disabled: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			variant: {
 				type: 'array',
 				value: ['bg-1', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent', 'border', 'size-s', 'size-m', 'size-l']
+				options: [
+					'bg-1', 'bg-2', 'bg-3', 'bg-4',
+					'transparent', 'border',
+					'color-brand', 'color-blue', 'color-red', 'color-orange', 'color-green',
+					'size-s', 'size-m', 'size-l',
+					'reverse'
+				]
 			},
 			_change: {
 				type: 'function'
@@ -42,11 +46,13 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			this.hasInfo = !!this.label || !!this.description;
+
 			this.handle = ({ event }) =>
 			{
 				this.value = event.target.checked;
 
-				if (this._change)
+				if(this._change)
 				{
 					this._change({ event, value: this.value });
 				}
@@ -54,14 +60,14 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.click = ({ event }) =>
 			{
-				if (this._click)
+				if(this._click)
 				{
 					this._click({ event, value: this.value });
 				}
 			};
 
-			return `
-				<label :class="'holder ' + variant.join(' ')">
+			return /* html */ `
+				<label :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
 					<input
 						type="radio"
 						:name="name"
@@ -72,7 +78,10 @@ onetype.AddonReady('elements', (elements) =>
 						ot-click="click"
 					/>
 					<span class="mark"></span>
-					<span ot-if="label" class="label">{{ label }}</span>
+					<span ot-if="hasInfo" class="info">
+						<span ot-if="label" class="label">{{ label }}</span>
+						<span ot-if="description" class="description">{{ description }}</span>
+					</span>
 				</label>
 			`;
 		}

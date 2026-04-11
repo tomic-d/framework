@@ -4,25 +4,29 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-color',
 		icon: 'palette',
 		name: 'Color',
-		description: 'Color picker with swatch preview and hex input.',
+		description: 'Premium color picker with native input, hex validation, presets and copy action.',
 		category: 'Form',
 		author: 'OneType',
 		config: {
 			value: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			name: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			placeholder: {
 				type: 'string',
-				value: 'transparent'
+				value: '#000000'
+			},
+			presets: {
+				type: 'array',
+				value: [],
+				each: {
+					type: 'string'
+				}
 			},
 			disabled: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			variant: {
 				type: 'array',
@@ -38,10 +42,45 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			this.copied = false;
+			this.hasPresets = this.presets && this.presets.length > 0;
+
+			this.normalize = (value) =>
+			{
+				if(!value)
+				{
+					return '';
+				}
+
+				let hex = String(value).trim().replace(/[^#0-9a-fA-F]/g, '');
+
+				if(hex && hex.charAt(0) !== '#')
+				{
+					hex = '#' + hex;
+				}
+
+				return hex.slice(0, 7);
+			};
+
+			this.isValid = (value) =>
+			{
+				return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value);
+			};
+
 			this.sync = () =>
 			{
 				const input = this.Element?.querySelector('input.input');
-				if(input) input.value = this.value || '';
+				const native = this.Element?.querySelector('input.native');
+
+				if(input)
+				{
+					input.value = this.value || '';
+				}
+
+				if(native && this.isValid(this.value))
+				{
+					native.value = this.value;
+				}
 			};
 
 			this.pick = ({ event, value }) =>
@@ -52,11 +91,6 @@ onetype.AddonReady('elements', (elements) =>
 				if(this._input)
 				{
 					this._input({ event, value });
-				}
-
-				if(this._change)
-				{
-					this._change({ event, value });
 				}
 			};
 
@@ -73,12 +107,7 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.input = ({ event, value }) =>
 			{
-				let hex = value.trim();
-
-				if(hex && hex.charAt(0) !== '#')
-				{
-					hex = '#' + hex;
-				}
+				const hex = this.normalize(value);
 
 				this.value = hex;
 				this.sync();
@@ -91,12 +120,17 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.open = ({ event }) =>
 			{
-				if (this.disabled)
+				if(this.disabled)
 				{
 					return;
 				}
 
-				event.target.closest('.holder').querySelector('.native').click();
+				const native = event.target.closest('.holder').querySelector('.native');
+
+				if(native)
+				{
+					native.click();
+				}
 			};
 
 			this.clear = () =>
@@ -104,31 +138,91 @@ onetype.AddonReady('elements', (elements) =>
 				this.value = '';
 				this.sync();
 
-				if (this._change)
+				if(this._change)
 				{
 					this._change({ event: null, value: '' });
 				}
 			};
 
-			return `
-				<div :class="'holder ' + variant.join(' ')">
-					<div class="swatch" :style="'background: ' + (value || 'transparent')" ot-click="open" :disabled="disabled">
-						<input class="native" type="color" :value="value" ot-input="pick" ot-change="commit" tabindex="-1" />
+			this.copy = () =>
+			{
+				if(!this.value || !navigator.clipboard)
+				{
+					return;
+				}
+
+				navigator.clipboard.writeText(this.value);
+				this.copied = true;
+
+				setTimeout(() =>
+				{
+					this.copied = false;
+				}, 1500);
+			};
+
+			this.pickPreset = (event, hex) =>
+			{
+				if(this.disabled)
+				{
+					return;
+				}
+
+				this.value = hex;
+				this.sync();
+
+				if(this._change)
+				{
+					this._change({ event, value: hex });
+				}
+			};
+
+			return /* html */ `
+				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+					<div class="field">
+						<div class="swatch" :style="value ? 'background: ' + value : ''" ot-click="open">
+							<input class="native" type="color" :value="value || '#000000'" ot-input="pick" ot-change="commit" tabindex="-1" :disabled="disabled" />
+						</div>
+						<input
+							class="input"
+							:name="name"
+							type="text"
+							:value="value"
+							:placeholder="placeholder"
+							:disabled="disabled"
+							maxlength="7"
+							autocomplete="off"
+							spellcheck="false"
+							ot-change="input"
+						/>
+						<button
+							ot-if="value && !disabled"
+							type="button"
+							:class="'action' + (copied ? ' copied' : '')"
+							ot-click.stop="copy"
+							:ot-tooltip="{ text: copied ? 'Copied!' : 'Copy', position: { x: 'center', y: 'top' } }"
+						>
+							<i ot-if="!copied">content_copy</i>
+							<i ot-if="copied">check</i>
+						</button>
+						<button
+							ot-if="value && !disabled"
+							type="button"
+							class="action"
+							ot-click.stop="clear"
+							:ot-tooltip="{ text: 'Clear', position: { x: 'center', y: 'top' } }"
+						>
+							<i>close</i>
+						</button>
 					</div>
-					<input
-						class="input"
-						:name="name"
-						type="text"
-						:value="value"
-						:placeholder="placeholder"
-						:disabled="disabled"
-						maxlength="7"
-						autocomplete="off"
-						spellcheck="false"
-						ot-change="input"
-					/>
-					<div ot-if="value && !disabled" class="clear" ot-click.stop="clear">
-						<i>close</i>
+					<div ot-if="hasPresets" class="presets">
+						<button
+							ot-for="preset in presets"
+							type="button"
+							:class="'preset' + (value === preset ? ' active' : '')"
+							:style="'background: ' + preset"
+							:ot-tooltip="{ text: preset, position: { x: 'center', y: 'top' } }"
+							ot-click="(event) => pickPreset(event, preset)"
+						></button>
 					</div>
 				</div>
 			`;
