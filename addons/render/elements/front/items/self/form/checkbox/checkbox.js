@@ -14,6 +14,12 @@ onetype.AddonReady('elements', (elements) =>
 			description: {
 				type: 'string'
 			},
+			icon: {
+				type: 'string'
+			},
+			count: {
+				type: 'string|number'
+			},
 			name: {
 				type: 'string'
 			},
@@ -47,6 +53,8 @@ onetype.AddonReady('elements', (elements) =>
 		render: function()
 		{
 			this.hasInfo = !!this.label || !!this.description;
+			this.hasIcon = !!this.icon;
+			this.hasCount = this.count !== undefined && this.count !== null && this.count !== '';
 
 			this.OnReady(() =>
 			{
@@ -88,10 +96,12 @@ onetype.AddonReady('elements', (elements) =>
 						ot-click="click"
 					/>
 					<span class="mark"></span>
+					<i ot-if="hasIcon" class="icon">{{ icon }}</i>
 					<span ot-if="hasInfo" class="info">
 						<span ot-if="label" class="label">{{ label }}</span>
 						<span ot-if="description" class="description">{{ description }}</span>
 					</span>
+					<span ot-if="hasCount" class="count">{{ count }}</span>
 				</label>
 			`;
 		}

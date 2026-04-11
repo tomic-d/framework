@@ -398,3 +398,29 @@
 {
 	box-shadow: 0 0 0 3px var(--ot-green-opacity);
 }
+
+/* Icon (optional, between mark and label) */
+
+.e-f249baa > .holder > .icon
+{
+	font-size: 18px;
+	color: var(--ot-text-2);
+	flex-shrink: 0;
+	align-self: center;
+}
+
+.e-f249baa > .holder.size-s > .icon { font-size: 16px; }
+.e-f249baa > .holder.size-l > .icon { font-size: 20px; }
+
+/* Count (optional, at the end) */
+
+.e-f249baa > .holder > .count
+{
+	margin-left: auto;
+	padding-left: var(--ot-spacing-s);
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--ot-text-3);
+	font-variant-numeric: tabular-nums;
+	align-self: center;
+}

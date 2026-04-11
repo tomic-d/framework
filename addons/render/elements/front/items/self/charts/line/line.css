@@ -1,0 +1,229 @@
+/* Root */
+
+.e-7f41cd6a
+{
+	display: flex;
+	width: 100%;
+}
+
+/* Holder */
+
+.e-7f41cd6a > .holder
+{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: var(--ot-spacing-m);
+	border-radius: var(--ot-radius-l);
+	border: 1px solid transparent;
+	padding: var(--ot-spacing-l);
+}
+
+.e-7f41cd6a > .holder.inline
+{
+	padding: 0;
+	background: transparent !important;
+	border-color: transparent !important;
+	gap: var(--ot-spacing-s);
+}
+
+.e-7f41cd6a > .holder.clean
+{
+	background: transparent !important;
+	border-color: transparent !important;
+	padding: 0;
+}
+
+/* ===== HEAD ===== */
+
+.e-7f41cd6a > .holder > .head
+{
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.e-7f41cd6a > .holder > .head > .title
+{
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-m);
+	font-weight: 600;
+	color: var(--ot-text-1);
+}
+
+.e-7f41cd6a > .holder > .head > .description
+{
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-3);
+}
+
+/* ===== CANVAS ===== */
+
+.e-7f41cd6a > .holder > .canvas
+{
+	width: 100%;
+	position: relative;
+}
+
+.e-7f41cd6a > .holder > .canvas > svg
+{
+	display: block;
+	width: 100%;
+	height: auto;
+	overflow: visible;
+}
+
+/* Grid */
+
+.e-7f41cd6a > .holder > .canvas > svg > .grid > .grid-line
+{
+	stroke: var(--ot-bg-2-border);
+	stroke-width: 1;
+	vector-effect: non-scaling-stroke;
+}
+
+.e-7f41cd6a > .holder > .canvas > svg > .grid > .grid-label
+{
+	font-family: var(--ot-font-primary);
+	font-size: 10px;
+	font-weight: 600;
+	fill: var(--ot-text-3);
+}
+
+/* X labels */
+
+.e-7f41cd6a > .holder > .canvas > svg > .labels > .x-label
+{
+	font-family: var(--ot-font-primary);
+	font-size: 10px;
+	font-weight: 500;
+	fill: var(--ot-text-3);
+}
+
+/* Line */
+
+.e-7f41cd6a > .holder > .canvas > svg > .series > .line
+{
+	fill: none;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	vector-effect: non-scaling-stroke;
+	animation: e-7f41cd6a-draw 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-7f41cd6a > .holder > .canvas > svg > .series > .area
+{
+	opacity: 0.3;
+	animation: e-7f41cd6a-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-7f41cd6a > .holder > .canvas > svg > .series > .dot
+{
+	stroke: var(--ot-bg-1);
+	stroke-width: 2;
+	cursor: pointer;
+	transition: r 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-7f41cd6a > .holder > .canvas > svg > .series > .dot:hover
+{
+	r: 5;
+}
+
+@keyframes e-7f41cd6a-draw
+{
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes e-7f41cd6a-fade
+{
+	from { opacity: 0; }
+	to { opacity: 0.3; }
+}
+
+/* ===== SERIES COLORS ===== */
+
+.e-7f41cd6a .series.color-brand > .line { stroke: var(--ot-brand); }
+.e-7f41cd6a .series.color-brand > .dot { fill: var(--ot-brand); }
+.e-7f41cd6a .series.color-brand > .area { fill: var(--ot-brand); }
+.area-start.color-brand { stop-color: var(--ot-brand); stop-opacity: 0.5; }
+.area-end.color-brand { stop-color: var(--ot-brand); stop-opacity: 0; }
+
+.e-7f41cd6a .series.color-blue > .line { stroke: var(--ot-blue); }
+.e-7f41cd6a .series.color-blue > .dot { fill: var(--ot-blue); }
+.e-7f41cd6a .series.color-blue > .area { fill: var(--ot-blue); }
+.area-start.color-blue { stop-color: var(--ot-blue); stop-opacity: 0.5; }
+.area-end.color-blue { stop-color: var(--ot-blue); stop-opacity: 0; }
+
+.e-7f41cd6a .series.color-red > .line { stroke: var(--ot-red); }
+.e-7f41cd6a .series.color-red > .dot { fill: var(--ot-red); }
+.e-7f41cd6a .series.color-red > .area { fill: var(--ot-red); }
+.area-start.color-red { stop-color: var(--ot-red); stop-opacity: 0.5; }
+.area-end.color-red { stop-color: var(--ot-red); stop-opacity: 0; }
+
+.e-7f41cd6a .series.color-orange > .line { stroke: var(--ot-orange); }
+.e-7f41cd6a .series.color-orange > .dot { fill: var(--ot-orange); }
+.e-7f41cd6a .series.color-orange > .area { fill: var(--ot-orange); }
+.area-start.color-orange { stop-color: var(--ot-orange); stop-opacity: 0.5; }
+.area-end.color-orange { stop-color: var(--ot-orange); stop-opacity: 0; }
+
+.e-7f41cd6a .series.color-green > .line { stroke: var(--ot-green); }
+.e-7f41cd6a .series.color-green > .dot { fill: var(--ot-green); }
+.e-7f41cd6a .series.color-green > .area { fill: var(--ot-green); }
+.area-start.color-green { stop-color: var(--ot-green); stop-opacity: 0.5; }
+.area-end.color-green { stop-color: var(--ot-green); stop-opacity: 0; }
+
+/* ===== LEGEND ===== */
+
+.e-7f41cd6a > .holder > .legend
+{
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--ot-spacing-m);
+}
+
+.e-7f41cd6a > .holder > .legend > .legend-item
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-2);
+}
+
+.e-7f41cd6a > .holder > .legend > .legend-item > .dot-marker
+{
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+}
+
+.e-7f41cd6a > .holder > .legend > .legend-item.color-brand > .dot-marker { background: var(--ot-brand); }
+.e-7f41cd6a > .holder > .legend > .legend-item.color-blue > .dot-marker { background: var(--ot-blue); }
+.e-7f41cd6a > .holder > .legend > .legend-item.color-red > .dot-marker { background: var(--ot-red); }
+.e-7f41cd6a > .holder > .legend > .legend-item.color-orange > .dot-marker { background: var(--ot-orange); }
+.e-7f41cd6a > .holder > .legend > .legend-item.color-green > .dot-marker { background: var(--ot-green); }
+
+/* ===== BACKGROUND VARIANTS ===== */
+
+.e-7f41cd6a > .holder.bg-1 { background: var(--ot-bg-1); }
+.e-7f41cd6a > .holder.bg-2 { background: var(--ot-bg-2); }
+.e-7f41cd6a > .holder.bg-3 { background: var(--ot-bg-3); }
+.e-7f41cd6a > .holder.bg-4 { background: var(--ot-bg-4); }
+
+.e-7f41cd6a > .holder.border { border-color: var(--ot-bg-2-border); }
+.e-7f41cd6a > .holder.bg-1.border { border-color: var(--ot-bg-1-border); }
+.e-7f41cd6a > .holder.bg-2.border { border-color: var(--ot-bg-2-border); }
+.e-7f41cd6a > .holder.bg-3.border { border-color: var(--ot-bg-3-border); }
+.e-7f41cd6a > .holder.bg-4.border { border-color: var(--ot-bg-4-border); }
+
+/* ===== SIZE ===== */
+
+.e-7f41cd6a > .holder.size-s { padding: var(--ot-spacing-m); gap: var(--ot-spacing-s); }
+.e-7f41cd6a > .holder.size-m { padding: var(--ot-spacing-l); }
+.e-7f41cd6a > .holder.size-l { padding: var(--ot-spacing-l); gap: var(--ot-spacing-l); }

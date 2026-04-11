@@ -1,0 +1,102 @@
+/* Root */
+
+.e-161c4111
+{
+	display: flex;
+	width: 100%;
+}
+
+/* Holder */
+
+.e-161c4111 > .holder
+{
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.e-161c4111 > .holder > svg
+{
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Line */
+
+.e-161c4111 > .holder > svg > .line
+{
+	fill: none;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	vector-effect: non-scaling-stroke;
+	animation: e-161c4111-draw 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes e-161c4111-draw
+{
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+/* Area fill */
+
+.e-161c4111 > .holder > svg > .area
+{
+	opacity: 0.35;
+	animation: e-161c4111-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes e-161c4111-fade
+{
+	from { opacity: 0; }
+	to { opacity: 0.35; }
+}
+
+/* Bars */
+
+.e-161c4111 > .holder > svg > .bar
+{
+	animation: e-161c4111-rise 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	transform-origin: bottom;
+}
+
+@keyframes e-161c4111-rise
+{
+	from { opacity: 0; transform: scaleY(0); }
+	to { opacity: 1; transform: scaleY(1); }
+}
+
+/* ===== COLORS ===== */
+
+.e-161c4111 > .holder.color-brand > svg > .line { stroke: var(--ot-brand); }
+.e-161c4111 > .holder.color-brand > svg > .area { fill: var(--ot-brand); }
+.e-161c4111 > .holder.color-brand > svg > .bar { fill: var(--ot-brand); }
+.e-161c4111 > .holder.color-brand > svg > defs .area-start { stop-color: var(--ot-brand); stop-opacity: 0.6; }
+.e-161c4111 > .holder.color-brand > svg > defs .area-end { stop-color: var(--ot-brand); stop-opacity: 0; }
+
+.e-161c4111 > .holder.color-blue > svg > .line { stroke: var(--ot-blue); }
+.e-161c4111 > .holder.color-blue > svg > .area { fill: var(--ot-blue); }
+.e-161c4111 > .holder.color-blue > svg > .bar { fill: var(--ot-blue); }
+.e-161c4111 > .holder.color-blue > svg > defs .area-start { stop-color: var(--ot-blue); stop-opacity: 0.6; }
+.e-161c4111 > .holder.color-blue > svg > defs .area-end { stop-color: var(--ot-blue); stop-opacity: 0; }
+
+.e-161c4111 > .holder.color-red > svg > .line { stroke: var(--ot-red); }
+.e-161c4111 > .holder.color-red > svg > .area { fill: var(--ot-red); }
+.e-161c4111 > .holder.color-red > svg > .bar { fill: var(--ot-red); }
+.e-161c4111 > .holder.color-red > svg > defs .area-start { stop-color: var(--ot-red); stop-opacity: 0.6; }
+.e-161c4111 > .holder.color-red > svg > defs .area-end { stop-color: var(--ot-red); stop-opacity: 0; }
+
+.e-161c4111 > .holder.color-orange > svg > .line { stroke: var(--ot-orange); }
+.e-161c4111 > .holder.color-orange > svg > .area { fill: var(--ot-orange); }
+.e-161c4111 > .holder.color-orange > svg > .bar { fill: var(--ot-orange); }
+.e-161c4111 > .holder.color-orange > svg > defs .area-start { stop-color: var(--ot-orange); stop-opacity: 0.6; }
+.e-161c4111 > .holder.color-orange > svg > defs .area-end { stop-color: var(--ot-orange); stop-opacity: 0; }
+
+.e-161c4111 > .holder.color-green > svg > .line { stroke: var(--ot-green); }
+.e-161c4111 > .holder.color-green > svg > .area { fill: var(--ot-green); }
+.e-161c4111 > .holder.color-green > svg > .bar { fill: var(--ot-green); }
+.e-161c4111 > .holder.color-green > svg > defs .area-start { stop-color: var(--ot-green); stop-opacity: 0.6; }
+.e-161c4111 > .holder.color-green > svg > defs .area-end { stop-color: var(--ot-green); stop-opacity: 0; }

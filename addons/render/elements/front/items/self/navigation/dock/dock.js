@@ -37,8 +37,8 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			variant: {
 				type: 'array',
-				value: ['bg-2', 'border-right', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'size-s', 'size-m', 'size-l']
+				value: ['bg-2', 'border-right'],
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left']
 			},
 			_click: {
 				type: 'function'
