@@ -11,74 +11,325 @@
 .e-283879c1 > .holder
 {
 	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-s);
 	width: 100%;
-	border-radius: var(--ot-radius-m);
-	border: 1px solid transparent;
-	background: transparent;
-	transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-/* Input */
+/* Field (input row) */
 
-.e-283879c1 > .holder > .input
+.e-283879c1 > .holder > .field
 {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
 	width: 100%;
+	padding: 0 var(--ot-spacing-m);
+	border: 1px solid transparent;
+	border-radius: var(--ot-radius-m);
+	background: transparent;
+	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Icon */
+
+.e-283879c1 > .holder > .field > .icon
+{
+	flex-shrink: 0;
+	font-size: 18px;
+	color: var(--ot-text-3);
+	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-283879c1 > .holder.today > .field > .icon
+{
+	color: var(--ot-brand);
+}
+
+/* Native input */
+
+.e-283879c1 > .holder > .field > .input
+{
+	flex: 1;
+	min-width: 0;
+	padding: 0;
 	background: transparent;
 	border: none;
 	outline: none;
 	color: var(--ot-text-1);
-	font-family: inherit;
-	padding: 0 var(--ot-spacing-m);
-	color-scheme: dark;
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-m);
+	font-weight: 500;
 }
 
-.e-283879c1 > .holder > .input:disabled
+.e-283879c1 > .holder > .field > .input::placeholder
 {
-	opacity: 0.5;
-	cursor: not-allowed;
+	color: var(--ot-text-3);
 }
 
-.e-283879c1 > .holder > .input::-webkit-calendar-picker-indicator
+.e-283879c1 > .holder > .field > .input::-webkit-calendar-picker-indicator
 {
 	cursor: pointer;
 	opacity: 0.5;
-	transition: opacity 0.15s ease;
+	filter: invert(0.45);
+	transition: opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.e-283879c1 > .holder > .input::-webkit-calendar-picker-indicator:hover
+.e-283879c1 > .holder > .field > .input::-webkit-calendar-picker-indicator:hover
 {
 	opacity: 1;
 }
 
-/* Background variants */
+.e-283879c1 > .holder > .field > .input:disabled
+{
+	cursor: not-allowed;
+}
 
-.e-283879c1 > .holder.bg-1 { background: var(--ot-bg-1); }
-.e-283879c1 > .holder.bg-1:hover { background: var(--ot-bg-1-hover); }
-.e-283879c1 > .holder.bg-1.border { border-color: var(--ot-bg-1-border); }
-.e-283879c1 > .holder.bg-2 { background: var(--ot-bg-2); }
-.e-283879c1 > .holder.bg-2:hover { background: var(--ot-bg-2-hover); }
-.e-283879c1 > .holder.bg-2.border { border-color: var(--ot-bg-2-border); }
-.e-283879c1 > .holder.bg-3 { background: var(--ot-bg-3); }
-.e-283879c1 > .holder.bg-3:hover { background: var(--ot-bg-3-hover); }
-.e-283879c1 > .holder.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-283879c1 > .holder.bg-4 { background: var(--ot-bg-4); }
-.e-283879c1 > .holder.bg-4:hover { background: var(--ot-bg-4-hover); }
-.e-283879c1 > .holder.bg-4.border { border-color: var(--ot-bg-4-border); }
+/* Clear button */
+
+.e-283879c1 > .holder > .field > .action
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	border-radius: var(--ot-radius-s);
+	color: var(--ot-text-3);
+	cursor: pointer;
+	outline: none;
+	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-283879c1 > .holder > .field > .action:hover
+{
+	background: var(--ot-bg-2-hover);
+	color: var(--ot-text-1);
+}
+
+.e-283879c1 > .holder > .field > .action > i
+{
+	font-size: 14px;
+}
+
+/* Focus ring */
+
+.e-283879c1 > .holder > .field:focus-within
+{
+	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
+}
+
+/* Today state — subtle brand icon color (border handled in bg variants) */
+
+/* Presets */
+
+.e-283879c1 > .holder > .presets
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--ot-spacing-x);
+}
+
+.e-283879c1 > .holder > .presets > .preset
+{
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: 100px;
+	font-family: var(--ot-font-primary);
+	font-size: 11.5px;
+	font-weight: 500;
+	color: var(--ot-text-2);
+	cursor: pointer;
+	outline: none;
+	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-283879c1 > .holder > .presets > .preset:hover:not(.disabled):not(.active)
+{
+	background: var(--ot-bg-2-hover);
+	color: var(--ot-text-1);
+	transform: translateY(-1px);
+}
+
+.e-283879c1 > .holder > .presets > .preset.active
+{
+	background: var(--ot-brand-opacity);
+	border-color: var(--ot-brand);
+	color: var(--ot-brand);
+}
+
+.e-283879c1 > .holder > .presets > .preset.disabled
+{
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+/* Disabled holder */
+
+.e-283879c1 > .holder.disabled > .field
+{
+	cursor: not-allowed;
+	opacity: 0.55;
+}
+
+/* ===== BACKGROUND VARIANTS ===== */
+
+.e-283879c1 > .holder.bg-1 > .field
+{
+	background: var(--ot-bg-1);
+}
+.e-283879c1 > .holder.bg-1 > .field:hover:not(:focus-within)
+{
+	background: var(--ot-bg-1-hover);
+}
+.e-283879c1 > .holder.bg-1 > .field > .action:hover
+{
+	background: var(--ot-bg-1-hover);
+}
+
+.e-283879c1 > .holder.bg-2 > .field
+{
+	background: var(--ot-bg-2);
+}
+.e-283879c1 > .holder.bg-2 > .field:hover:not(:focus-within)
+{
+	background: var(--ot-bg-2-hover);
+}
+.e-283879c1 > .holder.bg-2 > .field > .action:hover
+{
+	background: var(--ot-bg-2-hover);
+}
+
+.e-283879c1 > .holder.bg-3 > .field
+{
+	background: var(--ot-bg-3);
+}
+.e-283879c1 > .holder.bg-3 > .field:hover:not(:focus-within)
+{
+	background: var(--ot-bg-3-hover);
+}
+.e-283879c1 > .holder.bg-3 > .field > .action:hover
+{
+	background: var(--ot-bg-3-hover);
+}
+
+.e-283879c1 > .holder.bg-4 > .field
+{
+	background: var(--ot-bg-4);
+}
+.e-283879c1 > .holder.bg-4 > .field:hover:not(:focus-within)
+{
+	background: var(--ot-bg-4-hover);
+}
+.e-283879c1 > .holder.bg-4 > .field > .action:hover
+{
+	background: var(--ot-bg-4-hover);
+}
 
 /* Transparent variant */
 
-.e-283879c1 > .holder.transparent { background: transparent; }
+.e-283879c1 > .holder.transparent > .field
+{
+	background: transparent;
+	padding: 0;
+}
 
-/* Border variant */
+/* Border variant — per bg level */
 
-.e-283879c1 > .holder.border { border: 1px solid var(--ot-bg-2-border); }
-.e-283879c1 > .holder.border:focus-within { border-color: var(--ot-brand); }
+.e-283879c1 > .holder.border > .field { border-color: var(--ot-bg-2-border); }
+.e-283879c1 > .holder.bg-1.border > .field { border-color: var(--ot-bg-1-border); }
+.e-283879c1 > .holder.bg-2.border > .field { border-color: var(--ot-bg-2-border); }
+.e-283879c1 > .holder.bg-3.border > .field { border-color: var(--ot-bg-3-border); }
+.e-283879c1 > .holder.bg-4.border > .field { border-color: var(--ot-bg-4-border); }
 
-/* Size variants */
+/* Today state border override — brand border regardless of bg */
 
-.e-283879c1 > .holder.size-s { height: var(--ot-height-s); }
-.e-283879c1 > .holder.size-s > .input { font-size: var(--ot-size-s); padding: 0 var(--ot-spacing-s); }
-.e-283879c1 > .holder.size-m { height: var(--ot-height-m); }
-.e-283879c1 > .holder.size-m > .input { font-size: var(--ot-size-m); }
-.e-283879c1 > .holder.size-l { height: var(--ot-height-l); }
-.e-283879c1 > .holder.size-l > .input { font-size: var(--ot-size-m); padding: 0 var(--ot-spacing-l); }
+.e-283879c1 > .holder.today > .field,
+.e-283879c1 > .holder.bg-1.today > .field,
+.e-283879c1 > .holder.bg-2.today > .field,
+.e-283879c1 > .holder.bg-3.today > .field,
+.e-283879c1 > .holder.bg-4.today > .field,
+.e-283879c1 > .holder.border.today > .field
+{
+	border-color: var(--ot-brand);
+}
+
+/* ===== SIZE VARIANTS ===== */
+
+.e-283879c1 > .holder.size-s > .field
+{
+	height: var(--ot-height-s);
+	padding: 0 var(--ot-spacing-s);
+}
+.e-283879c1 > .holder.size-s > .field > .icon
+{
+	font-size: 15px;
+}
+.e-283879c1 > .holder.size-s > .field > .input
+{
+	font-size: var(--ot-size-s);
+}
+.e-283879c1 > .holder.size-s > .field > .action
+{
+	width: 18px;
+	height: 18px;
+}
+.e-283879c1 > .holder.size-s > .field > .action > i
+{
+	font-size: 13px;
+}
+.e-283879c1 > .holder.size-s > .presets > .preset
+{
+	font-size: 10.5px;
+	padding: 3px 8px;
+}
+
+.e-283879c1 > .holder.size-m > .field
+{
+	height: var(--ot-height-m);
+	padding: 0 var(--ot-spacing-m);
+}
+.e-283879c1 > .holder.size-m > .field > .icon
+{
+	font-size: 18px;
+}
+.e-283879c1 > .holder.size-m > .field > .input
+{
+	font-size: var(--ot-size-m);
+}
+
+.e-283879c1 > .holder.size-l > .field
+{
+	height: var(--ot-height-l);
+	padding: 0 var(--ot-spacing-l);
+}
+.e-283879c1 > .holder.size-l > .field > .icon
+{
+	font-size: 20px;
+}
+.e-283879c1 > .holder.size-l > .field > .input
+{
+	font-size: var(--ot-size-m);
+}
+.e-283879c1 > .holder.size-l > .field > .action
+{
+	width: 26px;
+	height: 26px;
+}
+.e-283879c1 > .holder.size-l > .field > .action > i
+{
+	font-size: 16px;
+}
+.e-283879c1 > .holder.size-l > .presets > .preset
+{
+	font-size: 12.5px;
+	padding: 5px 12px;
+}

@@ -9,12 +9,20 @@ onetype.AddonReady('directives', function(directives)
         trigger: 'node',
         order: 160,
         tag: 'slot',
+        strict: true,
         attributes: {
             'name': ['string']
         },
         code: function(data, item, compile, node, id)
         {
-            const name = data['name']?.value || 'default';
+            const name = data['name']?.value;
+
+            if(!name)
+            {
+                node.remove();
+                return;
+            }
+
             const slot = item.Slots[name];
 
             if (slot && slot.Element)

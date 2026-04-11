@@ -4,7 +4,7 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-menu',
 		icon: 'menu',
 		name: 'Menu',
-		description: 'Multi-level menu with icons, shortcuts, headers and separators.',
+		description: 'Premium menu with icons, descriptions, shortcuts, badges, nested items and multiple styles.',
 		category: 'Global',
 		author: 'OneType',
 		config: {
@@ -14,13 +14,22 @@ onetype.AddonReady('elements', (elements) =>
 				each: {
 					type: 'object',
 					config: {
-						type: { type: 'string', value: 'action', options: ['action', 'separator', 'header'] },
-						icon: { type: 'string', value: '' },
-						label: { type: 'string', value: '' },
-						value: { type: 'string', value: '' },
-						shortcut: { type: 'string', value: '' },
-						disabled: { type: 'boolean', value: false },
-						items: { type: 'array', value: [] }
+						type: { type: 'string', value: 'action', options: ['action', 'link', 'separator', 'header'] },
+						id: { type: 'string' },
+						label: { type: 'string' },
+						description: { type: 'string' },
+						icon: { type: 'string' },
+						iconRight: { type: 'string' },
+						shortcut: { type: 'string' },
+						badge: { type: 'string|number' },
+						value: { type: 'string' },
+						href: { type: 'string' },
+						target: { type: 'string' },
+						active: { type: 'boolean' },
+						disabled: { type: 'boolean' },
+						danger: { type: 'boolean' },
+						color: { type: 'string', options: ['brand', 'blue', 'red', 'orange', 'green'] },
+						items: { type: 'array' }
 					}
 				}
 			},
@@ -30,8 +39,8 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			variant: {
 				type: 'array',
-				value: ['bg-2', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+				value: ['default', 'size-m'],
+				options: ['default', 'contextual', 'flush', 'bordered', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'size-s', 'size-m', 'size-l']
 			},
 			_select: {
 				type: 'function'
@@ -39,63 +48,102 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			const styles = ['default', 'contextual', 'flush', 'bordered'];
+			const hasStyle = this.variant.some(v => styles.includes(v));
+
+			if(!hasStyle)
+			{
+				this.variant = ['default', ...this.variant];
+			}
+
 			this.opened = {};
-
-			this.toggle = (index) =>
-			{
-				this.opened[index] = !this.opened[index];
-				this.Update();
-			};
-
-			this.isOpen = (index) =>
-			{
-				return !!this.opened[index];
-			};
-
-			this.select = (item) =>
-			{
-				if (item.disabled)
-				{
-					return;
-				}
-
-				if (this._select)
-				{
-					this._select({ value: item.value || item.label });
-				}
-			};
 
 			this.hasChildren = (item) =>
 			{
 				return item.items && item.items.length > 0;
 			};
 
-			const items = `
-				<div ot-for="item, index in items" :class="'entry ' + item.type + (item.disabled ? ' disabled' : '') + (hasChildren(item) ? ' parent' : '') + (isOpen(index) ? ' open' : '')">
-					<div ot-if="item.type === 'separator'" class="separator"></div>
-					<div ot-if="item.type === 'header'" class="header">{{ item.label }}</div>
-					<div ot-if="item.type === 'action' && hasChildren(item)" class="content" ot-click="toggle(index)">
-						<i ot-if="item.icon" class="icon">{{ item.icon }}</i>
-						<span class="label">{{ item.label }}</span>
-						<i class="arrow">{{ isOpen(index) ? 'expand_less' : 'expand_more' }}</i>
-					</div>
-					<div ot-if="item.type === 'action' && !hasChildren(item)" class="content" ot-click="select(item)">
-						<i ot-if="item.icon" class="icon">{{ item.icon }}</i>
-						<span class="label">{{ item.label }}</span>
-						<span ot-if="item.shortcut" class="shortcut">{{ item.shortcut }}</span>
-					</div>
-					<e-global-menu ot-if="hasChildren(item) && isOpen(index)" :items="item.items" :depth="depth + 1" :_select="_select" :style="'--depth: ' + (depth + 1)"></e-global-menu>
-				</div>
-			`;
-
-			if (this.depth > 0)
+			this.isOpen = (id) =>
 			{
-				return items;
-			}
+				return !!this.opened[id];
+			};
 
-			return `
+			this.toggle = (item, event) =>
+			{
+				if(item.disabled)
+				{
+					return;
+				}
+
+				this.opened[item.id || item.label] = !this.opened[item.id || item.label];
+				this.Update();
+			};
+
+			this.select = (item, event) =>
+			{
+				if(item.disabled)
+				{
+					return;
+				}
+
+				if(this.hasChildren(item))
+				{
+					this.toggle(item, event);
+					return;
+				}
+
+				if(this._select)
+				{
+					this._select({ event, value: item.value || item.id || item.label });
+				}
+			};
+
+			return /* html */ `
 				<div :class="'holder ' + variant.join(' ')">
-					${items}
+					<div
+						ot-for="item in items"
+						:class="'entry ' + item.type + (item.disabled ? ' disabled' : '') + (item.active ? ' active' : '') + (item.danger ? ' danger' : '') + (item.color ? ' color-' + item.color : '') + (hasChildren(item) ? ' parent' : '') + (isOpen(item.id || item.label) ? ' open' : '')"
+					>
+						<div ot-if="item.type === 'separator'" class="separator"></div>
+
+						<div ot-if="item.type === 'header'" class="header">{{ item.label }}</div>
+
+						<a
+							ot-if="(item.type === 'action' || item.type === 'link') && !hasChildren(item)"
+							:href="item.href || 'javascript:void(0)'"
+							:target="item.target"
+							class="content"
+							ot-click="(event) => select(item, event)"
+						>
+							<i ot-if="item.icon" class="icon">{{ item.icon }}</i>
+							<div class="text">
+								<span class="label">{{ item.label }}</span>
+								<span ot-if="item.description" class="description">{{ item.description }}</span>
+							</div>
+							<span ot-if="item.badge" class="badge">{{ item.badge }}</span>
+							<span ot-if="item.shortcut" class="shortcut">{{ item.shortcut }}</span>
+							<i ot-if="item.iconRight" class="icon-right">{{ item.iconRight }}</i>
+						</a>
+
+						<button
+							ot-if="item.type === 'action' && hasChildren(item)"
+							type="button"
+							class="content"
+							ot-click="(event) => toggle(item, event)"
+						>
+							<i ot-if="item.icon" class="icon">{{ item.icon }}</i>
+							<div class="text">
+								<span class="label">{{ item.label }}</span>
+								<span ot-if="item.description" class="description">{{ item.description }}</span>
+							</div>
+							<span ot-if="item.badge" class="badge">{{ item.badge }}</span>
+							<i class="arrow">expand_more</i>
+						</button>
+
+						<div ot-if="hasChildren(item) && isOpen(item.id || item.label)" class="submenu">
+							<e-global-menu :items="item.items" :depth="depth + 1" :_select="_select" :variant="['flush', 'size-' + (variant.find(v => v.startsWith('size-')) || 'size-m').replace('size-', '')]"></e-global-menu>
+						</div>
+					</div>
 				</div>
 			`;
 		}

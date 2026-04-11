@@ -4,29 +4,25 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-button',
 		icon: 'smart_button',
 		name: 'Button',
-		description: 'Button with icons, loading state, and variant support.',
+		description: 'Premium button with icons, loading state, full variant and color system.',
 		category: 'Form',
 		author: 'OneType',
 		config: {
-			icon: {
-				type: 'string',
-				value: ''
-			},
-			iconRight: {
-				type: 'string',
-				value: ''
-			},
 			text: {
 				type: 'string',
 				value: 'Button'
 			},
+			icon: {
+				type: 'string'
+			},
+			iconRight: {
+				type: 'string'
+			},
 			href: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			target: {
 				type: 'string',
-				value: null,
 				options: ['_blank', '_self', '_parent', '_top']
 			},
 			type: {
@@ -35,12 +31,10 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['button', 'submit', 'reset']
 			},
 			disabled: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			loading: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			variant: {
 				type: 'array',
@@ -50,7 +44,7 @@ onetype.AddonReady('elements', (elements) =>
 					'soft-brand', 'soft-blue', 'soft-red', 'soft-orange', 'soft-green',
 					'outline-brand', 'outline-blue', 'outline-red', 'outline-orange', 'outline-green',
 					'bg-1', 'bg-2', 'bg-3', 'bg-4',
-					'ghost', 'glass', 'border', 'transparent',
+					'ghost', 'glass', 'border', 'transparent', 'link',
 					'size-s', 'size-m', 'size-l',
 					'full', 'icon-only', 'rounded'
 				]
@@ -61,38 +55,52 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			this.isIconOnly = this.variant.includes('icon-only');
+			this.hasText = !!this.text && !this.isIconOnly;
+
 			this.handle = (event) =>
 			{
-				if (this.disabled || this.loading) return;
+				if(this.disabled || this.loading)
+				{
+					return;
+				}
 
-				if (this._click)
+				if(this._click)
 				{
 					this._click({ event });
 				}
 			};
 
-			const classes = "'holder ' + variant.join(' ') + (disabled ? ' disabled' : '') + (loading ? ' loading' : '')";
-
-			const content = `
+			const content = /* html */ `
 				<span ot-if="loading" class="spinner"><i>progress_activity</i></span>
 				<span ot-if="!loading" class="content">
 					<i ot-if="icon" class="left">{{ icon }}</i>
-					<span ot-if="text && !variant.includes('icon-only')" class="text">{{ text }}</span>
+					<span ot-if="hasText" class="text">{{ text }}</span>
 					<i ot-if="iconRight" class="right">{{ iconRight }}</i>
 				</span>
 			`;
 
-			if (this.href)
+			if(this.href)
 			{
-				return `
-					<a :class="${classes}" :href="href" :target="target" ot-click="handle">
+				return /* html */ `
+					<a
+						:class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '') + (loading ? ' loading' : '')"
+						:href="href"
+						:target="target"
+						ot-click="handle"
+					>
 						${content}
 					</a>
 				`;
 			}
 
-			return `
-				<button :class="${classes}" :type="type" :disabled="disabled" ot-click="handle">
+			return /* html */ `
+				<button
+					:class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '') + (loading ? ' loading' : '')"
+					:type="type"
+					:disabled="disabled"
+					ot-click="handle"
+				>
 					${content}
 				</button>
 			`;

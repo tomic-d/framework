@@ -4,30 +4,35 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-toggle',
 		icon: 'toggle_on',
 		name: 'Toggle',
-		description: 'On/off switch toggle.',
+		description: 'Premium on/off switch with label, description, color variants and reverse mode.',
 		category: 'Form',
 		author: 'OneType',
 		config: {
 			label: {
-				type: 'string',
-				value: ''
+				type: 'string'
+			},
+			description: {
+				type: 'string'
 			},
 			name: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			value: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			disabled: {
-				type: 'boolean',
-				value: false
+				type: 'boolean'
 			},
 			variant: {
 				type: 'array',
 				value: ['bg-3', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+				options: [
+					'bg-1', 'bg-2', 'bg-3', 'bg-4',
+					'border',
+					'color-brand', 'color-blue', 'color-red', 'color-orange', 'color-green',
+					'size-s', 'size-m', 'size-l',
+					'reverse'
+				]
 			},
 			_change: {
 				type: 'function'
@@ -35,31 +40,41 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			this.hasInfo = !!this.label || !!this.description;
+
 			this.handle = ({ event }) =>
 			{
 				event.preventDefault();
 
-				if (this.disabled)
+				if(this.disabled)
 				{
 					return;
 				}
 
 				this.value = !this.value;
 
-				if (this._change)
+				if(this._change)
 				{
 					this._change({ event, value: this.value });
 				}
 			};
 
-			return `
-				<div :class="'holder ' + variant.join(' ') + (value ? ' active' : '') + (disabled ? ' disabled' : '')" ot-click="handle">
-					<input type="hidden" :name="name" :value="value ? 'on' : 'off'" />
+			return /* html */ `
+				<label :class="'holder ' + variant.join(' ') + (value ? ' active' : '') + (disabled ? ' disabled' : '')" ot-click="handle">
+					<input
+						type="checkbox"
+						:name="name"
+						:checked="value"
+						:disabled="disabled"
+					/>
 					<span class="track">
 						<span class="thumb"></span>
 					</span>
-					<span ot-if="label" class="label">{{ label }}</span>
-				</div>
+					<span ot-if="hasInfo" class="info">
+						<span ot-if="label" class="label">{{ label }}</span>
+						<span ot-if="description" class="description">{{ description }}</span>
+					</span>
+				</label>
 			`;
 		}
 	});

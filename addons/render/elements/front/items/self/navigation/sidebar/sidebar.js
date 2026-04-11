@@ -4,17 +4,26 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'navigation-sidebar',
 		icon: 'side_navigation',
 		name: 'Sidebar',
-		description: 'Vertical navigation sidebar with grouped items and slots.',
+		description: 'Secondary navigation sidebar with grouped items, header, badges and mobile drawer.',
 		category: 'Navigation',
 		author: 'OneType',
 		config: {
+			title: {
+				type: 'string'
+			},
+			subtitle: {
+				type: 'string'
+			},
+			version: {
+				type: 'string'
+			},
 			groups: {
 				type: 'array',
 				value: [],
 				each: {
 					type: 'object',
 					config: {
-						title: { type: 'string', value: '' },
+						title: { type: 'string' },
 						placement: { type: 'string', value: 'top', options: ['top', 'bottom'] },
 						items: {
 							type: 'array',
@@ -22,12 +31,16 @@ onetype.AddonReady('elements', (elements) =>
 							each: {
 								type: 'object',
 								config: {
-									icon: { type: 'string', value: '' },
-									label: { type: 'string', value: '' },
-									href: { type: 'string', value: '' },
-									value: { type: 'string', value: '' },
-									match: { type: 'string', value: '' },
-									count: { type: 'number', value: null }
+									icon: { type: 'string' },
+									label: { type: 'string' },
+									href: { type: 'string' },
+									target: { type: 'string' },
+									match: { type: 'string' },
+									value: { type: 'string' },
+									badge: { type: 'string|number' },
+									count: { type: 'string|number' },
+									soon: { type: 'boolean' },
+									disabled: { type: 'boolean' }
 								}
 							}
 						}
@@ -35,13 +48,12 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			},
 			active: {
-				type: 'string',
-				value: ''
+				type: 'string'
 			},
 			variant: {
 				type: 'array',
-				value: [],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border']
+				value: ['bg-2', 'border-right', 'size-m'],
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'size-s', 'size-m', 'size-l']
 			},
 			_click: {
 				type: 'function'
@@ -51,29 +63,65 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			const path = onetype.RouteCurrent();
 
-			this.top = this.groups.filter(g => !g.placement || g.placement === 'top');
-			this.bottom = this.groups.filter(g => g.placement === 'bottom');
-			this.open = false;
-
 			this.isActive = (item) =>
 			{
-				if(item.href)
+				if(item.soon || item.disabled)
 				{
-					if(item.match === 'exact' || item.href === '/') return path === item.href;
-					return path.startsWith(item.href);
+					return false;
 				}
 
-				return item.value === this.active;
+				if(item.value && this.active)
+				{
+					return item.value === this.active;
+				}
+
+				if(item.match)
+				{
+					return path === item.match;
+				}
+
+				if(!item.href)
+				{
+					return false;
+				}
+
+				if(item.href === '/')
+				{
+					return path === '/';
+				}
+
+				return path.startsWith(item.href);
 			};
 
-			this.handleClick = (item) =>
+			this.compute = (groups) =>
 			{
-				this.active = item.value;
+				return (groups || [])
+					.filter(group => group.items && group.items.length)
+					.map(group => ({
+						...group,
+						items: group.items.map(item => ({ ...item, active: this.isActive(item) }))
+					}));
+			};
+
+			this.top = this.compute(this.groups.filter(group => (group.placement || 'top') === 'top'));
+			this.bottom = this.compute(this.groups.filter(group => group.placement === 'bottom'));
+
+			this.hasHead = !!this.title || !!this.subtitle || !!this.version || !!this.Slots.top;
+			this.hasFoot = !!this.Slots.bottom;
+			this.open = false;
+
+			this.handle = (item, event) =>
+			{
+				if(item.soon || item.disabled)
+				{
+					return;
+				}
+
 				this.open = false;
 
 				if(this._click)
 				{
-					this._click({ value: item });
+					this._click({ event, value: item });
 				}
 			};
 
@@ -82,54 +130,59 @@ onetype.AddonReady('elements', (elements) =>
 				this.open = !this.open;
 			};
 
-			return `
-				<nav :class="'holder ' + variant.join(' ')">
-					<slot name="top"></slot>
-					<div ot-for="group in top" class="group">
-						<p ot-if="group.title" class="title">{{ group.title }}</p>
-						<a ot-for="item in group.items" :class="'item' + (isActive(item) ? ' active' : '')" :href="item.href || 'javascript:void(0)'" ot-click="handleClick(item)">
-							<i ot-if="item.icon">{{ item.icon }}</i>
-							<span>{{ item.label }}</span>
-							<span ot-if="item.count !== undefined && item.count !== null" class="count">{{ item.count }}</span>
-						</a>
+			return /* html */ `
+				<aside :class="'holder ' + variant.join(' ')">
+					<div ot-if="hasHead" class="head">
+						<slot name="top"></slot>
+						<div ot-if="title" class="title">{{ title }}</div>
+						<div ot-if="subtitle" class="subtitle">{{ subtitle }}</div>
+						<div ot-if="version" class="version">{{ version }}</div>
 					</div>
-					<div ot-if="bottom.length" class="bottom">
-						<div ot-for="group in bottom" class="group">
-							<p ot-if="group.title" class="title">{{ group.title }}</p>
-							<a ot-for="item in group.items" :class="'item' + (isActive(item) ? ' active' : '')" :href="item.href || 'javascript:void(0)'" ot-click="handleClick(item)">
+
+					<nav class="stack">
+						<div ot-for="group in top" class="group">
+							<div ot-if="group.title" class="group-title">{{ group.title }}</div>
+							<a
+								ot-for="item in group.items"
+								:class="'item' + (item.active ? ' active' : '') + (item.soon ? ' soon' : '') + (item.disabled ? ' disabled' : '')"
+								:href="item.href && !item.soon && !item.disabled ? item.href : 'javascript:void(0)'"
+								:target="item.target"
+								ot-click="(event) => handle(item, event)"
+							>
 								<i ot-if="item.icon">{{ item.icon }}</i>
-								<span>{{ item.label }}</span>
-								<span ot-if="item.count !== undefined && item.count !== null" class="count">{{ item.count }}</span>
+								<span class="label">{{ item.label }}</span>
+								<span ot-if="item.badge" class="badge">{{ item.badge }}</span>
+								<span ot-if="item.count != null && !item.badge" class="count">{{ item.count }}</span>
+								<span ot-if="item.soon" class="soon-badge">Soon</span>
+								<i ot-if="!item.badge && item.count == null && !item.soon && !item.disabled" class="chevron">chevron_right</i>
 							</a>
 						</div>
-					</div>
-					<slot name="bottom"></slot>
-				</nav>
-				<div :class="'bar ' + variant.join(' ')" ot-click="toggle">
-					<i class="toggle">filter_list</i>
-				</div>
-				<div ot-if="open" class="overlay" ot-click="toggle"></div>
-				<nav ot-if="open" :class="'drawer ' + variant.join(' ')">
-					<button class="toggle" ot-click="toggle"><i>close</i></button>
-					<div ot-for="group in top" class="group">
-						<p ot-if="group.title" class="title">{{ group.title }}</p>
-						<a ot-for="item in group.items" :class="'item' + (isActive(item) ? ' active' : '')" :href="item.href || 'javascript:void(0)'" ot-click="handleClick(item)">
-							<i ot-if="item.icon">{{ item.icon }}</i>
-							<span>{{ item.label }}</span>
-							<span ot-if="item.count !== undefined && item.count !== null" class="count">{{ item.count }}</span>
-						</a>
-					</div>
-					<div ot-if="bottom.length" class="group">
+					</nav>
+
+					<nav ot-if="bottom.length" class="stack bottom">
 						<div ot-for="group in bottom" class="group">
-							<p ot-if="group.title" class="title">{{ group.title }}</p>
-							<a ot-for="item in group.items" :class="'item' + (isActive(item) ? ' active' : '')" :href="item.href || 'javascript:void(0)'" ot-click="handleClick(item)">
+							<div ot-if="group.title" class="group-title">{{ group.title }}</div>
+							<a
+								ot-for="item in group.items"
+								:class="'item' + (item.active ? ' active' : '') + (item.soon ? ' soon' : '') + (item.disabled ? ' disabled' : '')"
+								:href="item.href && !item.soon && !item.disabled ? item.href : 'javascript:void(0)'"
+								:target="item.target"
+								ot-click="(event) => handle(item, event)"
+							>
 								<i ot-if="item.icon">{{ item.icon }}</i>
-								<span>{{ item.label }}</span>
-								<span ot-if="item.count !== undefined && item.count !== null" class="count">{{ item.count }}</span>
+								<span class="label">{{ item.label }}</span>
+								<span ot-if="item.badge" class="badge">{{ item.badge }}</span>
+								<span ot-if="item.count != null && !item.badge" class="count">{{ item.count }}</span>
+								<span ot-if="item.soon" class="soon-badge">Soon</span>
+								<i ot-if="!item.badge && item.count == null && !item.soon && !item.disabled" class="chevron">chevron_right</i>
 							</a>
 						</div>
+					</nav>
+
+					<div ot-if="hasFoot" class="foot">
+						<slot name="bottom"></slot>
 					</div>
-				</nav>
+				</aside>
 			`;
 		}
 	});
