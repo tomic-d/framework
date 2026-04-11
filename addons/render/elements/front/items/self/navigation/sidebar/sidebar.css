@@ -13,7 +13,7 @@
 {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: 260px;
 	height: 100%;
 	overflow-y: auto;
 }
@@ -33,6 +33,7 @@
 .e-210c16c7 > .holder > .head > .title
 {
 	font-family: var(--ot-font-secondary);
+	font-size: 22px;
 	font-weight: 500;
 	letter-spacing: -0.018em;
 	color: var(--ot-text-1);
@@ -42,6 +43,7 @@
 
 .e-210c16c7 > .holder > .head > .subtitle
 {
+	font-size: 11.5px;
 	color: var(--ot-text-3);
 	font-family: var(--ot-font-primary);
 	line-height: 1.4;
@@ -112,9 +114,11 @@
 	display: flex;
 	align-items: center;
 	gap: var(--ot-spacing-s);
+	height: var(--ot-height-m);
 	padding: 0 var(--ot-spacing-s);
 	border-radius: var(--ot-radius-m);
 	color: var(--ot-text-2);
+	font-size: 13px;
 	font-weight: 500;
 	text-decoration: none;
 	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
@@ -123,6 +127,7 @@
 .e-210c16c7 .item > i
 {
 	color: var(--ot-text-3);
+	font-size: 18px;
 	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 	flex-shrink: 0;
 }
@@ -139,6 +144,7 @@
 .e-210c16c7 .item > .chevron
 {
 	opacity: 0;
+	font-size: 16px;
 	transform: translateX(-4px);
 	transition: opacity 0.2s, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 	margin-left: auto;
@@ -398,27 +404,3 @@
 .e-210c16c7 > .holder.bg-4.border-bottom,
 .e-210c16c7 > .holder.bg-4.border-left { border-color: var(--ot-bg-4-border); }
 
-/* Sizes */
-
-.e-210c16c7 > .holder.size-s { width: 220px; }
-.e-210c16c7 > .holder.size-s > .head > .title { font-size: 18px; }
-.e-210c16c7 > .holder.size-s > .head > .subtitle { font-size: 11px; }
-.e-210c16c7 > .holder.size-s .item { height: var(--ot-height-s); font-size: 12px; }
-.e-210c16c7 > .holder.size-s .item > i { font-size: 16px; }
-.e-210c16c7 > .holder.size-s .item > .chevron { font-size: 14px; }
-
-.e-210c16c7 > .holder.size-m { width: 260px; }
-.e-210c16c7 > .holder.size-m > .head > .title { font-size: 22px; }
-.e-210c16c7 > .holder.size-m > .head > .subtitle { font-size: 11.5px; }
-.e-210c16c7 > .holder.size-m .item { height: var(--ot-height-m); font-size: 13px; }
-.e-210c16c7 > .holder.size-m .item > i { font-size: 18px; }
-.e-210c16c7 > .holder.size-m .item > .chevron { font-size: 16px; }
-
-.e-210c16c7 > .holder.size-l { width: 300px; }
-.e-210c16c7 > .holder.size-l > .head { padding: var(--ot-spacing-m) var(--ot-spacing-l); }
-.e-210c16c7 > .holder.size-l > .head > .title { font-size: 26px; }
-.e-210c16c7 > .holder.size-l > .head > .subtitle { font-size: 12.5px; }
-.e-210c16c7 > .holder.size-l > .stack { padding: var(--ot-spacing-s) var(--ot-spacing-m); }
-.e-210c16c7 > .holder.size-l .item { height: var(--ot-height-l); font-size: 14px; padding: 0 var(--ot-spacing-m); }
-.e-210c16c7 > .holder.size-l .item > i { font-size: 20px; }
-.e-210c16c7 > .holder.size-l .item > .chevron { font-size: 18px; }

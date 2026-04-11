@@ -14,6 +14,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 68px;
 	height: 100%;
 	padding: var(--ot-spacing-s) 0;
 	overflow: hidden;
@@ -27,6 +28,8 @@
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
+	width: 36px;
+	height: 36px;
 	margin-bottom: var(--ot-spacing-s);
 	transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -38,6 +41,8 @@
 
 .e-1a845976 > .holder > .logo > img
 {
+	width: 22px;
+	height: 22px;
 	object-fit: contain;
 }
 
@@ -61,6 +66,7 @@
 
 .e-1a845976 .separator
 {
+	width: 32px;
 	height: 1px;
 	background: var(--ot-bg-2-border);
 	margin: var(--ot-spacing-s) auto;
@@ -86,6 +92,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 44px;
+	height: 44px;
 	border-radius: var(--ot-radius-m);
 	color: var(--ot-text-2);
 	text-decoration: none;
@@ -105,6 +113,7 @@
 
 .e-1a845976 .item > i
 {
+	font-size: 20px;
 	font-variation-settings: 'wght' 400;
 }
 
@@ -210,26 +219,3 @@
 .e-1a845976 > .holder.bg-4.border-right,
 .e-1a845976 > .holder.bg-4.border-bottom,
 .e-1a845976 > .holder.bg-4.border-left { border-color: var(--ot-bg-4-border); }
-
-/* Sizes */
-
-.e-1a845976 > .holder.size-s { width: 52px; }
-.e-1a845976 > .holder.size-s > .logo { width: 28px; height: 28px; }
-.e-1a845976 > .holder.size-s > .logo > img { width: 18px; height: 18px; }
-.e-1a845976 > .holder.size-s .item { width: 36px; height: 36px; }
-.e-1a845976 > .holder.size-s .item > i { font-size: 18px; }
-.e-1a845976 > .holder.size-s .separator { width: 24px; }
-
-.e-1a845976 > .holder.size-m { width: 68px; }
-.e-1a845976 > .holder.size-m > .logo { width: 36px; height: 36px; }
-.e-1a845976 > .holder.size-m > .logo > img { width: 22px; height: 22px; }
-.e-1a845976 > .holder.size-m .item { width: 44px; height: 44px; }
-.e-1a845976 > .holder.size-m .item > i { font-size: 20px; }
-.e-1a845976 > .holder.size-m .separator { width: 32px; }
-
-.e-1a845976 > .holder.size-l { width: 84px; }
-.e-1a845976 > .holder.size-l > .logo { width: 44px; height: 44px; }
-.e-1a845976 > .holder.size-l > .logo > img { width: 26px; height: 26px; }
-.e-1a845976 > .holder.size-l .item { width: 52px; height: 52px; }
-.e-1a845976 > .holder.size-l .item > i { font-size: 22px; }
-.e-1a845976 > .holder.size-l .separator { width: 40px; }

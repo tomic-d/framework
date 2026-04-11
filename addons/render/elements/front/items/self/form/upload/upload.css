@@ -1,0 +1,408 @@
+/* Root */
+
+.e-19d35f54
+{
+	display: block;
+	width: 100%;
+}
+
+/* Holder */
+
+.e-19d35f54 > .holder
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-s);
+	width: 100%;
+}
+
+.e-19d35f54 > .holder.disabled
+{
+	opacity: 0.55;
+	pointer-events: none;
+}
+
+/* ===== DROPZONE ===== */
+
+.e-19d35f54 > .holder > .dropzone
+{
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 160px;
+	padding: var(--ot-spacing-l);
+	background: var(--ot-bg-2);
+	border: 1.5px dashed var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-m);
+	cursor: pointer;
+	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-19d35f54 > .holder > .dropzone:hover
+{
+	background: var(--ot-bg-3);
+	border-color: var(--ot-bg-3-border);
+}
+
+.e-19d35f54 > .holder > .dropzone.dragging
+{
+	background: var(--ot-brand-opacity);
+	border-color: var(--ot-brand);
+	transform: scale(1.005);
+}
+
+.e-19d35f54 > .holder > .dropzone > .file-input
+{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.e-19d35f54 > .holder > .dropzone > .dropzone-content
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	text-align: center;
+	pointer-events: none;
+}
+
+.e-19d35f54 > .holder > .dropzone > .dropzone-content > .dropzone-icon
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border-radius: var(--ot-radius-m);
+	background: var(--ot-bg-1);
+	border: 1px solid var(--ot-bg-2-border);
+	color: var(--ot-text-2);
+	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-19d35f54 > .holder > .dropzone.dragging > .dropzone-content > .dropzone-icon
+{
+	background: var(--ot-brand);
+	color: #fff;
+	border-color: var(--ot-brand);
+	transform: translateY(-2px);
+}
+
+.e-19d35f54 > .holder > .dropzone > .dropzone-content > .dropzone-icon > i
+{
+	font-size: 24px;
+}
+
+.e-19d35f54 > .holder > .dropzone > .dropzone-content > .dropzone-text
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+}
+
+.e-19d35f54 > .holder > .dropzone > .dropzone-content > .dropzone-text > .dropzone-label
+{
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-m);
+	font-weight: 600;
+	color: var(--ot-text-1);
+}
+
+.e-19d35f54 > .holder > .dropzone > .dropzone-content > .dropzone-text > .dropzone-hint
+{
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-3);
+}
+
+/* Compact when files are present */
+
+.e-19d35f54 > .holder > .dropzone.has-files
+{
+	min-height: 84px;
+	padding: var(--ot-spacing-m);
+}
+
+.e-19d35f54 > .holder > .dropzone.has-files > .dropzone-content
+{
+	flex-direction: row;
+}
+
+.e-19d35f54 > .holder > .dropzone.has-files > .dropzone-content > .dropzone-icon
+{
+	width: 36px;
+	height: 36px;
+}
+
+.e-19d35f54 > .holder > .dropzone.has-files > .dropzone-content > .dropzone-icon > i
+{
+	font-size: 18px;
+}
+
+.e-19d35f54 > .holder > .dropzone.has-files > .dropzone-content > .dropzone-text
+{
+	align-items: flex-start;
+	text-align: left;
+}
+
+/* ===== FILES LIST ===== */
+
+.e-19d35f54 > .holder > .files
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--ot-spacing-x);
+}
+
+.e-19d35f54 > .holder > .files > .file
+{
+	display: flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	padding: var(--ot-spacing-s);
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-m);
+	transition: background 0.15s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+	animation: e-19d35f54-in 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes e-19d35f54-in
+{
+	from { opacity: 0; transform: translateY(-4px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.e-19d35f54 > .holder > .files > .file:hover
+{
+	background: var(--ot-bg-3);
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-preview
+{
+	flex-shrink: 0;
+	width: 44px;
+	height: 44px;
+	border-radius: var(--ot-radius-s);
+	overflow: hidden;
+	background: var(--ot-bg-1);
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-preview > img
+{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-icon
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 44px;
+	height: 44px;
+	border-radius: var(--ot-radius-s);
+	background: var(--ot-brand-opacity);
+	color: var(--ot-brand);
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-icon > i
+{
+	font-size: 22px;
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-info
+{
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-width: 0;
+	gap: 2px;
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-info > .file-name
+{
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-m);
+	font-weight: 500;
+	color: var(--ot-text-1);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-info > .file-meta
+{
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-3);
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-info > .file-meta > .file-error
+{
+	color: var(--ot-red);
+	font-weight: 500;
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-info > .file-progress
+{
+	width: 100%;
+	height: 3px;
+	margin-top: 4px;
+	background: var(--ot-bg-1);
+	border-radius: 100px;
+	overflow: hidden;
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-info > .file-progress > .file-progress-bar
+{
+	height: 100%;
+	background: var(--ot-brand);
+	border-radius: 100px;
+	transition: width 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-remove
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	background: transparent;
+	border: none;
+	border-radius: var(--ot-radius-s);
+	color: var(--ot-text-3);
+	cursor: pointer;
+	outline: none;
+	transition: background 0.15s cubic-bezier(0.22, 1, 0.36, 1), color 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-remove:hover
+{
+	background: var(--ot-red-opacity);
+	color: var(--ot-red);
+}
+
+.e-19d35f54 > .holder > .files > .file > .file-remove > i
+{
+	font-size: 16px;
+}
+
+/* Footer */
+
+.e-19d35f54 > .holder > .files > .files-footer
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--ot-spacing-x) var(--ot-spacing-s);
+}
+
+.e-19d35f54 > .holder > .files > .files-footer > .files-count
+{
+	font-family: var(--ot-font-primary);
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--ot-text-3);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.e-19d35f54 > .holder > .files > .files-footer > .files-clear
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 8px;
+	background: transparent;
+	border: none;
+	border-radius: var(--ot-radius-s);
+	font-family: var(--ot-font-primary);
+	font-size: var(--ot-size-s);
+	font-weight: 500;
+	color: var(--ot-text-3);
+	cursor: pointer;
+	transition: background 0.15s cubic-bezier(0.22, 1, 0.36, 1), color 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.e-19d35f54 > .holder > .files > .files-footer > .files-clear:hover
+{
+	background: var(--ot-red-opacity);
+	color: var(--ot-red);
+}
+
+.e-19d35f54 > .holder > .files > .files-footer > .files-clear > i
+{
+	font-size: 14px;
+}
+
+/* ===== BACKGROUND VARIANTS ===== */
+
+.e-19d35f54 > .holder.bg-1 > .dropzone { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
+.e-19d35f54 > .holder.bg-1 > .dropzone:hover { background: var(--ot-bg-2); }
+.e-19d35f54 > .holder.bg-1 > .dropzone > .dropzone-content > .dropzone-icon { background: var(--ot-bg-2); }
+
+.e-19d35f54 > .holder.bg-2 > .dropzone { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
+.e-19d35f54 > .holder.bg-3 > .dropzone { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
+.e-19d35f54 > .holder.bg-4 > .dropzone { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
+
+/* Border variant (solid instead of dashed) */
+
+.e-19d35f54 > .holder.border > .dropzone
+{
+	border-style: solid;
+}
+
+/* ===== SIZE VARIANTS ===== */
+
+.e-19d35f54 > .holder.size-s > .dropzone
+{
+	min-height: 120px;
+	padding: var(--ot-spacing-m);
+}
+
+.e-19d35f54 > .holder.size-s > .dropzone > .dropzone-content > .dropzone-icon
+{
+	width: 40px;
+	height: 40px;
+}
+
+.e-19d35f54 > .holder.size-s > .dropzone > .dropzone-content > .dropzone-icon > i
+{
+	font-size: 20px;
+}
+
+.e-19d35f54 > .holder.size-l > .dropzone
+{
+	min-height: 220px;
+	padding: var(--ot-spacing-l);
+}
+
+.e-19d35f54 > .holder.size-l > .dropzone > .dropzone-content > .dropzone-icon
+{
+	width: 60px;
+	height: 60px;
+}
+
+.e-19d35f54 > .holder.size-l > .dropzone > .dropzone-content > .dropzone-icon > i
+{
+	font-size: 30px;
+}
