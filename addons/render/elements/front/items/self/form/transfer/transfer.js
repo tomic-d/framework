@@ -3,75 +3,152 @@ onetype.AddonReady('elements', (elements) =>
 	elements.ItemAdd({
 		id: 'form-transfer',
 		icon: 'swap_horiz',
-		name: 'Form Transfer',
-		description: 'Two-panel transfer list — move items from available to selected with single, bulk and clear actions, search and max limit.',
+		name: 'Transfer',
+		description: 'Two-panel transfer list with search, bulk actions and max limit.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
+		config:
+		{
+			value:
+			{
 				type: 'array',
 				value: [],
-				each: { type: 'string|number' }
+				each: { type: 'string|number' },
+				description: 'Selected item IDs.'
 			},
-			items: {
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						id: { type: 'string|number' },
-						label: { type: 'string' },
-						description: { type: 'string' },
-						icon: { type: 'string' },
-						disabled: { type: 'boolean' }
+					config:
+					{
+						id:
+						{
+							type: 'string|number',
+							description: 'Unique item identifier.'
+						},
+						label:
+						{
+							type: 'string',
+							description: 'Display label.'
+						},
+						description:
+						{
+							type: 'string',
+							description: 'Secondary text.'
+						},
+						icon:
+						{
+							type: 'string',
+							description: 'Material icon name.'
+						},
+						disabled:
+						{
+							type: 'boolean',
+							description: 'Prevent moving this item.'
+						}
 					}
-				}
+				},
+				description: 'All available items.'
 			},
-			max: {
-				type: 'number'
+			max:
+			{
+				type: 'number',
+				description: 'Maximum selectable items.'
 			},
-			searchable: {
+			searchable:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show search inputs.'
 			},
-			leftTitle: {
+			leftTitle:
+			{
 				type: 'string',
-				value: 'Available'
+				value: 'Available',
+				description: 'Left panel heading.'
 			},
-			rightTitle: {
+			rightTitle:
+			{
 				type: 'string',
-				value: 'Selected'
+				value: 'Selected',
+				description: 'Right panel heading.'
 			},
-			emptyLeft: {
+			emptyLeft:
+			{
 				type: 'string',
-				value: 'No items'
+				value: 'No items',
+				description: 'Left panel empty text.'
 			},
-			emptyRight: {
+			emptyRight:
+			{
 				type: 'string',
-				value: 'None selected'
+				value: 'None selected',
+				description: 'Right panel empty text.'
 			},
-			disabled: {
-				type: 'boolean'
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Panel background depth.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-1', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show panel border.'
 			},
-			_change: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Component size.'
+			},
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disable all interaction.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { value }.'
 			}
 		},
 		render: function()
 		{
-			// Local UI state
+			/* ===== STATE ===== */
 
 			this.leftSelected = [];
 			this.rightSelected = [];
 			this.leftSearch = '';
 			this.rightSearch = '';
 
-			// Helpers
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background, 'size-' + this.size];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
 
 			this.isSelected = (id) =>
 			{
@@ -91,18 +168,14 @@ onetype.AddonReady('elements', (elements) =>
 				{
 					const label = (item.label || '').toLowerCase();
 					const description = (item.description || '').toLowerCase();
+
 					return label.includes(search) || description.includes(search);
 				});
 			};
 
 			this.atMax = () =>
 			{
-				if(!this.max)
-				{
-					return false;
-				}
-
-				return this.value.length >= this.max;
+				return this.max && this.value.length >= this.max;
 			};
 
 			this.slotsLeft = () =>
@@ -114,8 +187,6 @@ onetype.AddonReady('elements', (elements) =>
 
 				return Math.max(0, this.max - this.value.length);
 			};
-
-			// Derived lists
 
 			this.computed = () =>
 			{
@@ -130,7 +201,7 @@ onetype.AddonReady('elements', (elements) =>
 				};
 			};
 
-			// Toggle selection inside a panel
+			/* ===== HANDLERS ===== */
 
 			this.toggleLeft = (item) =>
 			{
@@ -174,8 +245,6 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
-			// Emit change in original items order
-
 			this.emit = () =>
 			{
 				const ordered = this.items.filter(item => this.value.includes(item.id)).map(item => item.id);
@@ -186,8 +255,6 @@ onetype.AddonReady('elements', (elements) =>
 					this._change({ value: this.value });
 				}
 			};
-
-			// Move actions
 
 			this.moveRight = () =>
 			{
@@ -209,6 +276,7 @@ onetype.AddonReady('elements', (elements) =>
 
 				this.leftSelected = [];
 				this.emit();
+				this.sync();
 				this.Update();
 			};
 
@@ -222,6 +290,7 @@ onetype.AddonReady('elements', (elements) =>
 				this.value = this.value.filter(id => !this.rightSelected.includes(id));
 				this.rightSelected = [];
 				this.emit();
+				this.sync();
 				this.Update();
 			};
 
@@ -246,6 +315,7 @@ onetype.AddonReady('elements', (elements) =>
 
 				this.leftSelected = [];
 				this.emit();
+				this.sync();
 				this.Update();
 			};
 
@@ -260,10 +330,9 @@ onetype.AddonReady('elements', (elements) =>
 				this.value = keepIds;
 				this.rightSelected = [];
 				this.emit();
+				this.sync();
 				this.Update();
 			};
-
-			// Search handlers
 
 			this.changeLeftSearch = ({ value }) =>
 			{
@@ -275,21 +344,11 @@ onetype.AddonReady('elements', (elements) =>
 				this.rightSearch = value;
 			};
 
-			// Button states
+			/* ===== BUTTON STATES ===== */
 
 			this.canMoveRight = () =>
 			{
-				if(this.disabled || !this.leftSelected.length)
-				{
-					return false;
-				}
-
-				if(this.atMax())
-				{
-					return false;
-				}
-
-				return true;
+				return !this.disabled && this.leftSelected.length > 0 && !this.atMax();
 			};
 
 			this.canMoveLeft = () =>
@@ -304,8 +363,7 @@ onetype.AddonReady('elements', (elements) =>
 					return false;
 				}
 
-				const eligible = this.items.filter(item => !item.disabled && !this.isSelected(item.id));
-				return eligible.length > 0;
+				return this.items.some(item => !item.disabled && !this.isSelected(item.id));
 			};
 
 			this.canMoveAllLeft = () =>
@@ -315,41 +373,48 @@ onetype.AddonReady('elements', (elements) =>
 					return false;
 				}
 
-				const removable = this.items.filter(item => !item.disabled && this.isSelected(item.id));
-				return removable.length > 0;
+				return this.items.some(item => !item.disabled && this.isSelected(item.id));
 			};
 
-			// Build lists for rendering
+			/* ===== SYNC ===== */
 
-			const state = this.computed();
+			this.sync = () =>
+			{
+				const state = this.computed();
 
-			this.availableList = state.availableFiltered;
-			this.selectedList = state.selectedFiltered;
-			this.availableCount = state.available.length;
-			this.selectedCount = state.selected.length;
-			this.totalCount = this.items.length;
-			this.maxLabel = this.max ? this.max : this.totalCount;
+				this.availableList = state.availableFiltered;
+				this.selectedList = state.selectedFiltered;
+				this.availableCount = state.available.length;
+				this.selectedCount = state.selected.length;
+				this.totalCount = this.items.length;
+				this.maxLabel = this.max ? this.max : this.items.length;
+			};
+
+			this.sync();
+
+			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+				<div :class="classes()">
 					<div class="panel">
-						<header class="panel-head">
+						<header class="head">
 							<span class="title">{{ leftTitle }}</span>
 							<span class="counter">{{ availableCount }} / {{ totalCount }}</span>
 						</header>
 
-						<div ot-if="searchable" class="panel-search">
+						<div ot-if="searchable" class="search">
 							<e-form-input
 								icon="search"
 								placeholder="Search…"
 								:value="leftSearch"
 								:_input="changeLeftSearch"
-								:variant="['transparent', 'size-s']"
+								background="transparent"
+								size="s"
 							></e-form-input>
 						</div>
 
-						<div class="panel-list">
-							<div ot-if="!availableList.length" class="panel-empty">
+						<div class="list">
+							<div ot-if="!availableList.length" class="empty">
 								<i>inbox</i>
 								<span>{{ emptyLeft }}</span>
 							</div>
@@ -363,7 +428,7 @@ onetype.AddonReady('elements', (elements) =>
 								<i ot-if="item.icon" class="item-icon">{{ item.icon }}</i>
 								<div class="item-text">
 									<span class="item-label">{{ item.label }}</span>
-									<span ot-if="item.description" class="item-description">{{ item.description }}</span>
+									<span ot-if="item.description" class="item-desc">{{ item.description }}</span>
 								</div>
 								<i ot-if="leftSelected.includes(item.id)" class="item-check">check</i>
 							</button>
@@ -382,7 +447,7 @@ onetype.AddonReady('elements', (elements) =>
 						</button>
 						<button
 							type="button"
-							class="control primary"
+							class="control accent"
 							:disabled="!canMoveRight()"
 							ot-click="moveRight"
 							:ot-tooltip="{ text: 'Move selected', position: { x: 'center', y: 'top' } }"
@@ -391,7 +456,7 @@ onetype.AddonReady('elements', (elements) =>
 						</button>
 						<button
 							type="button"
-							class="control primary"
+							class="control accent"
 							:disabled="!canMoveLeft()"
 							ot-click="moveLeft"
 							:ot-tooltip="{ text: 'Remove selected', position: { x: 'center', y: 'top' } }"
@@ -410,23 +475,24 @@ onetype.AddonReady('elements', (elements) =>
 					</div>
 
 					<div class="panel">
-						<header class="panel-head">
+						<header class="head">
 							<span class="title">{{ rightTitle }}</span>
 							<span class="counter">{{ selectedCount }} / {{ maxLabel }}</span>
 						</header>
 
-						<div ot-if="searchable" class="panel-search">
+						<div ot-if="searchable" class="search">
 							<e-form-input
 								icon="search"
 								placeholder="Search…"
 								:value="rightSearch"
 								:_input="changeRightSearch"
-								:variant="['transparent', 'size-s']"
+								background="transparent"
+								size="s"
 							></e-form-input>
 						</div>
 
-						<div class="panel-list">
-							<div ot-if="!selectedList.length" class="panel-empty">
+						<div class="list">
+							<div ot-if="!selectedList.length" class="empty">
 								<i>playlist_add</i>
 								<span>{{ emptyRight }}</span>
 							</div>
@@ -440,7 +506,7 @@ onetype.AddonReady('elements', (elements) =>
 								<i ot-if="item.icon" class="item-icon">{{ item.icon }}</i>
 								<div class="item-text">
 									<span class="item-label">{{ item.label }}</span>
-									<span ot-if="item.description" class="item-description">{{ item.description }}</span>
+									<span ot-if="item.description" class="item-desc">{{ item.description }}</span>
 								</div>
 								<i ot-if="rightSelected.includes(item.id)" class="item-check">check</i>
 							</button>

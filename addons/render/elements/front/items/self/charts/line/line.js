@@ -4,71 +4,160 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'charts-line',
 		icon: 'show_chart',
 		name: 'Line Chart',
-		description: 'Premium line chart with multi-series, smooth/step, area fill, dots, grid and legend.',
+		description: 'Line chart with multi-series, smooth/step, area fill, dots, grid and legend.',
 		category: 'Charts',
-		author: 'OneType',
-		config: {
-			series: {
+		config:
+		{
+			series:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						label: { type: 'string' },
-						color: { type: 'string', value: 'brand' },
-						values: { type: 'array', each: { type: 'number' } }
+					config:
+					{
+						label:
+						{
+							type: 'string',
+							description: 'Series name for legend.'
+						},
+						color:
+						{
+							type: 'string',
+							value: 'brand',
+							options: ['brand', 'blue', 'red', 'orange', 'green'],
+							description: 'Line and fill color.'
+						},
+						values:
+						{
+							type: 'array',
+							each: { type: 'number' },
+							description: 'Data points.'
+						}
 					}
-				}
+				},
+				description: 'Data series array.'
 			},
-			labels: {
+			labels:
+			{
 				type: 'array',
 				value: [],
-				each: { type: 'string' }
+				each: { type: 'string' },
+				description: 'X-axis labels.'
 			},
-			title: {
-				type: 'string'
+			title:
+			{
+				type: 'string',
+				value: '',
+				description: 'Chart title.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Subtitle below title.'
 			},
-			smooth: {
+			smooth:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Bezier curve between points.'
 			},
-			fill: {
+			fill:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Gradient area below line.'
 			},
-			showDots: {
+			showDots:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show data point circles.'
 			},
-			showGrid: {
+			showGrid:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Horizontal grid lines with y-axis labels.'
 			},
-			showLegend: {
+			showLegend:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Series legend below chart.'
 			},
-			showLabels: {
+			showLabels:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'X-axis text labels.'
 			},
-			height: {
+			height:
+			{
 				type: 'number',
-				value: 240
+				value: 240,
+				description: 'SVG viewBox height.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Padding size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'clean', 'inline', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['clean', 'inline'],
+				description: 'Visual modifiers.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasHead = !!this.title || !!this.description;
 			this.hasLegend = this.showLegend && this.series.length > 0;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				this.variant.forEach(v => list.push(v));
+
+				return list.join(' ');
+			};
+
+			/* ===== COMPUTE ===== */
 
 			this.formatValue = (value) =>
 			{
@@ -96,7 +185,6 @@ onetype.AddonReady('elements', (elements) =>
 			const allValues = this.series.flatMap(s => s.values || []);
 			const max = allValues.length ? Math.max(...allValues) : 1;
 			const min = Math.min(0, ...allValues);
-			const range = max - min || 1;
 			const niceMax = max > 0 ? max * 1.1 : 1;
 
 			const pointCount = this.labels.length || Math.max(...this.series.map(s => (s.values || []).length), 0);
@@ -105,11 +193,12 @@ onetype.AddonReady('elements', (elements) =>
 
 			const stepX = pointCount > 1 ? chartWidth / (pointCount - 1) : 0;
 
-			// Build series paths
+			/* Series paths */
 
 			this.computedSeries = this.series.map(series =>
 			{
 				const values = series.values || [];
+
 				const points = values.map((value, index) =>
 				{
 					const x = this.padding.left + index * stepX;
@@ -152,7 +241,7 @@ onetype.AddonReady('elements', (elements) =>
 				};
 			});
 
-			// Grid lines
+			/* Grid lines */
 
 			this.gridLines = [0, 0.25, 0.5, 0.75, 1].map(fraction =>
 			{
@@ -167,7 +256,7 @@ onetype.AddonReady('elements', (elements) =>
 				};
 			});
 
-			// X-axis labels
+			/* X-axis labels */
 
 			this.xLabels = (this.labels || []).map((label, index) => ({
 				x: this.padding.left + index * stepX,
@@ -175,7 +264,7 @@ onetype.AddonReady('elements', (elements) =>
 				label
 			}));
 
-			// Build SVG string — SVG namespace cannot be templated through ot-for
+			/* ===== SVG ===== */
 
 			const uid = onetype.GenerateUID();
 
@@ -197,7 +286,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				const area = (this.fill && series.areaPath) ? `<path class="area" d="${series.areaPath}" fill="url(#line-fill-${uid}-${series.color})" />` : '';
 				const line = series.linePath ? `<path class="line" d="${series.linePath}" />` : '';
-				const dots = this.showDots ? series.points.map(point => `<circle class="dot" cx="${point.x}" cy="${point.y}" r="3.5"></circle>`).join('') : '';
+				const dots = this.showDots ? series.points.map(point => `<circle class="dot" cx="${point.x}" cy="${point.y}" r="3.5" data-label="${series.label}" data-value="${this.formatValue(point.value)}"></circle>`).join('') : '';
 
 				return `<g class="series color-${series.color}">${area}${line}${dots}</g>`;
 			}).join('');
@@ -215,20 +304,56 @@ onetype.AddonReady('elements', (elements) =>
 				</svg>
 			`;
 
+			/* ===== MOUNT ===== */
+
 			this.OnReady(() =>
 			{
 				const canvas = this.Element.querySelector('.canvas');
 
-				if(canvas)
+				if(!canvas)
 				{
-					const existing = canvas.querySelector('svg');
-					if(existing) existing.remove();
-					canvas.insertAdjacentHTML('afterbegin', svgString);
+					return;
 				}
+
+				const existing = canvas.querySelector('svg');
+
+				if(existing)
+				{
+					existing.remove();
+				}
+
+				canvas.insertAdjacentHTML('afterbegin', svgString);
+
+				/* Dot tooltips */
+
+				canvas.querySelectorAll('.dot').forEach(dot =>
+				{
+					let overlay = null;
+
+					dot.addEventListener('mouseenter', () =>
+					{
+						const label = dot.getAttribute('data-label');
+						const value = dot.getAttribute('data-value');
+						const text = label ? label + ': ' + value : value;
+
+						overlay = $ot.tooltip(dot, { text }, { position: { x: 'center', y: 'top' }, offset: { x: 0, y: -6 } });
+					});
+
+					dot.addEventListener('mouseleave', () =>
+					{
+						if(overlay)
+						{
+							overlay.Remove();
+							overlay = null;
+						}
+					});
+				});
 			});
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<header ot-if="hasHead" class="head">
 						<div ot-if="title" class="title">{{ title }}</div>
 						<div ot-if="description" class="description">{{ description }}</div>

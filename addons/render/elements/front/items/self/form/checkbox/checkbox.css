@@ -1,13 +1,13 @@
-/* Root */
+/* ===== FORM CHECKBOX ===== */
 
 .e-f249baa
 {
-	display: inline-flex;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-f249baa > .holder
+.e-f249baa > .box
 {
 	position: relative;
 	display: inline-flex;
@@ -17,14 +17,14 @@
 	font-family: var(--ot-font-primary);
 }
 
-.e-f249baa > .holder.reverse
+.e-f249baa > .box.reverse
 {
 	flex-direction: row-reverse;
 }
 
 /* Input — hidden but accessible */
 
-.e-f249baa > .holder > input
+.e-f249baa > .box > input
 {
 	position: absolute;
 	opacity: 0;
@@ -34,9 +34,9 @@
 	margin: 0;
 }
 
-/* Info block (label + description) */
+/* Info */
 
-.e-f249baa > .holder > .info
+.e-f249baa > .box > .info
 {
 	display: inline-flex;
 	flex-direction: column;
@@ -45,28 +45,28 @@
 	padding-top: 1px;
 }
 
-.e-f249baa > .holder > .info > .label
+.e-f249baa > .box > .info > .label
 {
 	font-size: var(--ot-size-m);
 	font-weight: 500;
 	color: var(--ot-text-1);
 	line-height: 1.3;
 	user-select: none;
-	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: color var(--ot-transition);
 }
 
-.e-f249baa > .holder > .info > .description
+.e-f249baa > .box > .info > .description
 {
 	font-size: var(--ot-size-s);
 	color: var(--ot-text-3);
 	line-height: 1.4;
 	user-select: none;
-	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: color var(--ot-transition);
 }
 
 /* Mark */
 
-.e-f249baa > .holder > .mark
+.e-f249baa > .box > .mark
 {
 	position: relative;
 	display: block;
@@ -74,12 +74,12 @@
 	border-radius: var(--ot-radius-s);
 	border: 1px solid transparent;
 	background: transparent;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), border-color var(--ot-transition), transform var(--ot-transition-fast), box-shadow var(--ot-transition);
 }
 
 /* Checkmark */
 
-.e-f249baa > .holder > .mark::after
+.e-f249baa > .box > .mark::after
 {
 	content: '';
 	position: absolute;
@@ -88,18 +88,18 @@
 	border: solid white;
 	transform: translate(-50%, -60%) rotate(45deg) scale(0);
 	opacity: 0;
-	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: transform var(--ot-transition), opacity var(--ot-transition-fast);
 }
 
-.e-f249baa > .holder > input:checked ~ .mark::after
+.e-f249baa > .box > input:checked ~ .mark::after
 {
 	transform: translate(-50%, -60%) rotate(45deg) scale(1);
 	opacity: 1;
 }
 
-/* Indeterminate mark — horizontal line instead of check */
+/* Indeterminate */
 
-.e-f249baa > .holder.indeterminate > .mark::after
+.e-f249baa > .box.indeterminate > .mark::after
 {
 	transform: translate(-50%, -50%) rotate(0) scale(1);
 	opacity: 1;
@@ -110,298 +110,205 @@
 
 /* Focus */
 
-.e-f249baa > .holder > input:focus-visible ~ .mark
+.e-f249baa > .box > input:focus-visible ~ .mark
 {
 	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
 }
 
-/* Active press */
+/* Active */
 
-.e-f249baa > .holder:active > .mark
+.e-f249baa > .box:active > .mark
 {
 	transform: scale(0.92);
 }
 
 /* Disabled */
 
-.e-f249baa > .holder.disabled
+.e-f249baa > .box.disabled
 {
 	cursor: not-allowed;
 }
 
-.e-f249baa > .holder.disabled > .mark
+.e-f249baa > .box.disabled > .mark
 {
 	opacity: 0.45;
 }
 
-.e-f249baa > .holder.disabled > .info > .label,
-.e-f249baa > .holder.disabled > .info > .description
+.e-f249baa > .box.disabled > .info > .label,
+.e-f249baa > .box.disabled > .info > .description
 {
 	color: var(--ot-text-3);
 	opacity: 0.6;
 }
 
-/* ===== SIZES ===== */
+/* ===== SIZE ===== */
 
-.e-f249baa > .holder.size-s > .mark
+/* Small */
+
+.e-f249baa > .box.size-s > .mark
 {
 	width: 16px;
 	height: 16px;
 }
 
-.e-f249baa > .holder.size-s > .mark::after
+.e-f249baa > .box.size-s > .mark::after
 {
 	width: 3px;
 	height: 6px;
 	border-width: 0 1.5px 1.5px 0;
 }
 
-.e-f249baa > .holder.size-s.indeterminate > .mark::after
+.e-f249baa > .box.size-s.indeterminate > .mark::after
 {
 	width: 8px;
 	height: 1.5px;
 }
 
-.e-f249baa > .holder.size-s > .info > .label
+.e-f249baa > .box.size-s > .info > .label
 {
 	font-size: var(--ot-size-s);
 }
 
-.e-f249baa > .holder.size-s > .info > .description
+.e-f249baa > .box.size-s > .info > .description
 {
 	font-size: 10.5px;
 }
 
-.e-f249baa > .holder.size-m > .mark
+.e-f249baa > .box.size-s > .icon { font-size: 16px; }
+
+/* Medium */
+
+.e-f249baa > .box.size-m > .mark
 {
 	width: 20px;
 	height: 20px;
 }
 
-.e-f249baa > .holder.size-m > .mark::after
+.e-f249baa > .box.size-m > .mark::after
 {
 	width: 4px;
 	height: 8px;
 	border-width: 0 2px 2px 0;
 }
 
-.e-f249baa > .holder.size-m.indeterminate > .mark::after
+.e-f249baa > .box.size-m.indeterminate > .mark::after
 {
 	width: 10px;
 	height: 2px;
 }
 
-.e-f249baa > .holder.size-m > .info > .label
+.e-f249baa > .box.size-m > .info > .label
 {
 	font-size: var(--ot-size-m);
 }
 
-.e-f249baa > .holder.size-l > .mark
+/* Large */
+
+.e-f249baa > .box.size-l > .mark
 {
 	width: 24px;
 	height: 24px;
 }
 
-.e-f249baa > .holder.size-l > .mark::after
+.e-f249baa > .box.size-l > .mark::after
 {
 	width: 5px;
 	height: 10px;
 	border-width: 0 2.5px 2.5px 0;
 }
 
-.e-f249baa > .holder.size-l.indeterminate > .mark::after
+.e-f249baa > .box.size-l.indeterminate > .mark::after
 {
 	width: 12px;
 	height: 2.5px;
 }
 
-.e-f249baa > .holder.size-l > .info > .label
+.e-f249baa > .box.size-l > .info > .label
 {
 	font-size: var(--ot-size-m);
 }
 
-/* ===== BACKGROUND VARIANTS ===== */
+.e-f249baa > .box.size-l > .icon { font-size: 20px; }
 
-.e-f249baa > .holder.bg-1 > .mark
-{
-	background: var(--ot-bg-1);
-	border-color: var(--ot-bg-1-border);
-}
-.e-f249baa > .holder.bg-1:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark
-{
-	background: var(--ot-bg-1-hover);
-}
+/* ===== BACKGROUND ===== */
 
-.e-f249baa > .holder.bg-2 > .mark
-{
-	background: var(--ot-bg-2);
-	border-color: var(--ot-bg-2-border);
-}
-.e-f249baa > .holder.bg-2:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark
-{
-	background: var(--ot-bg-2-hover);
-}
+.e-f249baa > .box.bg-1 > .mark { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
+.e-f249baa > .box.bg-2 > .mark { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
+.e-f249baa > .box.bg-3 > .mark { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
+.e-f249baa > .box.bg-4 > .mark { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
 
-.e-f249baa > .holder.bg-3 > .mark
-{
-	background: var(--ot-bg-3);
-	border-color: var(--ot-bg-3-border);
-}
-.e-f249baa > .holder.bg-3:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark
-{
-	background: var(--ot-bg-3-hover);
-}
+.e-f249baa > .box.bg-1:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-1-hover); }
+.e-f249baa > .box.bg-2:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-2-hover); }
+.e-f249baa > .box.bg-3:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-3-hover); }
+.e-f249baa > .box.bg-4:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-4-hover); }
 
-.e-f249baa > .holder.bg-4 > .mark
-{
-	background: var(--ot-bg-4);
-	border-color: var(--ot-bg-4-border);
-}
-.e-f249baa > .holder.bg-4:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark
-{
-	background: var(--ot-bg-4-hover);
-}
+/* Transparent */
 
-/* Transparent variant */
-
-.e-f249baa > .holder.transparent > .mark
+.e-f249baa > .box.transparent > .mark
 {
 	background: transparent;
 	border-color: transparent;
 }
 
-.e-f249baa > .holder.transparent > input:not(:checked) ~ .mark::after
-{
-	border-color: var(--ot-text-1);
-}
+/* Border */
 
-/* Border variant */
-
-.e-f249baa > .holder.border > .mark
+.e-f249baa > .box.border > .mark
 {
-	background: transparent;
 	border-color: var(--ot-bg-2-border);
 }
 
-.e-f249baa > .holder.border:hover:not(.disabled) > .mark
+.e-f249baa > .box.border:hover:not(.disabled) > .mark
 {
 	border-color: var(--ot-text-3);
 }
 
-/* ===== CHECKED STATE (color variants) ===== */
+/* ===== COLOR (checked state) ===== */
 
-/* Default — brand (high specificity to override bg variants) */
-
-.e-f249baa > .holder.bg-1 > input:checked ~ .mark,
-.e-f249baa > .holder.bg-2 > input:checked ~ .mark,
-.e-f249baa > .holder.bg-3 > input:checked ~ .mark,
-.e-f249baa > .holder.bg-4 > input:checked ~ .mark,
-.e-f249baa > .holder.transparent > input:checked ~ .mark,
-.e-f249baa > .holder.border > input:checked ~ .mark,
-.e-f249baa > .holder.bg-1.indeterminate > .mark,
-.e-f249baa > .holder.bg-2.indeterminate > .mark,
-.e-f249baa > .holder.bg-3.indeterminate > .mark,
-.e-f249baa > .holder.bg-4.indeterminate > .mark,
-.e-f249baa > .holder.transparent.indeterminate > .mark,
-.e-f249baa > .holder.border.indeterminate > .mark
+.e-f249baa > .box > input:checked ~ .mark,
+.e-f249baa > .box.indeterminate > .mark
 {
 	background: var(--ot-brand);
 	border-color: var(--ot-brand);
 }
 
-/* Color variants override checked bg */
-
-.e-f249baa > .holder.color-blue > input:checked ~ .mark,
-.e-f249baa > .holder.color-blue.indeterminate > .mark
+.e-f249baa > .box.color-blue > input:checked ~ .mark,
+.e-f249baa > .box.color-blue.indeterminate > .mark
 {
 	background: var(--ot-blue);
 	border-color: var(--ot-blue);
 }
 
-.e-f249baa > .holder.color-red > input:checked ~ .mark,
-.e-f249baa > .holder.color-red.indeterminate > .mark
+.e-f249baa > .box.color-red > input:checked ~ .mark,
+.e-f249baa > .box.color-red.indeterminate > .mark
 {
 	background: var(--ot-red);
 	border-color: var(--ot-red);
 }
 
-.e-f249baa > .holder.color-orange > input:checked ~ .mark,
-.e-f249baa > .holder.color-orange.indeterminate > .mark
+.e-f249baa > .box.color-orange > input:checked ~ .mark,
+.e-f249baa > .box.color-orange.indeterminate > .mark
 {
 	background: var(--ot-orange);
 	border-color: var(--ot-orange);
 }
 
-.e-f249baa > .holder.color-green > input:checked ~ .mark,
-.e-f249baa > .holder.color-green.indeterminate > .mark
+.e-f249baa > .box.color-green > input:checked ~ .mark,
+.e-f249baa > .box.color-green.indeterminate > .mark
 {
 	background: var(--ot-green);
 	border-color: var(--ot-green);
 }
 
-/* Color variant + bg variant combined (higher specificity wins) */
+/* Focus per color */
 
-.e-f249baa > .holder.bg-1.color-blue > input:checked ~ .mark,
-.e-f249baa > .holder.bg-2.color-blue > input:checked ~ .mark,
-.e-f249baa > .holder.bg-3.color-blue > input:checked ~ .mark,
-.e-f249baa > .holder.bg-4.color-blue > input:checked ~ .mark
-{
-	background: var(--ot-blue);
-	border-color: var(--ot-blue);
-}
+.e-f249baa > .box.color-blue > input:focus-visible ~ .mark { box-shadow: 0 0 0 3px var(--ot-blue-opacity); }
+.e-f249baa > .box.color-red > input:focus-visible ~ .mark { box-shadow: 0 0 0 3px var(--ot-red-opacity); }
+.e-f249baa > .box.color-orange > input:focus-visible ~ .mark { box-shadow: 0 0 0 3px var(--ot-orange-opacity); }
+.e-f249baa > .box.color-green > input:focus-visible ~ .mark { box-shadow: 0 0 0 3px var(--ot-green-opacity); }
 
-.e-f249baa > .holder.bg-1.color-red > input:checked ~ .mark,
-.e-f249baa > .holder.bg-2.color-red > input:checked ~ .mark,
-.e-f249baa > .holder.bg-3.color-red > input:checked ~ .mark,
-.e-f249baa > .holder.bg-4.color-red > input:checked ~ .mark
-{
-	background: var(--ot-red);
-	border-color: var(--ot-red);
-}
+/* Icon */
 
-.e-f249baa > .holder.bg-1.color-orange > input:checked ~ .mark,
-.e-f249baa > .holder.bg-2.color-orange > input:checked ~ .mark,
-.e-f249baa > .holder.bg-3.color-orange > input:checked ~ .mark,
-.e-f249baa > .holder.bg-4.color-orange > input:checked ~ .mark
-{
-	background: var(--ot-orange);
-	border-color: var(--ot-orange);
-}
-
-.e-f249baa > .holder.bg-1.color-green > input:checked ~ .mark,
-.e-f249baa > .holder.bg-2.color-green > input:checked ~ .mark,
-.e-f249baa > .holder.bg-3.color-green > input:checked ~ .mark,
-.e-f249baa > .holder.bg-4.color-green > input:checked ~ .mark
-{
-	background: var(--ot-green);
-	border-color: var(--ot-green);
-}
-
-/* Focus rings per color */
-
-.e-f249baa > .holder.color-blue > input:focus-visible ~ .mark
-{
-	box-shadow: 0 0 0 3px var(--ot-blue-opacity);
-}
-
-.e-f249baa > .holder.color-red > input:focus-visible ~ .mark
-{
-	box-shadow: 0 0 0 3px var(--ot-red-opacity);
-}
-
-.e-f249baa > .holder.color-orange > input:focus-visible ~ .mark
-{
-	box-shadow: 0 0 0 3px var(--ot-orange-opacity);
-}
-
-.e-f249baa > .holder.color-green > input:focus-visible ~ .mark
-{
-	box-shadow: 0 0 0 3px var(--ot-green-opacity);
-}
-
-/* Icon (optional, between mark and label) */
-
-.e-f249baa > .holder > .icon
+.e-f249baa > .box > .icon
 {
 	font-size: 18px;
 	color: var(--ot-text-2);
@@ -409,12 +316,9 @@
 	align-self: center;
 }
 
-.e-f249baa > .holder.size-s > .icon { font-size: 16px; }
-.e-f249baa > .holder.size-l > .icon { font-size: 20px; }
+/* Count */
 
-/* Count (optional, at the end) */
-
-.e-f249baa > .holder > .count
+.e-f249baa > .box > .count
 {
 	margin-left: auto;
 	padding-left: var(--ot-spacing-s);

@@ -4,61 +4,131 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-select',
 		icon: 'arrow_drop_down',
 		name: 'Select',
-		description: 'Premium custom dropdown select with search, keyboard navigation and clearable.',
+		description: 'Custom dropdown select with search, keyboard navigation and clearable.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
-				type: 'string|number'
+		config:
+		{
+			value:
+			{
+				type: 'string|number',
+				description: 'Selected value.'
 			},
-			name: {
-				type: 'string'
-			},
-			placeholder: {
+			name:
+			{
 				type: 'string',
-				value: 'Select…'
+				description: 'Hidden input name for forms.'
 			},
-			icon: {
-				type: 'string'
+			placeholder:
+			{
+				type: 'string',
+				value: 'Select…',
+				description: 'Placeholder text.'
 			},
-			options: {
+			icon:
+			{
+				type: 'string',
+				description: 'Left icon on trigger.'
+			},
+			options:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						label: { type: 'string' },
-						value: { type: 'string' },
-						icon: { type: 'string' },
-						description: { type: 'string' },
-						disabled: { type: 'boolean' }
+					config:
+					{
+						label: { type: 'string', description: 'Display text.' },
+						value: { type: 'string', description: 'Option value.' },
+						icon: { type: 'string', description: 'Option icon.' },
+						description: { type: 'string', description: 'Secondary text.' },
+						disabled: { type: 'boolean', description: 'Disabled option.' }
 					}
-				}
+				},
+				description: 'List of options.'
 			},
-			searchable: {
-				type: 'boolean'
+			searchable:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show search input in dropdown.'
 			},
-			clearable: {
-				type: 'boolean'
+			clearable:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show clear button when value set.'
 			},
-			disabled: {
-				type: 'boolean'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent', 'border', 'size-s', 'size-m', 'size-l']
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				description: 'Background depth.'
 			},
-			_change: {
-				type: 'function'
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Trigger size.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.open = false;
 			this.query = '';
-			this.style = '';
 			this.activeIndex = 0;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.open)
+				{
+					list.push('open');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
 
 			this.current = () =>
 			{
@@ -77,91 +147,9 @@ onetype.AddonReady('elements', (elements) =>
 				);
 			};
 
-			this.handleScroll = (event) =>
-			{
-				if(event.target.closest && event.target.closest('.dropdown'))
-				{
-					return;
-				}
+			/* ===== HANDLERS ===== */
 
-				this.close();
-			};
-
-			this.handleKey = (event) =>
-			{
-				if(!this.open)
-				{
-					return;
-				}
-
-				const filtered = this.filtered();
-
-				if(event.key === 'Escape')
-				{
-					event.preventDefault();
-					this.close();
-					return;
-				}
-
-				if(event.key === 'ArrowDown')
-				{
-					event.preventDefault();
-					this.activeIndex = Math.min(this.activeIndex + 1, filtered.length - 1);
-					this.Update();
-					return;
-				}
-
-				if(event.key === 'ArrowUp')
-				{
-					event.preventDefault();
-					this.activeIndex = Math.max(this.activeIndex - 1, 0);
-					this.Update();
-					return;
-				}
-
-				if(event.key === 'Home')
-				{
-					event.preventDefault();
-					this.activeIndex = 0;
-					this.Update();
-					return;
-				}
-
-				if(event.key === 'End')
-				{
-					event.preventDefault();
-					this.activeIndex = Math.max(filtered.length - 1, 0);
-					this.Update();
-					return;
-				}
-
-				if(event.key === 'Enter')
-				{
-					event.preventDefault();
-
-					if(filtered[this.activeIndex])
-					{
-						this.select(filtered[this.activeIndex]);
-					}
-
-					return;
-				}
-			};
-
-			this.close = () =>
-			{
-				this.open = false;
-				this.query = '';
-				this.activeIndex = 0;
-
-				window.removeEventListener('scroll', this.handleScroll, true);
-				window.removeEventListener('resize', this.close);
-				window.removeEventListener('keydown', this.handleKey);
-
-				this.Update();
-			};
-
-			this.toggle = (event) =>
+			this.toggle = () =>
 			{
 				if(this.disabled)
 				{
@@ -179,13 +167,12 @@ onetype.AddonReady('elements', (elements) =>
 
 				const filtered = this.filtered();
 				const currentIndex = filtered.findIndex(o => o.value === this.value);
+
 				this.activeIndex = currentIndex >= 0 ? currentIndex : 0;
 
 				window.addEventListener('scroll', this.handleScroll, true);
 				window.addEventListener('resize', this.close);
 				window.addEventListener('keydown', this.handleKey);
-
-				this.Update();
 
 				if(this.searchable)
 				{
@@ -199,6 +186,17 @@ onetype.AddonReady('elements', (elements) =>
 						}
 					}, 10);
 				}
+			};
+
+			this.close = () =>
+			{
+				this.open = false;
+				this.query = '';
+				this.activeIndex = 0;
+
+				window.removeEventListener('scroll', this.handleScroll, true);
+				window.removeEventListener('resize', this.close);
+				window.removeEventListener('keydown', this.handleKey);
 			};
 
 			this.select = (option) =>
@@ -231,7 +229,6 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				this.query = value;
 				this.activeIndex = 0;
-				this.Update();
 			};
 
 			this.dismiss = () =>
@@ -239,8 +236,77 @@ onetype.AddonReady('elements', (elements) =>
 				this.close();
 			};
 
+			this.handleScroll = (event) =>
+			{
+				if(event.target.closest && event.target.closest('.dropdown'))
+				{
+					return;
+				}
+
+				this.close();
+			};
+
+			this.handleKey = (event) =>
+			{
+				if(!this.open)
+				{
+					return;
+				}
+
+				const filtered = this.filtered();
+
+				if(event.key === 'Escape')
+				{
+					event.preventDefault();
+					this.close();
+					return;
+				}
+
+				if(event.key === 'ArrowDown')
+				{
+					event.preventDefault();
+					this.activeIndex = Math.min(this.activeIndex + 1, filtered.length - 1);
+					return;
+				}
+
+				if(event.key === 'ArrowUp')
+				{
+					event.preventDefault();
+					this.activeIndex = Math.max(this.activeIndex - 1, 0);
+					return;
+				}
+
+				if(event.key === 'Home')
+				{
+					event.preventDefault();
+					this.activeIndex = 0;
+					return;
+				}
+
+				if(event.key === 'End')
+				{
+					event.preventDefault();
+					this.activeIndex = Math.max(filtered.length - 1, 0);
+					return;
+				}
+
+				if(event.key === 'Enter')
+				{
+					event.preventDefault();
+
+					if(filtered[this.activeIndex])
+					{
+						this.select(filtered[this.activeIndex]);
+					}
+
+					return;
+				}
+			};
+
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (open ? ' open' : '') + (disabled ? ' disabled' : '')" ot-click-outside="dismiss">
+				<div :class="classes()" ot-click-outside="dismiss">
 					<input type="hidden" :name="name" :value="value" />
 					<div class="trigger" ot-click="toggle">
 						<i ot-if="icon" class="icon">{{ icon }}</i>

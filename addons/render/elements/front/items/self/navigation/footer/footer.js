@@ -4,103 +4,156 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'navigation-footer',
 		icon: 'call_to_action',
 		name: 'Footer',
-		description: 'Premium site footer with brand column, link groups, social icons, newsletter, legal bar and slots.',
+		description: 'Site footer with brand column, link groups, social icons, newsletter, legal bar and slots.',
 		category: 'Navigation',
-		author: 'OneType',
-		config: {
-			logo: {
-				type: 'string'
-			},
-			logoAlt: {
+		config:
+		{
+			logo:
+			{
 				type: 'string',
-				value: 'Logo'
+				value: '',
+				description: 'Logo image URL.'
 			},
-			brandHref: {
+			logoAlt:
+			{
 				type: 'string',
-				value: '/'
+				value: 'Logo',
+				description: 'Logo alt text.'
 			},
-			tagline: {
-				type: 'string'
+			brandHref:
+			{
+				type: 'string',
+				value: '/',
+				description: 'Logo link destination.'
 			},
-			groups: {
+			tagline:
+			{
+				type: 'string',
+				value: '',
+				description: 'Short brand description.'
+			},
+			groups:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Link groups with title and items.',
+				each:
+				{
 					type: 'object',
-					config: {
-						title: { type: 'string' },
-						items: {
+					config:
+					{
+						title: { type: 'string', description: 'Group heading.' },
+						items:
+						{
 							type: 'array',
-							each: {
+							each:
+							{
 								type: 'object',
-								config: {
-									icon: { type: 'string' },
-									label: { type: 'string' },
-									href: { type: 'string' },
-									target: { type: 'string' },
-									badge: { type: 'string' }
+								config:
+								{
+									icon: { type: 'string', description: 'Item icon.' },
+									label: { type: 'string', description: 'Item label.' },
+									href: { type: 'string', description: 'Item link.' },
+									target: { type: 'string', description: 'Link target.' },
+									badge: { type: 'string', description: 'Badge text.' }
 								}
 							}
 						}
 					}
 				}
 			},
-			social: {
+			social:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Social media links.',
+				each:
+				{
 					type: 'object',
-					config: {
-						icon: { type: 'string' },
-						label: { type: 'string' },
-						href: { type: 'string' }
+					config:
+					{
+						icon: { type: 'string', description: 'Icon name.' },
+						label: { type: 'string', description: 'Tooltip label.' },
+						href: { type: 'string', description: 'Profile URL.' }
 					}
 				}
 			},
-			legal: {
+			legal:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Legal links in bottom bar.',
+				each:
+				{
 					type: 'object',
-					config: {
-						label: { type: 'string' },
-						href: { type: 'string' }
+					config:
+					{
+						label: { type: 'string', description: 'Link label.' },
+						href: { type: 'string', description: 'Link URL.' }
 					}
 				}
 			},
-			copyright: {
-				type: 'string'
-			},
-			newsletter: {
-				type: 'boolean'
-			},
-			newsletterTitle: {
+			copyright:
+			{
 				type: 'string',
-				value: 'Stay in the loop'
+				value: '',
+				description: 'Copyright text.'
 			},
-			newsletterDescription: {
+			newsletter:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show newsletter form.'
+			},
+			newsletterTitle:
+			{
 				type: 'string',
-				value: 'Get product updates and tips straight to your inbox.'
+				value: 'Stay in the loop',
+				description: 'Newsletter heading.'
 			},
-			newsletterPlaceholder: {
+			newsletterDescription:
+			{
 				type: 'string',
-				value: 'you@example.com'
+				value: 'Get product updates and tips straight to your inbox.',
+				description: 'Newsletter subtext.'
 			},
-			newsletterButton: {
+			newsletterPlaceholder:
+			{
 				type: 'string',
-				value: 'Subscribe'
+				value: 'you@example.com',
+				description: 'Email input placeholder.'
 			},
-			variant: {
+			newsletterButton:
+			{
+				type: 'string',
+				value: 'Subscribe',
+				description: 'Submit button text.'
+			},
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Footer background depth.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border-top'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border-top', 'clean']
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'clean'],
+				description: 'Visual modifiers.'
 			},
-			_subscribe: {
-				type: 'function'
+			_subscribe:
+			{
+				type: 'function',
+				description: 'Newsletter submit handler. Receives { value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasTopSlot = !!this.Slots.top;
 			this.hasBottomSlot = !!this.Slots.bottom;
 			this.hasLogo = !!this.logo;
@@ -111,8 +164,28 @@ onetype.AddonReady('elements', (elements) =>
 			this.hasCopyright = !!this.copyright;
 			this.hasBottomBar = this.hasLegal || this.hasCopyright || this.hasSocial;
 			this.hasNewsletter = !!this.newsletter;
-
 			this.newsletterEmail = '';
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background];
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.variant.includes('clean'))
+				{
+					list.push('clean');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.onNewsletterInput = ({ value }) =>
 			{
@@ -134,8 +207,10 @@ onetype.AddonReady('elements', (elements) =>
 				this.newsletterEmail = '';
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<footer :class="'holder ' + variant.join(' ')">
+				<footer :class="classes()">
 					<div ot-if="hasTopSlot" class="top-slot">
 						<slot name="top"></slot>
 					</div>
@@ -160,13 +235,13 @@ onetype.AddonReady('elements', (elements) =>
 										:placeholder="newsletterPlaceholder"
 										:value="newsletterEmail"
 										:_input="onNewsletterInput"
-										:variant="['bg-2', 'border', 'size-m']"
+										background="bg-2"
 									></e-form-input>
 									<e-form-button
 										:text="newsletterButton"
 										icon-right="arrow_forward"
 										:_click="subscribe"
-										:variant="['brand', 'size-m']"
+										color="brand"
 									></e-form-button>
 								</form>
 							</div>

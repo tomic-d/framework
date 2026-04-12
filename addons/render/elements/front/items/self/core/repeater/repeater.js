@@ -4,95 +4,195 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'core-repeater',
 		icon: 'repeat',
 		name: 'Repeater',
-		description: 'Premium repeatable rows with drag reorder, duplicate, numbered rows, orientation modes and rich empty state.',
+		description: 'Repeatable rows with reorder, duplicate, numbered rows and empty state.',
 		category: 'Core',
-		author: 'OneType',
-		config: {
-			value: {
+		config:
+		{
+			value:
+			{
 				type: 'array',
 				value: [],
-				each: {
-					type: 'object'
-				}
+				each: { type: 'object' },
+				description: 'Row data array.'
 			},
-			fields: {
+			fields:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						key: { type: 'string' },
-						label: { type: 'string' },
-						description: { type: 'string' },
-						element: { type: 'string' },
-						properties: { type: 'object' },
-						default: { type: 'string' }
+					config:
+					{
+						key:
+						{
+							type: 'string',
+							description: 'Data key in row object.'
+						},
+						label:
+						{
+							type: 'string',
+							description: 'Field label shown above input.'
+						},
+						description:
+						{
+							type: 'string',
+							description: 'Helper text below label.'
+						},
+						element:
+						{
+							type: 'string',
+							description: 'Element id without e- prefix.'
+						},
+						properties:
+						{
+							type: 'object',
+							description: 'Props passed to element.'
+						},
+						default:
+						{
+							type: 'string',
+							description: 'Default value for new rows.'
+						}
 					}
-				}
+				},
+				description: 'Field definitions.'
 			},
-			orientation: {
+			orientation:
+			{
 				type: 'string',
 				value: 'horizontal',
-				options: ['horizontal', 'vertical']
+				options: ['horizontal', 'vertical'],
+				description: 'Field layout inside each row.'
 			},
-			add: {
+			add:
+			{
 				type: 'string',
-				value: 'Add'
+				value: 'Add',
+				description: 'Add button label.'
 			},
-			addPosition: {
+			addPosition:
+			{
 				type: 'string',
 				value: 'bottom',
-				options: ['top', 'bottom', 'both']
+				options: ['top', 'bottom', 'both'],
+				description: 'Add button placement.'
 			},
-			save: {
-				type: 'string'
-			},
-			empty: {
+			save:
+			{
 				type: 'string',
-				value: 'No items yet'
+				value: '',
+				description: 'Save button label. Empty hides button.'
 			},
-			emptyIcon: {
+			empty:
+			{
 				type: 'string',
-				value: 'inbox'
+				value: 'No items yet',
+				description: 'Empty state text.'
 			},
-			min: {
-				type: 'number'
+			emptyIcon:
+			{
+				type: 'string',
+				value: 'inbox',
+				description: 'Empty state icon.'
 			},
-			max: {
-				type: 'number'
+			min:
+			{
+				type: 'number',
+				description: 'Minimum row count.'
 			},
-			draggable: {
+			max:
+			{
+				type: 'number',
+				description: 'Maximum row count.'
+			},
+			draggable:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show reorder arrows.'
 			},
-			numbered: {
-				type: 'boolean'
+			numbered:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show row numbers.'
 			},
-			duplicable: {
-				type: 'boolean'
+			duplicable:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show duplicate button.'
 			},
-			disabled: {
-				type: 'boolean'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disable all interaction.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Row background depth.'
 			},
-			_change: {
-				type: 'function'
+			border:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show outer container border.'
 			},
-			_save: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Row padding size.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { value }.'
+			},
+			_save:
+			{
+				type: 'function',
+				description: 'Save handler. Receives { value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
+			this.hasSave = !!this.save;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background, this.orientation, 'size-' + this.size];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
+
 			this.defaults = () =>
 			{
 				const row = {};
 
-				this.fields.forEach((field) =>
+				this.fields.forEach(field =>
 				{
 					row[field.key] = field.default !== undefined ? field.default : '';
 				});
@@ -129,6 +229,8 @@ onetype.AddonReady('elements', (elements) =>
 
 				return true;
 			};
+
+			/* ===== HANDLERS ===== */
 
 			this.emit = () =>
 			{
@@ -213,6 +315,12 @@ onetype.AddonReady('elements', (elements) =>
 				this.emit();
 			};
 
+			this.change = (index, key, data) =>
+			{
+				this.value[index][key] = data.value;
+				this.emit();
+			};
+
 			this.submit = () =>
 			{
 				if(this._save)
@@ -221,22 +329,16 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			this.change = (index, key, data) =>
-			{
-				this.value[index][key] = data.value;
-				this.emit();
-			};
+			/* ===== RENDER ===== */
 
-			// Build field columns — each field is an element with two-way binding
-
-			const fieldTemplate = this.fields.map((field) =>
+			const fieldTemplate = this.fields.map(field =>
 			{
 				const tag = 'e-' + field.element;
 				const props = field.properties || {};
 
 				let attrs = '';
 
-				Object.keys(props).forEach((key) =>
+				Object.keys(props).forEach(key =>
 				{
 					const val = props[key];
 
@@ -250,25 +352,23 @@ onetype.AddonReady('elements', (elements) =>
 					}
 				});
 
-				const labelBlock = field.label
-					? `
-						<div class="field-info">
-							<span class="field-label">${field.label}</span>
-							${field.description ? `<span class="field-description">${field.description}</span>` : ''}
-						</div>
-					`
+				const label = field.label
+					? `<div class="field-info">
+						<span class="field-label">${field.label}</span>
+						${field.description ? `<span class="field-description">${field.description}</span>` : ''}
+					</div>`
 					: '';
 
 				return `
 					<div class="field">
-						${labelBlock}
+						${label}
 						<${tag} :value="row['${field.key}']" :_change="(data) => change(row_index, '${field.key}', data)"${attrs}></${tag}>
 					</div>
 				`;
 			}).join('');
 
 			return /* html */ `
-				<div :class="'holder ' + orientation + ' ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+				<div :class="classes()">
 					<div ot-if="addPosition === 'top' || addPosition === 'both'" class="footer top">
 						<span ot-if="max" class="counter">{{ value.length }} / {{ max }}</span>
 						<span ot-if="!max" class="counter">{{ value.length }} items</span>
@@ -277,7 +377,8 @@ onetype.AddonReady('elements', (elements) =>
 							:text="add"
 							icon="add"
 							:_click="prepend"
-							:variant="['bg-1', 'border', 'size-s']"
+							background="bg-1"
+							size="s"
 						></e-form-button>
 					</div>
 
@@ -341,7 +442,7 @@ onetype.AddonReady('elements', (elements) =>
 							:text="add"
 							icon="add"
 							:_click="append"
-							:variant="['brand', 'size-m']"
+							color="brand"
 						></e-form-button>
 					</div>
 
@@ -354,13 +455,15 @@ onetype.AddonReady('elements', (elements) =>
 								:text="add"
 								icon="add"
 								:_click="append"
-								:variant="['bg-1', 'border', 'size-s']"
+								background="bg-1"
+								size="s"
 							></e-form-button>
 							<e-form-button
-								ot-if="save"
+								ot-if="hasSave"
 								:text="save"
 								:_click="submit"
-								:variant="['brand', 'size-s']"
+								color="brand"
+								size="s"
 							></e-form-button>
 						</div>
 					</div>

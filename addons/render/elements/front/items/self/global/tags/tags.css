@@ -1,14 +1,13 @@
-/* Root */
+/* ===== GLOBAL TAGS ===== */
 
 .e-4a1d382d
 {
-	display: flex;
-	width: 100%;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-4a1d382d > .holder
+.e-4a1d382d > .box
 {
 	display: flex;
 	align-items: center;
@@ -17,7 +16,7 @@
 	width: 100%;
 }
 
-/* Tag base */
+/* Tag */
 
 .e-4a1d382d .tag
 {
@@ -27,7 +26,7 @@
 	gap: var(--ot-spacing-x);
 	padding: 7px var(--ot-spacing-m);
 	font-family: var(--ot-font-primary);
-	font-size: 13px;
+	font-size: var(--ot-size-m);
 	font-weight: 500;
 	color: var(--ot-text-2);
 	background: transparent;
@@ -37,7 +36,7 @@
 	outline: none;
 	white-space: nowrap;
 	user-select: none;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), border-color var(--ot-transition), color var(--ot-transition), transform var(--ot-transition);
 }
 
 .e-4a1d382d .tag:hover:not(.disabled):not(.active)
@@ -49,13 +48,26 @@
 .e-4a1d382d .tag:active:not(.disabled)
 {
 	transform: translateY(0) scale(0.97);
-	transition-duration: 0.1s;
+	transition-duration: 100ms;
+}
+
+.e-4a1d382d .tag:focus-visible
+{
+	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
 }
 
 .e-4a1d382d .tag.disabled
 {
 	cursor: not-allowed;
 	opacity: 0.45;
+	pointer-events: none;
+}
+
+/* Active */
+
+.e-4a1d382d .tag.active
+{
+	color: var(--ot-brand);
 }
 
 /* Icon */
@@ -75,6 +87,12 @@
 	border-radius: 50%;
 	flex-shrink: 0;
 	background: var(--ot-text-3);
+	transition: box-shadow var(--ot-transition);
+}
+
+.e-4a1d382d .tag.active > .dot
+{
+	box-shadow: 0 0 0 3px var(--ot-bg-1);
 }
 
 .e-4a1d382d .tag.color-brand > .dot { background: var(--ot-brand); }
@@ -94,137 +112,136 @@
 	padding: 0 6px;
 	background: var(--ot-bg-2);
 	border-radius: 100px;
-	font-size: 10.5px;
+	font-size: var(--ot-size-s);
 	font-weight: 600;
 	color: var(--ot-text-3);
 	line-height: 18px;
 	margin-right: -4px;
+	transition: background var(--ot-transition-fast), color var(--ot-transition-fast);
 }
 
 .e-4a1d382d .tag.active > .count
 {
 	background: var(--ot-brand);
-	color: white;
+	color: #fff;
 }
 
-/* Active state (all styles) */
+/* ===== TONE: PILLS ===== */
 
-.e-4a1d382d .tag.active
-{
-	color: var(--ot-brand);
-}
-
-/* ===== PILLS STYLE (default) ===== */
-
-.e-4a1d382d > .holder.pills > .tag
+.e-4a1d382d > .box.pills > .tag
 {
 	background: var(--ot-bg-2);
-	border-color: transparent;
 }
 
-.e-4a1d382d > .holder.pills > .tag:hover:not(.disabled):not(.active)
+.e-4a1d382d > .box.pills > .tag:hover:not(.disabled):not(.active)
 {
 	background: var(--ot-bg-2-hover);
 }
 
-.e-4a1d382d > .holder.pills > .tag.active
+.e-4a1d382d > .box.pills > .tag.active
 {
 	background: var(--ot-brand-opacity);
 	color: var(--ot-brand);
 }
 
-/* ===== OUTLINE STYLE ===== */
+/* ===== TONE: OUTLINE ===== */
 
-.e-4a1d382d > .holder.outline > .tag
+.e-4a1d382d > .box.outline > .tag
 {
 	background: transparent;
 	border-color: var(--ot-bg-2-border);
 }
 
-.e-4a1d382d > .holder.outline > .tag:hover:not(.disabled):not(.active)
+.e-4a1d382d > .box.outline > .tag:hover:not(.disabled):not(.active)
 {
 	border-color: var(--ot-text-2);
 }
 
-.e-4a1d382d > .holder.outline > .tag.active
+.e-4a1d382d > .box.outline > .tag.active
 {
 	background: var(--ot-brand-opacity);
 	border-color: var(--ot-brand);
 	color: var(--ot-brand);
 }
 
-/* ===== MINIMAL STYLE (text only) ===== */
+/* ===== TONE: MINIMAL ===== */
 
-.e-4a1d382d > .holder.minimal > .tag
+.e-4a1d382d > .box.minimal > .tag
 {
 	background: transparent;
 	border-color: transparent;
 	padding: 7px var(--ot-spacing-s);
 }
 
-.e-4a1d382d > .holder.minimal > .tag:hover:not(.disabled):not(.active)
+.e-4a1d382d > .box.minimal > .tag:hover:not(.disabled):not(.active)
 {
 	background: var(--ot-bg-2-opacity);
 }
 
-.e-4a1d382d > .holder.minimal > .tag.active
+.e-4a1d382d > .box.minimal > .tag.active
 {
 	color: var(--ot-brand);
 	background: var(--ot-brand-opacity);
 }
 
-/* ===== BACKGROUNDS ===== */
+/* ===== BACKGROUND ===== */
 
-.e-4a1d382d > .holder.bg-1.pills > .tag { background: var(--ot-bg-1); }
-.e-4a1d382d > .holder.bg-1.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-1-hover); }
-.e-4a1d382d > .holder.bg-1 .tag > .count { background: var(--ot-bg-2); }
+.e-4a1d382d > .box.bg-1.pills > .tag { background: var(--ot-bg-1); }
+.e-4a1d382d > .box.bg-1.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-1-hover); }
+.e-4a1d382d > .box.bg-1 .tag > .count { background: var(--ot-bg-2); }
 
-.e-4a1d382d > .holder.bg-2.pills > .tag { background: var(--ot-bg-2); }
-.e-4a1d382d > .holder.bg-2.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-2-hover); }
-.e-4a1d382d > .holder.bg-2 .tag > .count { background: var(--ot-bg-3); }
+.e-4a1d382d > .box.bg-2.pills > .tag { background: var(--ot-bg-2); }
+.e-4a1d382d > .box.bg-2.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-2-hover); }
+.e-4a1d382d > .box.bg-2 .tag > .count { background: var(--ot-bg-3); }
 
-.e-4a1d382d > .holder.bg-3.pills > .tag { background: var(--ot-bg-3); }
-.e-4a1d382d > .holder.bg-3.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-3-hover); }
-.e-4a1d382d > .holder.bg-3 .tag > .count { background: var(--ot-bg-4); }
+.e-4a1d382d > .box.bg-3.pills > .tag { background: var(--ot-bg-3); }
+.e-4a1d382d > .box.bg-3.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-3-hover); }
+.e-4a1d382d > .box.bg-3 .tag > .count { background: var(--ot-bg-4); }
 
-.e-4a1d382d > .holder.bg-4.pills > .tag { background: var(--ot-bg-4); }
-.e-4a1d382d > .holder.bg-4.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-4-hover); }
-.e-4a1d382d > .holder.bg-4 .tag > .count { background: var(--ot-bg-3); }
+.e-4a1d382d > .box.bg-4.pills > .tag { background: var(--ot-bg-4); }
+.e-4a1d382d > .box.bg-4.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-4-hover); }
+.e-4a1d382d > .box.bg-4 .tag > .count { background: var(--ot-bg-3); }
 
-/* Outline + bg — border prati bg */
+/* Outline + bg */
 
-.e-4a1d382d > .holder.bg-1.outline > .tag { border-color: var(--ot-bg-1-border); }
-.e-4a1d382d > .holder.bg-2.outline > .tag { border-color: var(--ot-bg-2-border); }
-.e-4a1d382d > .holder.bg-3.outline > .tag { border-color: var(--ot-bg-3-border); }
-.e-4a1d382d > .holder.bg-4.outline > .tag { border-color: var(--ot-bg-4-border); }
+.e-4a1d382d > .box.bg-1.outline > .tag { border-color: var(--ot-bg-1-border); }
+.e-4a1d382d > .box.bg-2.outline > .tag { border-color: var(--ot-bg-2-border); }
+.e-4a1d382d > .box.bg-3.outline > .tag { border-color: var(--ot-bg-3-border); }
+.e-4a1d382d > .box.bg-4.outline > .tag { border-color: var(--ot-bg-4-border); }
 
-/* ===== BORDER MODIFIER (adds border to pills/minimal) ===== */
+/* ===== BORDER MODIFIER ===== */
 
-.e-4a1d382d > .holder.border > .tag { border-color: var(--ot-bg-2-border); }
-.e-4a1d382d > .holder.bg-1.border > .tag { border-color: var(--ot-bg-1-border); }
-.e-4a1d382d > .holder.bg-2.border > .tag { border-color: var(--ot-bg-2-border); }
-.e-4a1d382d > .holder.bg-3.border > .tag { border-color: var(--ot-bg-3-border); }
-.e-4a1d382d > .holder.bg-4.border > .tag { border-color: var(--ot-bg-4-border); }
+.e-4a1d382d > .box.border > .tag { border-color: var(--ot-bg-2-border); }
+.e-4a1d382d > .box.bg-1.border > .tag { border-color: var(--ot-bg-1-border); }
+.e-4a1d382d > .box.bg-2.border > .tag { border-color: var(--ot-bg-2-border); }
+.e-4a1d382d > .box.bg-3.border > .tag { border-color: var(--ot-bg-3-border); }
+.e-4a1d382d > .box.bg-4.border > .tag { border-color: var(--ot-bg-4-border); }
 
-/* ===== SIZES ===== */
+/* ===== SIZE ===== */
 
-.e-4a1d382d > .holder.size-s
+.e-4a1d382d > .box.size-s
 {
 	gap: var(--ot-spacing-x);
 }
 
-.e-4a1d382d > .holder.size-s .tag
+.e-4a1d382d > .box.size-s .tag
 {
 	padding: 5px var(--ot-spacing-s);
-	font-size: 12px;
+	font-size: var(--ot-size-s);
 }
 
-.e-4a1d382d > .holder.size-s .tag > i
+.e-4a1d382d > .box.size-s .tag > i
 {
 	font-size: 14px;
 }
 
-.e-4a1d382d > .holder.size-s .tag > .count
+.e-4a1d382d > .box.size-s .tag > .dot
+{
+	width: 6px;
+	height: 6px;
+}
+
+.e-4a1d382d > .box.size-s .tag > .count
 {
 	min-width: 16px;
 	font-size: 10px;
@@ -232,32 +249,32 @@
 	padding: 0 5px;
 }
 
-.e-4a1d382d > .holder.size-s.minimal > .tag
+.e-4a1d382d > .box.size-s.minimal > .tag
 {
 	padding: 5px var(--ot-spacing-x);
 }
 
-.e-4a1d382d > .holder.size-m .tag
-{
-	padding: 7px var(--ot-spacing-m);
-	font-size: 13px;
-}
-
-.e-4a1d382d > .holder.size-l .tag
+.e-4a1d382d > .box.size-l .tag
 {
 	padding: 10px var(--ot-spacing-l);
 	font-size: 14px;
 }
 
-.e-4a1d382d > .holder.size-l .tag > i
+.e-4a1d382d > .box.size-l .tag > i
 {
 	font-size: 18px;
 }
 
-.e-4a1d382d > .holder.size-l .tag > .count
+.e-4a1d382d > .box.size-l .tag > .dot
+{
+	width: 10px;
+	height: 10px;
+}
+
+.e-4a1d382d > .box.size-l .tag > .count
 {
 	min-width: 20px;
-	font-size: 11.5px;
+	font-size: var(--ot-size-s);
 	line-height: 20px;
 	padding: 0 8px;
 }

@@ -4,81 +4,117 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'core-builder',
 		icon: 'dashboard_customize',
 		name: 'Builder',
-		description: 'Config-driven form builder with steps, sections, grid columns, conditions and reusable form-section / form-field elements.',
+		description: 'Config-driven form builder with steps, sections, grid and conditions.',
 		category: 'Core',
-		author: 'OneType',
-		config: {
-			values: {
+		config:
+		{
+			values:
+			{
 				type: 'object',
-				value: {}
+				value: {},
+				description: 'Form data keyed by field key.'
 			},
-			steps: {
+			steps:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						id: { type: 'string' },
-						label: { type: 'string' },
-						description: { type: 'string' },
-						icon: { type: 'string' },
-						sections: { type: 'array', value: [] }
+					config:
+					{
+						id:
+						{
+							type: 'string',
+							description: 'Step identifier.'
+						},
+						label:
+						{
+							type: 'string',
+							description: 'Step label.'
+						},
+						description:
+						{
+							type: 'string',
+							description: 'Step description.'
+						},
+						icon:
+						{
+							type: 'string',
+							description: 'Step icon.'
+						},
+						sections:
+						{
+							type: 'array',
+							value: [],
+							description: 'Sections for this step.'
+						}
 					}
-				}
+				},
+				description: 'Wizard steps. Each contains sections.'
 			},
-			sections: {
+			sections:
+			{
 				type: 'array',
 				value: [],
-				each: {
-					type: 'object'
-				}
+				each: { type: 'object' },
+				description: 'Flat sections when no steps.'
 			},
-			save: {
-				type: 'string'
+			save:
+			{
+				type: 'string',
+				value: '',
+				description: 'Save button label. Empty hides button.'
 			},
-			saveVariant: {
-				type: 'array',
-				value: ['brand', 'size-m']
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disable save button.'
 			},
-			disabled: {
-				type: 'boolean'
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Container background depth.'
 			},
-			variant: {
-				type: 'array',
-				value: ['size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'clean', 'size-s', 'size-m', 'size-l']
+			border:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Container border.'
 			},
-			_input: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Section spacing.'
 			},
-			_change: {
-				type: 'function'
+			_input:
+			{
+				type: 'function',
+				description: 'Input handler. Receives { key, value }.'
 			},
-			_save: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { key, value }.'
+			},
+			_save:
+			{
+				type: 'function',
+				description: 'Save handler. Receives { value }.'
 			}
 		},
 		render: function()
 		{
-			// Step state
+			/* ===== STATE ===== */
 
 			this.hasSteps = this.steps.length > 0;
 			this.activeStep = this.hasSteps ? this.steps[0].id : '';
-
-			// Current sections depend on step or flat sections
-
-			this.currentSections = () =>
-			{
-				if(this.hasSteps)
-				{
-					const step = this.steps.find(s => s.id === this.activeStep) || this.steps[0];
-					return step.sections || [];
-				}
-
-				return this.sections;
-			};
-
-			// Detect conditions — if any exist we re-render on change
+			this.hasSave = !!this.save;
 
 			this.hasConditions = (() =>
 			{
@@ -122,7 +158,31 @@ onetype.AddonReady('elements', (elements) =>
 				return scan(this.sections);
 			})();
 
-			// Helpers
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.hasSteps)
+				{
+					list.push('has-steps');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
 
 			this.visible = (condition) =>
 			{
@@ -144,7 +204,7 @@ onetype.AddonReady('elements', (elements) =>
 				return this.values[key];
 			};
 
-			// Actions
+			/* ===== HANDLERS ===== */
 
 			this.selectStep = ({ value }) =>
 			{
@@ -189,14 +249,12 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			// Escape attr value safely
+			/* ===== RENDER ===== */
 
 			const escape = (value) =>
 			{
-				return String(value).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				return elements.Fn('type.escape', value);
 			};
-
-			// Build field element tag with properties
 
 			const buildField = (field, sectionIndex, fieldIndex, scope) =>
 			{
@@ -206,7 +264,7 @@ onetype.AddonReady('elements', (elements) =>
 
 				let attrs = '';
 
-				Object.keys(props).forEach((key) =>
+				Object.keys(props).forEach(key =>
 				{
 					const value = props[key];
 
@@ -229,15 +287,13 @@ onetype.AddonReady('elements', (elements) =>
 					></${tag}>
 				`;
 
-				const fieldCondition = field.condition
+				const condition = field.condition
 					? `ot-if="visible(${scope}[${sectionIndex}].fields[${fieldIndex}].condition)"`
 					: '';
 
-				const fieldVariant = field.variant ? JSON.stringify(field.variant) : JSON.stringify(['size-m']);
-
 				return `
 					<e-form-field
-						${fieldCondition}
+						${condition}
 						#class="field"
 						#style="grid-column: span ${span};"
 						label="${escape(field.label || '')}"
@@ -245,7 +301,6 @@ onetype.AddonReady('elements', (elements) =>
 						hint="${escape(field.hint || '')}"
 						:required="${field.required ? 'true' : 'false'}"
 						orientation="${field.orientation || 'horizontal'}"
-						:variant='${escape(fieldVariant)}'
 					>
 						<div slot="input">
 							${input}
@@ -254,30 +309,29 @@ onetype.AddonReady('elements', (elements) =>
 				`;
 			};
 
-			// Build a single section
-
 			const buildSection = (section, sectionIndex, scope) =>
 			{
 				const columns = section.columns || 1;
-				const sectionFields = section.fields || [];
-				const fields = sectionFields.map((field, fieldIndex) => buildField(field, sectionIndex, fieldIndex, scope)).join('');
+				const fields = (section.fields || []).map((field, fieldIndex) => buildField(field, sectionIndex, fieldIndex, scope)).join('');
 
-				const sectionCondition = section.condition
+				const condition = section.condition
 					? `ot-if="visible(${scope}[${sectionIndex}].condition)"`
 					: '';
 
-				const sectionVariant = section.variant ? JSON.stringify(section.variant) : JSON.stringify(['clean']);
+				const background = section.background || '';
+				const sectionVariant = (section.border !== false) ? "['border']" : '[]';
 
 				return `
 					<e-form-section
-						${sectionCondition}
+						${condition}
 						eyebrow="${escape(section.eyebrow || '')}"
 						icon="${escape(section.icon || '')}"
 						title="${escape(section.title || '')}"
 						description="${escape(section.description || '')}"
 						:collapsible="${section.collapsible ? 'true' : 'false'}"
 						:collapsed="${section.collapsed ? 'true' : 'false'}"
-						:variant='${escape(sectionVariant)}'
+						background="${background}"
+						:variant="${sectionVariant}"
 					>
 						<div slot="content">
 							<div class="grid" style="grid-template-columns: repeat(${columns}, minmax(0, 1fr));">
@@ -287,8 +341,6 @@ onetype.AddonReady('elements', (elements) =>
 					</e-form-section>
 				`;
 			};
-
-			// Build all sections for current step (or flat)
 
 			let sectionsHtml = '';
 
@@ -311,27 +363,28 @@ onetype.AddonReady('elements', (elements) =>
 			}
 
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (hasSteps ? ' has-steps' : '')">
-					<e-navigation-steps
-						ot-if="hasSteps"
-						#class="steps"
-						:items="steps"
-						:active="activeStep"
-						orientation="vertical"
-						:variant="['bg-1', 'border', 'connected', 'size-m']"
-						:_change="selectStep"
-					></e-navigation-steps>
+				<div :class="classes()">
+					<div ot-if="hasSteps" class="steps">
+						<e-navigation-steps
+							:items="steps"
+							:active="activeStep"
+							orientation="vertical"
+							background="bg-1"
+							:variant="['border', 'connected']"
+							:_change="selectStep"
+						></e-navigation-steps>
+					</div>
 
 					<div class="main">
 						<div class="sections">
 							${sectionsHtml}
 						</div>
-						<div ot-if="save" class="footer">
+						<div ot-if="hasSave" class="footer">
 							<e-form-button
 								:text="save"
 								:_click="submit"
 								:disabled="disabled"
-								:variant="saveVariant"
+								color="brand"
 							></e-form-button>
 						</div>
 					</div>

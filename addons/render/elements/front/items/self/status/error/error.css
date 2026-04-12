@@ -1,25 +1,22 @@
-/* Root */
+/* ===== STATUS ERROR ===== */
 
 .e-63199a7d
 {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	min-height: 320px;
-	padding: var(--ot-spacing-l);
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-63199a7d > .holder
+.e-63199a7d > .box
 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: var(--ot-spacing-m);
 	text-align: center;
-	max-width: 420px;
+	width: 100%;
+	min-height: 320px;
+	padding: var(--ot-spacing-l);
 	animation: e-63199a7d-fade 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -29,9 +26,20 @@
 	to { opacity: 1; transform: translateY(0); }
 }
 
+/* Inner */
+
+.e-63199a7d > .box > .inner
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--ot-spacing-m);
+	max-width: 420px;
+}
+
 /* Circle */
 
-.e-63199a7d > .holder > .circle
+.e-63199a7d > .box > .inner > .circle
 {
 	position: relative;
 	display: flex;
@@ -45,7 +53,7 @@
 	margin-bottom: var(--ot-spacing-s);
 }
 
-.e-63199a7d > .holder > .circle::before
+.e-63199a7d > .box > .inner > .circle::before
 {
 	content: '';
 	position: absolute;
@@ -61,7 +69,7 @@
 	50% { transform: scale(1.08); opacity: 0.2; }
 }
 
-.e-63199a7d > .holder > .circle > i
+.e-63199a7d > .box > .inner > .circle > i
 {
 	font-size: 36px;
 	font-variation-settings: 'FILL' 1, 'wght' 400;
@@ -69,7 +77,7 @@
 
 /* Title */
 
-.e-63199a7d > .holder > .title
+.e-63199a7d > .box > .inner > .title
 {
 	margin: 0;
 	font-family: var(--ot-font-secondary);
@@ -82,7 +90,7 @@
 
 /* Description */
 
-.e-63199a7d > .holder > .description
+.e-63199a7d > .box > .inner > .description
 {
 	margin: 0;
 	font-size: 14px;
@@ -91,60 +99,45 @@
 	font-family: var(--ot-font-primary);
 }
 
-/* ===== COLOR VARIANTS ===== */
+/* ===== COLOR ===== */
 
-.e-63199a7d > .holder.brand > .circle { background: var(--ot-brand-opacity); color: var(--ot-brand); }
-.e-63199a7d > .holder.brand > .circle::before { border-color: var(--ot-brand-opacity); }
+.e-63199a7d > .box.brand > .inner > .circle { background: var(--ot-brand-opacity); color: var(--ot-brand); }
+.e-63199a7d > .box.brand > .inner > .circle::before { border-color: var(--ot-brand-opacity); }
 
-.e-63199a7d > .holder.blue > .circle { background: var(--ot-blue-opacity); color: var(--ot-blue); }
-.e-63199a7d > .holder.blue > .circle::before { border-color: var(--ot-blue-opacity); }
+.e-63199a7d > .box.blue > .inner > .circle { background: var(--ot-blue-opacity); color: var(--ot-blue); }
+.e-63199a7d > .box.blue > .inner > .circle::before { border-color: var(--ot-blue-opacity); }
 
-.e-63199a7d > .holder.red > .circle { background: var(--ot-red-opacity); color: var(--ot-red); }
-.e-63199a7d > .holder.red > .circle::before { border-color: var(--ot-red-opacity); }
+.e-63199a7d > .box.red > .inner > .circle { background: var(--ot-red-opacity); color: var(--ot-red); }
+.e-63199a7d > .box.red > .inner > .circle::before { border-color: var(--ot-red-opacity); }
 
-.e-63199a7d > .holder.orange > .circle { background: var(--ot-orange-opacity); color: var(--ot-orange); }
-.e-63199a7d > .holder.orange > .circle::before { border-color: var(--ot-orange-opacity); }
+.e-63199a7d > .box.orange > .inner > .circle { background: var(--ot-orange-opacity); color: var(--ot-orange); }
+.e-63199a7d > .box.orange > .inner > .circle::before { border-color: var(--ot-orange-opacity); }
 
-.e-63199a7d > .holder.green > .circle { background: var(--ot-green-opacity); color: var(--ot-green); }
-.e-63199a7d > .holder.green > .circle::before { border-color: var(--ot-green-opacity); }
+.e-63199a7d > .box.green > .inner > .circle { background: var(--ot-green-opacity); color: var(--ot-green); }
+.e-63199a7d > .box.green > .inner > .circle::before { border-color: var(--ot-green-opacity); }
 
-/* ===== BACKGROUNDS ===== */
+/* ===== SIZE ===== */
 
-.e-63199a7d.bg-1 { background: var(--ot-bg-1); border-radius: var(--ot-radius-l); }
-.e-63199a7d.bg-2 { background: var(--ot-bg-2); border-radius: var(--ot-radius-l); }
-.e-63199a7d.bg-3 { background: var(--ot-bg-3); border-radius: var(--ot-radius-l); }
-.e-63199a7d.bg-4 { background: var(--ot-bg-4); border-radius: var(--ot-radius-l); }
-
-/* ===== BORDERS ===== */
-
-.e-63199a7d.border { border: 1px solid var(--ot-bg-2-border); border-radius: var(--ot-radius-l); }
-.e-63199a7d.bg-1.border { border-color: var(--ot-bg-1-border); }
-.e-63199a7d.bg-2.border { border-color: var(--ot-bg-2-border); }
-.e-63199a7d.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-63199a7d.bg-4.border { border-color: var(--ot-bg-4-border); }
-
-/* ===== SIZES ===== */
-
-.e-63199a7d.size-s
+.e-63199a7d > .box.size-s
 {
 	min-height: 240px;
 	padding: var(--ot-spacing-m);
 }
 
-.e-63199a7d.size-s > .holder > .circle { width: 60px; height: 60px; }
-.e-63199a7d.size-s > .holder > .circle > i { font-size: 28px; }
-.e-63199a7d.size-s > .holder > .title { font-size: 18px; }
-.e-63199a7d.size-s > .holder > .description { font-size: 13px; }
+.e-63199a7d > .box.size-s > .inner > .circle { width: 60px; height: 60px; }
+.e-63199a7d > .box.size-s > .inner > .circle > i { font-size: 28px; }
+.e-63199a7d > .box.size-s > .inner > .title { font-size: 18px; }
+.e-63199a7d > .box.size-s > .inner > .description { font-size: 13px; }
 
-.e-63199a7d.size-m > .holder > .circle { width: 80px; height: 80px; }
-.e-63199a7d.size-m > .holder > .title { font-size: 22px; }
+.e-63199a7d > .box.size-m > .inner > .circle { width: 80px; height: 80px; }
+.e-63199a7d > .box.size-m > .inner > .title { font-size: 22px; }
 
-.e-63199a7d.size-l
+.e-63199a7d > .box.size-l
 {
 	min-height: 440px;
 }
 
-.e-63199a7d.size-l > .holder > .circle { width: 104px; height: 104px; }
-.e-63199a7d.size-l > .holder > .circle > i { font-size: 48px; }
-.e-63199a7d.size-l > .holder > .title { font-size: 28px; }
-.e-63199a7d.size-l > .holder > .description { font-size: 15px; max-width: 500px; }
+.e-63199a7d > .box.size-l > .inner > .circle { width: 104px; height: 104px; }
+.e-63199a7d > .box.size-l > .inner > .circle > i { font-size: 48px; }
+.e-63199a7d > .box.size-l > .inner > .title { font-size: 28px; }
+.e-63199a7d > .box.size-l > .inner > .description { font-size: 15px; max-width: 500px; }

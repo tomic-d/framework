@@ -4,55 +4,122 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-date',
 		icon: 'calendar_today',
 		name: 'Date',
-		description: 'Premium date picker with native input, min/max range, presets and clear action.',
+		description: 'Date picker with native input, min/max range, presets and clear action.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
-				type: 'string'
+		config:
+		{
+			value:
+			{
+				type: 'string',
+				value: '',
+				description: 'Selected date in ISO format (YYYY-MM-DD).'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Input name attribute.'
 			},
-			min: {
-				type: 'string'
+			placeholder:
+			{
+				type: 'string',
+				value: '',
+				description: 'Placeholder text.'
 			},
-			max: {
-				type: 'string'
+			min:
+			{
+				type: 'string',
+				value: '',
+				description: 'Minimum selectable date (YYYY-MM-DD).'
 			},
-			placeholder: {
-				type: 'string'
+			max:
+			{
+				type: 'string',
+				value: '',
+				description: 'Maximum selectable date (YYYY-MM-DD).'
 			},
-			presets: {
+			presets:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						label: { type: 'string' },
 						value: { type: 'string' }
 					}
-				}
+				},
+				description: 'Quick-pick preset buttons.'
 			},
-			disabled: {
-				type: 'boolean'
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				description: 'Background depth.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent', 'border', 'size-s', 'size-m', 'size-l']
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Field size.'
 			},
-			_change: {
-				type: 'function'
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
-			const today = new Date();
-			const todayIso = today.toISOString().slice(0, 10);
+			/* ===== STATE ===== */
 
-			this.todayIso = todayIso;
+			const today = new Date().toISOString().slice(0, 10);
+
+			this.todayIso = today;
 			this.hasPresets = this.presets && this.presets.length > 0;
+			this.isToday = this.value === today;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background, 'size-' + this.size];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				if(this.isToday)
+				{
+					list.push('today');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
 
 			this.inRange = (iso) =>
 			{
@@ -69,7 +136,7 @@ onetype.AddonReady('elements', (elements) =>
 				return true;
 			};
 
-			this.isToday = this.value === todayIso;
+			/* ===== HANDLERS ===== */
 
 			this.handle = ({ event, value }) =>
 			{
@@ -109,8 +176,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '') + (isToday ? ' today' : '')">
+				<div :class="classes()">
 					<div class="field">
 						<i class="icon">calendar_today</i>
 						<input

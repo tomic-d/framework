@@ -3,44 +3,99 @@ onetype.AddonReady('elements', (elements) =>
 	elements.ItemAdd({
 		id: 'form-field',
 		icon: 'space_dashboard',
-		name: 'Form Field',
-		description: 'Form field row with label, description, hint, required and error states.',
+		name: 'Field',
+		description: 'Form field with label, description, hint, required mark and error state.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			label: {
-				type: 'string'
+		config:
+		{
+			label:
+			{
+				type: 'string',
+				value: '',
+				description: 'Field label.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Helper text below label.'
 			},
-			hint: {
-				type: 'string'
+			hint:
+			{
+				type: 'string',
+				value: '',
+				description: 'Tooltip text on info icon.'
 			},
-			error: {
-				type: 'string'
+			error:
+			{
+				type: 'string',
+				value: '',
+				description: 'Error message. Tints input red.'
 			},
-			required: {
-				type: 'boolean'
+			required:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Red asterisk on label.'
 			},
-			orientation: {
+			orientation:
+			{
 				type: 'string',
 				value: 'horizontal',
-				options: ['horizontal', 'vertical']
+				options: ['horizontal', 'vertical'],
+				description: 'Layout direction.'
 			},
-			variant: {
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Field size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['size-m'],
-				options: ['border-bottom', 'clean', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'clean'],
+				description: 'Visual modifiers.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasInfo = !!this.label || !!this.description;
 			this.hasError = !!this.error;
 
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.orientation, 'size-' + this.size];
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.variant.includes('clean'))
+				{
+					list.push('clean');
+				}
+
+				if(this.hasError)
+				{
+					list.push('error');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + orientation + ' ' + variant.join(' ') + (hasError ? ' error' : '')">
+				<div :class="classes()">
 					<div ot-if="hasInfo" class="info">
 						<label ot-if="label" class="label">
 							<span>{{ label }}</span>
@@ -53,7 +108,7 @@ onetype.AddonReady('elements', (elements) =>
 						<div class="input">
 							<slot name="input"></slot>
 						</div>
-						<div ot-if="hasError" class="error-message">
+						<div ot-if="hasError" class="message">
 							<i>error</i>
 							<span>{{ error }}</span>
 						</div>

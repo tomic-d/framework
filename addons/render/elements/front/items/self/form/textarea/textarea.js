@@ -4,71 +4,153 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-textarea',
 		icon: 'notes',
 		name: 'Textarea',
-		description: 'Premium multi-line text input with auto-resize, character counter and focus ring.',
+		description: 'Multi-line text input with auto-resize, character counter and focus ring.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
-				type: 'string'
+		config:
+		{
+			value:
+			{
+				type: 'string',
+				value: '',
+				description: 'Current value.'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Form field name.'
 			},
-			placeholder: {
-				type: 'string'
+			placeholder:
+			{
+				type: 'string',
+				value: '',
+				description: 'Placeholder text.'
 			},
-			rows: {
+			rows:
+			{
 				type: 'number',
-				value: 4
+				value: 4,
+				description: 'Initial visible rows.'
 			},
-			minRows: {
-				type: 'number'
+			minRows:
+			{
+				type: 'number',
+				description: 'Minimum rows for auto-resize.'
 			},
-			maxRows: {
-				type: 'number'
+			maxRows:
+			{
+				type: 'number',
+				description: 'Maximum rows for auto-resize.'
 			},
-			maxlength: {
-				type: 'number'
+			maxlength:
+			{
+				type: 'number',
+				description: 'Maximum character count.'
 			},
-			autoResize: {
-				type: 'boolean'
+			autoResize:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Grow height with content.'
 			},
-			counter: {
-				type: 'boolean'
+			counter:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show character counter.'
 			},
-			resize: {
+			resize:
+			{
 				type: 'string',
 				value: 'vertical',
-				options: ['none', 'vertical', 'horizontal', 'both']
+				options: ['none', 'vertical', 'horizontal', 'both'],
+				description: 'CSS resize handle.'
 			},
-			disabled: {
-				type: 'boolean'
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				description: 'Background depth.'
 			},
-			readonly: {
-				type: 'boolean'
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent', 'border', 'size-s', 'size-m', 'size-l']
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Textarea size.'
 			},
-			_input: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
 			},
-			_change: {
-				type: 'function'
+			readonly:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Readonly state.'
 			},
-			_focus: {
-				type: 'function'
+			_input:
+			{
+				type: 'function',
+				description: 'Input handler. Receives { event, value }.'
 			},
-			_blur: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
+			},
+			_focus:
+			{
+				type: 'function',
+				description: 'Focus handler. Receives { event, value }.'
+			},
+			_blur:
+			{
+				type: 'function',
+				description: 'Blur handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.length = (this.value || '').length;
 			this.showCounter = this.counter && this.maxlength > 0;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.resizeTextarea = () =>
 			{
@@ -144,8 +226,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+				<div :class="classes()">
 					<textarea
 						:placeholder="placeholder"
 						:name="name"

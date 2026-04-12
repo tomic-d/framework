@@ -9,11 +9,21 @@ onetype.AddonReady('directives', function(directives)
 			if ('otTooltipConfig' in node && !node.otTooltipShow)
 			{
 				node.otTooltipShow = true;
-				const cfg = node.otTooltipConfig;
-				const opts = {};
-				if(cfg.position) opts.position = cfg.position;
-				if(cfg.offset) opts.offset = cfg.offset;
-				node.otTooltipOverlay = popup.Fn('tooltip', node, cfg, opts);
+
+				const config = node.otTooltipConfig;
+				const options = {};
+
+				if (config.position) options.position = config.position;
+				if (config.offset)   options.offset   = config.offset;
+
+				const content = {
+					text:    config.text    || '',
+					title:   config.title   || null,
+					icon:    config.icon    || null,
+					variant: config.variant || 'default'
+				};
+
+				node.otTooltipOverlay = popup.Fn('tooltip', node, content, options);
 				break;
 			}
 

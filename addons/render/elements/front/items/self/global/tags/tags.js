@@ -4,42 +4,104 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-tags',
 		icon: 'label',
 		name: 'Tags',
-		description: 'Filter tag group with single or multiple selection, icons, counts and color dots.',
+		description: 'Filter tag group with single or multi selection, icons, counts and color dots.',
 		category: 'Global',
-		author: 'OneType',
-		config: {
-			items: {
+		config:
+		{
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'string|object',
-					config: {
-						id: { type: 'string' },
-						label: { type: 'string' },
-						icon: { type: 'string' },
-						count: { type: 'string|number' },
-						color: { type: 'string', options: ['brand', 'blue', 'red', 'orange', 'green'] },
-						disabled: { type: 'boolean' }
+					config:
+					{
+						id:
+						{
+							type: 'string',
+							description: 'Unique tag identifier.'
+						},
+						label:
+						{
+							type: 'string',
+							description: 'Display text.'
+						},
+						icon:
+						{
+							type: 'string',
+							description: 'Material icon name.'
+						},
+						count:
+						{
+							type: 'string|number',
+							description: 'Count badge value.'
+						},
+						color:
+						{
+							type: 'string',
+							options: ['brand', 'blue', 'red', 'orange', 'green'],
+							description: 'Color dot accent.'
+						},
+						disabled:
+						{
+							type: 'boolean',
+							description: 'Disabled state.'
+						}
 					}
-				}
+				},
+				description: 'Tag items. Strings or { id, label, icon, count, color, disabled }.'
 			},
-			active: {
-				type: 'string|array'
+			active:
+			{
+				type: 'string|array',
+				description: 'Active tag id or array of ids for multi.'
 			},
-			multiple: {
-				type: 'boolean'
+			multiple:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Allow multiple selection.'
 			},
-			variant: {
+			tone:
+			{
+				type: 'string',
+				value: 'pills',
+				options: ['pills', 'outline', 'minimal'],
+				description: 'Visual tone.'
+			},
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Tag surface depth.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Tag size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['pills', 'size-m'],
-				options: ['pills', 'outline', 'minimal', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['border'],
+				description: 'Visual modifiers.'
 			},
-			_change: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Selection handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.normalized = this.items.map(item =>
 			{
 				if(typeof item === 'string')
@@ -57,13 +119,48 @@ onetype.AddonReady('elements', (elements) =>
 				};
 			});
 
-			const styles = ['pills', 'outline', 'minimal'];
-			const hasStyle = this.variant.some(v => styles.includes(v));
+			/* ===== CLASSES ===== */
 
-			if(!hasStyle)
+			this.classes = () =>
 			{
-				this.variant = ['pills', ...this.variant];
-			}
+				const list = ['box', this.tone, 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				return list.join(' ');
+			};
+
+			this.tagClass = (tag) =>
+			{
+				const list = ['tag'];
+
+				if(this.isActive(tag))
+				{
+					list.push('active');
+				}
+
+				if(tag.disabled)
+				{
+					list.push('disabled');
+				}
+
+				if(tag.color)
+				{
+					list.push('color-' + tag.color);
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.isActive = (item) =>
 			{
@@ -102,7 +199,7 @@ onetype.AddonReady('elements', (elements) =>
 				}
 				else
 				{
-					next = item.id;
+					next = this.active === item.id ? null : item.id;
 				}
 
 				this.active = next;
@@ -113,12 +210,14 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<button
 						ot-for="tag in normalized"
 						type="button"
-						:class="'tag' + (isActive(tag) ? ' active' : '') + (tag.disabled ? ' disabled' : '') + (tag.color ? ' color-' + tag.color : '')"
+						:class="tagClass(tag)"
 						ot-click="(event) => select(tag, event)"
 					>
 						<span ot-if="tag.color && !tag.icon" class="dot"></span>

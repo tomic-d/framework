@@ -14,10 +14,12 @@ popup.Fn('toast', function(message, options = {})
 		onOpen: options.onOpen,
 		render: function()
 		{
+			const icons = {info: 'info', success: 'check_circle', warning: 'warning', error: 'error'};
+
 			this.type = config.type || 'info';
 			this.title = config.title || null;
 			this.message = config.message || '';
-			this.icon = config.icon || null;
+			this.icon = config.icon || icons[this.type] || 'info';
 			this.closeable = config.closeable !== false;
 
 			this.close = () =>
@@ -25,11 +27,9 @@ popup.Fn('toast', function(message, options = {})
 				overlay.Remove();
 			};
 
-			const icons = {info: 'info', success: 'check_circle', warning: 'warning', error: 'error'};
-
 			return `
 				<div :class="'ot-toast ' + type">
-					<i class="icon">{{ icon || '${icons[this.type] || 'info'}' }}</i>
+					<i class="icon">{{ icon }}</i>
 					<div class="content">
 						<div ot-if="title" class="title">{{ title }}</div>
 						<div ot-if="message" class="message">{{ message }}</div>
@@ -40,11 +40,11 @@ popup.Fn('toast', function(message, options = {})
 		}
 	});
 
-	if(duration > 0)
+	if (duration > 0)
 	{
 		setTimeout(() =>
 		{
-			if(overlays.ItemGet(overlay.Get('id')))
+			if (overlays.ItemGet(overlay.Get('id')))
 			{
 				overlay.Remove();
 			}

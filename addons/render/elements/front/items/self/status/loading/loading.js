@@ -6,22 +6,56 @@ onetype.AddonReady('elements', (elements) =>
 		name: 'Loading',
 		description: 'Loading state with spinner and optional message.',
 		category: 'Status',
-		author: 'OneType',
-		config: {
-			text: {
-				type: 'string'
+		config:
+		{
+			text:
+			{
+				type: 'string',
+				value: '',
+				description: 'Message below spinner.'
 			},
-			variant: {
-				type: 'array',
-				value: ['brand', 'size-m'],
-				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			color:
+			{
+				type: 'string',
+				value: 'brand',
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Spinner color.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Spinner size.'
+			},
+			auto:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Remove min-height constraint.'
 			}
 		},
 		render: function()
 		{
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.color, 'size-' + this.size];
+
+				if(this.auto)
+				{
+					list.push('auto');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
-					<div class="circle"><i class="spinner">progress_activity</i></div>
+				<div :class="classes()">
+					<div class="circle"><i class="spin">progress_activity</i></div>
 					<span ot-if="text" class="text">{{ text }}</span>
 				</div>
 			`;

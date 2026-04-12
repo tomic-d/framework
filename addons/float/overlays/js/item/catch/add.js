@@ -36,6 +36,7 @@ overlays.ItemOn('add', function(item)
 		element.className = 'ot-overlay';
 		element.setAttribute('data-id', item.Get('id'));
 		element.style.zIndex = overlays.Fn('index');
+		element.__justOpened = true;
 
 		const backdrop = item.Get('backdrop');
 
@@ -120,4 +121,12 @@ overlays.ItemOn('add', function(item)
 	this.open(element);
 	this.position(element);
 	this.track();
+
+	/* Clear __justOpened flag after current event tick completes,
+	   so the click that opened this overlay can't immediately close it,
+	   but the very next click can. */
+	requestAnimationFrame(() =>
+	{
+		element.__justOpened = false;
+	});
 });

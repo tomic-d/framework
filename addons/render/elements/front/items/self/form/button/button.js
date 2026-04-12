@@ -4,61 +4,156 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-button',
 		icon: 'smart_button',
 		name: 'Button',
-		description: 'Premium button with icons, loading state, full variant and color system.',
+		description: 'Premium button with color, style, size, icon and loading state.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			text: {
+		config:
+		{
+			text:
+			{
 				type: 'string',
-				value: 'Button'
+				value: '',
+				description: 'Button label.'
 			},
-			icon: {
-				type: 'string'
-			},
-			iconRight: {
-				type: 'string'
-			},
-			href: {
-				type: 'string'
-			},
-			target: {
+			icon:
+			{
 				type: 'string',
-				options: ['_blank', '_self', '_parent', '_top']
+				value: '',
+				description: 'Left icon name.'
 			},
-			type: {
+			iconRight:
+			{
+				type: 'string',
+				value: '',
+				description: 'Right icon name.'
+			},
+			href:
+			{
+				type: 'string',
+				value: '',
+				description: 'When set, renders as anchor.'
+			},
+			target:
+			{
+				type: 'string',
+				value: '',
+				options: ['', '_blank', '_self', '_parent', '_top'],
+				description: 'Anchor target.'
+			},
+			type:
+			{
 				type: 'string',
 				value: 'button',
-				options: ['button', 'submit', 'reset']
+				options: ['button', 'submit', 'reset'],
+				description: 'Button type attribute.'
 			},
-			disabled: {
-				type: 'boolean'
+			color:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'brand', 'blue', 'red', 'orange', 'green', 'dark'],
+				description: 'Accent color. Pairs with style.'
 			},
-			loading: {
-				type: 'boolean'
+			tone:
+			{
+				type: 'string',
+				value: 'solid',
+				options: ['solid', 'soft', 'outline', 'ghost', 'link'],
+				description: 'Visual tone.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'glass'],
+				description: 'Background depth when no color set.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Button size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['brand', 'size-m'],
-				options: [
-					'brand', 'blue', 'red', 'orange', 'green', 'dark',
-					'soft-brand', 'soft-blue', 'soft-red', 'soft-orange', 'soft-green',
-					'outline-brand', 'outline-blue', 'outline-red', 'outline-orange', 'outline-green',
-					'bg-1', 'bg-2', 'bg-3', 'bg-4',
-					'ghost', 'glass', 'border', 'transparent', 'link',
-					'size-s', 'size-m', 'size-l',
-					'full', 'icon-only', 'rounded'
-				]
+				value: [],
+				each: { type: 'string' },
+				options: ['full', 'rounded', 'icon-only'],
+				description: 'Visual modifiers.'
 			},
-			_click: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			loading:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Loading state with spinner.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'Click handler. Receives { event }.'
 			}
 		},
 		render: function()
 		{
-			this.isIconOnly = this.variant.includes('icon-only');
-			this.hasText = !!this.text && !this.isIconOnly;
+			/* ===== STATE ===== */
 
-			this.handle = (event) =>
+			this.iconOnly = this.variant.includes('icon-only');
+			this.hasText = !!this.text && !this.iconOnly;
+			this.isLink = !!this.href;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.tone, 'size-' + this.size];
+
+				if(this.color)
+				{
+					list.push(this.color);
+				}
+				else if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.variant.includes('full'))
+				{
+					list.push('full');
+				}
+
+				if(this.variant.includes('rounded'))
+				{
+					list.push('rounded');
+				}
+
+				if(this.iconOnly)
+				{
+					list.push('icon-only');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				if(this.loading)
+				{
+					list.push('loading');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.click = ({ event }) =>
 			{
 				if(this.disabled || this.loading)
 				{
@@ -71,37 +166,29 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			const content = /* html */ `
-				<span ot-if="loading" class="spinner"><i>progress_activity</i></span>
-				<span ot-if="!loading" class="content">
+			/* ===== RENDER ===== */
+
+			const body = /* html */ `
+				<span ot-if="loading" class="spin"><i>progress_activity</i></span>
+				<span ot-if="!loading" class="body">
 					<i ot-if="icon" class="left">{{ icon }}</i>
 					<span ot-if="hasText" class="text">{{ text }}</span>
 					<i ot-if="iconRight" class="right">{{ iconRight }}</i>
 				</span>
 			`;
 
-			if(this.href)
+			if(this.isLink)
 			{
 				return /* html */ `
-					<a
-						:class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '') + (loading ? ' loading' : '')"
-						:href="href"
-						:target="target"
-						ot-click="handle"
-					>
-						${content}
+					<a :class="classes()" :href="href" :target="target || null" ot-click="click">
+						${body}
 					</a>
 				`;
 			}
 
 			return /* html */ `
-				<button
-					:class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '') + (loading ? ' loading' : '')"
-					:type="type"
-					:disabled="disabled"
-					ot-click="handle"
-				>
-					${content}
+				<button :class="classes()" :type="type" :disabled="disabled" ot-click="click">
+					${body}
 				</button>
 			`;
 		}

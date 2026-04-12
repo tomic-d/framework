@@ -1,14 +1,13 @@
-/* Root */
+/* ===== FORM TRANSFER ===== */
 
 .e-1e66ff82
 {
-	display: flex;
-	width: 100%;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-1e66ff82 > .holder
+.e-1e66ff82 > .box
 {
 	display: flex;
 	align-items: stretch;
@@ -19,7 +18,7 @@
 
 /* ===== PANEL ===== */
 
-.e-1e66ff82 > .holder > .panel
+.e-1e66ff82 > .box > .panel
 {
 	display: flex;
 	flex-direction: column;
@@ -30,9 +29,9 @@
 	overflow: hidden;
 }
 
-/* Panel head */
+/* Head */
 
-.e-1e66ff82 > .holder > .panel > .panel-head
+.e-1e66ff82 > .box > .panel > .head
 {
 	display: flex;
 	align-items: center;
@@ -41,7 +40,7 @@
 	flex-shrink: 0;
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-head > .title
+.e-1e66ff82 > .box > .panel > .head > .title
 {
 	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-s);
@@ -51,7 +50,7 @@
 	letter-spacing: 0.06em;
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-head > .counter
+.e-1e66ff82 > .box > .panel > .head > .counter
 {
 	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-s);
@@ -59,17 +58,17 @@
 	color: var(--ot-text-3);
 }
 
-/* Panel search */
+/* Search */
 
-.e-1e66ff82 > .holder > .panel > .panel-search
+.e-1e66ff82 > .box > .panel > .search
 {
 	padding: 0 var(--ot-spacing-s) var(--ot-spacing-s);
 	flex-shrink: 0;
 }
 
-/* Panel list */
+/* List */
 
-.e-1e66ff82 > .holder > .panel > .panel-list
+.e-1e66ff82 > .box > .panel > .list
 {
 	display: flex;
 	flex-direction: column;
@@ -80,9 +79,9 @@
 	overflow-y: auto;
 }
 
-/* Empty state */
+/* Empty */
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .panel-empty
+.e-1e66ff82 > .box > .panel > .list > .empty
 {
 	display: flex;
 	flex-direction: column;
@@ -94,13 +93,13 @@
 	color: var(--ot-text-3);
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .panel-empty > i
+.e-1e66ff82 > .box > .panel > .list > .empty > i
 {
 	font-size: 28px;
 	opacity: 0.6;
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .panel-empty > span
+.e-1e66ff82 > .box > .panel > .list > .empty > span
 {
 	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-s);
@@ -108,7 +107,7 @@
 
 /* Item */
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item
+.e-1e66ff82 > .box > .panel > .list > .item
 {
 	display: flex;
 	align-items: center;
@@ -121,39 +120,43 @@
 	text-align: left;
 	cursor: pointer;
 	outline: none;
-	transition: background 0.15s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.15s cubic-bezier(0.22, 1, 0.36, 1), color 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition-fast), border-color var(--ot-transition-fast), color var(--ot-transition-fast);
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item:hover:not(.disabled):not(.selected)
+.e-1e66ff82 > .box > .panel > .list > .item:hover:not(.disabled):not(.selected)
 {
 	background: var(--ot-bg-2);
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item.selected
+.e-1e66ff82 > .box > .panel > .list > .item.selected
 {
 	background: var(--ot-brand-opacity);
 	border-color: var(--ot-brand-border);
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item.disabled
+.e-1e66ff82 > .box > .panel > .list > .item.disabled
 {
 	opacity: 0.4;
 	cursor: not-allowed;
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item > .item-icon
+/* Item icon */
+
+.e-1e66ff82 > .box > .panel > .list > .item > .item-icon
 {
 	flex-shrink: 0;
 	font-size: 20px;
 	color: var(--ot-text-2);
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item.selected > .item-icon
+.e-1e66ff82 > .box > .panel > .list > .item.selected > .item-icon
 {
 	color: var(--ot-brand);
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item > .item-text
+/* Item text */
+
+.e-1e66ff82 > .box > .panel > .list > .item > .item-text
 {
 	display: flex;
 	flex-direction: column;
@@ -162,7 +165,7 @@
 	min-width: 0;
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item > .item-text > .item-label
+.e-1e66ff82 > .box > .panel > .list > .item > .item-text > .item-label
 {
 	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-m);
@@ -173,7 +176,7 @@
 	text-overflow: ellipsis;
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item > .item-text > .item-description
+.e-1e66ff82 > .box > .panel > .list > .item > .item-text > .item-desc
 {
 	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-s);
@@ -183,7 +186,9 @@
 	text-overflow: ellipsis;
 }
 
-.e-1e66ff82 > .holder > .panel > .panel-list > .item > .item-check
+/* Item check */
+
+.e-1e66ff82 > .box > .panel > .list > .item > .item-check
 {
 	flex-shrink: 0;
 	font-size: 18px;
@@ -192,7 +197,7 @@
 
 /* ===== CONTROLS ===== */
 
-.e-1e66ff82 > .holder > .controls
+.e-1e66ff82 > .box > .controls
 {
 	display: flex;
 	flex-direction: column;
@@ -203,13 +208,13 @@
 	padding: var(--ot-spacing-s);
 }
 
-.e-1e66ff82 > .holder > .controls > .control
+.e-1e66ff82 > .box > .controls > .control
 {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 34px;
-	height: 34px;
+	width: var(--ot-height-m);
+	height: var(--ot-height-m);
 	padding: 0;
 	background: var(--ot-bg-2);
 	border: 1px solid var(--ot-bg-2-border);
@@ -217,143 +222,119 @@
 	color: var(--ot-text-2);
 	cursor: pointer;
 	outline: none;
-	transition: background 0.15s cubic-bezier(0.22, 1, 0.36, 1), color 0.15s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.15s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition-fast), color var(--ot-transition-fast), border-color var(--ot-transition-fast), transform var(--ot-transition-fast);
 }
 
-.e-1e66ff82 > .holder > .controls > .control:hover:not(:disabled)
+.e-1e66ff82 > .box > .controls > .control:hover:not(:disabled)
 {
 	background: var(--ot-bg-3);
 	color: var(--ot-text-1);
 	border-color: var(--ot-bg-3-border);
 }
 
-.e-1e66ff82 > .holder > .controls > .control.primary:not(:disabled)
+.e-1e66ff82 > .box > .controls > .control.accent:not(:disabled)
 {
 	background: var(--ot-brand);
 	border-color: var(--ot-brand);
 	color: #fff;
 }
 
-.e-1e66ff82 > .holder > .controls > .control.primary:hover:not(:disabled)
+.e-1e66ff82 > .box > .controls > .control.accent:hover:not(:disabled)
 {
 	background: var(--ot-brand-hover);
 	border-color: var(--ot-brand-hover);
 	transform: translateX(2px);
 }
 
-.e-1e66ff82 > .holder > .controls > .control.primary:nth-child(3):hover:not(:disabled)
+.e-1e66ff82 > .box > .controls > .control.accent:nth-child(3):hover:not(:disabled)
 {
 	transform: translateX(-2px);
 }
 
-.e-1e66ff82 > .holder > .controls > .control:disabled
+.e-1e66ff82 > .box > .controls > .control:disabled
 {
 	opacity: 0.35;
 	cursor: not-allowed;
 }
 
-.e-1e66ff82 > .holder > .controls > .control > i
+.e-1e66ff82 > .box > .controls > .control > i
 {
 	font-size: 18px;
 }
 
-/* ===== BACKGROUND VARIANTS ===== */
+/* ===== BACKGROUND ===== */
 
-.e-1e66ff82 > .holder.bg-1 > .panel
-{
-	background: var(--ot-bg-1);
-	border-color: var(--ot-bg-1-border);
-}
+.e-1e66ff82 > .box.bg-1 > .panel { background: var(--ot-bg-1); }
+.e-1e66ff82 > .box.bg-2 > .panel { background: var(--ot-bg-2); }
+.e-1e66ff82 > .box.bg-3 > .panel { background: var(--ot-bg-3); }
+.e-1e66ff82 > .box.bg-4 > .panel { background: var(--ot-bg-4); }
 
-.e-1e66ff82 > .holder.bg-2 > .panel
-{
-	background: var(--ot-bg-2);
-	border-color: var(--ot-bg-2-border);
-}
+/* Border */
 
-.e-1e66ff82 > .holder.bg-3 > .panel
-{
-	background: var(--ot-bg-3);
-	border-color: var(--ot-bg-3-border);
-}
+.e-1e66ff82 > .box.border.bg-1 > .panel { border-color: var(--ot-bg-1-border); }
+.e-1e66ff82 > .box.border.bg-2 > .panel { border-color: var(--ot-bg-2-border); }
+.e-1e66ff82 > .box.border.bg-3 > .panel { border-color: var(--ot-bg-3-border); }
+.e-1e66ff82 > .box.border.bg-4 > .panel { border-color: var(--ot-bg-4-border); }
 
-.e-1e66ff82 > .holder.bg-4 > .panel
-{
-	background: var(--ot-bg-4);
-	border-color: var(--ot-bg-4-border);
-}
+/* ===== SIZE ===== */
 
-/* Border variant */
-
-.e-1e66ff82 > .holder.border > .panel
-{
-	border-color: var(--ot-bg-2-border);
-}
-
-.e-1e66ff82 > .holder.bg-1.border > .panel { border-color: var(--ot-bg-1-border); }
-.e-1e66ff82 > .holder.bg-2.border > .panel { border-color: var(--ot-bg-2-border); }
-.e-1e66ff82 > .holder.bg-3.border > .panel { border-color: var(--ot-bg-3-border); }
-.e-1e66ff82 > .holder.bg-4.border > .panel { border-color: var(--ot-bg-4-border); }
-
-/* ===== SIZE VARIANTS ===== */
-
-.e-1e66ff82 > .holder.size-s > .panel > .panel-head
+.e-1e66ff82 > .box.size-s > .panel > .head
 {
 	padding: var(--ot-spacing-x) var(--ot-spacing-s);
 }
 
-.e-1e66ff82 > .holder.size-s > .panel > .panel-list > .item
+.e-1e66ff82 > .box.size-s > .panel > .list > .item
 {
 	padding: var(--ot-spacing-x) var(--ot-spacing-s);
 	gap: var(--ot-spacing-x);
 }
 
-.e-1e66ff82 > .holder.size-s > .panel > .panel-list > .item > .item-icon
+.e-1e66ff82 > .box.size-s > .panel > .list > .item > .item-icon
 {
 	font-size: 16px;
 }
 
-.e-1e66ff82 > .holder.size-s > .controls > .control
+.e-1e66ff82 > .box.size-s > .controls > .control
 {
-	width: 28px;
-	height: 28px;
+	width: var(--ot-height-s);
+	height: var(--ot-height-s);
 }
 
-.e-1e66ff82 > .holder.size-s > .controls > .control > i
+.e-1e66ff82 > .box.size-s > .controls > .control > i
 {
 	font-size: 15px;
 }
 
-.e-1e66ff82 > .holder.size-l > .panel > .panel-head
+.e-1e66ff82 > .box.size-l > .panel > .head
 {
 	padding: var(--ot-spacing-m) var(--ot-spacing-l);
 }
 
-.e-1e66ff82 > .holder.size-l > .panel > .panel-list > .item
+.e-1e66ff82 > .box.size-l > .panel > .list > .item
 {
 	padding: var(--ot-spacing-m) var(--ot-spacing-l);
 	gap: var(--ot-spacing-m);
 }
 
-.e-1e66ff82 > .holder.size-l > .panel > .panel-list > .item > .item-icon
+.e-1e66ff82 > .box.size-l > .panel > .list > .item > .item-icon
 {
 	font-size: 22px;
 }
 
-.e-1e66ff82 > .holder.size-l > .controls > .control
+.e-1e66ff82 > .box.size-l > .controls > .control
 {
-	width: 40px;
-	height: 40px;
+	width: var(--ot-height-l);
+	height: var(--ot-height-l);
 }
 
-.e-1e66ff82 > .holder.size-l > .controls > .control > i
+.e-1e66ff82 > .box.size-l > .controls > .control > i
 {
 	font-size: 20px;
 }
 
 /* ===== DISABLED ===== */
 
-.e-1e66ff82 > .holder.disabled
+.e-1e66ff82 > .box.disabled
 {
 	opacity: 0.65;
 	pointer-events: none;
@@ -363,12 +344,12 @@
 
 @media (max-width: 767.98px)
 {
-	.e-1e66ff82 > .holder
+	.e-1e66ff82 > .box
 	{
 		flex-direction: column;
 	}
 
-	.e-1e66ff82 > .holder > .controls
+	.e-1e66ff82 > .box > .controls
 	{
 		flex-direction: row;
 		width: 100%;

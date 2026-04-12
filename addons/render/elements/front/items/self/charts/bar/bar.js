@@ -4,67 +4,166 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'charts-bar',
 		icon: 'bar_chart',
 		name: 'Bar Chart',
-		description: 'Premium bar chart with labels, values, grid, tooltip on hover, active bar highlight, and inline variant.',
+		description: 'Bar chart with labels, values, grid, tooltip, active highlight and inline mode.',
 		category: 'Charts',
-		author: 'OneType',
-		config: {
-			items: {
+		config:
+		{
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						value: { type: 'number', value: 0 },
-						label: { type: 'string' },
-						color: { type: 'string' },
-						active: { type: 'boolean' }
+					config:
+					{
+						value:
+						{
+							type: 'number',
+							value: 0,
+							description: 'Bar value.'
+						},
+						label:
+						{
+							type: 'string',
+							description: 'Bar label.'
+						},
+						color:
+						{
+							type: 'string',
+							description: 'Per-bar color override.'
+						},
+						active:
+						{
+							type: 'boolean',
+							description: 'Highlight this bar.'
+						}
 					}
-				}
+				},
+				description: 'Data items.'
 			},
-			title: {
-				type: 'string'
+			title:
+			{
+				type: 'string',
+				value: '',
+				description: 'Chart title.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Chart description.'
 			},
-			orientation: {
+			orientation:
+			{
 				type: 'string',
 				value: 'vertical',
-				options: ['vertical', 'horizontal']
+				options: ['vertical', 'horizontal'],
+				description: 'Bar direction.'
 			},
-			color: {
+			color:
+			{
 				type: 'string',
 				value: 'brand',
-				options: ['brand', 'blue', 'red', 'orange', 'green']
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Default bar color.'
 			},
-			height: {
+			height:
+			{
 				type: 'number',
-				value: 220
+				value: 220,
+				description: 'Canvas height in pixels.'
 			},
-			showLabels: {
+			showLabels:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show bar labels.'
 			},
-			showValues: {
-				type: 'boolean'
-			},
-			showGrid: {
+			showValues:
+			{
 				type: 'boolean',
-				value: true
+				value: false,
+				description: 'Show value above each bar.'
 			},
-			format: {
-				type: 'function'
+			showGrid:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show grid lines.'
 			},
-			variant: {
+			format:
+			{
+				type: 'function',
+				description: 'Custom value formatter. Receives number, returns string.'
+			},
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Padding size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'clean', 'inline', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['clean', 'inline'],
+				description: 'Visual modifiers.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasHead = !!this.title || !!this.description;
 			this.isInline = this.variant.includes('inline');
+			this.isClean = this.variant.includes('clean');
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.orientation, 'color-' + this.color, 'size-' + this.size];
+
+				if(!this.isInline && !this.isClean)
+				{
+					list.push(this.background);
+
+					if(this.border)
+					{
+						list.push('border');
+					}
+				}
+
+				if(this.isInline)
+				{
+					list.push('inline');
+				}
+
+				if(this.isClean)
+				{
+					list.push('clean');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== FORMAT ===== */
 
 			this.formatValue = (value) =>
 			{
@@ -91,9 +190,10 @@ onetype.AddonReady('elements', (elements) =>
 				return String(Math.round(value));
 			};
 
+			/* ===== DATA ===== */
+
 			const values = this.items.map(item => item.value || 0);
 			const max = Math.max(...values, 0) || 1;
-			const min = Math.min(0, ...values);
 
 			this.gridLines = [0, 0.25, 0.5, 0.75, 1].map(fraction => ({
 				percent: fraction * 100,
@@ -103,8 +203,7 @@ onetype.AddonReady('elements', (elements) =>
 			this.bars = this.items.map((item, index) =>
 			{
 				const value = item.value || 0;
-				const normalized = max === 0 ? 0 : Math.max(0, value / max);
-				const percent = normalized * 100;
+				const percent = max === 0 ? 0 : Math.max(0, value / max) * 100;
 
 				return {
 					index,
@@ -117,8 +216,10 @@ onetype.AddonReady('elements', (elements) =>
 				};
 			});
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + ' ' + orientation + ' color-' + color">
+				<div :class="classes()">
 					<header ot-if="hasHead" class="head">
 						<div ot-if="title" class="title">{{ title }}</div>
 						<div ot-if="description" class="description">{{ description }}</div>

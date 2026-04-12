@@ -1,14 +1,13 @@
-/* Root */
+/* ===== GLOBAL MARKDOWN ===== */
 
 .e-4696d703
 {
-	display: flex;
-	width: 100%;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-4696d703 > .holder
+.e-4696d703 > .box
 {
 	position: relative;
 	width: 100%;
@@ -16,20 +15,20 @@
 	overflow: hidden;
 }
 
-/* Body — scroll container for collapsible mode */
+/* Body */
 
-.e-4696d703 > .holder > .body
+.e-4696d703 > .box > .body
 {
 	overflow: hidden;
-	transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: max-height var(--ot-transition-slow);
 }
 
-.e-4696d703 > .holder.expanded > .body
+.e-4696d703 > .box.expanded > .body
 {
 	max-height: none !important;
 }
 
-/* Prose — typography container */
+/* Prose */
 
 .e-4696d703 .prose
 {
@@ -113,7 +112,7 @@
 	text-decoration: underline;
 	text-decoration-color: var(--ot-brand-opacity);
 	text-underline-offset: 3px;
-	transition: text-decoration-color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: text-decoration-color var(--ot-transition);
 }
 
 .e-4696d703 .prose a:hover
@@ -270,7 +269,7 @@
 	border-bottom: none;
 }
 
-/* ===== LINE WRAPPER (from onetype.Markdown) ===== */
+/* ===== LINE WRAPPER ===== */
 
 .e-4696d703 .prose > .line:empty
 {
@@ -289,9 +288,9 @@
 	padding-bottom: 0;
 }
 
-/* ===== COLLAPSIBLE — fade + toggle ===== */
+/* ===== COLLAPSIBLE ===== */
 
-.e-4696d703 > .holder.collapsible:not(.expanded) > .fade
+.e-4696d703 > .box.collapsible:not(.expanded) > .fade
 {
 	position: absolute;
 	bottom: 44px;
@@ -302,7 +301,7 @@
 	pointer-events: none;
 }
 
-.e-4696d703 > .holder.collapsible > .toggle
+.e-4696d703 > .box.collapsible > .toggle
 {
 	position: relative;
 	z-index: 2;
@@ -317,96 +316,45 @@
 	border: none;
 	border-top: 1px solid var(--ot-bg-1-border);
 	color: var(--ot-brand);
-	font-size: 12.5px;
+	font-size: var(--ot-size-s);
 	font-weight: 600;
 	font-family: var(--ot-font-primary);
 	cursor: pointer;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: color var(--ot-transition);
 }
 
-.e-4696d703 > .holder.collapsible > .toggle > i
+.e-4696d703 > .box.collapsible > .toggle:hover
+{
+	color: var(--ot-brand-hover);
+}
+
+.e-4696d703 > .box.collapsible > .toggle > i
 {
 	font-size: 18px;
 }
 
-/* ===== BACKGROUNDS ===== */
+/* ===== BACKGROUND ===== */
 
-.e-4696d703 > .holder.bg-1
-{
-	background: var(--ot-bg-1);
-	padding: var(--ot-spacing-l);
-}
-.e-4696d703 > .holder.bg-1.collapsible:not(.expanded) > .fade
-{
-	background: linear-gradient(180deg, transparent 0%, var(--ot-bg-1) 100%);
-}
-.e-4696d703 > .holder.bg-1.collapsible > .toggle
-{
-	border-top-color: var(--ot-bg-1-border);
-}
+.e-4696d703 > .box.bg-1 { background: var(--ot-bg-1); padding: var(--ot-spacing-l); }
+.e-4696d703 > .box.bg-2 { background: var(--ot-bg-2); padding: var(--ot-spacing-l); }
+.e-4696d703 > .box.bg-3 { background: var(--ot-bg-3); padding: var(--ot-spacing-l); }
+.e-4696d703 > .box.bg-4 { background: var(--ot-bg-4); padding: var(--ot-spacing-l); }
 
-.e-4696d703 > .holder.bg-2
-{
-	background: var(--ot-bg-2);
-	padding: var(--ot-spacing-l);
-}
-.e-4696d703 > .holder.bg-2.collapsible:not(.expanded) > .fade
-{
-	background: linear-gradient(180deg, transparent 0%, var(--ot-bg-2) 100%);
-}
-.e-4696d703 > .holder.bg-2.collapsible > .toggle
-{
-	border-top-color: var(--ot-bg-2-border);
-}
+.e-4696d703 > .box.bg-1.collapsible:not(.expanded) > .fade { background: linear-gradient(180deg, transparent 0%, var(--ot-bg-1) 100%); }
+.e-4696d703 > .box.bg-2.collapsible:not(.expanded) > .fade { background: linear-gradient(180deg, transparent 0%, var(--ot-bg-2) 100%); }
+.e-4696d703 > .box.bg-3.collapsible:not(.expanded) > .fade { background: linear-gradient(180deg, transparent 0%, var(--ot-bg-3) 100%); }
+.e-4696d703 > .box.bg-4.collapsible:not(.expanded) > .fade { background: linear-gradient(180deg, transparent 0%, var(--ot-bg-4) 100%); }
 
-.e-4696d703 > .holder.bg-3
-{
-	background: var(--ot-bg-3);
-	padding: var(--ot-spacing-l);
-}
-.e-4696d703 > .holder.bg-3.collapsible:not(.expanded) > .fade
-{
-	background: linear-gradient(180deg, transparent 0%, var(--ot-bg-3) 100%);
-}
-.e-4696d703 > .holder.bg-3.collapsible > .toggle
-{
-	border-top-color: var(--ot-bg-3-border);
-}
-
-.e-4696d703 > .holder.bg-4
-{
-	background: var(--ot-bg-4);
-	padding: var(--ot-spacing-l);
-}
-.e-4696d703 > .holder.bg-4.collapsible:not(.expanded) > .fade
-{
-	background: linear-gradient(180deg, transparent 0%, var(--ot-bg-4) 100%);
-}
-.e-4696d703 > .holder.bg-4.collapsible > .toggle
-{
-	border-top-color: var(--ot-bg-4-border);
-}
+.e-4696d703 > .box.bg-1.collapsible > .toggle { border-top-color: var(--ot-bg-1-border); }
+.e-4696d703 > .box.bg-2.collapsible > .toggle { border-top-color: var(--ot-bg-2-border); }
+.e-4696d703 > .box.bg-3.collapsible > .toggle { border-top-color: var(--ot-bg-3-border); }
+.e-4696d703 > .box.bg-4.collapsible > .toggle { border-top-color: var(--ot-bg-4-border); }
 
 /* ===== BORDER ===== */
 
-.e-4696d703 > .holder.border { border: 1px solid var(--ot-bg-2-border); }
-.e-4696d703 > .holder.bg-1.border { border-color: var(--ot-bg-1-border); }
-.e-4696d703 > .holder.bg-2.border { border-color: var(--ot-bg-2-border); }
-.e-4696d703 > .holder.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-4696d703 > .holder.bg-4.border { border-color: var(--ot-bg-4-border); }
+.e-4696d703 > .box.border { border: 1px solid var(--ot-bg-2-border); }
+.e-4696d703 > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
+.e-4696d703 > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
+.e-4696d703 > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
+.e-4696d703 > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
-/* ===== SIZES ===== */
-
-.e-4696d703 > .holder.size-s .prose { font-size: 12.5px; line-height: 1.65; }
-.e-4696d703 > .holder.size-s.bg-1,
-.e-4696d703 > .holder.size-s.bg-2,
-.e-4696d703 > .holder.size-s.bg-3,
-.e-4696d703 > .holder.size-s.bg-4 { padding: var(--ot-spacing-m); }
-
-.e-4696d703 > .holder.size-m .prose { font-size: 14px; }
-
-.e-4696d703 > .holder.size-l .prose { font-size: 16px; line-height: 1.8; }
-.e-4696d703 > .holder.size-l.bg-1,
-.e-4696d703 > .holder.size-l.bg-2,
-.e-4696d703 > .holder.size-l.bg-3,
-.e-4696d703 > .holder.size-l.bg-4 { padding: var(--ot-spacing-l) calc(var(--ot-spacing-l) * 1.25); }

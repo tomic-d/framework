@@ -4,53 +4,84 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-gallery',
 		icon: 'photo_library',
 		name: 'Gallery',
-		description: 'Premium image gallery with bento, grid and carousel layouts plus built-in lightbox (no transform dependency).',
+		description: 'Image gallery with bento, grid and carousel layouts plus built-in lightbox.',
 		category: 'Global',
-		author: 'OneType',
-		config: {
-			images: {
+		config:
+		{
+			images:
+			{
 				type: 'array',
 				value: [],
-				each: { type: 'string|object' }
+				each: { type: 'string|object' },
+				description: 'Array of URL strings or { src, alt, caption, thumb } objects.'
 			},
-			layout: {
+			layout:
+			{
 				type: 'string',
 				value: 'bento',
-				options: ['bento', 'grid', 'carousel']
+				options: ['bento', 'grid', 'carousel'],
+				description: 'Gallery layout mode.'
 			},
-			columns: {
+			columns:
+			{
 				type: 'number',
-				value: 4
+				value: 4,
+				description: 'Grid column count.'
 			},
-			ratio: {
+			ratio:
+			{
 				type: 'string',
-				value: '16/9'
+				value: '16/9',
+				description: 'Aspect ratio for grid items and carousel stage.'
 			},
-			gap: {
+			gap:
+			{
 				type: 'number',
-				value: 4
+				value: 4,
+				description: 'Gap between items in pixels.'
 			},
-			maxVisible: {
+			height:
+			{
+				type: 'string',
+				value: 'default',
+				options: ['compact', 'default', 'tall'],
+				description: 'Bento layout height.'
+			},
+			maxVisible:
+			{
 				type: 'number',
-				value: 5
+				value: 5,
+				description: 'Max visible images in bento before show-all badge.'
 			},
-			lightbox: {
+			lightbox:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Enable lightbox on click.'
 			},
-			showAllButton: {
+			showAll:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show floating all-photos button in bento.'
 			},
-			variant: {
-				type: 'array',
-				value: ['rounded'],
-				options: ['rounded', 'compact', 'tall', 'size-s', 'size-m', 'size-l']
+			rounded:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Apply border-radius to gallery.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Gallery size scale.'
 			}
 		},
 		render: function()
 		{
-			// Normalize images — accept string URLs or objects
+			/* ===== STATE ===== */
 
 			this.normalized = this.images.map((image, index) =>
 			{
@@ -69,21 +100,12 @@ onetype.AddonReady('elements', (elements) =>
 			});
 
 			this.total = this.normalized.length;
-
-			// Bento layout data
-
 			this.hero = this.normalized[0] || null;
 			this.thumbs = this.normalized.slice(1, this.maxVisible);
 			this.remaining = Math.max(0, this.total - this.maxVisible);
 			this.hasThumbs = this.thumbs.length > 0;
 			this.hasHero = !!this.hero;
-
-			// Grid layout — all images
-
 			this.gridImages = this.normalized;
-
-			// Carousel state
-
 			this.activeIndex = 0;
 			this.activeImage = this.normalized[0] || null;
 
@@ -91,14 +113,29 @@ onetype.AddonReady('elements', (elements) =>
 			this.isGrid = this.layout === 'grid';
 			this.isCarousel = this.layout === 'carousel';
 
-			// Style hooks
-
 			this.gridStyle = `grid-template-columns: repeat(${this.columns}, minmax(0, 1fr)); gap: ${this.gap}px;`;
 			this.bentoStyle = `gap: ${this.gap}px;`;
-			this.carouselRatio = this.ratio;
-			this.gridRatio = this.ratio;
 
-			// Carousel actions
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', 'layout-' + this.layout, 'size-' + this.size];
+
+				if(this.height !== 'default')
+				{
+					list.push(this.height);
+				}
+
+				if(this.rounded)
+				{
+					list.push('rounded');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.selectCarousel = (index) =>
 			{
@@ -120,8 +157,6 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				this.selectCarousel((this.activeIndex - 1 + this.total) % this.total);
 			};
-
-			// Lightbox open — builds a self-contained modal render
 
 			this.openLightbox = (startIndex) =>
 			{
@@ -167,26 +202,33 @@ onetype.AddonReady('elements', (elements) =>
 
 					this.go = (index) =>
 					{
-						if(index < 0) index = this.total - 1;
-						if(index >= this.total) index = 0;
+						if(index < 0)
+						{
+							index = this.total - 1;
+						}
+
+						if(index >= this.total)
+						{
+							index = 0;
+						}
+
 						this.index = index;
 						this.current = this.images[index];
 					};
 
 					this.next = () => this.go(this.index + 1);
 					this.prev = () => this.go(this.index - 1);
-
 					this.close = () => $ot.close();
 
 					return /* html */ `
-						<div class="lightbox-holder">
+						<div class="lightbox-box">
 							<button class="lightbox-close" type="button" ot-click="close">
 								<i>close</i>
 							</button>
 
 							<div class="lightbox-counter">{{ (index + 1) + ' / ' + total }}</div>
 
-							<button ot-if="total > 1" class="lightbox-nav lightbox-prev" type="button" ot-click="prev">
+							<button ot-if="total > 1" class="lightbox-nav prev" type="button" ot-click="prev">
 								<i>chevron_left</i>
 							</button>
 
@@ -195,7 +237,7 @@ onetype.AddonReady('elements', (elements) =>
 								<div ot-if="current.caption" class="lightbox-caption">{{ current.caption }}</div>
 							</div>
 
-							<button ot-if="total > 1" class="lightbox-nav lightbox-next" type="button" ot-click="next">
+							<button ot-if="total > 1" class="lightbox-nav next" type="button" ot-click="next">
 								<i>chevron_right</i>
 							</button>
 
@@ -214,15 +256,17 @@ onetype.AddonReady('elements', (elements) =>
 				}, { id: 'gallery-lightbox', backdrop: 0.85 });
 			};
 
-			this.openLightboxAt = (image) =>
+			this.openAt = (image) =>
 			{
 				this.openLightbox(image.index);
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + ' layout-' + layout">
+				<div :class="classes()">
 					<div ot-if="isBento && hasHero" class="bento" :style="bentoStyle">
-						<div class="bento-main" ot-click="() => openLightboxAt(hero)">
+						<div class="bento-main" ot-click="() => openAt(hero)">
 							<img :src="hero.src" :alt="hero.alt || ''" />
 						</div>
 
@@ -230,14 +274,14 @@ onetype.AddonReady('elements', (elements) =>
 							<div
 								ot-for="thumb in thumbs"
 								class="bento-thumb"
-								ot-click="() => openLightboxAt(thumb)"
+								ot-click="() => openAt(thumb)"
 							>
 								<img :src="thumb.src" :alt="thumb.alt || ''" />
 							</div>
 						</div>
 
 						<button
-							ot-if="showAllButton && remaining > 0"
+							ot-if="showAll && remaining > 0"
 							type="button"
 							class="show-all"
 							ot-click="() => openLightbox(0)"
@@ -251,22 +295,22 @@ onetype.AddonReady('elements', (elements) =>
 						<div
 							ot-for="image in gridImages"
 							class="grid-item"
-							:style="'aspect-ratio: ' + gridRatio"
-							ot-click="() => openLightboxAt(image)"
+							:style="'aspect-ratio: ' + ratio"
+							ot-click="() => openAt(image)"
 						>
 							<img :src="image.src" :alt="image.alt || ''" />
 						</div>
 					</div>
 
 					<div ot-if="isCarousel && hasHero" class="carousel">
-						<div class="carousel-stage" :style="'aspect-ratio: ' + carouselRatio">
-							<img :src="activeImage.src" :alt="activeImage.alt || ''" ot-click="() => openLightboxAt(activeImage)" />
+						<div class="carousel-stage" :style="'aspect-ratio: ' + ratio">
+							<img :src="activeImage.src" :alt="activeImage.alt || ''" ot-click="() => openAt(activeImage)" />
 
-							<button ot-if="total > 1" class="carousel-nav carousel-prev" type="button" ot-click="prev">
+							<button ot-if="total > 1" class="carousel-nav prev" type="button" ot-click="prev">
 								<i>chevron_left</i>
 							</button>
 
-							<button ot-if="total > 1" class="carousel-nav carousel-next" type="button" ot-click="next">
+							<button ot-if="total > 1" class="carousel-nav next" type="button" ot-click="next">
 								<i>chevron_right</i>
 							</button>
 

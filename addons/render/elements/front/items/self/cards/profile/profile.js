@@ -4,99 +4,177 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'cards-profile',
 		icon: 'account_circle',
 		name: 'Profile Card',
-		description: 'Generic profile card with avatar, name, role, bio, stats, tags, meta and action slots.',
+		description: 'Profile card with avatar, cover, stats, tags, socials and actions.',
 		category: 'Cards',
-		author: 'OneType',
-		config: {
-			avatar: {
-				type: 'string'
+		config:
+		{
+			avatar:
+			{
+				type: 'string',
+				value: '',
+				description: 'Avatar image URL.'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Display name.'
 			},
-			role: {
-				type: 'string'
+			role:
+			{
+				type: 'string',
+				value: '',
+				description: 'Role or subtitle.'
 			},
-			verified: {
-				type: 'boolean'
+			verified:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show verified badge.'
 			},
-			cover: {
-				type: 'string'
+			cover:
+			{
+				type: 'string',
+				value: '',
+				description: 'Cover image URL.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Bio or short description.'
 			},
-			meta: {
-				type: 'string'
+			meta:
+			{
+				type: 'string',
+				value: '',
+				description: 'Small meta text.'
 			},
-			href: {
-				type: 'string'
+			href:
+			{
+				type: 'string',
+				value: '',
+				description: 'Card link URL.'
 			},
-			tags: {
+			tags:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						icon: { type: 'string' },
 						label: { type: 'string' }
 					}
-				}
+				},
+				description: 'Pill tags with optional icon.'
 			},
-			stats: {
+			stats:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						num: { type: 'string|number' },
 						label: { type: 'string' }
 					}
-				}
+				},
+				description: 'Stat pairs with value and label.'
 			},
-			socials: {
+			socials:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						icon: { type: 'string' },
 						label: { type: 'string' },
 						href: { type: 'string' },
 						target: { type: 'string' }
 					}
-				}
+				},
+				description: 'Social link icons.'
 			},
-			following: {
-				type: 'boolean'
+			following:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Follow state.'
 			},
-			orientation: {
+			orientation:
+			{
 				type: 'string',
 				value: 'vertical',
-				options: ['vertical', 'horizontal']
+				options: ['vertical', 'horizontal'],
+				description: 'Card layout direction.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-1', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
 			},
-			_follow: {
-				type: 'function'
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
 			},
-			_click: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Card size.'
+			},
+			_follow:
+			{
+				type: 'function',
+				description: 'Follow handler. Receives { event, value }.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'Click handler. Receives { event }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasCover = !!this.cover;
 			this.hasTags = this.tags && this.tags.length > 0;
 			this.hasStats = this.stats && this.stats.length > 0;
 			this.hasSocials = this.socials && this.socials.length > 0;
 			this.hasActions = !!this.Slots.actions;
-			this.hasDefaultFollow = !this.hasActions && !!this._follow;
+			this.hasFollow = !this.hasActions && !!this._follow;
 
-			this.toggle = (event) =>
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.orientation, this.background, 'size-' + this.size];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.toggle = ({ event }) =>
 			{
 				this.following = !this.following;
 
@@ -106,7 +184,7 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			this.click = (event) =>
+			this.click = ({ event }) =>
 			{
 				if(this._click)
 				{
@@ -114,8 +192,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + orientation + ' ' + variant.join(' ')">
+				<div :class="classes()">
 					<div ot-if="hasCover" class="cover" :style="'background-image: url(' + cover + ')'"></div>
 
 					<div class="body">
@@ -167,7 +247,7 @@ onetype.AddonReady('elements', (elements) =>
 						</div>
 
 						<button
-							ot-if="hasDefaultFollow"
+							ot-if="hasFollow"
 							:class="'follow' + (following ? ' active' : '')"
 							type="button"
 							ot-click="toggle"

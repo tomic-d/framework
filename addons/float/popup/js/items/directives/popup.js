@@ -15,7 +15,20 @@ onetype.AddonReady('directives', function(directives)
 				}
 				else
 				{
-					node.otPopupOverlay = popup.Fn('popup', node, node.otPopupConfig.render, node.otPopupConfig);
+					const config = Object.assign({}, node.otPopupConfig);
+					const userOnClose = config.onClose;
+
+					config.onClose = (item) =>
+					{
+						node.otPopupOverlay = null;
+
+						if (typeof userOnClose === 'function')
+						{
+							userOnClose(item);
+						}
+					};
+
+					node.otPopupOverlay = popup.Fn('popup', node, config.render, config);
 				}
 
 				break;

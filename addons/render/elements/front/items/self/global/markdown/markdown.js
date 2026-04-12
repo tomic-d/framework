@@ -4,40 +4,96 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-markdown',
 		icon: 'article',
 		name: 'Markdown',
-		description: 'Markdown renderer with premium typography and optional collapsible read more.',
+		description: 'Markdown renderer with premium typography and collapsible read more.',
 		category: 'Global',
-		author: 'OneType',
-		config: {
-			content: {
-				type: 'string'
+		config:
+		{
+			content:
+			{
+				type: 'string',
+				value: '',
+				description: 'Markdown string to render.'
 			},
-			collapsible: {
-				type: 'boolean'
+			collapsible:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Enable read more toggle.'
 			},
-			maxHeight: {
+			maxHeight:
+			{
 				type: 'number',
-				value: 200
+				value: 200,
+				description: 'Collapsed max height in pixels.'
 			},
-			expanded: {
-				type: 'boolean'
+			expanded:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Start expanded when collapsible.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth with padding.'
+			},
+			variant:
+			{
 				type: 'array',
 				value: [],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+				each: { type: 'string' },
+				options: ['border'],
+				description: 'Visual modifiers.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.html = this.content ? onetype.Markdown(this.content) : '';
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box'];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.collapsible)
+				{
+					list.push('collapsible');
+				}
+
+				if(this.expanded)
+				{
+					list.push('expanded');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.toggle = () =>
 			{
 				this.expanded = !this.expanded;
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<article :class="'holder ' + variant.join(' ') + (collapsible ? ' collapsible' : '') + (expanded ? ' expanded' : '')">
+				<article :class="classes()">
 					<div
 						class="body"
 						:style="collapsible && !expanded ? 'max-height: ' + maxHeight + 'px' : ''"

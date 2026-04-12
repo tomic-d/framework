@@ -4,200 +4,235 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-upload',
 		icon: 'cloud_upload',
 		name: 'Upload',
-		description: 'Premium file upload with drag-and-drop, preview thumbnails, progress bars, remove, multi-file and accept filter.',
+		description: 'File upload with drag-and-drop, URL preview grid, suffix detection and remove.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
+		config:
+		{
+			mode:
+			{
+				type: 'string',
+				value: 'grid',
+				options: ['grid', 'input'],
+				description: 'Display mode. Grid shows cards, input shows URL field with preview.'
+			},
+			value:
+			{
 				type: 'array',
 				value: [],
-				each: { type: 'object' }
+				each: { type: 'string' },
+				description: 'Array of file URLs.'
 			},
-			name: {
-				type: 'string'
-			},
-			accept: {
+			placeholder:
+			{
 				type: 'string',
-				value: ''
+				value: 'Paste URL or drop file…',
+				description: 'Placeholder for input mode.'
 			},
-			multiple: {
+			multiple:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Allow multiple files.'
 			},
-			max: {
-				type: 'number'
+			max:
+			{
+				type: 'number',
+				description: 'Maximum number of files.'
 			},
-			maxSize: {
-				type: 'number'
-			},
-			label: {
+			accept:
+			{
 				type: 'string',
-				value: 'Drop files here or click to browse'
+				value: '',
+				description: 'Accepted file extensions (.png, .pdf) or MIME patterns (image/*).'
 			},
-			hint: {
-				type: 'string'
-			},
-			icon: {
+			label:
+			{
 				type: 'string',
-				value: 'cloud_upload'
+				value: 'Drop files here or click to browse',
+				description: 'Dropzone label text.'
 			},
-			disabled: {
-				type: 'boolean'
+			hint:
+			{
+				type: 'string',
+				value: '',
+				description: 'Hint text below label.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			icon:
+			{
+				type: 'string',
+				value: 'cloud_upload',
+				description: 'Dropzone icon.'
 			},
-			_change: {
-				type: 'function'
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
 			},
-			_error: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Dropzone size.'
+			},
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { value }.'
+			},
+			_upload:
+			{
+				type: 'function',
+				description: 'Upload handler. Receives { file }. Must return URL string or null.'
+			},
+			_error:
+			{
+				type: 'function',
+				description: 'Error handler. Receives { errors }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.dragging = false;
+			this.uploading = false;
 			this.inputId = 'upload-' + onetype.GenerateUID();
 
-			// Helpers
+			/* ===== HELPERS ===== */
 
-			this.formatSize = (bytes) =>
+			this.suffix = (url) =>
 			{
-				if(bytes === undefined || bytes === null)
+				if(!url)
 				{
 					return '';
 				}
 
-				if(bytes < 1024)
+				const clean = url.split('?')[0].split('#')[0];
+				const dot = clean.lastIndexOf('.');
+
+				if(dot === -1)
 				{
-					return bytes + ' B';
+					return '';
 				}
 
-				if(bytes < 1024 * 1024)
-				{
-					return (bytes / 1024).toFixed(1) + ' KB';
-				}
-
-				if(bytes < 1024 * 1024 * 1024)
-				{
-					return (bytes / 1024 / 1024).toFixed(1) + ' MB';
-				}
-
-				return (bytes / 1024 / 1024 / 1024).toFixed(1) + ' GB';
+				return clean.substring(dot + 1).toLowerCase();
 			};
 
-			this.fileIcon = (file) =>
+			this.isImage = (url) =>
 			{
-				const type = file.type || '';
-				const name = (file.name || '').toLowerCase();
+				const ext = this.suffix(url);
+				return ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'avif', 'ico', 'bmp'].includes(ext);
+			};
 
-				if(type.startsWith('image/')) return 'image';
-				if(type.startsWith('video/')) return 'movie';
-				if(type.startsWith('audio/')) return 'audio_file';
-				if(type.includes('pdf') || name.endsWith('.pdf')) return 'picture_as_pdf';
-				if(type.includes('zip') || name.endsWith('.zip') || name.endsWith('.rar')) return 'folder_zip';
-				if(name.match(/\.(doc|docx)$/)) return 'description';
-				if(name.match(/\.(xls|xlsx|csv)$/)) return 'table_chart';
-				if(name.match(/\.(ppt|pptx)$/)) return 'slideshow';
-				if(name.match(/\.(js|ts|jsx|tsx|py|go|rs|java|c|cpp|html|css|json)$/)) return 'code';
+			this.isVideo = (url) =>
+			{
+				const ext = this.suffix(url);
+				return ['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(ext);
+			};
+
+			this.fileIcon = (url) =>
+			{
+				const ext = this.suffix(url);
+
+				if(this.isImage(url)) return 'image';
+				if(this.isVideo(url)) return 'movie';
+				if(['mp3', 'wav', 'ogg', 'flac', 'aac'].includes(ext)) return 'audio_file';
+				if(ext === 'pdf') return 'picture_as_pdf';
+				if(['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) return 'folder_zip';
+				if(['doc', 'docx'].includes(ext)) return 'description';
+				if(['xls', 'xlsx', 'csv'].includes(ext)) return 'table_chart';
+				if(['ppt', 'pptx'].includes(ext)) return 'slideshow';
+				if(['js', 'ts', 'jsx', 'tsx', 'py', 'go', 'rs', 'java', 'c', 'cpp', 'html', 'css', 'json'].includes(ext)) return 'code';
 
 				return 'insert_drive_file';
 			};
 
-			this.isImage = (file) =>
+			this.fileName = (url) =>
 			{
-				return (file.type || '').startsWith('image/');
-			};
-
-			// Validation
-
-			this.validate = (file) =>
-			{
-				if(this.maxSize && file.size > this.maxSize)
+				if(!url)
 				{
-					return 'File "' + file.name + '" is larger than ' + this.formatSize(this.maxSize) + '.';
+					return '';
 				}
 
-				if(this.accept)
-				{
-					const patterns = this.accept.split(',').map(p => p.trim().toLowerCase());
-					const name = (file.name || '').toLowerCase();
-					const type = (file.type || '').toLowerCase();
+				const clean = url.split('?')[0].split('#')[0];
+				const slash = clean.lastIndexOf('/');
 
-					const matches = patterns.some(pattern =>
-					{
-						if(pattern.startsWith('.'))
-						{
-							return name.endsWith(pattern);
-						}
-
-						if(pattern.endsWith('/*'))
-						{
-							return type.startsWith(pattern.slice(0, -1));
-						}
-
-						return type === pattern;
-					});
-
-					if(!matches)
-					{
-						return 'File "' + file.name + '" type not allowed.';
-					}
-				}
-
-				return null;
+				return slash !== -1 ? clean.substring(slash + 1) : clean;
 			};
 
-			// Wrap raw File object with metadata
+			this.isInput = this.mode === 'input';
+			this.url = this.value.length > 0 ? this.value[0] : '';
+			this.hasPreview = this.url && this.isImage(this.url);
 
-			this.wrap = (file) =>
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
 			{
-				const wrapped = {
-					id: onetype.GenerateUID(),
-					file,
-					name: file.name,
-					size: file.size,
-					type: file.type,
-					progress: 0,
-					error: null,
-					preview: null
-				};
+				const list = ['box', this.background, 'size-' + this.size];
 
-				if(this.isImage(file))
+				if(this.isInput)
 				{
-					try
-					{
-						wrapped.preview = URL.createObjectURL(file);
-					}
-					catch(error) { }
+					list.push('mode-input');
 				}
 
-				return wrapped;
-			};
-
-			// Add files — validates and appends respecting max
-
-			this.addFiles = (fileList) =>
-			{
 				if(this.disabled)
 				{
-					return;
+					list.push('disabled');
 				}
 
-				const files = Array.from(fileList);
+				return list.join(' ');
+			};
+
+			this.zoneClasses = () =>
+			{
+				const list = ['zone'];
+
+				if(this.dragging)
+				{
+					list.push('dragging');
+				}
+
+				if(this.value.length > 0)
+				{
+					list.push('compact');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.addUrls = (urls) =>
+			{
 				const errors = [];
 				const accepted = [];
 
-				for(const file of files)
+				for(const url of urls)
 				{
-					const error = this.validate(file);
-
-					if(error)
+					if(!url || typeof url !== 'string')
 					{
-						errors.push(error);
 						continue;
+					}
+
+					if(this.accept)
+					{
+						const ext = this.suffix(url);
+						const patterns = this.accept.split(',').map(p => p.trim().toLowerCase().replace('.', ''));
+
+						if(ext && !patterns.includes(ext))
+						{
+							errors.push('File "' + this.fileName(url) + '" type not allowed.');
+							continue;
+						}
 					}
 
 					if(this.max && this.value.length + accepted.length >= this.max)
@@ -206,7 +241,7 @@ onetype.AddonReady('elements', (elements) =>
 						break;
 					}
 
-					accepted.push(this.wrap(file));
+					accepted.push(url);
 				}
 
 				if(!this.multiple && accepted.length)
@@ -231,24 +266,53 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
-			// Remove one file
+			this.uploadFile = async (file) =>
+			{
+				if(this._upload)
+				{
+					const url = await this._upload({ file });
 
-			this.remove = (index) =>
+					if(url && typeof url === 'string')
+					{
+						return url;
+					}
+				}
+
+				return null;
+			};
+
+			this.addFiles = async (fileList) =>
 			{
 				if(this.disabled)
 				{
 					return;
 				}
 
-				const removed = this.value[index];
+				const files = Array.from(fileList);
+				const urls = [];
 
-				if(removed && removed.preview)
+				this.uploading = true;
+				this.Update();
+
+				for(const file of files)
 				{
-					try
+					const url = await this.uploadFile(file);
+
+					if(url)
 					{
-						URL.revokeObjectURL(removed.preview);
+						urls.push(url);
 					}
-					catch(error) { }
+				}
+
+				this.uploading = false;
+				this.addUrls(urls);
+			};
+
+			this.remove = (index) =>
+			{
+				if(this.disabled)
+				{
+					return;
 				}
 
 				this.value.splice(index, 1);
@@ -261,26 +325,12 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
-			// Clear all
-
 			this.clear = () =>
 			{
 				if(this.disabled)
 				{
 					return;
 				}
-
-				this.value.forEach(entry =>
-				{
-					if(entry.preview)
-					{
-						try
-						{
-							URL.revokeObjectURL(entry.preview);
-						}
-						catch(error) { }
-					}
-				});
 
 				this.value = [];
 
@@ -292,28 +342,26 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
-			// Events
+			/* ===== DRAG EVENTS ===== */
 
-			this.onDragEnter = (event) =>
+			this.dragenter = ({ event }) =>
 			{
 				event.preventDefault();
 				event.stopPropagation();
 
-				if(this.disabled)
+				if(!this.disabled)
 				{
-					return;
+					this.dragging = true;
 				}
-
-				this.dragging = true;
 			};
 
-			this.onDragOver = (event) =>
+			this.dragover = ({ event }) =>
 			{
 				event.preventDefault();
 				event.stopPropagation();
 			};
 
-			this.onDragLeave = (event) =>
+			this.dragleave = ({ event }) =>
 			{
 				event.preventDefault();
 				event.stopPropagation();
@@ -326,11 +374,10 @@ onetype.AddonReady('elements', (elements) =>
 				this.dragging = false;
 			};
 
-			this.onDrop = (event) =>
+			this.drop = ({ event }) =>
 			{
 				event.preventDefault();
 				event.stopPropagation();
-
 				this.dragging = false;
 
 				if(this.disabled)
@@ -346,7 +393,7 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			this.onPick = (event) =>
+			this.pick = ({ event }) =>
 			{
 				const files = event.target.files;
 
@@ -365,7 +412,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const input = this.Element.querySelector('.file-input');
+				const input = this.Element.querySelector('.input');
 
 				if(input)
 				{
@@ -373,94 +420,154 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			// Cleanup previews on destroy
+			/* ===== INPUT MODE ===== */
 
-			this.OnDestroy(() =>
+			this.onUrl = ({ event, value }) =>
 			{
-				this.value.forEach(entry =>
-				{
-					if(entry.preview)
-					{
-						try
-						{
-							URL.revokeObjectURL(entry.preview);
-						}
-						catch(error) { }
-					}
-				});
-			});
+				this.url = value;
+				this.hasPreview = value && this.isImage(value);
 
-			this.hasFiles = this.value.length > 0;
+				if(value)
+				{
+					this.value = [value];
+				}
+				else
+				{
+					this.value = [];
+				}
+
+				if(this._change)
+				{
+					this._change({ value: this.value });
+				}
+			};
+
+			this.clearUrl = () =>
+			{
+				this.url = '';
+				this.hasPreview = false;
+				this.value = [];
+
+				if(this._change)
+				{
+					this._change({ value: this.value });
+				}
+			};
+
+			/* ===== RENDER ===== */
+
+			if(this.isInput)
+			{
+				return /* html */ `
+					<div :class="classes()">
+						<div class="row">
+							<div ot-if="hasPreview" class="preview">
+								<img :src="url" />
+							</div>
+							<div ot-if="url && !hasPreview" class="preview placeholder">
+								<i>{{ fileIcon(url) }}</i>
+							</div>
+							<div class="field">
+								<i class="icon">link</i>
+								<input
+									class="text"
+									type="text"
+									:value="url"
+									:placeholder="placeholder"
+									:disabled="disabled || null"
+									autocomplete="off"
+									ot-change="onUrl"
+								/>
+								<button
+									ot-if="url && !disabled"
+									type="button"
+									class="action"
+									ot-click.stop="clearUrl"
+								>
+									<i>close</i>
+								</button>
+								<button
+									ot-if="!disabled"
+									type="button"
+									class="action"
+									ot-click.stop="browse"
+								>
+									<i>upload</i>
+								</button>
+							</div>
+							<input
+								class="input"
+								type="file"
+								:accept="accept || null"
+								:disabled="disabled || null"
+								ot-change="pick"
+							/>
+						</div>
+					</div>
+				`;
+			}
 
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+				<div :class="classes()">
 					<div
-						:class="'dropzone' + (dragging ? ' dragging' : '') + (hasFiles ? ' has-files' : '')"
-						ot-click="browse"
-						ot-dragenter="onDragEnter"
-						ot-dragover="onDragOver"
-						ot-dragleave="onDragLeave"
-						ot-drop="onDrop"
+						:class="zoneClasses()"
+						ot-dragenter="dragenter"
+						ot-dragover="dragover"
+						ot-dragleave="dragleave"
+						ot-drop="drop"
 					>
 						<input
-							class="file-input"
+							class="input"
 							type="file"
 							:id="inputId"
-							:name="name || null"
 							:accept="accept || null"
 							:multiple="multiple || null"
 							:disabled="disabled || null"
-							ot-change="onPick"
+							ot-change="pick"
 						/>
 
-						<div class="dropzone-content">
-							<div class="dropzone-icon">
-								<i>{{ icon }}</i>
+						<div ot-if="value.length === 0" class="prompt" ot-click="browse">
+							<div class="badge">
+								<i ot-if="!uploading">{{ icon }}</i>
+								<i ot-if="uploading" class="spin">progress_activity</i>
 							</div>
-							<div class="dropzone-text">
-								<span class="dropzone-label">{{ label }}</span>
-								<span ot-if="hint" class="dropzone-hint">{{ hint }}</span>
-								<span ot-if="!hint && accept" class="dropzone-hint">Accepted: {{ accept }}</span>
-								<span ot-if="!hint && !accept && maxSize" class="dropzone-hint">Max size: {{ formatSize(maxSize) }}</span>
+							<div class="text">
+								<span class="label">{{ label }}</span>
+								<span ot-if="hint" class="hint">{{ hint }}</span>
+								<span ot-if="!hint && accept" class="hint">Accepted: {{ accept }}</span>
+							</div>
+						</div>
+
+						<div ot-if="value.length > 0" class="grid">
+							<div ot-for="url, index in value" class="card">
+								<div ot-if="isImage(url)" class="thumb">
+									<img :src="url" :alt="fileName(url)" />
+								</div>
+								<div ot-if="!isImage(url)" class="thumb placeholder">
+									<i>{{ fileIcon(url) }}</i>
+								</div>
+								<span class="name">{{ fileName(url) }}</span>
+								<button
+									type="button"
+									class="remove"
+									ot-click.stop="() => remove(index)"
+								>
+									<i>close</i>
+								</button>
+							</div>
+
+							<div ot-if="multiple && (!max || value.length < max)" class="card add" ot-click="browse">
+								<i>add</i>
 							</div>
 						</div>
 					</div>
 
-					<div ot-if="hasFiles" class="files">
-						<div ot-for="entry, index in value" class="file">
-							<div ot-if="entry.preview" class="file-preview">
-								<img :src="entry.preview" :alt="entry.name" />
-							</div>
-							<div ot-if="!entry.preview" class="file-icon">
-								<i>{{ fileIcon(entry) }}</i>
-							</div>
-							<div class="file-info">
-								<span class="file-name">{{ entry.name }}</span>
-								<span class="file-meta">
-									<span>{{ formatSize(entry.size) }}</span>
-									<span ot-if="entry.error" class="file-error">{{ entry.error }}</span>
-								</span>
-								<div ot-if="entry.progress > 0 && entry.progress < 100" class="file-progress">
-									<div class="file-progress-bar" :style="'width: ' + entry.progress + '%'"></div>
-								</div>
-							</div>
-							<button
-								type="button"
-								class="file-remove"
-								ot-click="() => remove(index)"
-								:ot-tooltip="{ text: 'Remove', position: { x: 'center', y: 'top' } }"
-							>
-								<i>close</i>
-							</button>
-						</div>
-
-						<div ot-if="value.length > 1" class="files-footer">
-							<span class="files-count">{{ value.length }} file{{ value.length === 1 ? '' : 's' }}</span>
-							<button type="button" class="files-clear" ot-click="clear">
-								<i>delete_sweep</i>
-								<span>Clear all</span>
-							</button>
-						</div>
+					<div ot-if="value.length > 1" class="footer">
+						<span class="count">{{ value.length }} file{{ value.length === 1 ? '' : 's' }}</span>
+						<button type="button" class="clear" ot-click="clear">
+							<i>delete_sweep</i>
+							<span>Clear all</span>
+						</button>
 					</div>
 				</div>
 			`;

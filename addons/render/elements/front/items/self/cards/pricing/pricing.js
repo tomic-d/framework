@@ -4,82 +4,191 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'cards-pricing',
 		icon: 'payments',
 		name: 'Pricing Card',
-		description: 'Premium pricing plan card with icon, badge, ribbon, highlighted state and flexible CTA.',
+		description: 'Pricing plan card with icon, badge, ribbon, features and CTA.',
 		category: 'Cards',
-		author: 'OneType',
-		config: {
-			icon: {
-				type: 'string'
-			},
-			name: {
-				type: 'string'
-			},
-			description: {
-				type: 'string'
-			},
-			badge: {
-				type: 'string'
-			},
-			ribbon: {
-				type: 'string'
-			},
-			currency: {
+		config:
+		{
+			icon:
+			{
 				type: 'string',
-				value: '$'
+				value: '',
+				description: 'Plan icon.'
 			},
-			price: {
-				type: 'string|number'
-			},
-			originalPrice: {
-				type: 'string|number'
-			},
-			period: {
+			name:
+			{
 				type: 'string',
-				value: '/mo'
+				value: '',
+				description: 'Plan name.'
 			},
-			yearly: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Short tagline.'
 			},
-			features: {
+			badge:
+			{
+				type: 'string',
+				value: '',
+				description: 'Pill badge next to icon.'
+			},
+			ribbon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Corner ribbon label.'
+			},
+			currency:
+			{
+				type: 'string',
+				value: '$',
+				description: 'Currency symbol.'
+			},
+			price:
+			{
+				type: 'string|number',
+				value: '',
+				description: 'Plan price.'
+			},
+			original:
+			{
+				type: 'string|number',
+				value: '',
+				description: 'Strikethrough original price.'
+			},
+			period:
+			{
+				type: 'string',
+				value: '/mo',
+				description: 'Billing period label.'
+			},
+			yearly:
+			{
+				type: 'string',
+				value: '',
+				description: 'Yearly savings caption.'
+			},
+			features:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						text: { type: 'string' },
-						icon: { type: 'string' },
-						included: { type: 'boolean', value: true },
-						highlight: { type: 'boolean' }
+					config:
+					{
+						text:
+						{
+							type: 'string',
+							description: 'Feature label.'
+						},
+						icon:
+						{
+							type: 'string',
+							description: 'Feature icon.'
+						},
+						included:
+						{
+							type: 'boolean',
+							value: true,
+							description: 'Included in plan.'
+						},
+						highlight:
+						{
+							type: 'boolean',
+							value: false,
+							description: 'Emphasize feature.'
+						}
 					}
-				}
+				},
+				description: 'Feature list.'
 			},
-			cta: {
+			cta:
+			{
 				type: 'string',
-				value: 'Get started'
+				value: 'Get started',
+				description: 'CTA button text.'
 			},
-			ctaIcon: {
+			ctaIcon:
+			{
 				type: 'string',
-				value: 'arrow_forward'
+				value: 'arrow_forward',
+				description: 'CTA button icon.'
 			},
-			href: {
-				type: 'string'
+			href:
+			{
+				type: 'string',
+				value: '',
+				description: 'CTA link URL.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-1', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'featured', 'border', 'highlighted', 'size-s', 'size-m', 'size-l']
+			tone:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'highlighted', 'featured'],
+				description: 'Card emphasis level.'
 			},
-			_click: {
-				type: 'function'
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Card size.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'CTA click handler. Receives { event }.'
 			}
 		},
 		render: function()
 		{
-			this.isHighlighted = this.variant.includes('highlighted');
-			this.isFeatured = this.variant.includes('featured');
-			this.hasRibbon = !!this.ribbon;
+			/* ===== STATE ===== */
 
-			this.handle = (event) =>
+			this.hasRibbon = !!this.ribbon;
+			this.hasFeatures = this.features.length > 0;
+			this.hasOriginal = !!this.original;
+			this.hasYearly = !!this.yearly;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', 'size-' + this.size];
+
+				if(this.tone)
+				{
+					list.push(this.tone);
+				}
+				else
+				{
+					list.push(this.background);
+				}
+
+				if(this.border && this.tone !== 'featured')
+				{
+					list.push('border');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.handle = ({ event }) =>
 			{
 				if(this._click)
 				{
@@ -87,18 +196,37 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			this.ctaButtonVariant = () =>
+			this.featureClass = (feature) =>
 			{
-				if(this.isFeatured || this.isHighlighted)
+				const list = ['feature'];
+
+				if(!feature.included)
 				{
-					return ['brand', 'size-m', 'full'];
+					list.push('disabled');
 				}
 
-				return ['bg-2', 'border', 'size-m', 'full'];
+				if(feature.highlight)
+				{
+					list.push('highlight');
+				}
+
+				return list.join(' ');
 			};
 
+			this.featureIcon = (feature) =>
+			{
+				if(feature.icon)
+				{
+					return feature.icon;
+				}
+
+				return feature.included ? 'check_circle' : 'remove';
+			};
+
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<div ot-if="hasRibbon" class="ribbon">{{ ribbon }}</div>
 
 					<div class="header">
@@ -108,7 +236,7 @@ onetype.AddonReady('elements', (elements) =>
 						</div>
 
 						<h3 class="name">{{ name }}</h3>
-						<p ot-if="description" class="description">{{ description }}</p>
+						<p ot-if="description" class="desc">{{ description }}</p>
 
 						<div class="price">
 							<span ot-if="currency" class="currency">{{ currency }}</span>
@@ -116,16 +244,16 @@ onetype.AddonReady('elements', (elements) =>
 							<span ot-if="period" class="period">{{ period }}</span>
 						</div>
 
-						<span ot-if="originalPrice" class="original"><span class="strike">{{ currency }}{{ originalPrice }}</span></span>
-						<span ot-if="yearly" class="yearly">{{ yearly }}</span>
+						<span ot-if="hasOriginal" class="original"><span class="strike">{{ currency }}{{ original }}</span></span>
+						<span ot-if="hasYearly" class="yearly">{{ yearly }}</span>
 					</div>
 
-					<div ot-if="features.length" class="features">
+					<div ot-if="hasFeatures" class="features">
 						<div
 							ot-for="feature in features"
-							:class="'feature' + (feature.included === false ? ' disabled' : '') + (feature.highlight ? ' highlight' : '')"
+							:class="featureClass(feature)"
 						>
-							<i class="icon">{{ feature.icon || (feature.included === false ? 'remove' : 'check_circle') }}</i>
+							<i class="icon">{{ featureIcon(feature) }}</i>
 							<span class="text">{{ feature.text }}</span>
 						</div>
 					</div>
@@ -135,7 +263,10 @@ onetype.AddonReady('elements', (elements) =>
 							:text="cta"
 							:icon="ctaIcon"
 							:href="href"
-							:variant="ctaButtonVariant()"
+							:color="tone === 'featured' || tone === 'highlighted' ? 'brand' : ''"
+							:background="tone === 'featured' || tone === 'highlighted' ? '' : 'bg-2'"
+							:border="tone !== 'featured' && tone !== 'highlighted'"
+							:variant="['full']"
 							:_click="handle"
 						></e-form-button>
 					</div>

@@ -4,59 +4,207 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-menu',
 		icon: 'menu',
 		name: 'Menu',
-		description: 'Premium menu with icons, descriptions, shortcuts, badges, nested items and multiple styles.',
+		description: 'Context menu with icons, descriptions, shortcuts, badges, nested submenus and color accents.',
 		category: 'Global',
-		author: 'OneType',
-		config: {
-			items: {
+		config:
+		{
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Menu entries.',
+				each:
+				{
 					type: 'object',
-					config: {
-						type: { type: 'string', value: 'action', options: ['action', 'link', 'separator', 'header'] },
-						id: { type: 'string' },
-						label: { type: 'string' },
-						description: { type: 'string' },
-						icon: { type: 'string' },
-						iconRight: { type: 'string' },
-						shortcut: { type: 'string' },
-						badge: { type: 'string|number' },
-						value: { type: 'string' },
-						href: { type: 'string' },
-						target: { type: 'string' },
-						active: { type: 'boolean' },
-						disabled: { type: 'boolean' },
-						danger: { type: 'boolean' },
-						color: { type: 'string', options: ['brand', 'blue', 'red', 'orange', 'green'] },
-						items: { type: 'array' }
+					config:
+					{
+						type:
+						{
+							type: 'string',
+							value: 'action',
+							options: ['action', 'link', 'separator', 'header'],
+							description: 'Entry type.'
+						},
+						id:
+						{
+							type: 'string',
+							description: 'Unique identifier.'
+						},
+						label:
+						{
+							type: 'string',
+							description: 'Display label.'
+						},
+						description:
+						{
+							type: 'string',
+							description: 'Secondary line below label.'
+						},
+						icon:
+						{
+							type: 'string',
+							description: 'Leading icon.'
+						},
+						iconRight:
+						{
+							type: 'string',
+							description: 'Trailing icon.'
+						},
+						shortcut:
+						{
+							type: 'string',
+							description: 'Keyboard shortcut hint.'
+						},
+						badge:
+						{
+							type: 'string|number',
+							description: 'Badge count or text.'
+						},
+						value:
+						{
+							type: 'string',
+							description: 'Value passed to _select.'
+						},
+						href:
+						{
+							type: 'string',
+							description: 'Link URL.'
+						},
+						target:
+						{
+							type: 'string',
+							description: 'Link target.'
+						},
+						active:
+						{
+							type: 'boolean',
+							description: 'Active highlight.'
+						},
+						disabled:
+						{
+							type: 'boolean',
+							description: 'Disabled state.'
+						},
+						danger:
+						{
+							type: 'boolean',
+							description: 'Danger red accent.'
+						},
+						color:
+						{
+							type: 'string',
+							options: ['brand', 'blue', 'red', 'orange', 'green'],
+							description: 'Icon color accent.'
+						},
+						items:
+						{
+							type: 'array',
+							description: 'Nested submenu entries.'
+						}
 					}
 				}
 			},
-			depth: {
+			depth:
+			{
 				type: 'number',
-				value: 0
+				value: 0,
+				description: 'Nesting depth. Auto-incremented for submenus.'
 			},
-			variant: {
+			tone:
+			{
+				type: 'string',
+				value: 'default',
+				options: ['default', 'contextual', 'flush', 'bordered'],
+				description: 'Container style.'
+			},
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Row height.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['default', 'size-m'],
-				options: ['default', 'contextual', 'flush', 'bordered', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'border-top', 'border-right', 'border-bottom', 'border-left'],
+				description: 'Border modifiers.'
 			},
-			_select: {
-				type: 'function'
+			_select:
+			{
+				type: 'function',
+				description: 'Select handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
-			const styles = ['default', 'contextual', 'flush', 'bordered'];
-			const hasStyle = this.variant.some(v => styles.includes(v));
-
-			if(!hasStyle)
-			{
-				this.variant = ['default', ...this.variant];
-			}
+			/* ===== STATE ===== */
 
 			this.opened = {};
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.tone, 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				this.variant.forEach(v => list.push(v));
+
+				return list.join(' ');
+			};
+
+			this.entryClass = (item) =>
+			{
+				const list = ['entry', item.type];
+
+				if(item.disabled)
+				{
+					list.push('disabled');
+				}
+
+				if(item.active)
+				{
+					list.push('active');
+				}
+
+				if(item.danger)
+				{
+					list.push('danger');
+				}
+
+				if(item.color)
+				{
+					list.push('color-' + item.color);
+				}
+
+				if(this.hasChildren(item))
+				{
+					list.push('parent');
+				}
+
+				if(this.isOpen(item.id || item.label))
+				{
+					list.push('open');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.hasChildren = (item) =>
 			{
@@ -68,7 +216,7 @@ onetype.AddonReady('elements', (elements) =>
 				return !!this.opened[id];
 			};
 
-			this.toggle = (item, event) =>
+			this.toggle = (item) =>
 			{
 				if(item.disabled)
 				{
@@ -79,7 +227,7 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
-			this.select = (item, event) =>
+			this.select = (item) =>
 			{
 				if(item.disabled)
 				{
@@ -88,21 +236,23 @@ onetype.AddonReady('elements', (elements) =>
 
 				if(this.hasChildren(item))
 				{
-					this.toggle(item, event);
+					this.toggle(item);
 					return;
 				}
 
 				if(this._select)
 				{
-					this._select({ event, value: item.value || item.id || item.label });
+					this._select({ event: null, value: item.value || item.id || item.label });
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<div
 						ot-for="item in items"
-						:class="'entry ' + item.type + (item.disabled ? ' disabled' : '') + (item.active ? ' active' : '') + (item.danger ? ' danger' : '') + (item.color ? ' color-' + item.color : '') + (hasChildren(item) ? ' parent' : '') + (isOpen(item.id || item.label) ? ' open' : '')"
+						:class="entryClass(item)"
 					>
 						<div ot-if="item.type === 'separator'" class="separator"></div>
 
@@ -112,8 +262,8 @@ onetype.AddonReady('elements', (elements) =>
 							ot-if="(item.type === 'action' || item.type === 'link') && !hasChildren(item)"
 							:href="item.href || 'javascript:void(0)'"
 							:target="item.target"
-							class="content"
-							ot-click="(event) => select(item, event)"
+							class="row"
+							ot-click="() => select(item)"
 						>
 							<i ot-if="item.icon" class="icon">{{ item.icon }}</i>
 							<div class="text">
@@ -122,14 +272,14 @@ onetype.AddonReady('elements', (elements) =>
 							</div>
 							<span ot-if="item.badge" class="badge">{{ item.badge }}</span>
 							<span ot-if="item.shortcut" class="shortcut">{{ item.shortcut }}</span>
-							<i ot-if="item.iconRight" class="icon-right">{{ item.iconRight }}</i>
+							<i ot-if="item.iconRight" class="trail">{{ item.iconRight }}</i>
 						</a>
 
 						<button
 							ot-if="item.type === 'action' && hasChildren(item)"
 							type="button"
-							class="content"
-							ot-click="(event) => toggle(item, event)"
+							class="row"
+							ot-click="() => toggle(item)"
 						>
 							<i ot-if="item.icon" class="icon">{{ item.icon }}</i>
 							<div class="text">
@@ -141,7 +291,13 @@ onetype.AddonReady('elements', (elements) =>
 						</button>
 
 						<div ot-if="hasChildren(item) && isOpen(item.id || item.label)" class="submenu">
-							<e-global-menu :items="item.items" :depth="depth + 1" :_select="_select" :variant="['flush', 'size-' + (variant.find(v => v.startsWith('size-')) || 'size-m').replace('size-', '')]"></e-global-menu>
+							<e-global-menu
+								:items="item.items"
+								:depth="depth + 1"
+								tone="flush"
+								:size="size"
+								:_select="_select"
+							></e-global-menu>
 						</div>
 					</div>
 				</div>

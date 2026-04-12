@@ -4,47 +4,96 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-heading',
 		icon: 'title',
 		name: 'Heading',
-		description: 'Page or section heading with eyebrow, icon, serif title, description and right/bottom slots.',
+		description: 'Section or page heading with eyebrow, icon, title, description and slots.',
 		category: 'Global',
-		author: 'OneType',
-		config: {
-			eyebrow: {
-				type: 'string'
+		config:
+		{
+			eyebrow:
+			{
+				type: 'string',
+				value: '',
+				description: 'Uppercase label above title.'
 			},
-			icon: {
-				type: 'string'
+			icon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Leading icon in brand box.'
 			},
-			title: {
-				type: 'string'
+			title:
+			{
+				type: 'string',
+				value: '',
+				description: 'Main heading text. Supports <em> for brand accent.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Subtext below title.'
 			},
-			element: {
+			element:
+			{
 				type: 'string',
 				value: 'h2',
-				options: ['h1', 'h2']
+				options: ['h1', 'h2', 'h3'],
+				description: 'Heading HTML element.'
 			},
-			variant: {
+			align:
+			{
+				type: 'string',
+				value: 'left',
+				options: ['left', 'center', 'right'],
+				description: 'Content alignment.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Heading scale.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['left', 'size-m'],
-				options: ['left', 'center', 'right', 'border-bottom', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['border'],
+				description: 'Visual modifiers.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasRight = !!this.Slots.right;
 			this.hasBottom = !!this.Slots.bottom;
-			this.isH1 = this.element === 'h1';
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.align, 'size-' + this.size];
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<div class="top">
 						<div ot-if="icon" class="icon"><i>{{ icon }}</i></div>
 						<div class="text">
 							<div ot-if="eyebrow" class="eyebrow">{{ eyebrow }}</div>
-							<h1 ot-if="isH1" class="title"><span ot-html="title"></span></h1>
-							<h2 ot-if="!isH1" class="title"><span ot-html="title"></span></h2>
+							<h1 ot-if="element === 'h1'" class="title"><span ot-html="title"></span></h1>
+							<h2 ot-if="element === 'h2'" class="title"><span ot-html="title"></span></h2>
+							<h3 ot-if="element === 'h3'" class="title"><span ot-html="title"></span></h3>
 							<p ot-if="description" class="description">{{ description }}</p>
 						</div>
 						<div ot-if="hasRight" class="right">

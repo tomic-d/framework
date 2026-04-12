@@ -1,14 +1,13 @@
-/* Root */
+/* ===== FORM DATE ===== */
 
 .e-283879c1
 {
-	display: flex;
-	width: 100%;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-283879c1 > .holder
+.e-283879c1 > .box
 {
 	display: flex;
 	flex-direction: column;
@@ -16,9 +15,9 @@
 	width: 100%;
 }
 
-/* Field (input row) */
+/* Field */
 
-.e-283879c1 > .holder > .field
+.e-283879c1 > .box > .field
 {
 	position: relative;
 	display: flex;
@@ -29,27 +28,32 @@
 	border: 1px solid transparent;
 	border-radius: var(--ot-radius-m);
 	background: transparent;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), border-color var(--ot-transition), box-shadow var(--ot-transition);
+}
+
+.e-283879c1 > .box > .field:focus-within
+{
+	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
 }
 
 /* Icon */
 
-.e-283879c1 > .holder > .field > .icon
+.e-283879c1 > .box > .field > .icon
 {
 	flex-shrink: 0;
 	font-size: 18px;
 	color: var(--ot-text-3);
-	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: color var(--ot-transition);
 }
 
-.e-283879c1 > .holder.today > .field > .icon
+.e-283879c1 > .box.today > .field > .icon
 {
 	color: var(--ot-brand);
 }
 
-/* Native input */
+/* Input */
 
-.e-283879c1 > .holder > .field > .input
+.e-283879c1 > .box > .field > .input
 {
 	flex: 1;
 	min-width: 0;
@@ -63,32 +67,33 @@
 	font-weight: 500;
 }
 
-.e-283879c1 > .holder > .field > .input::placeholder
+.e-283879c1 > .box > .field > .input::placeholder
 {
 	color: var(--ot-text-3);
+	font-weight: 400;
 }
 
-.e-283879c1 > .holder > .field > .input::-webkit-calendar-picker-indicator
+.e-283879c1 > .box > .field > .input::-webkit-calendar-picker-indicator
 {
 	cursor: pointer;
 	opacity: 0.5;
 	filter: invert(0.45);
-	transition: opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: opacity var(--ot-transition);
 }
 
-.e-283879c1 > .holder > .field > .input::-webkit-calendar-picker-indicator:hover
+.e-283879c1 > .box > .field > .input::-webkit-calendar-picker-indicator:hover
 {
 	opacity: 1;
 }
 
-.e-283879c1 > .holder > .field > .input:disabled
+.e-283879c1 > .box > .field > .input:disabled
 {
 	cursor: not-allowed;
 }
 
-/* Clear button */
+/* Action */
 
-.e-283879c1 > .holder > .field > .action
+.e-283879c1 > .box > .field > .action
 {
 	display: inline-flex;
 	align-items: center;
@@ -103,233 +108,142 @@
 	color: var(--ot-text-3);
 	cursor: pointer;
 	outline: none;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), color var(--ot-transition);
 }
 
-.e-283879c1 > .holder > .field > .action:hover
+.e-283879c1 > .box > .field > .action:hover
 {
 	background: var(--ot-bg-2-hover);
 	color: var(--ot-text-1);
 }
 
-.e-283879c1 > .holder > .field > .action > i
+.e-283879c1 > .box > .field > .action > i
 {
 	font-size: 14px;
 }
 
-/* Focus ring */
-
-.e-283879c1 > .holder > .field:focus-within
-{
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
-}
-
-/* Today state — subtle brand icon color (border handled in bg variants) */
-
 /* Presets */
 
-.e-283879c1 > .holder > .presets
+.e-283879c1 > .box > .presets
 {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--ot-spacing-x);
 }
 
-.e-283879c1 > .holder > .presets > .preset
+.e-283879c1 > .box > .presets > .preset
 {
 	display: inline-flex;
 	align-items: center;
-	padding: 4px 10px;
+	padding: var(--ot-spacing-x) 10px;
 	background: var(--ot-bg-2);
 	border: 1px solid var(--ot-bg-2-border);
 	border-radius: 100px;
 	font-family: var(--ot-font-primary);
-	font-size: 11.5px;
+	font-size: var(--ot-size-s);
 	font-weight: 500;
 	color: var(--ot-text-2);
 	cursor: pointer;
 	outline: none;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), border-color var(--ot-transition), color var(--ot-transition), transform var(--ot-transition);
 }
 
-.e-283879c1 > .holder > .presets > .preset:hover:not(.disabled):not(.active)
+.e-283879c1 > .box > .presets > .preset:hover:not(.disabled):not(.active)
 {
 	background: var(--ot-bg-2-hover);
 	color: var(--ot-text-1);
 	transform: translateY(-1px);
 }
 
-.e-283879c1 > .holder > .presets > .preset.active
+.e-283879c1 > .box > .presets > .preset.active
 {
 	background: var(--ot-brand-opacity);
 	border-color: var(--ot-brand);
 	color: var(--ot-brand);
 }
 
-.e-283879c1 > .holder > .presets > .preset.disabled
+.e-283879c1 > .box > .presets > .preset.disabled
 {
 	opacity: 0.4;
 	cursor: not-allowed;
 }
 
-/* Disabled holder */
+/* Disabled */
 
-.e-283879c1 > .holder.disabled > .field
+.e-283879c1 > .box.disabled > .field
 {
 	cursor: not-allowed;
 	opacity: 0.55;
 }
 
-/* ===== BACKGROUND VARIANTS ===== */
+/* ===== BACKGROUND ===== */
 
-.e-283879c1 > .holder.bg-1 > .field
-{
-	background: var(--ot-bg-1);
-}
-.e-283879c1 > .holder.bg-1 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-1-hover);
-}
-.e-283879c1 > .holder.bg-1 > .field > .action:hover
-{
-	background: var(--ot-bg-1-hover);
-}
+.e-283879c1 > .box.bg-1 > .field { background: var(--ot-bg-1); }
+.e-283879c1 > .box.bg-2 > .field { background: var(--ot-bg-2); }
+.e-283879c1 > .box.bg-3 > .field { background: var(--ot-bg-3); }
+.e-283879c1 > .box.bg-4 > .field { background: var(--ot-bg-4); }
 
-.e-283879c1 > .holder.bg-2 > .field
-{
-	background: var(--ot-bg-2);
-}
-.e-283879c1 > .holder.bg-2 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-2-hover);
-}
-.e-283879c1 > .holder.bg-2 > .field > .action:hover
-{
-	background: var(--ot-bg-2-hover);
-}
+.e-283879c1 > .box.bg-1 > .field:hover:not(:focus-within) { background: var(--ot-bg-1-hover); }
+.e-283879c1 > .box.bg-2 > .field:hover:not(:focus-within) { background: var(--ot-bg-2-hover); }
+.e-283879c1 > .box.bg-3 > .field:hover:not(:focus-within) { background: var(--ot-bg-3-hover); }
+.e-283879c1 > .box.bg-4 > .field:hover:not(:focus-within) { background: var(--ot-bg-4-hover); }
 
-.e-283879c1 > .holder.bg-3 > .field
-{
-	background: var(--ot-bg-3);
-}
-.e-283879c1 > .holder.bg-3 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-3-hover);
-}
-.e-283879c1 > .holder.bg-3 > .field > .action:hover
-{
-	background: var(--ot-bg-3-hover);
-}
+.e-283879c1 > .box.bg-1 > .field > .action:hover { background: var(--ot-bg-1-hover); }
+.e-283879c1 > .box.bg-2 > .field > .action:hover { background: var(--ot-bg-2-hover); }
+.e-283879c1 > .box.bg-3 > .field > .action:hover { background: var(--ot-bg-3-hover); }
+.e-283879c1 > .box.bg-4 > .field > .action:hover { background: var(--ot-bg-4-hover); }
 
-.e-283879c1 > .holder.bg-4 > .field
-{
-	background: var(--ot-bg-4);
-}
-.e-283879c1 > .holder.bg-4 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-4-hover);
-}
-.e-283879c1 > .holder.bg-4 > .field > .action:hover
-{
-	background: var(--ot-bg-4-hover);
-}
+/* Transparent */
 
-/* Transparent variant */
-
-.e-283879c1 > .holder.transparent > .field
+.e-283879c1 > .box.transparent > .field
 {
 	background: transparent;
 	padding: 0;
 }
 
-/* Border variant — per bg level */
+/* Border */
 
-.e-283879c1 > .holder.border > .field { border-color: var(--ot-bg-2-border); }
-.e-283879c1 > .holder.bg-1.border > .field { border-color: var(--ot-bg-1-border); }
-.e-283879c1 > .holder.bg-2.border > .field { border-color: var(--ot-bg-2-border); }
-.e-283879c1 > .holder.bg-3.border > .field { border-color: var(--ot-bg-3-border); }
-.e-283879c1 > .holder.bg-4.border > .field { border-color: var(--ot-bg-4-border); }
+.e-283879c1 > .box.border > .field { border-color: var(--ot-bg-2-border); }
+.e-283879c1 > .box.bg-1.border > .field { border-color: var(--ot-bg-1-border); }
+.e-283879c1 > .box.bg-2.border > .field { border-color: var(--ot-bg-2-border); }
+.e-283879c1 > .box.bg-3.border > .field { border-color: var(--ot-bg-3-border); }
+.e-283879c1 > .box.bg-4.border > .field { border-color: var(--ot-bg-4-border); }
 
-/* Today state border override — brand border regardless of bg */
+/* Today */
 
-.e-283879c1 > .holder.today > .field,
-.e-283879c1 > .holder.bg-1.today > .field,
-.e-283879c1 > .holder.bg-2.today > .field,
-.e-283879c1 > .holder.bg-3.today > .field,
-.e-283879c1 > .holder.bg-4.today > .field,
-.e-283879c1 > .holder.border.today > .field
+.e-283879c1 > .box.today > .field,
+.e-283879c1 > .box.today.border > .field
 {
 	border-color: var(--ot-brand);
 }
 
-/* ===== SIZE VARIANTS ===== */
+/* ===== SIZE ===== */
 
-.e-283879c1 > .holder.size-s > .field
+.e-283879c1 > .box.size-s > .field
 {
 	height: var(--ot-height-s);
 	padding: 0 var(--ot-spacing-s);
 }
-.e-283879c1 > .holder.size-s > .field > .icon
-{
-	font-size: 15px;
-}
-.e-283879c1 > .holder.size-s > .field > .input
-{
-	font-size: var(--ot-size-s);
-}
-.e-283879c1 > .holder.size-s > .field > .action
-{
-	width: 18px;
-	height: 18px;
-}
-.e-283879c1 > .holder.size-s > .field > .action > i
-{
-	font-size: 13px;
-}
-.e-283879c1 > .holder.size-s > .presets > .preset
-{
-	font-size: 10.5px;
-	padding: 3px 8px;
-}
 
-.e-283879c1 > .holder.size-m > .field
+.e-283879c1 > .box.size-s > .field > .icon { font-size: 15px; }
+.e-283879c1 > .box.size-s > .field > .input { font-size: var(--ot-size-s); }
+.e-283879c1 > .box.size-s > .field > .action { width: 18px; height: 18px; }
+.e-283879c1 > .box.size-s > .field > .action > i { font-size: 13px; }
+.e-283879c1 > .box.size-s > .presets > .preset { font-size: 10.5px; padding: 3px 8px; }
+
+.e-283879c1 > .box.size-m > .field
 {
 	height: var(--ot-height-m);
 	padding: 0 var(--ot-spacing-m);
 }
-.e-283879c1 > .holder.size-m > .field > .icon
-{
-	font-size: 18px;
-}
-.e-283879c1 > .holder.size-m > .field > .input
-{
-	font-size: var(--ot-size-m);
-}
 
-.e-283879c1 > .holder.size-l > .field
+.e-283879c1 > .box.size-l > .field
 {
 	height: var(--ot-height-l);
 	padding: 0 var(--ot-spacing-l);
 }
-.e-283879c1 > .holder.size-l > .field > .icon
-{
-	font-size: 20px;
-}
-.e-283879c1 > .holder.size-l > .field > .input
-{
-	font-size: var(--ot-size-m);
-}
-.e-283879c1 > .holder.size-l > .field > .action
-{
-	width: 26px;
-	height: 26px;
-}
-.e-283879c1 > .holder.size-l > .field > .action > i
-{
-	font-size: 16px;
-}
-.e-283879c1 > .holder.size-l > .presets > .preset
-{
-	font-size: 12.5px;
-	padding: 5px 12px;
-}
+
+.e-283879c1 > .box.size-l > .field > .icon { font-size: 20px; }
+.e-283879c1 > .box.size-l > .field > .action { width: 26px; height: 26px; }
+.e-283879c1 > .box.size-l > .field > .action > i { font-size: 16px; }
+.e-283879c1 > .box.size-l > .presets > .preset { font-size: 12.5px; padding: 5px 12px; }
