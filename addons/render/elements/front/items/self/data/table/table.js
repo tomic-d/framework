@@ -50,7 +50,7 @@ onetype.AddonReady('elements', (elements) =>
 						{
 							type: 'string',
 							value: 'text',
-							options: ['text', 'description', 'number', 'currency', 'boolean', 'date', 'timeago', 'icon', 'image', 'avatar', 'media', 'badge', 'chip', 'tag', 'tags', 'status', 'metric', 'progress', 'link', 'group'],
+							options: ['text', 'description', 'number', 'currency', 'boolean', 'date', 'timeago', 'icon', 'image', 'avatar', 'media', 'badge', 'chip', 'tag', 'tags', 'status', 'metric', 'progress', 'link', 'color', 'count', 'group'],
 							description: 'Cell render type from shared type system.'
 						},
 						width:
@@ -327,18 +327,12 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Background depth.'
 			},
-			border:
-			{
-				type: 'boolean',
-				value: true,
-				description: 'Show outer border.'
-			},
 			variant:
 			{
 				type: 'array',
-				value: [],
+				value: ['border'],
 				each: { type: 'string' },
-				options: ['clean', 'striped', 'sticky', 'border-bottom'],
+				options: ['border', 'border-bottom', 'clean', 'striped', 'sticky'],
 				description: 'Visual modifiers.'
 			},
 			_click:
@@ -432,11 +426,6 @@ onetype.AddonReady('elements', (elements) =>
 			this.classes = () =>
 			{
 				const list = ['box', this.background];
-
-				if(this.border)
-				{
-					list.push('border');
-				}
 
 				this.variant.forEach(v => list.push(v));
 
@@ -582,7 +571,6 @@ onetype.AddonReady('elements', (elements) =>
 								:_input="onSearchInput"
 								background="bg-2"
 								size="s"
-								:border="true"
 							></e-form-input>
 						</div>
 					</div>
