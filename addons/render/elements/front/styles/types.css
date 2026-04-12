@@ -84,12 +84,15 @@
 
 .ot-type-image
 {
-	width: 36px;
-	height: 36px;
+	height: 32px;
+	padding: 4px;
 	border-radius: var(--ot-radius-s);
-	background-size: cover;
+	border: 1px solid var(--ot-bg-2-border);
+	background-size: contain;
+	background-repeat: no-repeat;
 	background-position: center;
-	background-color: var(--ot-bg-2);
+	width: 100%;
+	max-width: 64px;
 }
 
 .ot-type-image.empty
@@ -346,6 +349,54 @@
 	font-variant-numeric: tabular-nums;
 	min-width: 32px;
 	text-align: right;
+}
+
+/* Count */
+
+.ot-type-count
+{
+	display: inline-flex;
+	align-items: baseline;
+	gap: 4px;
+}
+
+.ot-type-count > .ot-type-count-value
+{
+	font-weight: 700;
+	color: var(--ot-text-1);
+	font-variant-numeric: tabular-nums;
+}
+
+.ot-type-count > .ot-type-count-label
+{
+	color: var(--ot-text-3);
+	font-weight: 400;
+}
+
+/* Color */
+
+.ot-type-color
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.ot-type-color > .ot-type-color-swatch
+{
+	width: 18px;
+	height: 18px;
+	border-radius: var(--ot-radius-s);
+	border: 1px solid var(--ot-bg-2-border);
+	flex-shrink: 0;
+}
+
+.ot-type-color > .ot-type-color-value
+{
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--ot-text-2);
+	text-transform: uppercase;
 }
 
 /* Link */

@@ -17,7 +17,7 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			items:
 			{
-				type: 'array',
+				type: 'array|function',
 				value: [],
 				each:
 				{
@@ -130,6 +130,33 @@ onetype.AddonReady('elements', (elements) =>
 			this.rightSelected = [];
 			this.leftSearch = '';
 			this.rightSearch = '';
+			this.loading = false;
+
+			/* ===== ASYNC ITEMS ===== */
+
+			if(typeof this.items === 'function')
+			{
+				const callback = this.items;
+				this.items = [];
+				this.loading = true;
+
+				this.OnInit(async () =>
+				{
+					try
+					{
+						const result = await callback.call(this);
+						this.items = Array.isArray(result) ? result : [];
+					}
+					catch(error)
+					{
+						this.items = [];
+					}
+
+					this.loading = false;
+					this.sync();
+					this.Update();
+				});
+			}
 
 			/* ===== CLASSES ===== */
 
