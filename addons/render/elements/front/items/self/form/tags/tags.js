@@ -4,7 +4,7 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-tags',
 		icon: 'label',
 		name: 'Tags',
-		description: 'Tag input with autocomplete, multi-select, color variants and keyboard navigation.',
+		description: 'Tag input with autocomplete, multi-select, async options and keyboard navigation.',
 		category: 'Form',
 		config:
 		{
@@ -12,8 +12,8 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'array',
 				value: [],
-				each: { type: 'string' },
-				description: 'Selected tags.'
+				each: { type: 'string|number' },
+				description: 'Selected tag values.'
 			},
 			name:
 			{
@@ -29,10 +29,21 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			options:
 			{
-				type: 'array',
+				type: 'array|function',
 				value: [],
-				each: { type: 'string' },
-				description: 'Suggestion list. Also used as selectable chips when mode is select.'
+				each:
+				{
+					type: 'object',
+					config:
+					{
+						label: { type: 'string', description: 'Display text.' },
+						value: { type: 'string|number', description: 'Option value.' },
+						icon: { type: 'string', description: 'Option icon.' },
+						description: { type: 'string', description: 'Secondary text.' },
+						disabled: { type: 'boolean', description: 'Disabled option.' }
+					}
+				},
+				description: 'Array of {label, value} objects or async function returning the same.'
 			},
 			mode:
 			{
@@ -59,6 +70,12 @@ onetype.AddonReady('elements', (elements) =>
 				value: false,
 				description: 'Only allow values from options.'
 			},
+			searchable:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show search dropdown in select mode.'
+			},
 			color:
 			{
 				type: 'string',
@@ -83,9 +100,9 @@ onetype.AddonReady('elements', (elements) =>
 			variant:
 			{
 				type: 'array',
-				value: [],
+				value: ['border'],
 				each: { type: 'string' },
-				options: ['border'],
+				options: ['border', 'border-bottom'],
 				description: 'Visual modifiers.'
 			},
 			disabled:
@@ -106,11 +123,45 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.query = '';
 			this.open = false;
+			this.above = false;
 			this.activeIndex = 0;
 			this.shakeIndex = -1;
+			this.loading = false;
 			this.isSelect = this.mode === 'select';
 
-			/* ===== CLASSES ===== */
+			/* ===== ASYNC OPTIONS ===== */
+
+			if(typeof this.options === 'function')
+			{
+				const callback = this.options;
+				this.options = [];
+				this.loading = true;
+
+				this.OnInit(async () =>
+				{
+					try
+					{
+						const result = await callback.call(this);
+						this.options = Array.isArray(result) ? result : [];
+					}
+					catch(error)
+					{
+						this.options = [];
+					}
+
+					this.loading = false;
+					this.Update();
+				});
+			}
+
+			/* ===== HELPERS ===== */
+
+			this.labelOf = (value) =>
+			{
+				const found = this.options.find(o => o.value === value);
+
+				return found ? found.label : String(value);
+			};
 
 			this.classes = () =>
 			{
@@ -126,6 +177,16 @@ onetype.AddonReady('elements', (elements) =>
 					list.push('border');
 				}
 
+				if(this.variant.includes('border-bottom'))
+				{
+					list.push('border-bottom');
+				}
+
+				if(this.above)
+				{
+					list.push('above');
+				}
+
 				if(this.disabled)
 				{
 					list.push('disabled');
@@ -136,12 +197,10 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.chipClass = (option) =>
 			{
-				const selected = this.value.includes(option);
+				const selected = this.value.includes(option.value);
 
 				return 'chip' + (selected ? ' selected' : '');
 			};
-
-			/* ===== HELPERS ===== */
 
 			this.reachedMax = () =>
 			{
@@ -159,7 +218,7 @@ onetype.AddonReady('elements', (elements) =>
 
 				return this.options.filter(option =>
 				{
-					if(this.value.includes(option))
+					if(this.value.includes(option.value))
 					{
 						return false;
 					}
@@ -169,27 +228,20 @@ onetype.AddonReady('elements', (elements) =>
 						return true;
 					}
 
-					return option.toLowerCase().includes(query);
+					return String(option.label || '').toLowerCase().includes(query);
 				});
 			};
 
 			/* ===== HANDLERS ===== */
 
-			this.add = (tag) =>
+			this.add = (option) =>
 			{
 				if(this.disabled)
 				{
 					return;
 				}
 
-				tag = String(tag || '').trim();
-
-				if(!tag)
-				{
-					return;
-				}
-
-				if(this.minLength && tag.length < this.minLength)
+				if(!option || option.disabled)
 				{
 					return;
 				}
@@ -199,12 +251,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				if(this.restrict && !this.options.includes(tag))
-				{
-					return;
-				}
-
-				const existing = this.value.indexOf(tag);
+				const existing = this.value.indexOf(option.value);
 
 				if(existing !== -1)
 				{
@@ -220,7 +267,48 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				this.value.push(tag);
+				this.value.push(option.value);
+				this.query = '';
+				this.activeIndex = 0;
+				this.open = false;
+				this.Update();
+
+				if(this._change)
+				{
+					this._change({ value: this.value });
+				}
+			};
+
+			this.addRaw = (text) =>
+			{
+				if(this.disabled || this.restrict)
+				{
+					return;
+				}
+
+				text = String(text || '').trim();
+
+				if(!text)
+				{
+					return;
+				}
+
+				if(this.minLength && text.length < this.minLength)
+				{
+					return;
+				}
+
+				if(this.reachedMax())
+				{
+					return;
+				}
+
+				if(this.value.includes(text))
+				{
+					return;
+				}
+
+				this.value.push(text);
 				this.query = '';
 				this.activeIndex = 0;
 				this.open = false;
@@ -250,12 +338,12 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.toggle = (option) =>
 			{
-				if(this.disabled)
+				if(this.disabled || option.disabled)
 				{
 					return;
 				}
 
-				const index = this.value.indexOf(option);
+				const index = this.value.indexOf(option.value);
 
 				if(index !== -1)
 				{
@@ -268,7 +356,7 @@ onetype.AddonReady('elements', (elements) =>
 						return;
 					}
 
-					this.value.push(option);
+					this.value.push(option.value);
 				}
 
 				this.Update();
@@ -322,7 +410,7 @@ onetype.AddonReady('elements', (elements) =>
 					}
 					else if(this.query.trim() && !this.restrict)
 					{
-						this.add(this.query);
+						this.addRaw(this.query);
 					}
 
 					return;
@@ -368,11 +456,6 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			this.select = (option) =>
-			{
-				this.add(option);
-			};
-
 			this.openDropdown = () =>
 			{
 				if(this.open)
@@ -380,6 +463,11 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
+				const box = this.Element.querySelector('.box');
+				const rect = box.getBoundingClientRect();
+				const space = window.innerHeight - rect.bottom;
+
+				this.above = space < 320;
 				this.open = true;
 				this.Update();
 
@@ -395,6 +483,7 @@ onetype.AddonReady('elements', (elements) =>
 				}
 
 				this.open = false;
+				this.above = false;
 				this.query = '';
 				this.activeIndex = 0;
 				this.Update();
@@ -425,14 +514,19 @@ onetype.AddonReady('elements', (elements) =>
 				return /* html */ `
 					<div :class="classes()">
 						<input type="hidden" :name="name" :value="value.join(',')" />
-						<div class="chips">
+						<div ot-if="loading" class="empty">Loading…</div>
+						<div ot-if="!loading" class="chips">
+							<span ot-if="!options.length" class="placeholder">{{ placeholder }}</span>
 							<button
 								ot-for="option in options"
 								type="button"
 								:class="chipClass(option)"
 								ot-click="() => toggle(option)"
-								:disabled="disabled"
-							>{{ option }}</button>
+								:disabled="disabled || option.disabled"
+							>
+								<i ot-if="option.icon">{{ option.icon }}</i>
+								<span>{{ option.label }}</span>
+							</button>
 						</div>
 					</div>
 				`;
@@ -443,7 +537,7 @@ onetype.AddonReady('elements', (elements) =>
 					<input type="hidden" :name="name" :value="value.join(',')" />
 					<div class="field">
 						<span ot-for="tag, index in value" :class="'tag' + (shakeIndex === index ? ' shake' : '')">
-							<span class="text">{{ tag }}</span>
+							<span class="text">{{ labelOf(tag) }}</span>
 							<button ot-if="!disabled" type="button" class="remove" ot-click="() => remove(index)">
 								<i>close</i>
 							</button>
@@ -467,8 +561,12 @@ onetype.AddonReady('elements', (elements) =>
 							ot-for="option, index in filtered()"
 							type="button"
 							:class="'option' + (activeIndex === index ? ' active' : '')"
-							ot-click="() => select(option)"
-						>{{ option }}</button>
+							ot-click="() => add(option)"
+						>
+							<i ot-if="option.icon">{{ option.icon }}</i>
+							<span class="label">{{ option.label }}</span>
+							<span ot-if="option.description" class="description">{{ option.description }}</span>
+						</button>
 					</div>
 				</div>
 			`;

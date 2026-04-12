@@ -31,7 +31,7 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			options:
 			{
-				type: 'array',
+				type: 'array|function',
 				value: [],
 				each:
 				{
@@ -45,7 +45,7 @@ onetype.AddonReady('elements', (elements) =>
 						disabled: { type: 'boolean', description: 'Disabled option.' }
 					}
 				},
-				description: 'List of options.'
+				description: 'List of options or async function returning options.'
 			},
 			searchable:
 			{
@@ -72,11 +72,13 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
 				description: 'Background depth.'
 			},
-			border:
+			variant:
 			{
-				type: 'boolean',
-				value: true,
-				description: 'Show border.'
+				type: 'array',
+				value: ['border'],
+				each: { type: 'string' },
+				options: ['border', 'border-bottom'],
+				description: 'Visual modifiers.'
 			},
 			size:
 			{
@@ -91,13 +93,38 @@ onetype.AddonReady('elements', (elements) =>
 				description: 'Change handler. Receives { value }.'
 			}
 		},
-		render: function()
+		render: async function()
 		{
 			/* ===== STATE ===== */
 
 			this.open = false;
+			this.above = false;
 			this.query = '';
 			this.activeIndex = 0;
+			this.loading = false;
+
+			/* ===== ASYNC OPTIONS ===== */
+
+			if(typeof this.options === 'function')
+			{
+				const callback = this.options;
+				
+				this.options = [];
+				this.loading = true;
+			
+				try
+				{
+					const result = await callback.call(this);
+					this.options = Array.isArray(result) ? result : [];
+				}
+				catch(error)
+				{
+					this.options = [];
+				}
+
+				this.loading = false;
+				this.Update();
+			}
 
 			/* ===== CLASSES ===== */
 
@@ -110,14 +137,24 @@ onetype.AddonReady('elements', (elements) =>
 					list.push(this.background);
 				}
 
-				if(this.border)
+				if(this.variant.includes('border'))
 				{
 					list.push('border');
+				}
+
+				if(this.variant.includes('border-bottom'))
+				{
+					list.push('border-bottom');
 				}
 
 				if(this.open)
 				{
 					list.push('open');
+				}
+
+				if(this.above)
+				{
+					list.push('above');
 				}
 
 				if(this.disabled)
@@ -165,6 +202,12 @@ onetype.AddonReady('elements', (elements) =>
 				this.open = true;
 				this.query = '';
 
+				const box = this.Element.querySelector('.box');
+				const rect = box.getBoundingClientRect();
+				const space = window.innerHeight - rect.bottom;
+
+				this.above = space < 320;
+
 				const filtered = this.filtered();
 				const currentIndex = filtered.findIndex(o => o.value === this.value);
 
@@ -191,6 +234,7 @@ onetype.AddonReady('elements', (elements) =>
 			this.close = () =>
 			{
 				this.open = false;
+				this.above = false;
 				this.query = '';
 				this.activeIndex = 0;
 
@@ -311,8 +355,9 @@ onetype.AddonReady('elements', (elements) =>
 					<div class="trigger" ot-click="toggle">
 						<i ot-if="icon" class="icon">{{ icon }}</i>
 						<i ot-if="!icon && current() && current().icon" class="icon">{{ current().icon }}</i>
-						<span ot-if="value" class="selected">{{ current() ? current().label : '' }}</span>
-						<span ot-if="!value" class="placeholder">{{ placeholder }}</span>
+						<span ot-if="current()" class="selected">{{ current().label }}</span>
+						<span ot-if="!current() && !loading" class="placeholder">{{ placeholder }}</span>
+						<span ot-if="loading" class="placeholder">Loading…</span>
 						<button
 							ot-if="clearable && value && !disabled"
 							type="button"
@@ -343,7 +388,8 @@ onetype.AddonReady('elements', (elements) =>
 								</span>
 								<i ot-if="option.value === value" class="check">check</i>
 							</button>
-							<div ot-if="filtered().length === 0" class="empty">No results</div>
+							<div ot-if="filtered().length === 0 && !loading" class="empty">No results</div>
+							<div ot-if="loading" class="empty">Loading…</div>
 						</div>
 					</div>
 				</div>

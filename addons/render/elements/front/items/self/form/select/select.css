@@ -154,6 +154,19 @@
 	to { opacity: 1; transform: translateY(0); }
 }
 
+.e-15ce864f > .box.above > .dropdown
+{
+	top: auto;
+	bottom: calc(100% + var(--ot-spacing-x));
+	animation: e-15ce864f-drop-above var(--ot-transition);
+}
+
+@keyframes e-15ce864f-drop-above
+{
+	from { opacity: 0; transform: translateY(4px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
 /* Search */
 
 .e-15ce864f > .box > .dropdown > .search

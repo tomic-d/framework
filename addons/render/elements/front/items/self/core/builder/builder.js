@@ -23,26 +23,10 @@ onetype.AddonReady('elements', (elements) =>
 					type: 'object',
 					config:
 					{
-						id:
-						{
-							type: 'string',
-							description: 'Step identifier.'
-						},
-						label:
-						{
-							type: 'string',
-							description: 'Step label.'
-						},
-						description:
-						{
-							type: 'string',
-							description: 'Step description.'
-						},
-						icon:
-						{
-							type: 'string',
-							description: 'Step icon.'
-						},
+						id: { type: 'string', description: 'Step identifier.' },
+						label: { type: 'string', description: 'Step label.' },
+						description: { type: 'string', description: 'Step description.' },
+						icon: { type: 'string', description: 'Step icon.' },
 						sections:
 						{
 							type: 'array',
@@ -271,6 +255,12 @@ onetype.AddonReady('elements', (elements) =>
 					if(typeof value === 'string')
 					{
 						attrs += ` ${key}="${escape(value)}"`;
+					}
+					else if(typeof value === 'function')
+					{
+						const ref = '__fn_' + field.key + '_' + key;
+						this[ref] = value;
+						attrs += ` :${key}="${ref}"`;
 					}
 					else
 					{

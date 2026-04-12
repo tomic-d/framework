@@ -57,7 +57,7 @@ onetype.AddonReady('elements', (elements) =>
 				type: 'array',
 				value: [],
 				each: { type: 'string' },
-				options: ['border', 'clean'],
+				options: ['border', 'border-bottom', 'clean'],
 				description: 'Visual modifiers.'
 			}
 		},
@@ -77,6 +77,11 @@ onetype.AddonReady('elements', (elements) =>
 				if(this.variant.includes('border'))
 				{
 					list.push('border');
+				}
+
+				if(this.variant.includes('border-bottom'))
+				{
+					list.push('border-bottom');
 				}
 
 				if(this.variant.includes('clean'))

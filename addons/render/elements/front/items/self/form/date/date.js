@@ -67,11 +67,13 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['s', 'm', 'l'],
 				description: 'Field size.'
 			},
-			border:
+			variant:
 			{
-				type: 'boolean',
-				value: true,
-				description: 'Show border.'
+				type: 'array',
+				value: ['border'],
+				each: { type: 'string' },
+				options: ['border', 'border-bottom'],
+				description: 'Visual modifiers.'
 			},
 			disabled:
 			{
@@ -101,9 +103,14 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				const list = ['box', this.background, 'size-' + this.size];
 
-				if(this.border)
+				if(this.variant.includes('border'))
 				{
 					list.push('border');
+				}
+
+				if(this.variant.includes('border-bottom'))
+				{
+					list.push('border-bottom');
 				}
 
 				if(this.disabled)
