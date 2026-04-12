@@ -41,34 +41,36 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
-			this.activeIndex = this.items.findIndex(item => item.id === this.active);
-
-			this.status = (index) =>
+			this.rebuild = () =>
 			{
-				if(this.activeIndex === -1)
-				{
-					return 'upcoming';
-				}
+				this.activeIndex = this.items.findIndex(entry => entry.id === this.active);
 
-				if(index < this.activeIndex)
+				this.computed = this.items.map((entry, index) =>
 				{
-					return 'done';
-				}
+					let status = 'upcoming';
 
-				if(index === this.activeIndex)
-				{
-					return 'active';
-				}
+					if(this.activeIndex !== -1)
+					{
+						if(index < this.activeIndex)
+						{
+							status = 'done';
+						}
+						else if(index === this.activeIndex)
+						{
+							status = 'active';
+						}
+					}
 
-				return 'upcoming';
+					return {
+						...entry,
+						index,
+						status,
+						number: index + 1
+					};
+				});
 			};
 
-			this.computed = this.items.map((item, index) => ({
-				...item,
-				index,
-				status: this.status(index),
-				number: index + 1
-			}));
+			this.rebuild();
 
 			this.select = (item, event) =>
 			{
@@ -78,6 +80,7 @@ onetype.AddonReady('elements', (elements) =>
 				}
 
 				this.active = item.id;
+				this.rebuild();
 
 				if(this._change)
 				{
@@ -91,7 +94,7 @@ onetype.AddonReady('elements', (elements) =>
 						ot-for="item in computed"
 						type="button"
 						:class="'step ' + item.status + (item.disabled ? ' disabled' : '')"
-						ot-click="(event) => select(item, event)"
+						ot-click="({ event }) => select(item, event)"
 					>
 						<span class="marker">
 							<i ot-if="item.status === 'done'">check</i>

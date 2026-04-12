@@ -9,7 +9,7 @@ onetype.AddonReady('elements', (elements) =>
 		author: 'OneType',
 		config: {
 			value: {
-				type: 'string'
+				type: 'string|number'
 			},
 			name: {
 				type: 'string'

@@ -109,6 +109,10 @@
 	color: var(--ot-text-3);
 	line-height: 1.4;
 	font-weight: 400;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }
 
 /* Done state */
