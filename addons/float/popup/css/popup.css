@@ -209,8 +209,8 @@
 	border-top: 1px solid var(--ot-bg-1-border);
 }
 
-.ot-confirm > .actions > *
+.ot-confirm > .actions > *,
+.ot-confirm > .actions > * > *
 {
-	flex: 1;
 	width: 100%;
 }

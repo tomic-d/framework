@@ -20,7 +20,7 @@
 {
 	flex-direction: row;
 	align-items: flex-start;
-	gap: var(--ot-spacing-l);
+	gap: var(--ot-spacing-m);
 }
 
 /* Steps sidebar */
@@ -75,8 +75,6 @@
 {
 	display: flex;
 	justify-content: flex-end;
-	padding-top: var(--ot-spacing-m);
-	border-top: 1px solid var(--ot-bg-2-border);
 }
 
 /* Background variants */

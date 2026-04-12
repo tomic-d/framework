@@ -96,6 +96,30 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			this.hasHeader = !!this.title || !!this.icon || !!this.badge;
 			this.hasStatus = this.status && this.status.label;
+
+			// Pre-render row values through type system if row has type/id
+
+			this.rows = (this.rows || []).map(row =>
+			{
+				if(row.type === 'group')
+				{
+					return {
+						...row,
+						html: elements.Fn('type.text', row, row.item || {})
+					};
+				}
+
+				if(row.type)
+				{
+					return {
+						...row,
+						html: elements.Fn('type.render', row, row.item || {})
+					};
+				}
+
+				return row;
+			});
+
 			this.hasRows = this.rows && this.rows.length > 0;
 			this.hasFields = this.fields && this.fields.length > 0;
 			this.hasStats = this.stats && this.stats.length > 0;
@@ -162,7 +186,8 @@ onetype.AddonReady('elements', (elements) =>
 								<i ot-if="row.icon">{{ row.icon }}</i>
 								<span>{{ row.label }}</span>
 							</div>
-							<span class="row-value">{{ row.value }}</span>
+							<span ot-if="row.html" class="row-value" ot-html="row.html"></span>
+							<span ot-if="!row.html" class="row-value">{{ row.value }}</span>
 						</div>
 					</div>
 

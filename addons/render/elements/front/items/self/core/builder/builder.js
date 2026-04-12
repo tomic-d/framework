@@ -259,7 +259,8 @@ onetype.AddonReady('elements', (elements) =>
 			const buildSection = (section, sectionIndex, scope) =>
 			{
 				const columns = section.columns || 1;
-				const fields = (section.fields || []).map((field, fieldIndex) => buildField(field, sectionIndex, fieldIndex, scope)).join('');
+				const sectionFields = section.fields || [];
+				const fields = sectionFields.map((field, fieldIndex) => buildField(field, sectionIndex, fieldIndex, scope)).join('');
 
 				const sectionCondition = section.condition
 					? `ot-if="visible(${scope}[${sectionIndex}].condition)"`

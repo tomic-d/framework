@@ -14,7 +14,7 @@
 	flex-direction: column;
 	gap: var(--ot-spacing-m);
 	width: 100%;
-	padding: var(--ot-spacing-l);
+	padding: var(--ot-spacing-m);
 	background: var(--ot-bg-1);
 	border: 1px solid transparent;
 	border-radius: var(--ot-radius-l);
@@ -79,6 +79,11 @@
 	color: var(--ot-text-2);
 	line-height: 1.4;
 	font-family: var(--ot-font-primary);
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
 }
 
 /* Header badge */
