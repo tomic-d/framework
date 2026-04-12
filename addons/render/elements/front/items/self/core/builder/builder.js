@@ -63,18 +63,20 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Container background depth.'
 			},
-			border:
-			{
-				type: 'boolean',
-				value: false,
-				description: 'Container border.'
-			},
 			size:
 			{
 				type: 'string',
 				value: 'm',
 				options: ['s', 'm', 'l'],
 				description: 'Section spacing.'
+			},
+			variant:
+			{
+				type: 'array',
+				value: [],
+				each: { type: 'string' },
+				options: ['border'],
+				description: 'Visual modifiers.'
 			},
 			_input:
 			{
@@ -153,10 +155,7 @@ onetype.AddonReady('elements', (elements) =>
 					list.push(this.background);
 				}
 
-				if(this.border)
-				{
-					list.push('border');
-				}
+				this.variant.forEach(v => list.push(v));
 
 				if(this.hasSteps)
 				{

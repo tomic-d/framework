@@ -135,18 +135,20 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Background depth.'
 			},
-			border:
-			{
-				type: 'boolean',
-				value: true,
-				description: 'Show border.'
-			},
 			size:
 			{
 				type: 'string',
 				value: 'm',
 				options: ['s', 'm', 'l'],
 				description: 'Card size.'
+			},
+			variant:
+			{
+				type: 'array',
+				value: ['border'],
+				each: { type: 'string' },
+				options: ['border', 'featured', 'highlighted'],
+				description: 'Visual modifiers.'
 			},
 			_click:
 			{
@@ -178,10 +180,7 @@ onetype.AddonReady('elements', (elements) =>
 					list.push(this.background);
 				}
 
-				if(this.border && this.tone !== 'featured')
-				{
-					list.push('border');
-				}
+				this.variant.forEach(v => list.push(v));
 
 				return list.join(' ');
 			};

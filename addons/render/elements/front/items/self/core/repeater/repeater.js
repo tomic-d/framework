@@ -137,18 +137,20 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Row background depth.'
 			},
-			border:
-			{
-				type: 'boolean',
-				value: false,
-				description: 'Show outer container border.'
-			},
 			size:
 			{
 				type: 'string',
 				value: 'm',
 				options: ['s', 'm', 'l'],
 				description: 'Row padding size.'
+			},
+			variant:
+			{
+				type: 'array',
+				value: [],
+				each: { type: 'string' },
+				options: ['border'],
+				description: 'Visual modifiers.'
 			},
 			_change:
 			{
@@ -173,10 +175,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				const list = ['box', this.background, this.orientation, 'size-' + this.size];
 
-				if(this.border)
-				{
-					list.push('border');
-				}
+				this.variant.forEach(v => list.push(v));
 
 				if(this.disabled)
 				{

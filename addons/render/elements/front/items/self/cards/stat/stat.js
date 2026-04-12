@@ -130,12 +130,6 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Background depth.'
 			},
-			border:
-			{
-				type: 'boolean',
-				value: true,
-				description: 'Show border.'
-			},
 			size:
 			{
 				type: 'string',
@@ -146,9 +140,9 @@ onetype.AddonReady('elements', (elements) =>
 			variant:
 			{
 				type: 'array',
-				value: [],
+				value: ['border'],
 				each: { type: 'string' },
-				options: ['hover-lift', 'gradient'],
+				options: ['border', 'hover-lift', 'gradient'],
 				description: 'Visual modifiers.'
 			},
 			_click:
@@ -174,11 +168,6 @@ onetype.AddonReady('elements', (elements) =>
 			this.classes = () =>
 			{
 				const list = ['box', this.background, this.orientation, 'size-' + this.size];
-
-				if(this.border)
-				{
-					list.push('border');
-				}
 
 				this.variant.forEach(v => list.push(v));
 

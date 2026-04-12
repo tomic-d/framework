@@ -100,7 +100,6 @@ popup.Fn('confirm', function(title, description, options = {})
 								:placeholder="placeholder"
 								:_input="input"
 								background="bg-2"
-								:border="true"
 								ot-keydown="keydown"
 							></e-form-input>
 						</div>
