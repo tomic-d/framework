@@ -95,11 +95,13 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Panel background depth.'
 			},
-			border:
+			variant:
 			{
-				type: 'boolean',
-				value: true,
-				description: 'Show panel border.'
+				type: 'array',
+				value: ['border'],
+				each: { type: 'string' },
+				options: ['border', 'border-bottom'],
+				description: 'Visual modifiers.'
 			},
 			size:
 			{
@@ -135,9 +137,14 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				const list = ['box', this.background, 'size-' + this.size];
 
-				if(this.border)
+				if(this.variant.includes('border'))
 				{
 					list.push('border');
+				}
+
+				if(this.variant.includes('border-bottom'))
+				{
+					list.push('border-bottom');
 				}
 
 				if(this.disabled)

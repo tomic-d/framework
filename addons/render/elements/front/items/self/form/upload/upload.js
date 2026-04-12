@@ -77,6 +77,14 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['s', 'm', 'l'],
 				description: 'Dropzone size.'
 			},
+			variant:
+			{
+				type: 'array',
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'border-bottom'],
+				description: 'Visual modifiers.'
+			},
 			disabled:
 			{
 				type: 'boolean',
@@ -178,6 +186,16 @@ onetype.AddonReady('elements', (elements) =>
 			this.classes = () =>
 			{
 				const list = ['box', this.background, 'size-' + this.size];
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.variant.includes('border-bottom'))
+				{
+					list.push('border-bottom');
+				}
 
 				if(this.isInput)
 				{
