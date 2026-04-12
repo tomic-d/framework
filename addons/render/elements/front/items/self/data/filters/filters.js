@@ -83,18 +83,12 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Background depth.'
 			},
-			border:
-			{
-				type: 'boolean',
-				value: true,
-				description: 'Show outer border.'
-			},
 			variant:
 			{
 				type: 'array',
-				value: [],
+				value: ['border'],
 				each: { type: 'string' },
-				options: ['clean'],
+				options: ['border', 'clean'],
 				description: 'Visual modifiers.'
 			},
 			_change:
@@ -136,11 +130,6 @@ onetype.AddonReady('elements', (elements) =>
 			this.classes = () =>
 			{
 				const list = ['box', this.background, this.orientation];
-
-				if(this.border)
-				{
-					list.push('border');
-				}
 
 				if(this.sticky)
 				{
@@ -427,7 +416,6 @@ onetype.AddonReady('elements', (elements) =>
 									:searchable="group.searchable"
 									:_change="({ value }) => set(group.id, value)"
 									background="bg-2"
-									:border="true"
 								></e-form-select>
 
 								<!-- SEARCH -->
@@ -438,7 +426,6 @@ onetype.AddonReady('elements', (elements) =>
 									:placeholder="(group.config && group.config.placeholder) || 'Search…'"
 									:_input="({ value }) => set(group.id, value)"
 									background="bg-2"
-									:border="true"
 									size="s"
 								></e-form-input>
 
@@ -450,7 +437,6 @@ onetype.AddonReady('elements', (elements) =>
 										:placeholder="(group.config && group.config.minPlaceholder) || 'Min'"
 										:_change="({ value }) => setRange(group.id, 'min', value)"
 										background="bg-2"
-										:border="true"
 										size="s"
 									></e-form-input>
 									<span class="range-dash">—</span>
@@ -460,7 +446,6 @@ onetype.AddonReady('elements', (elements) =>
 										:placeholder="(group.config && group.config.maxPlaceholder) || 'Max'"
 										:_change="({ value }) => setRange(group.id, 'max', value)"
 										background="bg-2"
-										:border="true"
 										size="s"
 									></e-form-input>
 								</div>
@@ -485,7 +470,6 @@ onetype.AddonReady('elements', (elements) =>
 										:placeholder="(group.config && group.config.fromPlaceholder) || 'From'"
 										:_change="({ value }) => setRange(group.id, 'from', value)"
 										background="bg-2"
-										:border="true"
 										size="s"
 									></e-form-date>
 									<e-form-date
@@ -493,7 +477,6 @@ onetype.AddonReady('elements', (elements) =>
 										:placeholder="(group.config && group.config.toPlaceholder) || 'To'"
 										:_change="({ value }) => setRange(group.id, 'to', value)"
 										background="bg-2"
-										:border="true"
 										size="s"
 									></e-form-date>
 								</div>
