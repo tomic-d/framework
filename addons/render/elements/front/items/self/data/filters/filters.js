@@ -4,72 +4,118 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'data-filters',
 		icon: 'filter_alt',
 		name: 'Data Filters',
-		description: 'Premium filters panel with collapsible groups, multiple filter types (checkbox, radio, select, tags, range, slider, search, date, toggle), clear actions and active counts. Reuses form elements.',
+		description: 'Filter panel with collapsible groups, multiple types and active counts.',
 		category: 'Data',
-		author: 'OneType',
-		config: {
-			title: {
+		config:
+		{
+			title:
+			{
 				type: 'string',
-				value: 'Filters'
+				value: 'Filters',
+				description: 'Panel header title.'
 			},
-			icon: {
+			icon:
+			{
 				type: 'string',
-				value: 'filter_alt'
+				value: 'filter_alt',
+				description: 'Header icon.'
 			},
-			groups: {
+			groups:
+			{
 				type: 'array',
 				value: [],
-				each: { type: 'object' }
+				each: { type: 'object' },
+				description: 'Filter groups. Each: { id, label, type, options, config, collapsed, max }.'
 			},
-			value: {
+			value:
+			{
 				type: 'object',
-				value: null
+				value: null,
+				description: 'Filter state keyed by group id.'
 			},
-			collapsible: {
+			collapsible:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Allow collapsing groups.'
 			},
-			showClear: {
+			showClear:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show clear all button.'
 			},
-			showCount: {
+			showCount:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show active filter counts.'
 			},
-			sticky: {
-				type: 'boolean'
+			sticky:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Sticky positioning.'
 			},
-			orientation: {
+			orientation:
+			{
 				type: 'string',
 				value: 'vertical',
-				options: ['vertical', 'horizontal']
+				options: ['vertical', 'horizontal'],
+				description: 'Layout direction.'
 			},
-			clearLabel: {
+			clearLabel:
+			{
 				type: 'string',
-				value: 'Clear all'
+				value: 'Clear all',
+				description: 'Clear button label.'
 			},
-			applyLabel: {
-				type: 'string'
+			applyLabel:
+			{
+				type: 'string',
+				value: '',
+				description: 'Apply button label. Empty hides footer.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show outer border.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'clean']
+				value: [],
+				each: { type: 'string' },
+				options: ['clean'],
+				description: 'Visual modifiers.'
 			},
-			_change: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { value }.'
 			},
-			_clear: {
-				type: 'function'
+			_clear:
+			{
+				type: 'function',
+				description: 'Clear all handler.'
 			},
-			_apply: {
-				type: 'function'
+			_apply:
+			{
+				type: 'function',
+				description: 'Apply handler. Receives { value }.'
 			}
 		},
 		render: function()
 		{
-			// Local state — clone value
+			/* ===== STATE ===== */
 
 			this.state = this.value ? { ...this.value } : {};
 			this.collapsed = {};
@@ -83,30 +129,56 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			});
 
-			// Count helpers
+			this.hasApply = !!this.applyLabel;
 
-			this.isGroupActive = (group) =>
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
 			{
-				const value = this.state[group.id];
-				if(value === undefined || value === null || value === '') return false;
-				if(Array.isArray(value)) return value.length > 0;
-				if(typeof value === 'object')
+				const list = ['box', this.background, this.orientation];
+
+				if(this.border)
 				{
-					return Object.values(value).some(v => v !== null && v !== undefined && v !== '');
+					list.push('border');
 				}
-				return true;
+
+				if(this.sticky)
+				{
+					list.push('sticky');
+				}
+
+				this.variant.forEach(v => list.push(v));
+
+				return list.join(' ');
 			};
+
+			/* ===== COUNTS ===== */
 
 			this.groupActiveCount = (group) =>
 			{
 				const value = this.state[group.id];
-				if(!value) return 0;
-				if(Array.isArray(value)) return value.length;
+
+				if(!value)
+				{
+					return 0;
+				}
+
+				if(Array.isArray(value))
+				{
+					return value.length;
+				}
+
 				if(typeof value === 'object')
 				{
 					return Object.values(value).filter(v => v !== null && v !== undefined && v !== '').length;
 				}
+
 				return 1;
+			};
+
+			this.isGroupActive = (group) =>
+			{
+				return this.groupActiveCount(group) > 0;
 			};
 
 			this.totalActiveCount = () =>
@@ -114,7 +186,10 @@ onetype.AddonReady('elements', (elements) =>
 				return this.groups.reduce((sum, group) => sum + this.groupActiveCount(group), 0);
 			};
 
-			// Value getters
+			this.totalActive = this.totalActiveCount();
+			this.hasActive = this.totalActive > 0;
+
+			/* ===== GETTERS ===== */
 
 			this.isChecked = (groupId, optionId) =>
 			{
@@ -127,16 +202,10 @@ onetype.AddonReady('elements', (elements) =>
 				return this.state[groupId] === optionId;
 			};
 
-			this.getSearchValue = (groupId) =>
+			this.getValue = (groupId, fallback) =>
 			{
 				const value = this.state[groupId];
-				return typeof value === 'string' ? value : '';
-			};
-
-			this.getNumberValue = (groupId) =>
-			{
-				const value = this.state[groupId];
-				return typeof value === 'number' ? value : 0;
+				return value !== undefined && value !== null ? value : fallback;
 			};
 
 			this.getRangeValue = (groupId, key) =>
@@ -145,12 +214,7 @@ onetype.AddonReady('elements', (elements) =>
 				return value && typeof value === 'object' && value[key] !== undefined ? value[key] : '';
 			};
 
-			this.getBooleanValue = (groupId) =>
-			{
-				return !!this.state[groupId];
-			};
-
-			// Emit
+			/* ===== HANDLERS ===== */
 
 			this.emit = () =>
 			{
@@ -160,7 +224,20 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			// Actions
+			this.set = (groupId, value) =>
+			{
+				this.state = { ...this.state, [groupId]: value };
+				this.emit();
+				this.Update();
+			};
+
+			this.setRange = (groupId, key, value) =>
+			{
+				const range = this.state[groupId] && typeof this.state[groupId] === 'object' ? this.state[groupId] : {};
+				this.state = { ...this.state, [groupId]: { ...range, [key]: value } };
+				this.emit();
+				this.Update();
+			};
 
 			this.toggleCollapse = (groupId) =>
 			{
@@ -188,76 +265,12 @@ onetype.AddonReady('elements', (elements) =>
 					current.splice(index, 1);
 				}
 
-				this.state = { ...this.state, [group.id]: current };
-				this.emit();
-				this.Update();
+				this.set(group.id, current);
 			};
 
 			this.selectRadio = (group, optionId) =>
 			{
-				const next = this.state[group.id] === optionId ? null : optionId;
-				this.state = { ...this.state, [group.id]: next };
-				this.emit();
-				this.Update();
-			};
-
-			this.changeSelect = (group, { value }) =>
-			{
-				this.state = { ...this.state, [group.id]: value };
-				this.emit();
-				this.Update();
-			};
-
-			this.changeSearch = (group, { value }) =>
-			{
-				this.state = { ...this.state, [group.id]: value };
-				this.emit();
-			};
-
-			this.changeSlider = (group, { value }) =>
-			{
-				this.state = { ...this.state, [group.id]: value };
-				this.emit();
-				this.Update();
-			};
-
-			this.changeRangeMin = (group, { value }) =>
-			{
-				const range = this.state[group.id] && typeof this.state[group.id] === 'object' ? this.state[group.id] : {};
-				this.state = { ...this.state, [group.id]: { ...range, min: value } };
-				this.emit();
-				this.Update();
-			};
-
-			this.changeRangeMax = (group, { value }) =>
-			{
-				const range = this.state[group.id] && typeof this.state[group.id] === 'object' ? this.state[group.id] : {};
-				this.state = { ...this.state, [group.id]: { ...range, max: value } };
-				this.emit();
-				this.Update();
-			};
-
-			this.changeDateFrom = (group, { value }) =>
-			{
-				const range = this.state[group.id] && typeof this.state[group.id] === 'object' ? this.state[group.id] : {};
-				this.state = { ...this.state, [group.id]: { ...range, from: value } };
-				this.emit();
-				this.Update();
-			};
-
-			this.changeDateTo = (group, { value }) =>
-			{
-				const range = this.state[group.id] && typeof this.state[group.id] === 'object' ? this.state[group.id] : {};
-				this.state = { ...this.state, [group.id]: { ...range, to: value } };
-				this.emit();
-				this.Update();
-			};
-
-			this.changeToggle = (group, { value }) =>
-			{
-				this.state = { ...this.state, [group.id]: value };
-				this.emit();
-				this.Update();
+				this.set(group.id, this.state[group.id] === optionId ? null : optionId);
 			};
 
 			this.clearGroup = (group, event) =>
@@ -296,14 +309,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			// Computed header state
-
-			this.totalActive = this.totalActiveCount();
-			this.hasActive = this.totalActive > 0;
-			this.hasApply = !!this.applyLabel;
+			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<aside :class="'holder ' + variant.join(' ') + ' ' + orientation + (sticky ? ' sticky' : '')">
+				<aside :class="classes()">
 					<header class="head">
 						<div class="head-title">
 							<i ot-if="icon">{{ icon }}</i>
@@ -354,7 +363,8 @@ onetype.AddonReady('elements', (elements) =>
 											:count="option.count != null ? option.count : ''"
 											:value="isChecked(group.id, option.id)"
 											:_change="() => toggleCheckbox(group, option.id)"
-											:variant="['bg-2', 'border', 'size-m']"
+											background="bg-2"
+											:variant="['border']"
 										></e-form-checkbox>
 									</div>
 
@@ -378,7 +388,8 @@ onetype.AddonReady('elements', (elements) =>
 											:count="option.count != null ? option.count : ''"
 											:value="isSelected(group.id, option.id)"
 											:_change="() => selectRadio(group, option.id)"
-											:variant="['bg-2', 'border', 'size-m']"
+											background="bg-2"
+											:variant="['border']"
 										></e-form-radio>
 									</div>
 
@@ -393,7 +404,7 @@ onetype.AddonReady('elements', (elements) =>
 									</button>
 								</div>
 
-								<!-- TAGS (pill buttons, multi-select) -->
+								<!-- TAGS -->
 								<div ot-if="group.type === 'tags'" class="tags">
 									<button
 										ot-for="option in group.options"
@@ -410,69 +421,80 @@ onetype.AddonReady('elements', (elements) =>
 								<!-- SELECT -->
 								<e-form-select
 									ot-if="group.type === 'select'"
-									:value="state[group.id] || ''"
+									:value="getValue(group.id, '')"
 									:options="group.options"
 									:placeholder="(group.config && group.config.placeholder) || 'Select…'"
 									:searchable="group.searchable"
-									:_change="(data) => changeSelect(group, data)"
-									:variant="['bg-2', 'border', 'size-m']"
+									:_change="({ value }) => set(group.id, value)"
+									background="bg-2"
+									:border="true"
 								></e-form-select>
 
 								<!-- SEARCH -->
 								<e-form-input
 									ot-if="group.type === 'search'"
 									icon="search"
-									:value="getSearchValue(group.id)"
+									:value="getValue(group.id, '')"
 									:placeholder="(group.config && group.config.placeholder) || 'Search…'"
-									:_input="(data) => changeSearch(group, data)"
-									:variant="['bg-2', 'border', 'size-m']"
+									:_input="({ value }) => set(group.id, value)"
+									background="bg-2"
+									:border="true"
+									size="s"
 								></e-form-input>
 
-								<!-- RANGE (two inputs) -->
+								<!-- RANGE -->
 								<div ot-if="group.type === 'range'" class="range">
 									<e-form-input
 										type="number"
 										:value="getRangeValue(group.id, 'min')"
 										:placeholder="(group.config && group.config.minPlaceholder) || 'Min'"
-										:_change="(data) => changeRangeMin(group, data)"
-										:variant="['bg-2', 'border', 'size-m']"
+										:_change="({ value }) => setRange(group.id, 'min', value)"
+										background="bg-2"
+										:border="true"
+										size="s"
 									></e-form-input>
 									<span class="range-dash">—</span>
 									<e-form-input
 										type="number"
 										:value="getRangeValue(group.id, 'max')"
 										:placeholder="(group.config && group.config.maxPlaceholder) || 'Max'"
-										:_change="(data) => changeRangeMax(group, data)"
-										:variant="['bg-2', 'border', 'size-m']"
+										:_change="({ value }) => setRange(group.id, 'max', value)"
+										background="bg-2"
+										:border="true"
+										size="s"
 									></e-form-input>
 								</div>
 
 								<!-- SLIDER -->
 								<div ot-if="group.type === 'slider'" class="slider-wrap">
 									<e-form-slider
-										:value="getNumberValue(group.id) || (group.config && group.config.min) || 0"
+										:value="getValue(group.id, (group.config && group.config.min) || 0)"
 										:min="(group.config && group.config.min) || 0"
 										:max="(group.config && group.config.max) || 100"
 										:step="(group.config && group.config.step) || 1"
-										:_change="(data) => changeSlider(group, data)"
-										:variant="['brand', 'size-m']"
+										:showValue="true"
+										:_change="({ value }) => set(group.id, value)"
+										color="brand"
 									></e-form-slider>
-									<div ot-if="state[group.id] != null" class="slider-value">{{ state[group.id] }}</div>
 								</div>
 
-								<!-- DATE (from/to) -->
+								<!-- DATE -->
 								<div ot-if="group.type === 'date'" class="date-range">
 									<e-form-date
 										:value="getRangeValue(group.id, 'from')"
 										:placeholder="(group.config && group.config.fromPlaceholder) || 'From'"
-										:_change="(data) => changeDateFrom(group, data)"
-										:variant="['bg-2', 'border', 'size-m']"
+										:_change="({ value }) => setRange(group.id, 'from', value)"
+										background="bg-2"
+										:border="true"
+										size="s"
 									></e-form-date>
 									<e-form-date
 										:value="getRangeValue(group.id, 'to')"
 										:placeholder="(group.config && group.config.toPlaceholder) || 'To'"
-										:_change="(data) => changeDateTo(group, data)"
-										:variant="['bg-2', 'border', 'size-m']"
+										:_change="({ value }) => setRange(group.id, 'to', value)"
+										background="bg-2"
+										:border="true"
+										size="s"
 									></e-form-date>
 								</div>
 
@@ -480,9 +502,8 @@ onetype.AddonReady('elements', (elements) =>
 								<div ot-if="group.type === 'toggle'" class="toggle-wrap">
 									<e-form-toggle
 										:label="(group.config && group.config.label) || group.label"
-										:value="getBooleanValue(group.id)"
-										:_change="(data) => changeToggle(group, data)"
-										:variant="['bg-3', 'size-m']"
+										:value="!!state[group.id]"
+										:_change="({ value }) => set(group.id, value)"
 									></e-form-toggle>
 								</div>
 							</div>
@@ -494,7 +515,8 @@ onetype.AddonReady('elements', (elements) =>
 							:text="applyLabel"
 							icon="check"
 							:_click="apply"
-							:variant="['brand', 'size-m', 'full']"
+							color="brand"
+							:variant="['full']"
 						></e-form-button>
 					</footer>
 				</aside>

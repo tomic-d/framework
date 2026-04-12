@@ -4,92 +4,174 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-input',
 		icon: 'input',
 		name: 'Input',
-		description: 'Premium text input with icons, prefix/suffix, password toggle, clearable and autocomplete dropdown.',
+		description: 'Text input with icons, prefix/suffix, password toggle, clearable and autocomplete.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
-				type: 'string|number'
+		config:
+		{
+			value:
+			{
+				type: 'string|number',
+				description: 'Input value.'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				description: 'Input name attribute.'
 			},
-			type: {
+			type:
+			{
 				type: 'string',
 				value: 'text',
-				options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search']
+				options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search'],
+				description: 'Input type.'
 			},
-			placeholder: {
-				type: 'string'
+			placeholder:
+			{
+				type: 'string',
+				description: 'Placeholder text.'
 			},
-			icon: {
-				type: 'string'
+			icon:
+			{
+				type: 'string',
+				description: 'Left icon.'
 			},
-			iconRight: {
-				type: 'string'
+			iconRight:
+			{
+				type: 'string',
+				description: 'Right icon.'
 			},
-			prefix: {
-				type: 'string'
+			prefix:
+			{
+				type: 'string',
+				description: 'Static text before value.'
 			},
-			suffix: {
-				type: 'string'
+			suffix:
+			{
+				type: 'string',
+				description: 'Static text after value.'
 			},
-			options: {
+			options:
+			{
 				type: 'array',
 				value: [],
-				each: {
-					type: 'string'
-				}
+				each: { type: 'string' },
+				description: 'Autocomplete suggestions.'
 			},
-			restrict: {
-				type: 'boolean'
+			restrict:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Only allow values from options.'
 			},
-			clearable: {
-				type: 'boolean'
+			clearable:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show clear button when value present.'
 			},
-			maxlength: {
-				type: 'number'
+			maxlength:
+			{
+				type: 'number',
+				description: 'Maximum character count.'
 			},
-			min: {
-				type: 'number'
+			min:
+			{
+				type: 'number',
+				description: 'Minimum value for number input.'
 			},
-			max: {
-				type: 'number'
+			max:
+			{
+				type: 'number',
+				description: 'Maximum value for number input.'
 			},
-			step: {
-				type: 'number'
+			step:
+			{
+				type: 'number',
+				description: 'Step increment for number input.'
 			},
-			disabled: {
-				type: 'boolean'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
 			},
-			readonly: {
-				type: 'boolean'
+			readonly:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Readonly state.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent', 'border', 'size-s', 'size-m', 'size-l']
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				description: 'Background depth.'
 			},
-			_input: {
-				type: 'function'
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
 			},
-			_change: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Input size.'
 			},
-			_focus: {
-				type: 'function'
+			_input:
+			{
+				type: 'function',
+				description: 'Input handler. Receives { event, value }.'
 			},
-			_blur: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
+			},
+			_focus:
+			{
+				type: 'function',
+				description: 'Focus handler. Receives { event, value }.'
+			},
+			_blur:
+			{
+				type: 'function',
+				description: 'Blur handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.open = false;
 			this.activeIndex = 0;
 			this.revealed = false;
 			this.hasOptions = this.options && this.options.length > 0;
 			this.isPassword = this.type === 'password';
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background, 'size-' + this.size];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
 
 			this.inputType = () =>
 			{
@@ -117,6 +199,8 @@ onetype.AddonReady('elements', (elements) =>
 
 				return this.options.filter(option => String(option).toLowerCase().includes(query));
 			};
+
+			/* ===== HANDLERS ===== */
 
 			this.input = ({ event, value }) =>
 			{
@@ -263,8 +347,10 @@ onetype.AddonReady('elements', (elements) =>
 				this.revealed = !this.revealed;
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')" ot-click-outside="close">
+				<div :class="classes()" ot-click-outside="close">
 					<div class="field">
 						<i ot-if="icon" class="icon">{{ icon }}</i>
 						<span ot-if="prefix" class="affix">{{ prefix }}</span>

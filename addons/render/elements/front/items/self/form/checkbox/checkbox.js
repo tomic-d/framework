@@ -4,67 +4,135 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-checkbox',
 		icon: 'check_box',
 		name: 'Checkbox',
-		description: 'Premium checkbox with label, description, indeterminate state and color variants.',
+		description: 'Checkbox with label, description, icon, count, indeterminate and color variants.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			label: {
-				type: 'string'
+		config:
+		{
+			label:
+			{
+				type: 'string',
+				value: '',
+				description: 'Checkbox label.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Helper text below label.'
 			},
-			icon: {
-				type: 'string'
+			icon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Icon between mark and label.'
 			},
-			count: {
-				type: 'string|number'
+			count:
+			{
+				type: 'string|number',
+				description: 'Count badge at the end.'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Input name attribute.'
 			},
-			value: {
-				type: 'boolean'
+			value:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Checked state.'
 			},
-			indeterminate: {
-				type: 'boolean'
+			indeterminate:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Partial selection state.'
 			},
-			disabled: {
-				type: 'boolean'
+			color:
+			{
+				type: 'string',
+				value: 'brand',
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Checked mark color.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				description: 'Mark background depth.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Checkbox size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'size-m'],
-				options: [
-					'bg-1', 'bg-2', 'bg-3', 'bg-4',
-					'transparent', 'border',
-					'color-brand', 'color-blue', 'color-red', 'color-orange', 'color-green',
-					'size-s', 'size-m', 'size-l',
-					'reverse'
-				]
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'reverse'],
+				description: 'Visual modifiers.'
 			},
-			_change: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
 			},
-			_click: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'Click handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasInfo = !!this.label || !!this.description;
 			this.hasIcon = !!this.icon;
 			this.hasCount = this.count !== undefined && this.count !== null && this.count !== '';
 
-			this.OnReady(() =>
-			{
-				const input = this.Element?.querySelector('input');
+			/* ===== CLASSES ===== */
 
-				if(input)
+			this.classes = () =>
+			{
+				const list = ['box', this.background, 'color-' + this.color, 'size-' + this.size];
+
+				if(this.variant.includes('border'))
 				{
-					input.indeterminate = !!this.indeterminate;
+					list.push('border');
 				}
-			});
+
+				if(this.variant.includes('reverse'))
+				{
+					list.push('reverse');
+				}
+
+				if(this.indeterminate)
+				{
+					list.push('indeterminate');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.handle = ({ event }) =>
 			{
@@ -85,8 +153,22 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== LIFECYCLE ===== */
+
+			this.OnReady(() =>
+			{
+				const input = this.Element?.querySelector('input');
+
+				if(input)
+				{
+					input.indeterminate = !!this.indeterminate;
+				}
+			});
+
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<label :class="'holder ' + variant.join(' ') + (indeterminate ? ' indeterminate' : '') + (disabled ? ' disabled' : '')">
+				<label :class="classes()">
 					<input
 						type="checkbox"
 						:name="name"

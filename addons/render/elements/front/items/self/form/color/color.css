@@ -1,14 +1,13 @@
-/* Root */
+/* ===== FORM COLOR ===== */
 
 .e-21311850
 {
-	display: flex;
-	width: 100%;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-21311850 > .holder
+.e-21311850 > .box
 {
 	display: flex;
 	flex-direction: column;
@@ -16,9 +15,9 @@
 	width: 100%;
 }
 
-/* Field (input row) */
+/* Field */
 
-.e-21311850 > .holder > .field
+.e-21311850 > .box > .field
 {
 	position: relative;
 	display: flex;
@@ -29,12 +28,17 @@
 	border: 1px solid transparent;
 	border-radius: var(--ot-radius-m);
 	background: transparent;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), border-color var(--ot-transition), box-shadow var(--ot-transition);
+}
+
+.e-21311850 > .box > .field:focus-within
+{
+	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
 }
 
 /* Swatch */
 
-.e-21311850 > .holder > .field > .swatch
+.e-21311850 > .box > .field > .swatch
 {
 	position: relative;
 	flex-shrink: 0;
@@ -48,17 +52,17 @@
 	background-image: linear-gradient(45deg, var(--ot-bg-3) 25%, transparent 25%), linear-gradient(-45deg, var(--ot-bg-3) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--ot-bg-3) 75%), linear-gradient(-45deg, transparent 75%, var(--ot-bg-3) 75%);
 	background-size: 8px 8px;
 	background-position: 0 0, 0 4px, 4px -4px, -4px 0;
-	transition: border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: border-color var(--ot-transition), transform var(--ot-transition);
 }
 
-.e-21311850 > .holder > .field > .swatch:hover
+.e-21311850 > .box > .field > .swatch:hover
 {
 	transform: scale(1.08);
 }
 
-/* Native color input — hidden inside swatch */
+/* Native color input */
 
-.e-21311850 > .holder > .field > .swatch > .native
+.e-21311850 > .box > .field > .swatch > .native
 {
 	position: absolute;
 	inset: 0;
@@ -72,7 +76,7 @@
 
 /* Hex input */
 
-.e-21311850 > .holder > .field > .input
+.e-21311850 > .box > .field > .input
 {
 	flex: 1;
 	min-width: 0;
@@ -88,15 +92,15 @@
 	padding: 0;
 }
 
-.e-21311850 > .holder > .field > .input::placeholder
+.e-21311850 > .box > .field > .input::placeholder
 {
 	color: var(--ot-text-3);
 	text-transform: none;
 }
 
-/* Action buttons (copy / clear) */
+/* Action */
 
-.e-21311850 > .holder > .field > .action
+.e-21311850 > .box > .field > .action
 {
 	display: inline-flex;
 	align-items: center;
@@ -111,21 +115,21 @@
 	color: var(--ot-text-3);
 	cursor: pointer;
 	outline: none;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), color var(--ot-transition);
 }
 
-.e-21311850 > .holder > .field > .action:hover
+.e-21311850 > .box > .field > .action:hover
 {
 	background: var(--ot-bg-2-hover);
 	color: var(--ot-text-1);
 }
 
-.e-21311850 > .holder > .field > .action > i
+.e-21311850 > .box > .field > .action > i
 {
 	font-size: 14px;
 }
 
-.e-21311850 > .holder > .field > .action.copied
+.e-21311850 > .box > .field > .action.copied
 {
 	color: var(--ot-green);
 	background: var(--ot-green-opacity);
@@ -133,14 +137,14 @@
 
 /* Presets */
 
-.e-21311850 > .holder > .presets
+.e-21311850 > .box > .presets
 {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--ot-spacing-x);
 }
 
-.e-21311850 > .holder > .presets > .preset
+.e-21311850 > .box > .presets > .preset
 {
 	width: 22px;
 	height: 22px;
@@ -149,202 +153,107 @@
 	border-radius: var(--ot-radius-s);
 	cursor: pointer;
 	outline: none;
-	transition: border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: border-color var(--ot-transition), transform var(--ot-transition), box-shadow var(--ot-transition);
 }
 
-.e-21311850 > .holder > .presets > .preset:hover
+.e-21311850 > .box > .presets > .preset:hover
 {
 	transform: scale(1.1);
 }
 
-.e-21311850 > .holder > .presets > .preset.active
+.e-21311850 > .box > .presets > .preset.active
 {
 	box-shadow: 0 0 0 2px var(--ot-bg-1), 0 0 0 4px var(--ot-brand);
 }
 
-/* Focus ring */
-
-.e-21311850 > .holder > .field:focus-within
-{
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
-}
-
 /* Disabled */
 
-.e-21311850 > .holder.disabled > .field
+.e-21311850 > .box.disabled > .field
 {
 	cursor: not-allowed;
 	opacity: 0.55;
 }
 
-.e-21311850 > .holder.disabled > .field > .swatch
+.e-21311850 > .box.disabled > .field > .swatch
 {
 	cursor: not-allowed;
 	transform: none;
 }
 
-.e-21311850 > .holder.disabled > .field > .input
+.e-21311850 > .box.disabled > .field > .input
 {
 	cursor: not-allowed;
 }
 
-/* ===== BACKGROUND VARIANTS ===== */
+/* ===== BACKGROUND ===== */
 
-.e-21311850 > .holder.bg-1 > .field
-{
-	background: var(--ot-bg-1);
-}
-.e-21311850 > .holder.bg-1 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-1-hover);
-}
-.e-21311850 > .holder.bg-1 > .field > .swatch
-{
-	border-color: var(--ot-bg-1-border);
-}
-.e-21311850 > .holder.bg-1 > .field > .action:hover
-{
-	background: var(--ot-bg-1-hover);
-}
+.e-21311850 > .box.bg-1 > .field { background: var(--ot-bg-1); }
+.e-21311850 > .box.bg-2 > .field { background: var(--ot-bg-2); }
+.e-21311850 > .box.bg-3 > .field { background: var(--ot-bg-3); }
+.e-21311850 > .box.bg-4 > .field { background: var(--ot-bg-4); }
 
-.e-21311850 > .holder.bg-2 > .field
-{
-	background: var(--ot-bg-2);
-}
-.e-21311850 > .holder.bg-2 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-2-hover);
-}
-.e-21311850 > .holder.bg-2 > .field > .swatch
-{
-	border-color: var(--ot-bg-2-border);
-}
-.e-21311850 > .holder.bg-2 > .field > .action:hover
-{
-	background: var(--ot-bg-2-hover);
-}
+.e-21311850 > .box.bg-1 > .field:hover:not(:focus-within) { background: var(--ot-bg-1-hover); }
+.e-21311850 > .box.bg-2 > .field:hover:not(:focus-within) { background: var(--ot-bg-2-hover); }
+.e-21311850 > .box.bg-3 > .field:hover:not(:focus-within) { background: var(--ot-bg-3-hover); }
+.e-21311850 > .box.bg-4 > .field:hover:not(:focus-within) { background: var(--ot-bg-4-hover); }
 
-.e-21311850 > .holder.bg-3 > .field
-{
-	background: var(--ot-bg-3);
-}
-.e-21311850 > .holder.bg-3 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-3-hover);
-}
-.e-21311850 > .holder.bg-3 > .field > .swatch
-{
-	border-color: var(--ot-bg-3-border);
-}
-.e-21311850 > .holder.bg-3 > .field > .action:hover
-{
-	background: var(--ot-bg-3-hover);
-}
+.e-21311850 > .box.bg-1 > .field > .swatch { border-color: var(--ot-bg-1-border); }
+.e-21311850 > .box.bg-2 > .field > .swatch { border-color: var(--ot-bg-2-border); }
+.e-21311850 > .box.bg-3 > .field > .swatch { border-color: var(--ot-bg-3-border); }
+.e-21311850 > .box.bg-4 > .field > .swatch { border-color: var(--ot-bg-4-border); }
 
-.e-21311850 > .holder.bg-4 > .field
-{
-	background: var(--ot-bg-4);
-}
-.e-21311850 > .holder.bg-4 > .field:hover:not(:focus-within)
-{
-	background: var(--ot-bg-4-hover);
-}
-.e-21311850 > .holder.bg-4 > .field > .swatch
-{
-	border-color: var(--ot-bg-4-border);
-}
-.e-21311850 > .holder.bg-4 > .field > .action:hover
-{
-	background: var(--ot-bg-4-hover);
-}
+.e-21311850 > .box.bg-1 > .field > .action:hover { background: var(--ot-bg-1-hover); }
+.e-21311850 > .box.bg-2 > .field > .action:hover { background: var(--ot-bg-2-hover); }
+.e-21311850 > .box.bg-3 > .field > .action:hover { background: var(--ot-bg-3-hover); }
+.e-21311850 > .box.bg-4 > .field > .action:hover { background: var(--ot-bg-4-hover); }
 
-/* Transparent variant */
+/* Transparent */
 
-.e-21311850 > .holder.transparent > .field
+.e-21311850 > .box.transparent > .field
 {
 	background: transparent;
 	padding: 0;
 }
 
-/* Border variant — per bg level */
+/* Border */
 
-.e-21311850 > .holder.border > .field { border-color: var(--ot-bg-2-border); }
-.e-21311850 > .holder.bg-1.border > .field { border-color: var(--ot-bg-1-border); }
-.e-21311850 > .holder.bg-2.border > .field { border-color: var(--ot-bg-2-border); }
-.e-21311850 > .holder.bg-3.border > .field { border-color: var(--ot-bg-3-border); }
-.e-21311850 > .holder.bg-4.border > .field { border-color: var(--ot-bg-4-border); }
+.e-21311850 > .box.border > .field { border-color: var(--ot-bg-2-border); }
+.e-21311850 > .box.bg-1.border > .field { border-color: var(--ot-bg-1-border); }
+.e-21311850 > .box.bg-2.border > .field { border-color: var(--ot-bg-2-border); }
+.e-21311850 > .box.bg-3.border > .field { border-color: var(--ot-bg-3-border); }
+.e-21311850 > .box.bg-4.border > .field { border-color: var(--ot-bg-4-border); }
 
-/* ===== SIZE VARIANTS ===== */
+/* ===== SIZE ===== */
 
-.e-21311850 > .holder.size-s > .field
+.e-21311850 > .box.size-s > .field
 {
 	height: var(--ot-height-s);
 	padding: 0 var(--ot-spacing-x);
 }
-.e-21311850 > .holder.size-s > .field > .swatch
-{
-	width: 18px;
-	height: 18px;
-}
-.e-21311850 > .holder.size-s > .field > .input
-{
-	font-size: var(--ot-size-s);
-}
-.e-21311850 > .holder.size-s > .field > .action
-{
-	width: 18px;
-	height: 18px;
-}
-.e-21311850 > .holder.size-s > .field > .action > i
-{
-	font-size: 13px;
-}
-.e-21311850 > .holder.size-s > .presets > .preset
-{
-	width: 18px;
-	height: 18px;
-}
 
-.e-21311850 > .holder.size-m > .field
+.e-21311850 > .box.size-s > .field > .swatch { width: 18px; height: 18px; }
+.e-21311850 > .box.size-s > .field > .input { font-size: var(--ot-size-s); }
+.e-21311850 > .box.size-s > .field > .action { width: 18px; height: 18px; }
+.e-21311850 > .box.size-s > .field > .action > i { font-size: 13px; }
+.e-21311850 > .box.size-s > .presets > .preset { width: 18px; height: 18px; }
+
+.e-21311850 > .box.size-m > .field
 {
 	height: var(--ot-height-m);
 	padding: 0 var(--ot-spacing-s);
 }
-.e-21311850 > .holder.size-m > .field > .swatch
-{
-	width: 22px;
-	height: 22px;
-}
-.e-21311850 > .holder.size-m > .field > .input
-{
-	font-size: var(--ot-size-m);
-}
 
-.e-21311850 > .holder.size-l > .field
+.e-21311850 > .box.size-m > .field > .swatch { width: 22px; height: 22px; }
+.e-21311850 > .box.size-m > .field > .input { font-size: var(--ot-size-m); }
+
+.e-21311850 > .box.size-l > .field
 {
 	height: var(--ot-height-l);
 	padding: 0 var(--ot-spacing-m);
 }
-.e-21311850 > .holder.size-l > .field > .swatch
-{
-	width: 28px;
-	height: 28px;
-}
-.e-21311850 > .holder.size-l > .field > .input
-{
-	font-size: var(--ot-size-m);
-}
-.e-21311850 > .holder.size-l > .field > .action
-{
-	width: 26px;
-	height: 26px;
-}
-.e-21311850 > .holder.size-l > .field > .action > i
-{
-	font-size: 16px;
-}
-.e-21311850 > .holder.size-l > .presets > .preset
-{
-	width: 28px;
-	height: 28px;
-}
+
+.e-21311850 > .box.size-l > .field > .swatch { width: 28px; height: 28px; }
+.e-21311850 > .box.size-l > .field > .input { font-size: var(--ot-size-m); }
+.e-21311850 > .box.size-l > .field > .action { width: 26px; height: 26px; }
+.e-21311850 > .box.size-l > .field > .action > i { font-size: 16px; }
+.e-21311850 > .box.size-l > .presets > .preset { width: 28px; height: 28px; }

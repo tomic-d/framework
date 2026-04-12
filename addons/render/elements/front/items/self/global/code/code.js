@@ -1,5 +1,7 @@
 onetype.AddonReady('elements', (elements) =>
 {
+	/* ===== SYNTAX GRAMMARS ===== */
+
 	const LANG_JS = {
 		keywords: /\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|class|extends|super|this|typeof|instanceof|in|of|try|catch|finally|throw|async|await|import|from|export|default|null|undefined|true|false|void|delete|yield|static)\b/g,
 		comment: /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g,
@@ -45,7 +47,9 @@ onetype.AddonReady('elements', (elements) =>
 		command: /^(\s*)([a-zA-Z_][\w-]*)/gm
 	};
 
-	const escapeHtml = (text) =>
+	/* ===== HELPERS ===== */
+
+	const escape = (text) =>
 	{
 		return text
 			.replace(/&/g, '&amp;')
@@ -54,170 +58,111 @@ onetype.AddonReady('elements', (elements) =>
 			.replace(/"/g, '&quot;');
 	};
 
-	const tokenize = (code, language) =>
+	const stash = (placeholders, html) =>
 	{
-		const escaped = escapeHtml(code);
-
-		if(language === 'js' || language === 'javascript')
-		{
-			return tokenizeJs(escaped);
-		}
-
-		if(language === 'css')
-		{
-			return tokenizeCss(escaped);
-		}
-
-		if(language === 'html')
-		{
-			return tokenizeHtml(escaped);
-		}
-
-		if(language === 'json')
-		{
-			return tokenizeJson(escaped);
-		}
-
-		if(language === 'python' || language === 'py')
-		{
-			return tokenizePython(escaped);
-		}
-
-		if(language === 'bash' || language === 'sh' || language === 'shell')
-		{
-			return tokenizeBash(escaped);
-		}
-
-		return escaped;
+		const index = placeholders.length;
+		placeholders.push(html);
+		return '\u0000ph' + index + 'hp\u0000';
 	};
+
+	const unstash = (code, placeholders) =>
+	{
+		return code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
+	};
+
+	/* ===== TOKENIZERS ===== */
 
 	const tokenizeJs = (code) =>
 	{
-		const placeholders = [];
+		const ph = [];
 
-		const stash = (match) =>
-		{
-			const index = placeholders.length;
-			placeholders.push(match);
-			return '\u0000ph' + index + 'hp\u0000';
-		};
-
-		code = code.replace(LANG_JS.comment, (match) => stash('<span class="t-comment">' + match + '</span>'));
-		code = code.replace(LANG_JS.string, (match) => stash('<span class="t-string">' + match + '</span>'));
+		code = code.replace(LANG_JS.comment, (m) => stash(ph, '<span class="t-comment">' + m + '</span>'));
+		code = code.replace(LANG_JS.string, (m) => stash(ph, '<span class="t-string">' + m + '</span>'));
 		code = code.replace(LANG_JS.keywords, '<span class="t-keyword">$1</span>');
 		code = code.replace(LANG_JS.number, '<span class="t-number">$1</span>');
 		code = code.replace(LANG_JS.fn, '<span class="t-fn">$1</span>');
 
-		code = code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
-
-		return code;
+		return unstash(code, ph);
 	};
 
 	const tokenizeCss = (code) =>
 	{
-		const placeholders = [];
+		const ph = [];
 
-		const stash = (match) =>
-		{
-			const index = placeholders.length;
-			placeholders.push(match);
-			return '\u0000ph' + index + 'hp\u0000';
-		};
-
-		code = code.replace(LANG_CSS.comment, (match) => stash('<span class="t-comment">' + match + '</span>'));
-		code = code.replace(LANG_CSS.string, (match) => stash('<span class="t-string">' + match + '</span>'));
+		code = code.replace(LANG_CSS.comment, (m) => stash(ph, '<span class="t-comment">' + m + '</span>'));
+		code = code.replace(LANG_CSS.string, (m) => stash(ph, '<span class="t-string">' + m + '</span>'));
 		code = code.replace(LANG_CSS.selector, '<span class="t-selector">$1</span>');
 		code = code.replace(LANG_CSS.prop, '<span class="t-prop">$1</span>');
 		code = code.replace(LANG_CSS.number, '<span class="t-number">$1</span>');
 
-		code = code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
-
-		return code;
+		return unstash(code, ph);
 	};
 
 	const tokenizeHtml = (code) =>
 	{
-		const placeholders = [];
+		const ph = [];
 
-		const stash = (match) =>
-		{
-			const index = placeholders.length;
-			placeholders.push(match);
-			return '\u0000ph' + index + 'hp\u0000';
-		};
-
-		code = code.replace(LANG_HTML.comment, (match) => stash('<span class="t-comment">' + match + '</span>'));
+		code = code.replace(LANG_HTML.comment, (m) => stash(ph, '<span class="t-comment">' + m + '</span>'));
 		code = code.replace(LANG_HTML.string, '$1<span class="t-string">$2</span>');
 		code = code.replace(LANG_HTML.attr, ' <span class="t-attr">$1</span>');
 		code = code.replace(LANG_HTML.tag, '$1<span class="t-tag">$2</span>');
 
-		code = code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
-
-		return code;
+		return unstash(code, ph);
 	};
 
 	const tokenizeJson = (code) =>
 	{
-		const placeholders = [];
+		const ph = [];
 
-		const stash = (match) =>
-		{
-			const index = placeholders.length;
-			placeholders.push(match);
-			return '\u0000ph' + index + 'hp\u0000';
-		};
-
-		code = code.replace(LANG_JSON.string, (match) => stash('<span class="t-string">' + match + '</span>'));
+		code = code.replace(LANG_JSON.string, (m) => stash(ph, '<span class="t-string">' + m + '</span>'));
 		code = code.replace(LANG_JSON.keyword, '<span class="t-keyword">$1</span>');
 		code = code.replace(LANG_JSON.number, '<span class="t-number">$1</span>');
 
-		code = code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
-
-		return code;
+		return unstash(code, ph);
 	};
 
 	const tokenizePython = (code) =>
 	{
-		const placeholders = [];
+		const ph = [];
 
-		const stash = (match) =>
-		{
-			const index = placeholders.length;
-			placeholders.push(match);
-			return '\u0000ph' + index + 'hp\u0000';
-		};
-
-		code = code.replace(LANG_PYTHON.comment, (match) => stash('<span class="t-comment">' + match + '</span>'));
-		code = code.replace(LANG_PYTHON.string, (match) => stash('<span class="t-string">' + match + '</span>'));
+		code = code.replace(LANG_PYTHON.comment, (m) => stash(ph, '<span class="t-comment">' + m + '</span>'));
+		code = code.replace(LANG_PYTHON.string, (m) => stash(ph, '<span class="t-string">' + m + '</span>'));
 		code = code.replace(LANG_PYTHON.keywords, '<span class="t-keyword">$1</span>');
 		code = code.replace(LANG_PYTHON.number, '<span class="t-number">$1</span>');
 		code = code.replace(LANG_PYTHON.fn, '<span class="t-fn">$1</span>');
 
-		code = code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
-
-		return code;
+		return unstash(code, ph);
 	};
 
 	const tokenizeBash = (code) =>
 	{
-		const placeholders = [];
+		const ph = [];
 
-		const stash = (match) =>
-		{
-			const index = placeholders.length;
-			placeholders.push(match);
-			return '\u0000ph' + index + 'hp\u0000';
-		};
-
-		code = code.replace(LANG_BASH.comment, (match) => stash('<span class="t-comment">' + match + '</span>'));
-		code = code.replace(LANG_BASH.string, (match) => stash('<span class="t-string">' + match + '</span>'));
+		code = code.replace(LANG_BASH.comment, (m) => stash(ph, '<span class="t-comment">' + m + '</span>'));
+		code = code.replace(LANG_BASH.string, (m) => stash(ph, '<span class="t-string">' + m + '</span>'));
 		code = code.replace(LANG_BASH.variable, '<span class="t-number">$1</span>');
 		code = code.replace(LANG_BASH.flag, '$1<span class="t-attr">$2</span>');
 		code = code.replace(LANG_BASH.command, '$1<span class="t-keyword">$2</span>');
 
-		code = code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
+		return unstash(code, ph);
+	};
 
-		return code;
+	const tokenize = (code, language) =>
+	{
+		const escaped = escape(code);
+
+		const map = {
+			js: tokenizeJs, javascript: tokenizeJs,
+			css: tokenizeCss,
+			html: tokenizeHtml,
+			json: tokenizeJson,
+			python: tokenizePython, py: tokenizePython,
+			bash: tokenizeBash, sh: tokenizeBash, shell: tokenizeBash
+		};
+
+		const fn = map[language];
+
+		return fn ? fn(escaped) : escaped;
 	};
 
 	const parseHighlight = (value) =>
@@ -252,72 +197,129 @@ onetype.AddonReady('elements', (elements) =>
 		return result;
 	};
 
+	/* ===== ELEMENT ===== */
+
 	elements.ItemAdd({
 		id: 'global-code',
 		icon: 'code',
 		name: 'Code',
-		description: 'Code block with syntax highlighting for html, css, js. Copy button, line numbers and line highlight.',
+		description: 'Code block with syntax highlighting, copy button, line numbers and line highlight.',
 		category: 'Global',
-		author: 'OneType',
-		config: {
-			source: {
-				type: 'string'
+		config:
+		{
+			source:
+			{
+				type: 'string',
+				value: '',
+				description: 'Raw code string.'
 			},
-			color: {
-				type: 'string'
-			},
-			language: {
+			language:
+			{
 				type: 'string',
 				value: 'js',
-				options: ['js', 'javascript', 'css', 'html', 'json', 'python', 'py', 'bash', 'sh', 'shell']
+				options: ['js', 'javascript', 'css', 'html', 'json', 'python', 'py', 'bash', 'sh', 'shell'],
+				description: 'Syntax language.'
 			},
-			filename: {
-				type: 'string'
+			filename:
+			{
+				type: 'string',
+				value: '',
+				description: 'Filename in header. Replaces language label.'
 			},
-			lines: {
+			lines:
+			{
 				type: 'boolean',
-				value: false
+				value: false,
+				description: 'Show line numbers.'
 			},
-			highlight: {
-				type: 'string'
+			highlight:
+			{
+				type: 'string',
+				value: '',
+				description: 'Lines to highlight. Range string: 2,4-6.'
 			},
-			copy: {
+			copy:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Show copy button.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			color:
+			{
+				type: 'string',
+				value: '',
+				description: 'Custom background color override.'
+			},
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Frame outline depth.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Padding and font size.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.copied = false;
 
 			const raw = (this.source || '').replace(/^\n+|\n+$/g, '');
 			const highlighted = tokenize(raw, this.language);
-			const highlightLines = parseHighlight(this.highlight);
+			const lines = parseHighlight(this.highlight);
+
+			this.hasHead = !!this.filename || !!this.language || this.copy;
+
+			/* ===== OUTPUT ===== */
 
 			if(this.lines)
 			{
-				const linesArray = highlighted.split('\n');
-
-				this.linesHtml = linesArray.map((line, index) =>
+				this.output = '<div class="numbered">' + highlighted.split('\n').map((line, index) =>
 				{
 					const number = index + 1;
-					const isHighlighted = highlightLines.includes(number);
-					const classes = 'line' + (isHighlighted ? ' highlighted' : '');
+					const cls = 'line' + (lines.includes(number) ? ' highlighted' : '');
 
-					return '<div class="' + classes + '"><span class="number">' + number + '</span><span class="content">' + (line || ' ') + '</span></div>';
-				}).join('');
-
-				this.output = '<div class="numbered">' + this.linesHtml + '</div>';
+					return '<div class="' + cls + '"><span class="number">' + number + '</span><span class="code">' + (line || ' ') + '</span></div>';
+				}).join('') + '</div>';
 			}
 			else
 			{
 				this.output = '<span class="plain">' + highlighted + '</span>';
 			}
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.copyCode = () =>
 			{
@@ -334,12 +336,10 @@ onetype.AddonReady('elements', (elements) =>
 				}, 1800);
 			};
 
-			this.hasHead = !!this.filename || !!this.language || this.copy;
-
-			this.frameStyle = this.color ? 'background: ' + this.color : '';
+			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')" :style="frameStyle">
+				<div :class="classes()" :style="color ? 'background:' + color : ''">
 					<div ot-if="hasHead" class="head">
 						<div class="dots"><span></span><span></span><span></span></div>
 						<div ot-if="filename" class="filename">{{ filename }}</div>
@@ -350,7 +350,7 @@ onetype.AddonReady('elements', (elements) =>
 							<span>{{ copied ? 'Copied' : 'Copy' }}</span>
 						</button>
 					</div>
-					<pre class="content"><code ot-html="output"></code></pre>
+					<pre class="body"><code ot-html="output"></code></pre>
 				</div>
 			`;
 		}

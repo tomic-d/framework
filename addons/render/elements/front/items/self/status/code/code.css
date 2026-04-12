@@ -1,4 +1,4 @@
-/* Root */
+/* ===== STATUS CODE ===== */
 
 .e-471f3f12
 {
@@ -10,9 +10,9 @@
 	padding: var(--ot-spacing-l);
 }
 
-/* Holder */
+/* Box */
 
-.e-471f3f12 > .holder
+.e-471f3f12 > .box
 {
 	display: flex;
 	flex-direction: column;
@@ -20,7 +20,7 @@
 	gap: var(--ot-spacing-m);
 	text-align: center;
 	max-width: 480px;
-	animation: e-471f3f12-fade 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+	animation: e-471f3f12-fade 0.4s var(--ot-transition-slow);
 }
 
 @keyframes e-471f3f12-fade
@@ -31,7 +31,7 @@
 
 /* Code number */
 
-.e-471f3f12 > .holder > .code
+.e-471f3f12 > .box > .code
 {
 	font-family: var(--ot-font-secondary);
 	font-size: 140px;
@@ -50,7 +50,7 @@
 
 /* Title */
 
-.e-471f3f12 > .holder > .title
+.e-471f3f12 > .box > .title
 {
 	margin: 0;
 	font-family: var(--ot-font-secondary);
@@ -63,7 +63,7 @@
 
 /* Description */
 
-.e-471f3f12 > .holder > .description
+.e-471f3f12 > .box > .description
 {
 	margin: 0;
 	font-size: 14px;
@@ -72,57 +72,34 @@
 	font-family: var(--ot-font-primary);
 }
 
-/* ===== COLOR VARIANTS (code accent) ===== */
+/* ===== COLOR ===== */
 
-.e-471f3f12 > .holder.brand > .code { background: linear-gradient(180deg, var(--ot-brand) 0%, var(--ot-brand-hover) 100%); -webkit-background-clip: text; background-clip: text; }
-.e-471f3f12 > .holder.blue > .code { background: linear-gradient(180deg, var(--ot-blue) 0%, var(--ot-blue-hover) 100%); -webkit-background-clip: text; background-clip: text; }
-.e-471f3f12 > .holder.red > .code { background: linear-gradient(180deg, var(--ot-red) 0%, var(--ot-red-hover) 100%); -webkit-background-clip: text; background-clip: text; }
-.e-471f3f12 > .holder.orange > .code { background: linear-gradient(180deg, var(--ot-orange) 0%, var(--ot-orange-hover) 100%); -webkit-background-clip: text; background-clip: text; }
-.e-471f3f12 > .holder.green > .code { background: linear-gradient(180deg, var(--ot-green) 0%, var(--ot-green-hover) 100%); -webkit-background-clip: text; background-clip: text; }
+.e-471f3f12 > .box.brand > .code  { background: linear-gradient(180deg, var(--ot-brand) 0%, var(--ot-brand-hover) 100%);   -webkit-background-clip: text; background-clip: text; }
+.e-471f3f12 > .box.blue > .code   { background: linear-gradient(180deg, var(--ot-blue) 0%, var(--ot-blue-hover) 100%);     -webkit-background-clip: text; background-clip: text; }
+.e-471f3f12 > .box.red > .code    { background: linear-gradient(180deg, var(--ot-red) 0%, var(--ot-red-hover) 100%);       -webkit-background-clip: text; background-clip: text; }
+.e-471f3f12 > .box.orange > .code { background: linear-gradient(180deg, var(--ot-orange) 0%, var(--ot-orange-hover) 100%); -webkit-background-clip: text; background-clip: text; }
+.e-471f3f12 > .box.green > .code  { background: linear-gradient(180deg, var(--ot-green) 0%, var(--ot-green-hover) 100%);   -webkit-background-clip: text; background-clip: text; }
 
-/* ===== BACKGROUNDS ===== */
+/* ===== SIZE ===== */
 
-.e-471f3f12.bg-1 { background: var(--ot-bg-1); }
-.e-471f3f12.bg-2 { background: var(--ot-bg-2); }
-.e-471f3f12.bg-3 { background: var(--ot-bg-3); }
-.e-471f3f12.bg-4 { background: var(--ot-bg-4); }
-
-.e-471f3f12.bg-1,
-.e-471f3f12.bg-2,
-.e-471f3f12.bg-3,
-.e-471f3f12.bg-4
-{
-	border-radius: var(--ot-radius-l);
-}
-
-/* ===== BORDERS ===== */
-
-.e-471f3f12.border { border: 1px solid var(--ot-bg-2-border); border-radius: var(--ot-radius-l); }
-.e-471f3f12.bg-1.border { border-color: var(--ot-bg-1-border); }
-.e-471f3f12.bg-2.border { border-color: var(--ot-bg-2-border); }
-.e-471f3f12.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-471f3f12.bg-4.border { border-color: var(--ot-bg-4-border); }
-
-/* ===== SIZES ===== */
-
-.e-471f3f12.size-s
+.e-471f3f12 > .box.size-s
 {
 	min-height: 240px;
 	padding: var(--ot-spacing-m);
 }
 
-.e-471f3f12.size-s > .holder > .code { font-size: 96px; }
-.e-471f3f12.size-s > .holder > .title { font-size: 20px; }
-.e-471f3f12.size-s > .holder > .description { font-size: 13px; }
+.e-471f3f12 > .box.size-s > .code        { font-size: 96px; }
+.e-471f3f12 > .box.size-s > .title       { font-size: 20px; }
+.e-471f3f12 > .box.size-s > .description { font-size: var(--ot-size-m); }
 
-.e-471f3f12.size-m > .holder > .code { font-size: 140px; }
-.e-471f3f12.size-m > .holder > .title { font-size: 26px; }
+.e-471f3f12 > .box.size-m > .code  { font-size: 140px; }
+.e-471f3f12 > .box.size-m > .title { font-size: 26px; }
 
-.e-471f3f12.size-l
+.e-471f3f12 > .box.size-l
 {
 	min-height: 480px;
 }
 
-.e-471f3f12.size-l > .holder > .code { font-size: 200px; letter-spacing: -0.05em; }
-.e-471f3f12.size-l > .holder > .title { font-size: 36px; }
-.e-471f3f12.size-l > .holder > .description { font-size: 16px; max-width: 560px; }
+.e-471f3f12 > .box.size-l > .code        { font-size: 200px; letter-spacing: -0.05em; }
+.e-471f3f12 > .box.size-l > .title       { font-size: 36px; }
+.e-471f3f12 > .box.size-l > .description { font-size: 16px; max-width: 560px; }

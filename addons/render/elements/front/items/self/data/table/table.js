@@ -4,309 +4,392 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'data-table',
 		icon: 'table_view',
 		name: 'Data Table',
-		description: 'Premium data table with sort, search, pagination, row actions, sticky header and loading skeleton.',
+		description: 'Data table with sort, search, pagination, row actions, sticky header and loading skeleton.',
 		category: 'Data',
-		author: 'OneType',
-		config: {
-			items: {
+		config:
+		{
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						id: {
+					config:
+					{
+						id:
+						{
 							type: 'string|number'
 						}
 					}
-				}
+				},
+				description: 'Row data array. Each item should have an id.'
 			},
-			columns: {
+			columns:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						id: {
+					config:
+					{
+						id:
+						{
 							type: 'string',
-							value: ''
+							value: '',
+							description: 'Field key in item data.'
 						},
-						label: {
+						label:
+						{
 							type: 'string',
-							value: ''
+							value: '',
+							description: 'Column header text.'
 						},
-						type: {
+						type:
+						{
 							type: 'string',
 							value: 'text',
-							options: ['text', 'description', 'number', 'currency', 'boolean', 'date', 'timeago', 'icon', 'image', 'avatar', 'media', 'badge', 'chip', 'tag', 'tags', 'status', 'metric', 'progress', 'link', 'group']
+							options: ['text', 'description', 'number', 'currency', 'boolean', 'date', 'timeago', 'icon', 'image', 'avatar', 'media', 'badge', 'chip', 'tag', 'tags', 'status', 'metric', 'progress', 'link', 'group'],
+							description: 'Cell render type from shared type system.'
 						},
-						width: {
+						width:
+						{
 							type: 'string',
-							value: '1fr'
+							value: '1fr',
+							description: 'CSS grid column width.'
 						},
-						align: {
+						align:
+						{
 							type: 'string',
 							value: 'left',
-							options: ['left', 'center', 'right']
+							options: ['left', 'center', 'right'],
+							description: 'Cell text alignment.'
 						},
-						sortable: {
+						sortable:
+						{
 							type: 'boolean',
-							value: true
+							value: true,
+							description: 'Allow sorting by this column.'
 						},
-						hidden: {
+						hidden:
+						{
 							type: 'boolean',
-							value: false
+							value: false,
+							description: 'Hide column from render.'
 						},
-						config: {
+						config:
+						{
 							type: 'object',
-							value: {}
+							value: {},
+							description: 'Type-specific config passed to renderer.'
 						},
-						render: {
-							type: 'function'
+						render:
+						{
+							type: 'function',
+							description: 'Custom cell render function(item, column).'
 						}
 					}
-				}
-			},
-			title: {
-				type: 'string',
-				value: ''
-			},
-			description: {
-				type: 'string',
-				value: ''
-			},
-			icon: {
-				type: 'string',
-				value: ''
-			},
-			search: {
-				type: 'object',
-				value: {
-					enabled: true,
-					value: ''
 				},
-				config: {
-					enabled: {
+				description: 'Column definitions.'
+			},
+			title:
+			{
+				type: 'string',
+				value: '',
+				description: 'Table header title.'
+			},
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Table header description.'
+			},
+			icon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Table header icon.'
+			},
+			search:
+			{
+				type: 'object',
+				value: { enabled: true, value: '' },
+				config:
+				{
+					enabled:
+					{
 						type: 'boolean',
-						value: true
+						value: true,
+						description: 'Show search field in toolbar.'
 					},
-					value: {
+					value:
+					{
 						type: 'string',
-						value: ''
+						value: '',
+						description: 'Current search query.'
 					}
-				}
-			},
-			sort: {
-				type: 'object',
-				value: {
-					field: '',
-					direction: 'asc'
 				},
-				config: {
-					field: {
+				description: 'Search toolbar config.'
+			},
+			sort:
+			{
+				type: 'object',
+				value: { field: '', direction: 'asc' },
+				config:
+				{
+					field:
+					{
 						type: 'string',
-						value: ''
+						value: '',
+						description: 'Currently sorted column id.'
 					},
-					direction: {
+					direction:
+					{
 						type: 'string',
 						value: 'asc',
-						options: ['asc', 'desc']
+						options: ['asc', 'desc'],
+						description: 'Sort direction.'
 					}
-				}
+				},
+				description: 'Sort state.'
 			},
-			pagination: {
+			pagination:
+			{
 				type: 'object',
 				value: null,
-				config: {
-					page: {
+				config:
+				{
+					page:
+					{
 						type: 'number',
-						value: 1
+						value: 1,
+						description: 'Current page.'
 					},
-					size: {
+					size:
+					{
 						type: 'number',
-						value: 20
+						value: 20,
+						description: 'Rows per page.'
 					},
-					total: {
+					total:
+					{
 						type: 'number',
-						value: 0
+						value: 0,
+						description: 'Total row count.'
 					},
-					sizes: {
+					sizes:
+					{
 						type: 'array',
-						value: [10, 20, 50, 100]
+						value: [10, 20, 50, 100],
+						description: 'Page size options.'
 					}
-				}
-			},
-			loading: {
-				type: 'object',
-				value: {
-					enabled: false,
-					rows: 6
 				},
-				config: {
-					enabled: {
-						type: 'boolean',
-						value: false
-					},
-					rows: {
-						type: 'number',
-						value: 6
-					}
-				}
+				description: 'Pagination config. Null disables.'
 			},
-			actions: {
+			loading:
+			{
+				type: 'object',
+				value: { enabled: false, rows: 6 },
+				config:
+				{
+					enabled:
+					{
+						type: 'boolean',
+						value: false,
+						description: 'Show skeleton loading state.'
+					},
+					rows:
+					{
+						type: 'number',
+						value: 6,
+						description: 'Number of skeleton rows.'
+					}
+				},
+				description: 'Loading skeleton config.'
+			},
+			actions:
+			{
 				type: 'array',
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
-						type: {
+					config:
+					{
+						type:
+						{
 							type: 'string',
 							value: 'action',
-							options: ['action', 'link', 'separator', 'header']
+							options: ['action', 'link', 'separator', 'header'],
+							description: 'Menu item type.'
 						},
-						id: {
-							type: 'string'
-						},
-						label: {
-							type: 'string'
-						},
-						description: {
-							type: 'string'
-						},
-						icon: {
-							type: 'string'
-						},
-						iconRight: {
-							type: 'string'
-						},
-						shortcut: {
-							type: 'string'
-						},
-						badge: {
-							type: 'string|number'
-						},
-						href: {
-							type: 'string'
-						},
-						target: {
-							type: 'string'
-						},
-						disabled: {
-							type: 'boolean'
-						},
-						danger: {
-							type: 'boolean'
-						},
-						color: {
+						id:
+						{
 							type: 'string',
-							options: ['brand', 'blue', 'red', 'orange', 'green']
+							description: 'Action identifier.'
 						},
-						_click: {
-							type: 'function'
+						label:
+						{
+							type: 'string',
+							description: 'Display label.'
+						},
+						description:
+						{
+							type: 'string',
+							description: 'Secondary text.'
+						},
+						icon:
+						{
+							type: 'string',
+							description: 'Left icon.'
+						},
+						iconRight:
+						{
+							type: 'string',
+							description: 'Right icon.'
+						},
+						shortcut:
+						{
+							type: 'string',
+							description: 'Keyboard shortcut hint.'
+						},
+						badge:
+						{
+							type: 'string|number',
+							description: 'Badge count or text.'
+						},
+						href:
+						{
+							type: 'string',
+							description: 'Link URL for link type.'
+						},
+						target:
+						{
+							type: 'string',
+							description: 'Link target.'
+						},
+						disabled:
+						{
+							type: 'boolean',
+							description: 'Disabled state.'
+						},
+						danger:
+						{
+							type: 'boolean',
+							description: 'Red danger styling.'
+						},
+						color:
+						{
+							type: 'string',
+							options: ['brand', 'blue', 'red', 'orange', 'green'],
+							description: 'Accent color.'
+						},
+						_click:
+						{
+							type: 'function',
+							description: 'Per-action click handler.'
 						}
 					}
-				}
-			},
-			empty: {
-				type: 'object',
-				value: {
-					icon: 'table_view',
-					title: 'No data',
-					description: 'Nothing to show here yet.'
 				},
-				config: {
-					icon: {
+				description: 'Row action menu items (global-menu format).'
+			},
+			empty:
+			{
+				type: 'object',
+				value: { icon: 'table_view', title: 'No data', description: 'Nothing to show here yet.' },
+				config:
+				{
+					icon:
+					{
 						type: 'string',
-						value: 'table_view'
+						value: 'table_view',
+						description: 'Empty state icon.'
 					},
-					title: {
+					title:
+					{
 						type: 'string',
-						value: 'No data'
+						value: 'No data',
+						description: 'Empty state title.'
 					},
-					description: {
+					description:
+					{
 						type: 'string',
-						value: 'Nothing to show here yet.'
+						value: 'Nothing to show here yet.',
+						description: 'Empty state description.'
 					}
-				}
+				},
+				description: 'Empty state config.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show outer border.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-bottom', 'clean', 'striped', 'sticky-header']
+				value: [],
+				each: { type: 'string' },
+				options: ['clean', 'striped', 'sticky', 'border-bottom'],
+				description: 'Visual modifiers.'
 			},
-			_click: {
-				type: 'function'
+			_click:
+			{
+				type: 'function',
+				description: 'Row click handler. Receives { value, index, event }.'
 			},
-			_sort: {
-				type: 'function'
+			_sort:
+			{
+				type: 'function',
+				description: 'Sort handler. Receives { field, direction }.'
 			},
-			_page: {
-				type: 'function'
+			_page:
+			{
+				type: 'function',
+				description: 'Page handler. Receives { page, size }.'
 			},
-			_search: {
-				type: 'function'
+			_search:
+			{
+				type: 'function',
+				description: 'Search handler. Receives { value }.'
 			},
-			_action: {
-				type: 'function'
+			_action:
+			{
+				type: 'function',
+				description: 'Action handler. Receives { action, value, index }.'
 			}
 		},
 		render: function()
 		{
-			// Derive row key — uses item.id or falls back to index
-
-			this.getKey = (item, index) =>
-			{
-				if(item && item.id !== undefined)
-				{
-					return item.id;
-				}
-
-				return index;
-			};
-
-			// Cell renderer — delegates to shared type system
-
-			this.renderCell = (column, item) => elements.Fn('type.render', column, item);
-
-			// Derived columns
+			/* ===== STATE ===== */
 
 			this.visibleColumns = this.columns.filter(column => !column.hidden);
+			this.hasHead = !!this.title || !!this.icon || !!this.description || !!this.Slots.actions;
+			this.hasActions = this.actions && this.actions.length > 0;
+			this.hasPagination = !!this.pagination;
+			this.hasToolbar = this.search.enabled;
+			this.isLoading = !!this.loading.enabled;
+			this.loadingSkeleton = Array.from({ length: this.loading.rows || 6 }, (_, index) => index);
 
-			// Grid template columns
-
-			this.buildTemplate = () =>
+			this.template = (() =>
 			{
-				const parts = [];
+				const parts = this.visibleColumns.map(column => column.width || '1fr');
 
-				this.visibleColumns.forEach(column => parts.push(column.width || '1fr'));
-
-				if(this.actions && this.actions.length)
+				if(this.hasActions)
 				{
 					parts.push('60px');
 				}
 
 				return parts.join(' ');
-			};
-
-			this.template = this.buildTemplate();
-
-			// Rows for render — items are shown as-is, parent controls filtering/sorting
-
-			this.rows = this.items.map((item, index) =>
-			{
-				const key = this.getKey(item, index);
-				const cells = this.visibleColumns.map(column => ({
-					html: this.renderCell(column, item),
-					align: column.align || 'left'
-				}));
-
-				return {
-					key,
-					item,
-					index,
-					cells
-				};
-			});
-
-			// Headers
+			})();
 
 			this.headerCells = this.visibleColumns.map(column => ({
 				id: column.id,
@@ -319,17 +402,18 @@ onetype.AddonReady('elements', (elements) =>
 					: 'unfold_more'
 			}));
 
-			// State detection
+			this.rows = this.items.map((item, index) =>
+			{
+				const key = (item && item.id !== undefined) ? item.id : index;
+				const cells = this.visibleColumns.map(column => ({
+					html: elements.Fn('type.render', column, item),
+					align: column.align || 'left'
+				}));
 
-			this.hasHead = !!this.title || !!this.icon || !!this.description || !!this.Slots.actions;
+				return { key, item, index, cells };
+			});
+
 			this.hasItems = this.rows.length > 0;
-			this.hasActions = this.actions && this.actions.length > 0;
-			this.hasPagination = !!this.pagination;
-			this.hasToolbar = this.search.enabled;
-			this.isLoading = !!this.loading.enabled;
-			this.loadingSkeleton = Array.from({ length: this.loading.rows || 6 }, (_, index) => index);
-
-			// Pagination computed
 
 			if(this.hasPagination)
 			{
@@ -343,7 +427,23 @@ onetype.AddonReady('elements', (elements) =>
 				this.paginationComputed = { page, size, total, pages, start, end };
 			}
 
-			// Actions
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				this.variant.forEach(v => list.push(v));
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.onSort = (column) =>
 			{
@@ -447,7 +547,6 @@ onetype.AddonReady('elements', (elements) =>
 						<e-global-menu
 							:items="actions"
 							:_select="onSelect"
-							:variant="['contextual', 'size-m']"
 						></e-global-menu>
 					`;
 				}, {
@@ -457,8 +556,10 @@ onetype.AddonReady('elements', (elements) =>
 				});
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<header ot-if="hasHead" class="head">
 						<div ot-if="icon" class="head-icon">
 							<i>{{ icon }}</i>
@@ -479,7 +580,9 @@ onetype.AddonReady('elements', (elements) =>
 								placeholder="Search…"
 								:value="search.value || ''"
 								:_input="onSearchInput"
-								:variant="['bg-2', 'border', 'size-s']"
+								background="bg-2"
+								size="s"
+								:border="true"
 							></e-form-input>
 						</div>
 					</div>

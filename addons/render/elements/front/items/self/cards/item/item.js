@@ -4,114 +4,238 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'cards-item',
 		icon: 'dashboard',
 		name: 'Item Card',
-		description: 'Generic premium card — cover, icon, badge, title, description, stats, meta, tags, action, href. Vertical or horizontal.',
+		description: 'Generic card with cover, icon, badge, title, description, stats, meta, tags and action.',
 		category: 'Cards',
-		author: 'OneType',
-		config: {
-			cover: {
-				type: 'string'
+		config:
+		{
+			/* ===== COVER ===== */
+
+			cover:
+			{
+				type: 'string',
+				value: '',
+				description: 'Cover image URL.'
 			},
-			coverIcon: {
-				type: 'string'
+			coverIcon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Placeholder icon when no cover image.'
 			},
-			icon: {
-				type: 'string'
+
+			/* ===== HEADER ===== */
+
+			icon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Icon in colored wrap box.'
 			},
-			iconVariant: {
-				type: 'array',
-				value: ['bg-2'],
-				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-1', 'bg-2', 'bg-3', 'bg-4']
+			iconColor:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Icon wrap accent color.'
 			},
-			badge: {
-				type: 'string'
+			iconBackground:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Icon wrap background when no color.'
 			},
-			badgeVariant: {
-				type: 'array',
-				value: ['brand'],
-				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-2', 'bg-3']
+			badge:
+			{
+				type: 'string',
+				value: '',
+				description: 'Badge label text.'
 			},
-			eyebrow: {
-				type: 'string'
+			badgeColor:
+			{
+				type: 'string',
+				value: 'brand',
+				options: ['brand', 'blue', 'red', 'orange', 'green', 'neutral'],
+				description: 'Badge accent color.'
 			},
-			title: {
-				type: 'string'
+			eyebrow:
+			{
+				type: 'string',
+				value: '',
+				description: 'Uppercase label above title.'
 			},
-			description: {
-				type: 'string'
+			title:
+			{
+				type: 'string',
+				value: '',
+				description: 'Card title.'
 			},
-			value: {
-				type: 'string|number'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Card description text.'
 			},
-			delta: {
-				type: 'string'
+
+			/* ===== STATS ===== */
+
+			value:
+			{
+				type: 'string|number',
+				description: 'Primary stat value.'
 			},
-			deltaDirection: {
+			delta:
+			{
+				type: 'string',
+				value: '',
+				description: 'Change indicator text.'
+			},
+			deltaDirection:
+			{
 				type: 'string',
 				value: 'neutral',
-				options: ['up', 'down', 'neutral']
+				options: ['up', 'down', 'neutral'],
+				description: 'Delta trend direction.'
 			},
-			meta: {
+
+			/* ===== META / TAGS ===== */
+
+			meta:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						icon: { type: 'string' },
 						label: { type: 'string' }
 					}
-				}
+				},
+				description: 'Icon + label pairs below description.'
 			},
-			tags: {
+			tags:
+			{
 				type: 'array',
 				value: [],
-				each: { type: 'string' }
+				each: { type: 'string' },
+				description: 'Tag chips below meta.'
 			},
-			action: {
-				type: 'string'
+
+			/* ===== ACTION ===== */
+
+			action:
+			{
+				type: 'string',
+				value: '',
+				description: 'Footer action button text.'
 			},
-			actionIcon: {
-				type: 'string'
+			actionIcon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Footer action button icon.'
 			},
-			actionVariant: {
-				type: 'array',
-				value: ['ghost', 'size-s']
+			actionColor:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Footer action button color.'
 			},
-			href: {
-				type: 'string'
+			actionTone:
+			{
+				type: 'string',
+				value: 'ghost',
+				options: ['solid', 'soft', 'outline', 'ghost'],
+				description: 'Footer action button tone.'
 			},
-			target: {
-				type: 'string'
+
+			/* ===== LINK ===== */
+
+			href:
+			{
+				type: 'string',
+				value: '',
+				description: 'Renders card as anchor.'
 			},
-			orientation: {
+			target:
+			{
+				type: 'string',
+				value: '',
+				description: 'Anchor target.'
+			},
+
+			/* ===== LAYOUT ===== */
+
+			orientation:
+			{
 				type: 'string',
 				value: 'vertical',
-				options: ['vertical', 'horizontal']
+				options: ['vertical', 'horizontal'],
+				description: 'Card direction.'
 			},
-			align: {
+			align:
+			{
 				type: 'string',
 				value: 'left',
-				options: ['left', 'center']
+				options: ['left', 'center'],
+				description: 'Content alignment.'
 			},
-			loading: {
-				type: 'boolean'
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Card background depth.'
 			},
-			disabled: {
-				type: 'boolean'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Card size.'
 			},
-			active: {
-				type: 'boolean'
-			},
-			variant: {
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'glass', 'gradient', 'hover-lift', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'glass', 'gradient', 'hover'],
+				description: 'Visual modifiers.'
 			},
-			_click: {
-				type: 'function'
+
+			/* ===== STATE ===== */
+
+			loading:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Skeleton shimmer state.'
+			},
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			active:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Selected ring state.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'Click handler. Receives { event }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasCover = !!this.cover || !!this.coverIcon;
 			this.hasHeader = !!this.icon || !!this.eyebrow || !!this.title || !!this.description || !!this.badge;
 			this.hasStats = this.value !== undefined && this.value !== '' && this.value !== null;
@@ -120,9 +244,57 @@ onetype.AddonReady('elements', (elements) =>
 			this.hasAction = !!this.action;
 			this.isClickable = !!this.href || !!this._click;
 			this.tag = this.href ? 'a' : 'div';
-			this.deltaIcon = this.deltaDirection === 'up' ? 'trending_up' : (this.deltaDirection === 'down' ? 'trending_down' : 'trending_flat');
 
-			this.click = (event) =>
+			this.deltaIcon = this.deltaDirection === 'up'
+				? 'trending_up'
+				: this.deltaDirection === 'down'
+					? 'trending_down'
+					: 'trending_flat';
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.orientation, 'align-' + this.align, this.background, 'size-' + this.size];
+
+				this.variant.forEach(v => list.push(v));
+
+				if(this.isClickable)
+				{
+					list.push('clickable');
+				}
+
+				if(this.loading)
+				{
+					list.push('loading');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				if(this.active)
+				{
+					list.push('active');
+				}
+
+				return list.join(' ');
+			};
+
+			this.iconClasses = () =>
+			{
+				return 'icon-wrap ' + (this.iconColor || this.iconBackground);
+			};
+
+			this.badgeClasses = () =>
+			{
+				return 'badge ' + this.badgeColor;
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.click = ({ event }) =>
 			{
 				if(this.disabled)
 				{
@@ -136,9 +308,11 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
 				<${this.tag}
-					:class="'holder ' + variant.join(' ') + ' ' + orientation + ' align-' + align + (isClickable ? ' clickable' : '') + (loading ? ' loading' : '') + (disabled ? ' disabled' : '') + (active ? ' active' : '')"
+					:class="classes()"
 					:href="href || null"
 					:target="target || null"
 					ot-click="click"
@@ -148,12 +322,12 @@ onetype.AddonReady('elements', (elements) =>
 						<div ot-if="!cover && coverIcon" class="cover-empty">
 							<i>{{ coverIcon }}</i>
 						</div>
-						<span ot-if="badge" :class="'badge ' + badgeVariant.join(' ')">{{ badge }}</span>
+						<span ot-if="badge" :class="badgeClasses()">{{ badge }}</span>
 					</div>
 
 					<div class="body">
 						<header ot-if="hasHeader" class="head">
-							<div ot-if="icon" :class="'icon-wrap ' + iconVariant.join(' ')">
+							<div ot-if="icon" :class="iconClasses()">
 								<i>{{ icon }}</i>
 							</div>
 							<div class="head-text">
@@ -161,7 +335,7 @@ onetype.AddonReady('elements', (elements) =>
 								<h3 ot-if="title" class="title">{{ title }}</h3>
 								<p ot-if="description" class="description">{{ description }}</p>
 							</div>
-							<span ot-if="badge && !hasCover" :class="'badge ' + badgeVariant.join(' ')">{{ badge }}</span>
+							<span ot-if="badge && !hasCover" :class="badgeClasses()">{{ badge }}</span>
 						</header>
 
 						<div ot-if="hasStats" class="stats">
@@ -180,14 +354,16 @@ onetype.AddonReady('elements', (elements) =>
 						</div>
 
 						<div ot-if="hasTags" class="tags">
-							<span ot-for="tag in tags" class="tag">{{ tag }}</span>
+							<span ot-for="item in tags" class="tag">{{ item }}</span>
 						</div>
 
 						<div ot-if="hasAction" class="footer">
 							<e-form-button
 								:text="action"
-								:icon="actionIcon || ''"
-								:variant="actionVariant"
+								:icon="actionIcon"
+								:color="actionColor"
+								:tone="actionTone"
+								size="s"
 							></e-form-button>
 						</div>
 					</div>

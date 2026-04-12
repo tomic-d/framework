@@ -4,60 +4,143 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-radio',
 		icon: 'radio_button_checked',
 		name: 'Radio',
-		description: 'Premium radio button with label, description, color variants and group support.',
+		description: 'Radio button with label, description, icon, count and color variants.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			label: {
-				type: 'string'
+		config:
+		{
+			label:
+			{
+				type: 'string',
+				value: '',
+				description: 'Primary label.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Secondary description below label.'
 			},
-			icon: {
-				type: 'string'
+			icon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Icon between mark and label.'
 			},
-			count: {
-				type: 'string|number'
+			count:
+			{
+				type: 'string|number',
+				description: 'Count badge at the end.'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Group name for mutual exclusion.'
 			},
-			option: {
-				type: 'string'
+			option:
+			{
+				type: 'string',
+				value: '',
+				description: 'Value sent to the group.'
 			},
-			value: {
-				type: 'boolean'
+			value:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Checked state.'
 			},
-			disabled: {
-				type: 'boolean'
+			color:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Checked accent color.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				description: 'Mark background depth.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Mark size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'size-m'],
-				options: [
-					'bg-1', 'bg-2', 'bg-3', 'bg-4',
-					'transparent', 'border',
-					'color-brand', 'color-blue', 'color-red', 'color-orange', 'color-green',
-					'size-s', 'size-m', 'size-l',
-					'reverse'
-				]
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'reverse'],
+				description: 'Visual modifiers.'
 			},
-			_change: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
 			},
-			_click: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'Click handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasInfo = !!this.label || !!this.description;
 			this.hasIcon = !!this.icon;
 			this.hasCount = this.count !== undefined && this.count !== null && this.count !== '';
 
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background, 'size-' + this.size];
+
+				if(this.color)
+				{
+					list.push('color-' + this.color);
+				}
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.variant.includes('reverse'))
+				{
+					list.push('reverse');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
 			this.handle = ({ event }) =>
 			{
+				if(this.disabled)
+				{
+					return;
+				}
+
 				this.value = event.target.checked;
 
 				if(this._change)
@@ -68,14 +151,21 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.click = ({ event }) =>
 			{
+				if(this.disabled)
+				{
+					return;
+				}
+
 				if(this._click)
 				{
 					this._click({ event, value: this.value });
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<label :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+				<label :class="classes()">
 					<input
 						type="radio"
 						:name="name"

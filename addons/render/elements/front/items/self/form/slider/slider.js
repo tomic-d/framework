@@ -4,69 +4,135 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-slider',
 		icon: 'linear_scale',
 		name: 'Slider',
-		description: 'Premium range slider with label, value display, marks, tooltip and color variants.',
+		description: 'Range slider with label, value display, marks and color variants.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			label: {
-				type: 'string'
+		config:
+		{
+			label:
+			{
+				type: 'string',
+				value: '',
+				description: 'Label above the track.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Description below the label.'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Form field name.'
 			},
-			value: {
+			value:
+			{
 				type: 'number',
-				value: 0
+				value: 0,
+				description: 'Current value.'
 			},
-			min: {
+			min:
+			{
 				type: 'number',
-				value: 0
+				value: 0,
+				description: 'Minimum value.'
 			},
-			max: {
+			max:
+			{
 				type: 'number',
-				value: 100
+				value: 100,
+				description: 'Maximum value.'
 			},
-			step: {
+			step:
+			{
 				type: 'number',
-				value: 1
+				value: 1,
+				description: 'Step increment.'
 			},
-			showValue: {
-				type: 'boolean'
+			showValue:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show current value badge in header.'
 			},
-			showRange: {
-				type: 'boolean'
+			showRange:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show min/max labels below track.'
 			},
-			marks: {
-				type: 'boolean'
+			marks:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show tick marks at each step.'
 			},
-			prefix: {
-				type: 'string'
+			prefix:
+			{
+				type: 'string',
+				value: '',
+				description: 'Text before value display.'
 			},
-			suffix: {
-				type: 'string'
+			suffix:
+			{
+				type: 'string',
+				value: '',
+				description: 'Text after value display.'
 			},
-			disabled: {
-				type: 'boolean'
+			color:
+			{
+				type: 'string',
+				value: 'brand',
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Fill color.'
 			},
-			variant: {
-				type: 'array',
-				value: ['brand', 'size-m'],
-				options: ['brand', 'blue', 'red', 'orange', 'green', 'size-s', 'size-m', 'size-l']
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Track and thumb size.'
 			},
-			_input: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
 			},
-			_change: {
-				type: 'function'
+			_input:
+			{
+				type: 'function',
+				description: 'Fires on drag. Receives { event, value }.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Fires on release. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasInfo = !!this.label || !!this.description;
 			this.hasMeta = this.showValue || this.showRange;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.color, 'size-' + this.size];
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
 
 			this.format = (value) =>
 			{
@@ -114,6 +180,8 @@ onetype.AddonReady('elements', (elements) =>
 			this.marksList = this.computeMarks();
 			this.hasMarks = this.marksList.length > 0;
 
+			/* ===== HANDLERS ===== */
+
 			this.OnReady(() =>
 			{
 				const input = this.Element?.querySelector('input[type="range"]');
@@ -144,8 +212,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+				<div :class="classes()">
 					<div ot-if="hasInfo || showValue" class="head">
 						<div ot-if="hasInfo" class="info">
 							<span ot-if="label" class="label">{{ label }}</span>
@@ -177,8 +247,8 @@ onetype.AddonReady('elements', (elements) =>
 						/>
 					</div>
 					<div ot-if="showRange" class="range">
-						<span class="range-min">{{ format(min) }}</span>
-						<span class="range-max">{{ format(max) }}</span>
+						<span class="min">{{ format(min) }}</span>
+						<span class="max">{{ format(max) }}</span>
 					</div>
 				</div>
 			`;

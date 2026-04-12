@@ -4,82 +4,163 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'cards-stat',
 		icon: 'analytics',
 		name: 'Stat Card',
-		description: 'Premium KPI stat card — label, big value, icon, delta and optional inline sparkline chart.',
+		description: 'KPI stat card with label, value, icon, delta trend and inline sparkline.',
 		category: 'Cards',
-		author: 'OneType',
-		config: {
-			label: {
-				type: 'string'
-			},
-			value: {
-				type: 'string|number'
-			},
-			description: {
-				type: 'string'
-			},
-			icon: {
-				type: 'string'
-			},
-			iconVariant: {
-				type: 'array',
-				value: ['brand'],
-				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-1', 'bg-2', 'bg-3', 'bg-4']
-			},
-			delta: {
-				type: 'object',
-				value: null,
-				config: {
-					value: { type: 'string' },
-					label: { type: 'string' },
-					direction: { type: 'string', value: 'up', options: ['up', 'down', 'neutral'] }
-				}
-			},
-			sparkline: {
-				type: 'array',
-				value: [],
-				each: { type: 'number' }
-			},
-			sparklineType: {
+		config:
+		{
+			label:
+			{
 				type: 'string',
-				value: 'area',
-				options: ['line', 'area', 'bar']
+				value: '',
+				description: 'Uppercase label above value.'
 			},
-			sparklineColor: {
+			value:
+			{
+				type: 'string|number',
+				value: '',
+				description: 'Main display value.'
+			},
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Helper text below value.'
+			},
+			icon:
+			{
+				type: 'string',
+				value: '',
+				description: 'Icon in colored wrap.'
+			},
+			iconColor:
+			{
 				type: 'string',
 				value: 'brand',
-				options: ['brand', 'blue', 'red', 'orange', 'green']
+				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Icon wrap color.'
 			},
-			href: {
-				type: 'string'
+			delta:
+			{
+				type: 'object',
+				value: null,
+				config:
+				{
+					value:
+					{
+						type: 'string',
+						description: 'Delta display value.'
+					},
+					label:
+					{
+						type: 'string',
+						description: 'Delta context label.'
+					},
+					direction:
+					{
+						type: 'string',
+						value: 'up',
+						options: ['up', 'down', 'neutral'],
+						description: 'Trend direction.'
+					}
+				},
+				description: 'Trend delta badge.'
 			},
-			target: {
-				type: 'string'
+			sparkline:
+			{
+				type: 'array',
+				value: [],
+				each: { type: 'number' },
+				description: 'Sparkline data points.'
 			},
-			orientation: {
+			sparklineType:
+			{
+				type: 'string',
+				value: 'area',
+				options: ['line', 'area', 'bar'],
+				description: 'Sparkline chart type.'
+			},
+			sparklineColor:
+			{
+				type: 'string',
+				value: 'brand',
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Sparkline color.'
+			},
+			href:
+			{
+				type: 'string',
+				value: '',
+				description: 'Renders as anchor.'
+			},
+			target:
+			{
+				type: 'string',
+				value: '',
+				description: 'Anchor target.'
+			},
+			orientation:
+			{
 				type: 'string',
 				value: 'vertical',
-				options: ['vertical', 'horizontal']
+				options: ['vertical', 'horizontal'],
+				description: 'Card layout.'
 			},
-			loading: {
-				type: 'boolean'
+			loading:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Skeleton loading state.'
 			},
-			disabled: {
-				type: 'boolean'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
 			},
-			active: {
-				type: 'boolean'
+			active:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Active highlight ring.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Card size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'hover-lift', 'gradient', 'size-s', 'size-m', 'size-l']
+				value: [],
+				each: { type: 'string' },
+				options: ['hover-lift', 'gradient'],
+				description: 'Visual modifiers.'
 			},
-			_click: {
-				type: 'function'
+			_click:
+			{
+				type: 'function',
+				description: 'Click handler. Receives { event }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasDelta = !!this.delta && !!this.delta.value;
 			this.hasSparkline = this.sparkline && this.sparkline.length > 1;
 			this.hasIcon = !!this.icon;
@@ -87,6 +168,44 @@ onetype.AddonReady('elements', (elements) =>
 			this.tag = this.href ? 'a' : 'div';
 			this.deltaDir = this.hasDelta ? (this.delta.direction || 'up') : 'neutral';
 			this.deltaIcon = this.deltaDir === 'up' ? 'trending_up' : (this.deltaDir === 'down' ? 'trending_down' : 'trending_flat');
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background, this.orientation, 'size-' + this.size];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				this.variant.forEach(v => list.push(v));
+
+				if(this.isClickable)
+				{
+					list.push('clickable');
+				}
+
+				if(this.loading)
+				{
+					list.push('loading');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				if(this.active)
+				{
+					list.push('active');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.click = (event) =>
 			{
@@ -102,9 +221,11 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
 				<${this.tag}
-					:class="'holder ' + variant.join(' ') + ' ' + orientation + (isClickable ? ' clickable' : '') + (loading ? ' loading' : '') + (disabled ? ' disabled' : '') + (active ? ' active' : '')"
+					:class="classes()"
 					:href="href || null"
 					:target="target || null"
 					ot-click="click"
@@ -114,7 +235,7 @@ onetype.AddonReady('elements', (elements) =>
 							<div class="head-text">
 								<span ot-if="label" class="label">{{ label }}</span>
 							</div>
-							<div ot-if="hasIcon" :class="'icon-wrap ' + iconVariant.join(' ')">
+							<div ot-if="hasIcon" :class="'icon-wrap ' + iconColor">
 								<i>{{ icon }}</i>
 							</div>
 						</header>

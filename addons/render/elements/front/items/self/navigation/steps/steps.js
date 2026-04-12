@@ -4,43 +4,93 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'navigation-steps',
 		icon: 'format_list_numbered',
 		name: 'Steps',
-		description: 'Stepper navigation with done, active and upcoming states. Vertical or horizontal.',
+		description: 'Stepper navigation with done, active and upcoming states.',
 		category: 'Navigation',
-		author: 'OneType',
-		config: {
-			items: {
+		config:
+		{
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Step items.',
+				each:
+				{
 					type: 'object',
-					config: {
-						id: { type: 'string' },
-						label: { type: 'string' },
-						description: { type: 'string' },
-						icon: { type: 'string' },
-						disabled: { type: 'boolean' }
+					config:
+					{
+						id:
+						{
+							type: 'string',
+							description: 'Unique step identifier.'
+						},
+						label:
+						{
+							type: 'string',
+							description: 'Step label.'
+						},
+						description:
+						{
+							type: 'string',
+							description: 'Step description.'
+						},
+						icon:
+						{
+							type: 'string',
+							description: 'Icon for upcoming state.'
+						},
+						disabled:
+						{
+							type: 'boolean',
+							description: 'Prevent selection.'
+						}
 					}
 				}
 			},
-			active: {
-				type: 'string'
+			active:
+			{
+				type: 'string',
+				value: '',
+				description: 'Active step id.'
 			},
-			orientation: {
+			orientation:
+			{
 				type: 'string',
 				value: 'vertical',
-				options: ['vertical', 'horizontal']
+				options: ['vertical', 'horizontal'],
+				description: 'Layout direction.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Step size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border', 'connected', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'clean', 'connected', 'size-s', 'size-m', 'size-l']
+				value: ['border', 'connected'],
+				each: { type: 'string' },
+				options: ['border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'clean', 'connected'],
+				description: 'Visual modifiers.'
 			},
-			_change: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.rebuild = () =>
 			{
 				this.activeIndex = this.items.findIndex(entry => entry.id === this.active);
@@ -72,7 +122,20 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.rebuild();
 
-			this.select = (item, event) =>
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.orientation, this.background, 'size-' + this.size];
+
+				this.variant.forEach(v => list.push(v));
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.select = ({ event }, item) =>
 			{
 				if(item.disabled)
 				{
@@ -88,13 +151,15 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<nav :class="'holder ' + orientation + ' ' + variant.join(' ')">
+				<nav :class="classes()">
 					<button
 						ot-for="item in computed"
 						type="button"
 						:class="'step ' + item.status + (item.disabled ? ' disabled' : '')"
-						ot-click="({ event }) => select(item, event)"
+						ot-click="(event) => select(event, item)"
 					>
 						<span class="marker">
 							<i ot-if="item.status === 'done'">check</i>

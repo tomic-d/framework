@@ -1,14 +1,13 @@
-/* Root */
+/* ===== FORM FIELD ===== */
 
 .e-2109a6b9
 {
-	display: flex;
-	width: 100%;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-2109a6b9 > .holder
+.e-2109a6b9 > .box
 {
 	display: flex;
 	width: 100%;
@@ -16,22 +15,22 @@
 	gap: var(--ot-spacing-l);
 }
 
-.e-2109a6b9 > .holder.horizontal
+.e-2109a6b9 > .box.horizontal
 {
 	flex-direction: row;
 	align-items: flex-start;
 	justify-content: space-between;
 }
 
-.e-2109a6b9 > .holder.vertical
+.e-2109a6b9 > .box.vertical
 {
 	flex-direction: column;
 	gap: var(--ot-spacing-s);
 }
 
-/* Info (label + description) */
+/* Info */
 
-.e-2109a6b9 > .holder > .info
+.e-2109a6b9 > .box > .info
 {
 	display: flex;
 	flex-direction: column;
@@ -40,13 +39,15 @@
 	flex: 1;
 }
 
-.e-2109a6b9 > .holder.horizontal > .info
+.e-2109a6b9 > .box.horizontal > .info
 {
 	padding-top: 6px;
 	max-width: 320px;
 }
 
-.e-2109a6b9 > .holder > .info > .label
+/* Label */
+
+.e-2109a6b9 > .box > .info > .label
 {
 	display: inline-flex;
 	align-items: center;
@@ -59,26 +60,28 @@
 	cursor: default;
 }
 
-.e-2109a6b9 > .holder > .info > .label > .required
+.e-2109a6b9 > .box > .info > .label > .required
 {
 	color: var(--ot-red);
 	font-weight: 600;
 }
 
-.e-2109a6b9 > .holder > .info > .label > .hint
+.e-2109a6b9 > .box > .info > .label > .hint
 {
 	font-size: 16px;
 	color: var(--ot-text-3);
 	cursor: help;
-	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: color var(--ot-transition);
 }
 
-.e-2109a6b9 > .holder > .info > .label > .hint:hover
+.e-2109a6b9 > .box > .info > .label > .hint:hover
 {
 	color: var(--ot-text-1);
 }
 
-.e-2109a6b9 > .holder > .info > .description
+/* Description */
+
+.e-2109a6b9 > .box > .info > .description
 {
 	margin: 0;
 	font-family: var(--ot-font-primary);
@@ -87,9 +90,9 @@
 	line-height: 1.5;
 }
 
-/* Control (input + error) */
+/* Control */
 
-.e-2109a6b9 > .holder > .control
+.e-2109a6b9 > .box > .control
 {
 	display: flex;
 	flex-direction: column;
@@ -98,32 +101,32 @@
 	min-width: 0;
 }
 
-.e-2109a6b9 > .holder.horizontal > .control
+.e-2109a6b9 > .box.horizontal > .control
 {
 	flex: 1.5;
 }
 
-.e-2109a6b9 > .holder.vertical > .control
+.e-2109a6b9 > .box.vertical > .control
 {
 	width: 100%;
 }
 
 /* Input slot */
 
-.e-2109a6b9 > .holder > .control > .input
+.e-2109a6b9 > .box > .control > .input
 {
 	display: flex;
 	width: 100%;
 }
 
-.e-2109a6b9 > .holder > .control > .input > *
+.e-2109a6b9 > .box > .control > .input > *
 {
 	width: 100%;
 }
 
 /* Error message */
 
-.e-2109a6b9 > .holder > .control > .error-message
+.e-2109a6b9 > .box > .control > .message
 {
 	display: inline-flex;
 	align-items: center;
@@ -134,7 +137,7 @@
 	animation: e-2109a6b9-shake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
 
-.e-2109a6b9 > .holder > .control > .error-message > i
+.e-2109a6b9 > .box > .control > .message > i
 {
 	font-size: 14px;
 	font-variation-settings: 'FILL' 1;
@@ -147,71 +150,87 @@
 	75% { transform: translateX(3px); }
 }
 
-/* Error state — border tint on inner inputs */
+/* Error state */
 
-.e-2109a6b9 > .holder.error > .control > .input > *
+.e-2109a6b9 > .box.error > .control > .input > *
 {
 	--ot-brand: var(--ot-red);
 	--ot-brand-opacity: var(--ot-red-opacity);
 }
 
-/* ===== VARIANTS ===== */
+/* ===== VARIANT ===== */
 
-.e-2109a6b9 > .holder.clean
+.e-2109a6b9 > .box.clean
 {
 	padding: 0;
 }
 
-.e-2109a6b9 > .holder.border-bottom
+.e-2109a6b9 > .box.border
 {
 	border-bottom: 1px solid var(--ot-bg-2-border);
 }
 
-/* ===== SIZES ===== */
+/* ===== SIZE ===== */
 
-.e-2109a6b9 > .holder.size-s
+/* Small */
+
+.e-2109a6b9 > .box.size-s
 {
 	padding: var(--ot-spacing-s) var(--ot-spacing-m);
 	gap: var(--ot-spacing-m);
 }
 
-.e-2109a6b9 > .holder.size-s > .info > .label
+.e-2109a6b9 > .box.size-s.vertical
+{
+	gap: var(--ot-spacing-x);
+}
+
+.e-2109a6b9 > .box.size-s > .info > .label
 {
 	font-size: var(--ot-size-s);
 }
 
-.e-2109a6b9 > .holder.size-s > .info > .description
+.e-2109a6b9 > .box.size-s > .info > .description
 {
-	font-size: 10.5px;
+	font-size: var(--ot-size-s);
 }
 
-.e-2109a6b9 > .holder.size-m
+/* Medium */
+
+.e-2109a6b9 > .box.size-m
 {
 	padding: var(--ot-spacing-m);
 	gap: var(--ot-spacing-m);
 }
 
-.e-2109a6b9 > .holder.size-l
+/* Large */
+
+.e-2109a6b9 > .box.size-l
 {
 	padding: var(--ot-spacing-l) var(--ot-spacing-m);
 	gap: var(--ot-spacing-l);
 }
 
-.e-2109a6b9 > .holder.size-l > .info > .label
+.e-2109a6b9 > .box.size-l.vertical
+{
+	gap: var(--ot-spacing-s);
+}
+
+.e-2109a6b9 > .box.size-l > .info > .label
 {
 	font-size: 15px;
 }
 
-.e-2109a6b9 > .holder.size-l > .info > .description
+.e-2109a6b9 > .box.size-l > .info > .description
 {
 	font-size: var(--ot-size-m);
 }
 
-/* Clean overrides size padding */
+/* Clean overrides */
 
-.e-2109a6b9 > .holder.clean.size-s,
-.e-2109a6b9 > .holder.clean.size-m,
-.e-2109a6b9 > .holder.clean.size-l
+.e-2109a6b9 > .box.clean.size-s,
+.e-2109a6b9 > .box.clean.size-m,
+.e-2109a6b9 > .box.clean.size-l
 {
 	padding: 0;
 }

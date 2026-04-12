@@ -4,33 +4,49 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'navigation-sidebar',
 		icon: 'side_navigation',
 		name: 'Sidebar',
-		description: 'Secondary navigation sidebar with grouped items, header, badges and mobile drawer.',
+		description: 'Secondary navigation sidebar with grouped items, header, badges and bottom placement.',
 		category: 'Navigation',
-		author: 'OneType',
-		config: {
-			title: {
-				type: 'string'
+		config:
+		{
+			title:
+			{
+				type: 'string',
+				value: '',
+				description: 'Header title.'
 			},
-			subtitle: {
-				type: 'string'
+			subtitle:
+			{
+				type: 'string',
+				value: '',
+				description: 'Header subtitle.'
 			},
-			version: {
-				type: 'string'
+			version:
+			{
+				type: 'string',
+				value: '',
+				description: 'Version pill badge in header.'
 			},
-			groups: {
+			groups:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Nav groups with items.',
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						title: { type: 'string' },
 						placement: { type: 'string', value: 'top', options: ['top', 'bottom'] },
-						items: {
+						items:
+						{
 							type: 'array',
 							value: [],
-							each: {
+							each:
+							{
 								type: 'object',
-								config: {
+								config:
+								{
 									icon: { type: 'string' },
 									label: { type: 'string' },
 									href: { type: 'string' },
@@ -47,20 +63,37 @@ onetype.AddonReady('elements', (elements) =>
 					}
 				}
 			},
-			active: {
-				type: 'string'
+			active:
+			{
+				type: 'string',
+				value: '',
+				description: 'Active item value for manual control.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-2', 'border-right'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left']
+				value: ['border-right'],
+				each: { type: 'string' },
+				options: ['border', 'border-top', 'border-right', 'border-bottom', 'border-left'],
+				description: 'Border modifiers.'
 			},
-			_click: {
-				type: 'function'
+			_click:
+			{
+				type: 'function',
+				description: 'Item click handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			const path = onetype.RouteCurrent();
 
 			this.isActive = (item) =>
@@ -93,7 +126,7 @@ onetype.AddonReady('elements', (elements) =>
 				return path.startsWith(item.href);
 			};
 
-			this.compute = (groups) =>
+			this.annotate = (groups) =>
 			{
 				return (groups || [])
 					.filter(group => group.items && group.items.length)
@@ -103,12 +136,27 @@ onetype.AddonReady('elements', (elements) =>
 					}));
 			};
 
-			this.top = this.compute(this.groups.filter(group => (group.placement || 'top') === 'top'));
-			this.bottom = this.compute(this.groups.filter(group => group.placement === 'bottom'));
+			this.top = this.annotate(this.groups.filter(group => (group.placement || 'top') === 'top'));
+			this.bottom = this.annotate(this.groups.filter(group => group.placement === 'bottom'));
 
 			this.hasHead = !!this.title || !!this.subtitle || !!this.version || !!this.Slots.top;
 			this.hasFoot = !!this.Slots.bottom;
-			this.open = false;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background];
+
+				this.variant.forEach(v =>
+				{
+					list.push(v);
+				});
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.handle = (item, event) =>
 			{
@@ -117,21 +165,16 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				this.open = false;
-
 				if(this._click)
 				{
 					this._click({ event, value: item });
 				}
 			};
 
-			this.toggle = () =>
-			{
-				this.open = !this.open;
-			};
+			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<aside :class="'holder ' + variant.join(' ')">
+				<aside :class="classes()">
 					<div ot-if="hasHead" class="head">
 						<slot name="top"></slot>
 						<div ot-if="title" class="title">{{ title }}</div>

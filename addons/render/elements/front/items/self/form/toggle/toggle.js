@@ -4,45 +4,113 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-toggle',
 		icon: 'toggle_on',
 		name: 'Toggle',
-		description: 'Premium on/off switch with label, description, color variants and reverse mode.',
+		description: 'On/off switch with label, description and color variants.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			label: {
-				type: 'string'
+		config:
+		{
+			label:
+			{
+				type: 'string',
+				value: '',
+				description: 'Toggle label.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Helper text below label.'
 			},
-			name: {
-				type: 'string'
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Form field name.'
 			},
-			value: {
-				type: 'boolean'
+			value:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Checked state.'
 			},
-			disabled: {
-				type: 'boolean'
+			color:
+			{
+				type: 'string',
+				value: 'brand',
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Active track color.'
 			},
-			variant: {
+			background:
+			{
+				type: 'string',
+				value: 'bg-3',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Inactive track background.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Toggle size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-3', 'size-m'],
-				options: [
-					'bg-1', 'bg-2', 'bg-3', 'bg-4',
-					'border',
-					'color-brand', 'color-blue', 'color-red', 'color-orange', 'color-green',
-					'size-s', 'size-m', 'size-l',
-					'reverse'
-				]
+				value: [],
+				each: { type: 'string' },
+				options: ['reverse', 'border'],
+				description: 'Visual modifiers.'
 			},
-			_change: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hasInfo = !!this.label || !!this.description;
 
-			this.handle = ({ event }) =>
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.color, this.background, 'size-' + this.size];
+
+				if(this.value)
+				{
+					list.push('active');
+				}
+
+				if(this.variant.includes('reverse'))
+				{
+					list.push('reverse');
+				}
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.toggle = ({ event }) =>
 			{
 				event.preventDefault();
 
@@ -59,8 +127,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<label :class="'holder ' + variant.join(' ') + (value ? ' active' : '') + (disabled ? ' disabled' : '')" ot-click="handle">
+				<label :class="classes()" ot-click="toggle">
 					<input
 						type="checkbox"
 						:name="name"
@@ -72,7 +142,7 @@ onetype.AddonReady('elements', (elements) =>
 					</span>
 					<span ot-if="hasInfo" class="info">
 						<span ot-if="label" class="label">{{ label }}</span>
-						<span ot-if="description" class="description">{{ description }}</span>
+						<span ot-if="description" class="desc">{{ description }}</span>
 					</span>
 				</label>
 			`;

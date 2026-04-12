@@ -10,16 +10,25 @@ popup.Fn('confirm', function(title, description, options = {})
 	{
 		const id = 'confirm-' + onetype.GenerateUID();
 		let resolved = false;
+		let overlay = null;
 
-		const close = (value) =>
+		const finish = (value) =>
 		{
-			if(resolved) return;
+			if(resolved)
+			{
+				return;
+			}
+
 			resolved = true;
-			overlay.Remove();
 			resolve(value);
+
+			if(overlay && overlays.ItemGet(overlay.Get('id')))
+			{
+				overlay.Remove();
+			}
 		};
 
-		const overlay = overlays.Item({
+		overlay = overlays.Item({
 			id: options.id || id,
 			position: { x: 'center', y: 'center' },
 			backdrop: options.backdrop ?? 0.4,
@@ -34,45 +43,51 @@ popup.Fn('confirm', function(title, description, options = {})
 					element.classList.add('ot-modal');
 				}
 			},
-			onClose: () => close(options.input ? null : false),
+			onClose: () => finish(options.input ? null : false),
 			render: function()
 			{
-				this.value = options.value || '';
-				this.hasInput = !!options.input;
+				const initialValue = options.value || '';
+				const hasInput = !!options.input;
+
+				/* Internal value holder - NOT bound to render data,
+				   so input doesn't re-render and lose focus on every keystroke */
+				let currentValue = initialValue;
+
+				this.title = title || '';
+				this.description = description || '';
+				this.hasInput = hasInput;
+				this.hasIcon = !!options.icon;
+				this.icon = options.icon || '';
+				this.type = options.type || 'default';
+				this.confirmText = options.confirm || (hasInput ? 'Continue' : 'Confirm');
+				this.cancelText = options.cancel || 'Cancel';
+				this.confirmColor = (this.type === 'danger') ? 'red' : 'brand';
+				this.placeholder = options.placeholder || '';
+				this.initialValue = initialValue;
 
 				this.input = ({ value }) =>
 				{
-					this.value = value;
+					currentValue = value;
 				};
 
 				this.cancel = () =>
 				{
-					close(this.hasInput ? null : false);
+					finish(hasInput ? null : false);
 				};
 
 				this.submit = () =>
 				{
-					close(this.hasInput ? this.value : true);
+					finish(hasInput ? currentValue : true);
 				};
 
 				this.keydown = ({ event }) =>
 				{
-					if(event.key === 'Enter' && this.hasInput && this.value)
+					if(event.key === 'Enter' && hasInput && currentValue)
 					{
 						event.preventDefault();
 						this.submit();
 					}
 				};
-
-				this.title = title || '';
-				this.description = description || '';
-				this.hasIcon = !!options.icon;
-				this.icon = options.icon || '';
-				this.type = options.type || 'default';
-				this.confirmText = options.confirm || (this.hasInput ? 'Continue' : 'Confirm');
-				this.cancelText = options.cancel || 'Cancel';
-				this.confirmVariant = (this.type === 'danger') ? ['red', 'size-m'] : ['brand', 'size-m'];
-				this.placeholder = options.placeholder || '';
 
 				return /* html */ `
 					<div class="ot-confirm">
@@ -81,16 +96,17 @@ popup.Fn('confirm', function(title, description, options = {})
 						<p ot-if="description" class="description">{{ description }}</p>
 						<div ot-if="hasInput" class="input">
 							<e-form-input
-								:value="value"
+								:value="initialValue"
 								:placeholder="placeholder"
 								:_input="input"
-								:variant="['bg-2', 'border', 'size-m']"
+								background="bg-2"
+								:border="true"
 								ot-keydown="keydown"
 							></e-form-input>
 						</div>
 						<div class="actions">
-							<e-form-button :text="cancelText" :variant="['bg-2', 'border', 'size-m']" :_click="cancel"></e-form-button>
-							<e-form-button :text="confirmText" :variant="confirmVariant" :_click="submit"></e-form-button>
+							<e-form-button :text="cancelText" background="bg-2" :_click="cancel"></e-form-button>
+							<e-form-button :text="confirmText" :color="confirmColor" :_click="submit"></e-form-button>
 						</div>
 					</div>
 				`;

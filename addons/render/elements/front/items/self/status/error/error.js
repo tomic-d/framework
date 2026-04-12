@@ -4,38 +4,66 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'status-error',
 		icon: 'error',
 		name: 'Error',
-		description: 'Full-page error state with icon, message, and retry action.',
+		description: 'Error state with icon, message and retry action.',
 		category: 'Status',
-		author: 'OneType',
-		config: {
-			icon: {
+		config:
+		{
+			icon:
+			{
 				type: 'string',
-				value: 'error'
+				value: 'error',
+				description: 'Center icon name.'
 			},
-			title: {
+			title:
+			{
 				type: 'string',
-				value: 'Something went wrong'
+				value: 'Something went wrong',
+				description: 'Error heading.'
 			},
-			description: {
+			description:
+			{
 				type: 'string',
-				value: 'An unexpected error occurred. Please try again.'
+				value: 'An unexpected error occurred. Please try again.',
+				description: 'Error detail text.'
 			},
-			action: {
+			action:
+			{
 				type: 'string',
-				value: 'Try Again'
+				value: 'Try Again',
+				description: 'Retry button label. Empty hides button.'
 			},
-			variant: {
-				type: 'array',
-				value: ['red', 'size-m'],
-				options: ['brand', 'blue', 'red', 'orange', 'green', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
+			color:
+			{
+				type: 'string',
+				value: 'red',
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Icon circle accent color.'
 			},
-			_click: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Component size.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'Retry handler. Receives { event }. Reloads page if not set.'
 			}
 		},
 		render: function()
 		{
-			this.retry = (event) =>
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				return 'box ' + this.color + ' size-' + this.size;
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.retry = ({ event }) =>
 			{
 				if(this._click)
 				{
@@ -46,18 +74,23 @@ onetype.AddonReady('elements', (elements) =>
 				window.location.reload();
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
-					<div class="circle"><i>{{ icon }}</i></div>
-					<h2 ot-if="title" class="title">{{ title }}</h2>
-					<p ot-if="description" class="description">{{ description }}</p>
-					<e-form-button
-						ot-if="action"
-						:text="action"
-						icon="refresh"
-						:variant="['brand', 'size-m']"
-						:_click="retry"
-					></e-form-button>
+				<div :class="classes()">
+					<div class="inner">
+						<div class="circle"><i>{{ icon }}</i></div>
+						<h2 ot-if="title" class="title">{{ title }}</h2>
+						<p ot-if="description" class="description">{{ description }}</p>
+						<e-form-button
+							ot-if="action"
+							:text="action"
+							icon="refresh"
+							color="brand"
+							size="m"
+							:_click="retry"
+						></e-form-button>
+					</div>
 				</div>
 			`;
 		}

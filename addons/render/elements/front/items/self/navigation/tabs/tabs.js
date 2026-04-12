@@ -4,55 +4,108 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'navigation-tabs',
 		icon: 'tab',
 		name: 'Tabs',
-		description: 'Tabbed navigation with multiple styles, icons, counts, and optional content panels.',
+		description: 'Tabbed navigation with multiple tones, icons, counts and content panels.',
 		category: 'Navigation',
-		author: 'OneType',
-		config: {
-			items: {
+		config:
+		{
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Tab items.',
+				each:
+				{
 					type: 'object',
-					config: {
-						id: { type: 'string' },
-						label: { type: 'string' },
-						icon: { type: 'string' },
-						count: { type: 'string|number' },
-						href: { type: 'string' },
-						target: { type: 'string' },
-						disabled: { type: 'boolean' },
-						content: { type: 'string' }
+					config:
+					{
+						id: { type: 'string', description: 'Unique tab ID.' },
+						label: { type: 'string', description: 'Tab label.' },
+						icon: { type: 'string', description: 'Tab icon.' },
+						count: { type: 'string|number', description: 'Count badge.' },
+						href: { type: 'string', description: 'Link URL.' },
+						target: { type: 'string', description: 'Link target.' },
+						disabled: { type: 'boolean', description: 'Disabled state.' },
+						content: { type: 'string', description: 'Panel HTML content.' }
 					}
 				}
 			},
-			active: {
-				type: 'string'
+			active:
+			{
+				type: 'string',
+				value: '',
+				description: 'Active tab ID.'
 			},
-			variant: {
+			tone:
+			{
+				type: 'string',
+				value: 'underline',
+				options: ['underline', 'pills', 'contained', 'segmented'],
+				description: 'Visual tone.'
+			},
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Tab size.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['underline', 'size-m'],
-				options: ['underline', 'pills', 'contained', 'segmented', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l', 'stretch']
+				value: [],
+				each: { type: 'string' },
+				options: ['border', 'stretch'],
+				description: 'Visual modifiers.'
 			},
-			_change: {
-				type: 'function'
+			_change:
+			{
+				type: 'function',
+				description: 'Tab change handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			if(!this.active && this.items.length)
 			{
 				this.active = this.items[0].id;
 			}
 
-			const styles = ['underline', 'pills', 'contained', 'segmented'];
-			const hasStyle = this.variant.some(v => styles.includes(v));
-
-			if(!hasStyle)
-			{
-				this.variant = ['underline', ...this.variant];
-			}
-
 			this.hasContent = this.items.some(item => item.content);
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.tone, 'size-' + this.size];
+
+				if(this.background)
+				{
+					list.push(this.background);
+				}
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.variant.includes('stretch'))
+				{
+					list.push('stretch');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.select = (item, event) =>
 			{
@@ -69,6 +122,8 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			this.panels = this.items
 				.filter(item => item.content)
 				.map(item =>
@@ -78,7 +133,7 @@ onetype.AddonReady('elements', (elements) =>
 				.join('');
 
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<nav class="tabs">
 						<a
 							ot-for="item in items"
@@ -92,7 +147,7 @@ onetype.AddonReady('elements', (elements) =>
 							<span ot-if="item.count != null" class="count">{{ item.count }}</span>
 						</a>
 					</nav>
-					<div ot-if="hasContent" class="content">
+					<div ot-if="hasContent" class="body">
 						<span ot-html="panels"></span>
 					</div>
 				</div>

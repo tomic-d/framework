@@ -6,46 +6,97 @@ onetype.AddonReady('elements', (elements) =>
 		name: 'Dock',
 		description: 'Slim icon rail with grouped navigation, logo, badges and tooltips.',
 		category: 'Navigation',
-		author: 'OneType',
-		config: {
-			logo: {
-				type: 'string'
+		config:
+		{
+			logo:
+			{
+				type: 'string',
+				value: '',
+				description: 'Logo image URL. Links to /.'
 			},
-			groups: {
+			groups:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Navigation groups.',
+				each:
+				{
 					type: 'object',
-					config: {
-						placement: { type: 'string', value: 'top', options: ['top', 'bottom'] },
-						items: {
+					config:
+					{
+						placement:
+						{
+							type: 'string',
+							value: 'top',
+							options: ['top', 'bottom'],
+							description: 'Stack position.'
+						},
+						items:
+						{
 							type: 'array',
 							value: [],
-							each: {
+							description: 'Group items.',
+							each:
+							{
 								type: 'object',
-								config: {
-									icon: { type: 'string' },
-									label: { type: 'string' },
-									href: { type: 'string' },
-									match: { type: 'string' },
-									badge: { type: 'string|number' }
+								config:
+								{
+									icon:
+									{
+										type: 'string',
+										description: 'Material icon name.'
+									},
+									label:
+									{
+										type: 'string',
+										description: 'Tooltip text.'
+									},
+									href:
+									{
+										type: 'string',
+										description: 'Navigation URL.'
+									},
+									match:
+									{
+										type: 'string',
+										description: 'Active match path. Falls back to href.'
+									},
+									badge:
+									{
+										type: 'string|number',
+										description: 'Notification badge value.'
+									}
 								}
 							}
 						}
 					}
 				}
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border-right'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left']
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
 			},
-			_click: {
-				type: 'function'
+			variant:
+			{
+				type: 'array',
+				value: ['border-right'],
+				each: { type: 'string' },
+				options: ['border', 'border-top', 'border-right', 'border-bottom', 'border-left'],
+				description: 'Border modifiers.'
+			},
+			_click:
+			{
+				type: 'function',
+				description: 'Click handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			const path = onetype.RouteCurrent();
 
 			this.isActive = (item) =>
@@ -78,7 +129,20 @@ onetype.AddonReady('elements', (elements) =>
 			this.top = this.compute(this.groups.filter(group => (group.placement || 'top') === 'top'));
 			this.bottom = this.compute(this.groups.filter(group => group.placement === 'bottom'));
 
-			this.handle = (item, event) =>
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background];
+
+				this.variant.forEach(v => list.push(v));
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
+
+			this.handle = ({ event }, item) =>
 			{
 				if(this._click)
 				{
@@ -86,8 +150,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<aside :class="'holder ' + variant.join(' ')">
+				<aside :class="classes()">
 					<a ot-if="logo" class="logo" href="/">
 						<img :src="logo" alt="" />
 					</a>
@@ -101,7 +167,7 @@ onetype.AddonReady('elements', (elements) =>
 									:class="'item' + (item.active ? ' active' : '')"
 									:href="item.href || 'javascript:void(0)'"
 									:ot-tooltip="item.label ? { text: item.label, position: { x: 'right', y: 'center' } } : null"
-									ot-click="(event) => handle(item, event)"
+									ot-click="(event) => handle(event, item)"
 								>
 									<i>{{ item.icon }}</i>
 									<span ot-if="item.badge" class="badge">{{ item.badge }}</span>
@@ -119,7 +185,7 @@ onetype.AddonReady('elements', (elements) =>
 									:class="'item' + (item.active ? ' active' : '')"
 									:href="item.href || 'javascript:void(0)'"
 									:ot-tooltip="item.label ? { text: item.label, position: { x: 'right', y: 'center' } } : null"
-									ot-click="(event) => handle(item, event)"
+									ot-click="(event) => handle(event, item)"
 								>
 									<i>{{ item.icon }}</i>
 									<span ot-if="item.badge" class="badge">{{ item.badge }}</span>

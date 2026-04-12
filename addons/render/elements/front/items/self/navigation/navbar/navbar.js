@@ -4,27 +4,38 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'navigation-navbar',
 		icon: 'menu',
 		name: 'Navbar',
-		description: 'Premium top navigation bar with slots, dropdowns, user menu, breadcrumbs, sticky/shrink/scroll-hide behaviors and mobile drawer.',
+		description: 'Top navigation bar with links, dropdowns, user menu, breadcrumbs, scroll behaviors and mobile drawer.',
 		category: 'Navigation',
-		author: 'OneType',
-		config: {
-			logo: {
-				type: 'string'
-			},
-			logoAlt: {
+		config:
+		{
+			logo:
+			{
 				type: 'string',
-				value: 'Logo'
+				value: '',
+				description: 'Logo image URL.'
 			},
-			brandHref: {
+			logoAlt:
+			{
 				type: 'string',
-				value: '/'
+				value: 'Logo',
+				description: 'Logo alt text.'
 			},
-			items: {
+			brandHref:
+			{
+				type: 'string',
+				value: '/',
+				description: 'Logo click destination.'
+			},
+			items:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Nav links.',
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						id: { type: 'string' },
 						icon: { type: 'string' },
 						label: { type: 'string' },
@@ -39,34 +50,45 @@ onetype.AddonReady('elements', (elements) =>
 					}
 				}
 			},
-			crumbs: {
+			crumbs:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Breadcrumb trail. Replaces logo.',
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						icon: { type: 'string' },
 						label: { type: 'string' },
 						href: { type: 'string' }
 					}
 				}
 			},
-			user: {
+			user:
+			{
 				type: 'object',
 				value: null,
-				config: {
+				description: 'User object for avatar trigger.',
+				config:
+				{
 					name: { type: 'string' },
 					email: { type: 'string' },
 					avatar: { type: 'string' },
 					role: { type: 'string' }
 				}
 			},
-			userMenu: {
+			userMenu:
+			{
 				type: 'array',
 				value: [],
-				each: {
+				description: 'Dropdown items for user menu.',
+				each:
+				{
 					type: 'object',
-					config: {
+					config:
+					{
 						icon: { type: 'string' },
 						label: { type: 'string' },
 						href: { type: 'string' },
@@ -74,41 +96,68 @@ onetype.AddonReady('elements', (elements) =>
 					}
 				}
 			},
-			notifications: {
+			notifications:
+			{
 				type: 'number',
-				value: 0
+				value: 0,
+				description: 'Unread notification count.'
 			},
-			notificationsHref: {
-				type: 'string'
+			notificationsHref:
+			{
+				type: 'string',
+				value: '',
+				description: 'Notifications link.'
 			},
-			sticky: {
+			sticky:
+			{
 				type: 'boolean',
-				value: true
+				value: true,
+				description: 'Stick to top on scroll.'
 			},
-			scrollHide: {
-				type: 'boolean'
-			},
-			shrinkOnScroll: {
+			scrollHide:
+			{
 				type: 'boolean',
-				value: true
+				value: false,
+				description: 'Hide on scroll down, show on scroll up.'
 			},
-			blur: {
-				type: 'boolean'
+			shrinkOnScroll:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Reduce bar height after scroll.'
 			},
-			variant: {
+			blur:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Glassmorphism backdrop blur.'
+			},
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			variant:
+			{
 				type: 'array',
-				value: ['bg-1', 'border-bottom'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border-bottom', 'border', 'clean']
+				value: ['border'],
+				each: { type: 'string' },
+				options: ['border', 'clean'],
+				description: 'Visual modifiers.'
 			},
-			_search: {
-				type: 'function'
+			_search:
+			{
+				type: 'function',
+				description: 'Search callback. Receives query string.'
 			}
 		},
 		render: function()
 		{
-			const path = onetype.RouteCurrent();
+			/* ===== STATE ===== */
 
-			// Active detection
+			const path = onetype.RouteCurrent();
 
 			const isActive = (item) =>
 			{
@@ -131,23 +180,15 @@ onetype.AddonReady('elements', (elements) =>
 				return path.startsWith(item.href);
 			};
 
-			// Split items by position + annotate active state
-
-			this.left = this.items.filter(item => (item.position || 'left') === 'left').map(item => ({
+			const annotate = (item) => ({
 				...item,
 				active: isActive(item),
 				hasChildren: item.children && item.children.length > 0
-			}));
+			});
 
-			this.right = this.items.filter(item => item.position === 'right').map(item => ({
-				...item,
-				active: isActive(item),
-				hasChildren: item.children && item.children.length > 0
-			}));
-
+			this.left = this.items.filter(item => (item.position || 'left') === 'left').map(annotate);
+			this.right = this.items.filter(item => item.position === 'right').map(annotate);
 			this.all = [...this.left, ...this.right];
-
-			// Slots — additive only, default content always renders
 
 			this.hasBanner = !!this.Slots.banner;
 			this.hasActions = !!this.Slots.actions;
@@ -157,11 +198,55 @@ onetype.AddonReady('elements', (elements) =>
 			this.hasNotifications = !!this.notificationsHref || this.notifications > 0;
 			this.hasUserMenu = this.hasUser && this.userMenu && this.userMenu.length > 0;
 
-			// State
-
 			this.open = false;
 			this.hidden = false;
 			this.shrunk = false;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background];
+
+				if(this.variant.includes('border'))
+				{
+					list.push('border');
+				}
+
+				if(this.variant.includes('clean'))
+				{
+					list.push('clean');
+				}
+
+				if(this.sticky)
+				{
+					list.push('sticky');
+				}
+
+				if(this.blur)
+				{
+					list.push('blur');
+				}
+
+				if(this.hidden)
+				{
+					list.push('hidden');
+				}
+
+				if(this.shrunk)
+				{
+					list.push('shrunk');
+				}
+
+				if(this.open)
+				{
+					list.push('open');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.toggleMobile = () =>
 			{
@@ -172,8 +257,6 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				this.open = false;
 			};
-
-			// Dropdown open handler — uses $ot.popup
 
 			this.openDropdown = (event, item) =>
 			{
@@ -223,8 +306,6 @@ onetype.AddonReady('elements', (elements) =>
 					offset: { x: 0, y: 8 }
 				});
 			};
-
-			// User menu dropdown
 
 			this.openUserMenu = (event) =>
 			{
@@ -288,7 +369,7 @@ onetype.AddonReady('elements', (elements) =>
 				});
 			};
 
-			// Scroll behavior
+			/* ===== LIFECYCLE ===== */
 
 			this.OnReady(() =>
 			{
@@ -336,8 +417,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			});
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<header :class="'holder ' + variant.join(' ') + (sticky ? ' sticky' : '') + (blur ? ' blur' : '') + (hidden ? ' hidden' : '') + (shrunk ? ' shrunk' : '') + (open ? ' open' : '')">
+				<header :class="classes()">
 					<div ot-if="hasBanner" class="banner">
 						<slot name="banner"></slot>
 					</div>

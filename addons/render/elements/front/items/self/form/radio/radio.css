@@ -1,13 +1,13 @@
-/* Root */
+/* ===== FORM RADIO ===== */
 
 .e-206433b8
 {
-	display: inline-flex;
+	display: contents;
 }
 
-/* Holder */
+/* Box */
 
-.e-206433b8 > .holder
+.e-206433b8 > .box
 {
 	position: relative;
 	display: inline-flex;
@@ -17,14 +17,14 @@
 	font-family: var(--ot-font-primary);
 }
 
-.e-206433b8 > .holder.reverse
+.e-206433b8 > .box.reverse
 {
 	flex-direction: row-reverse;
 }
 
-/* Input — hidden but accessible */
+/* Input */
 
-.e-206433b8 > .holder > input
+.e-206433b8 > .box > input
 {
 	position: absolute;
 	opacity: 0;
@@ -34,9 +34,9 @@
 	margin: 0;
 }
 
-/* Info block (label + description) */
+/* Info */
 
-.e-206433b8 > .holder > .info
+.e-206433b8 > .box > .info
 {
 	display: inline-flex;
 	flex-direction: column;
@@ -45,28 +45,28 @@
 	padding-top: 1px;
 }
 
-.e-206433b8 > .holder > .info > .label
+.e-206433b8 > .box > .info > .label
 {
 	font-size: var(--ot-size-m);
 	font-weight: 500;
 	color: var(--ot-text-1);
 	line-height: 1.3;
 	user-select: none;
-	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: color var(--ot-transition);
 }
 
-.e-206433b8 > .holder > .info > .description
+.e-206433b8 > .box > .info > .description
 {
 	font-size: var(--ot-size-s);
 	color: var(--ot-text-3);
 	line-height: 1.4;
 	user-select: none;
-	transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: color var(--ot-transition);
 }
 
 /* Mark */
 
-.e-206433b8 > .holder > .mark
+.e-206433b8 > .box > .mark
 {
 	position: relative;
 	display: block;
@@ -74,12 +74,12 @@
 	border-radius: 50%;
 	border: 1px solid transparent;
 	background: transparent;
-	transition: background 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: background var(--ot-transition), border-color var(--ot-transition), transform var(--ot-transition-fast), box-shadow var(--ot-transition);
 }
 
 /* Dot */
 
-.e-206433b8 > .holder > .mark::after
+.e-206433b8 > .box > .mark::after
 {
 	content: '';
 	position: absolute;
@@ -89,10 +89,10 @@
 	background: white;
 	transform: translate(-50%, -50%) scale(0);
 	opacity: 0;
-	transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: transform var(--ot-transition), opacity var(--ot-transition-fast);
 }
 
-.e-206433b8 > .holder > input:checked ~ .mark::after
+.e-206433b8 > .box > input:checked ~ .mark::after
 {
 	transform: translate(-50%, -50%) scale(1);
 	opacity: 1;
@@ -100,265 +100,237 @@
 
 /* Focus */
 
-.e-206433b8 > .holder > input:focus-visible ~ .mark
+.e-206433b8 > .box > input:focus-visible ~ .mark
 {
 	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
 }
 
-/* Active press */
+/* Active */
 
-.e-206433b8 > .holder:active > .mark
+.e-206433b8 > .box:active > .mark
 {
 	transform: scale(0.92);
 }
 
 /* Disabled */
 
-.e-206433b8 > .holder.disabled
+.e-206433b8 > .box.disabled
 {
 	cursor: not-allowed;
 }
 
-.e-206433b8 > .holder.disabled > .mark
+.e-206433b8 > .box.disabled > .mark
 {
 	opacity: 0.45;
 }
 
-.e-206433b8 > .holder.disabled > .info > .label,
-.e-206433b8 > .holder.disabled > .info > .description
+.e-206433b8 > .box.disabled > .info > .label,
+.e-206433b8 > .box.disabled > .info > .description
 {
 	color: var(--ot-text-3);
 	opacity: 0.6;
 }
 
-/* ===== SIZES ===== */
+/* ===== SIZE ===== */
 
-.e-206433b8 > .holder.size-s > .mark
+.e-206433b8 > .box.size-s > .mark
 {
 	width: 16px;
 	height: 16px;
 }
 
-.e-206433b8 > .holder.size-s > .mark::after
+.e-206433b8 > .box.size-s > .mark::after
 {
 	width: 6px;
 	height: 6px;
 }
 
-.e-206433b8 > .holder.size-s > .info > .label
+.e-206433b8 > .box.size-s > .info > .label
 {
 	font-size: var(--ot-size-s);
 }
 
-.e-206433b8 > .holder.size-s > .info > .description
+.e-206433b8 > .box.size-s > .info > .description
 {
 	font-size: 10.5px;
 }
 
-.e-206433b8 > .holder.size-m > .mark
+.e-206433b8 > .box.size-m > .mark
 {
 	width: 20px;
 	height: 20px;
 }
 
-.e-206433b8 > .holder.size-m > .mark::after
+.e-206433b8 > .box.size-m > .mark::after
 {
 	width: 8px;
 	height: 8px;
 }
 
-.e-206433b8 > .holder.size-m > .info > .label
+.e-206433b8 > .box.size-m > .info > .label
 {
 	font-size: var(--ot-size-m);
 }
 
-.e-206433b8 > .holder.size-l > .mark
+.e-206433b8 > .box.size-l > .mark
 {
 	width: 24px;
 	height: 24px;
 }
 
-.e-206433b8 > .holder.size-l > .mark::after
+.e-206433b8 > .box.size-l > .mark::after
 {
 	width: 10px;
 	height: 10px;
 }
 
-.e-206433b8 > .holder.size-l > .info > .label
+.e-206433b8 > .box.size-l > .info > .label
 {
 	font-size: var(--ot-size-m);
 }
 
-/* ===== BACKGROUND VARIANTS ===== */
+/* ===== BACKGROUND ===== */
 
-.e-206433b8 > .holder.bg-1 > .mark
+.e-206433b8 > .box.bg-1 > .mark
 {
 	background: var(--ot-bg-1);
 	border-color: var(--ot-bg-1-border);
 }
-.e-206433b8 > .holder.bg-1:hover:not(.disabled) > input:not(:checked) ~ .mark
+
+.e-206433b8 > .box.bg-1:hover:not(.disabled) > input:not(:checked) ~ .mark
 {
 	background: var(--ot-bg-1-hover);
 }
 
-.e-206433b8 > .holder.bg-2 > .mark
+.e-206433b8 > .box.bg-2 > .mark
 {
 	background: var(--ot-bg-2);
 	border-color: var(--ot-bg-2-border);
 }
-.e-206433b8 > .holder.bg-2:hover:not(.disabled) > input:not(:checked) ~ .mark
+
+.e-206433b8 > .box.bg-2:hover:not(.disabled) > input:not(:checked) ~ .mark
 {
 	background: var(--ot-bg-2-hover);
 }
 
-.e-206433b8 > .holder.bg-3 > .mark
+.e-206433b8 > .box.bg-3 > .mark
 {
 	background: var(--ot-bg-3);
 	border-color: var(--ot-bg-3-border);
 }
-.e-206433b8 > .holder.bg-3:hover:not(.disabled) > input:not(:checked) ~ .mark
+
+.e-206433b8 > .box.bg-3:hover:not(.disabled) > input:not(:checked) ~ .mark
 {
 	background: var(--ot-bg-3-hover);
 }
 
-.e-206433b8 > .holder.bg-4 > .mark
+.e-206433b8 > .box.bg-4 > .mark
 {
 	background: var(--ot-bg-4);
 	border-color: var(--ot-bg-4-border);
 }
-.e-206433b8 > .holder.bg-4:hover:not(.disabled) > input:not(:checked) ~ .mark
+
+.e-206433b8 > .box.bg-4:hover:not(.disabled) > input:not(:checked) ~ .mark
 {
 	background: var(--ot-bg-4-hover);
 }
 
-/* Transparent variant */
+/* Transparent */
 
-.e-206433b8 > .holder.transparent > .mark
+.e-206433b8 > .box.transparent > .mark
 {
 	background: transparent;
 	border-color: transparent;
 }
 
-.e-206433b8 > .holder.transparent > input:not(:checked) ~ .mark::after
+.e-206433b8 > .box.transparent > input:not(:checked) ~ .mark::after
 {
 	background: var(--ot-text-1);
 }
 
-/* Border variant */
+/* Border */
 
-.e-206433b8 > .holder.border > .mark
+.e-206433b8 > .box.border > .mark
 {
 	background: transparent;
 	border-color: var(--ot-bg-2-border);
 }
 
-.e-206433b8 > .holder.border:hover:not(.disabled) > input:not(:checked) ~ .mark
+.e-206433b8 > .box.border:hover:not(.disabled) > input:not(:checked) ~ .mark
 {
 	border-color: var(--ot-text-3);
 }
 
-/* ===== CHECKED STATE (high specificity to override bg variants) ===== */
+/* ===== CHECKED ===== */
 
-.e-206433b8 > .holder.bg-1 > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-2 > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-3 > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-4 > input:checked ~ .mark,
-.e-206433b8 > .holder.transparent > input:checked ~ .mark,
-.e-206433b8 > .holder.border > input:checked ~ .mark
+.e-206433b8 > .box.bg-1 > input:checked ~ .mark,
+.e-206433b8 > .box.bg-2 > input:checked ~ .mark,
+.e-206433b8 > .box.bg-3 > input:checked ~ .mark,
+.e-206433b8 > .box.bg-4 > input:checked ~ .mark,
+.e-206433b8 > .box.transparent > input:checked ~ .mark,
+.e-206433b8 > .box.border > input:checked ~ .mark
 {
 	background: var(--ot-brand);
 	border-color: var(--ot-brand);
 }
 
-/* Color variants */
+/* ===== COLOR ===== */
 
-.e-206433b8 > .holder.color-blue > input:checked ~ .mark
+.e-206433b8 > .box.color-brand > input:checked ~ .mark
+{
+	background: var(--ot-brand);
+	border-color: var(--ot-brand);
+}
+
+.e-206433b8 > .box.color-blue > input:checked ~ .mark
 {
 	background: var(--ot-blue);
 	border-color: var(--ot-blue);
 }
 
-.e-206433b8 > .holder.color-red > input:checked ~ .mark
+.e-206433b8 > .box.color-red > input:checked ~ .mark
 {
 	background: var(--ot-red);
 	border-color: var(--ot-red);
 }
 
-.e-206433b8 > .holder.color-orange > input:checked ~ .mark
+.e-206433b8 > .box.color-orange > input:checked ~ .mark
 {
 	background: var(--ot-orange);
 	border-color: var(--ot-orange);
 }
 
-.e-206433b8 > .holder.color-green > input:checked ~ .mark
+.e-206433b8 > .box.color-green > input:checked ~ .mark
 {
 	background: var(--ot-green);
 	border-color: var(--ot-green);
 }
 
-/* Color + bg combined (highest specificity) */
+/* Color focus rings */
 
-.e-206433b8 > .holder.bg-1.color-blue > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-2.color-blue > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-3.color-blue > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-4.color-blue > input:checked ~ .mark
-{
-	background: var(--ot-blue);
-	border-color: var(--ot-blue);
-}
-
-.e-206433b8 > .holder.bg-1.color-red > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-2.color-red > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-3.color-red > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-4.color-red > input:checked ~ .mark
-{
-	background: var(--ot-red);
-	border-color: var(--ot-red);
-}
-
-.e-206433b8 > .holder.bg-1.color-orange > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-2.color-orange > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-3.color-orange > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-4.color-orange > input:checked ~ .mark
-{
-	background: var(--ot-orange);
-	border-color: var(--ot-orange);
-}
-
-.e-206433b8 > .holder.bg-1.color-green > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-2.color-green > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-3.color-green > input:checked ~ .mark,
-.e-206433b8 > .holder.bg-4.color-green > input:checked ~ .mark
-{
-	background: var(--ot-green);
-	border-color: var(--ot-green);
-}
-
-/* Focus rings per color */
-
-.e-206433b8 > .holder.color-blue > input:focus-visible ~ .mark
+.e-206433b8 > .box.color-blue > input:focus-visible ~ .mark
 {
 	box-shadow: 0 0 0 3px var(--ot-blue-opacity);
 }
 
-.e-206433b8 > .holder.color-red > input:focus-visible ~ .mark
+.e-206433b8 > .box.color-red > input:focus-visible ~ .mark
 {
 	box-shadow: 0 0 0 3px var(--ot-red-opacity);
 }
 
-.e-206433b8 > .holder.color-orange > input:focus-visible ~ .mark
+.e-206433b8 > .box.color-orange > input:focus-visible ~ .mark
 {
 	box-shadow: 0 0 0 3px var(--ot-orange-opacity);
 }
 
-.e-206433b8 > .holder.color-green > input:focus-visible ~ .mark
+.e-206433b8 > .box.color-green > input:focus-visible ~ .mark
 {
 	box-shadow: 0 0 0 3px var(--ot-green-opacity);
 }
 
-/* Icon (optional, between mark and label) */
+/* ===== ICON ===== */
 
-.e-206433b8 > .holder > .icon
+.e-206433b8 > .box > .icon
 {
 	font-size: 18px;
 	color: var(--ot-text-2);
@@ -366,16 +338,16 @@
 	align-self: center;
 }
 
-.e-206433b8 > .holder.size-s > .icon { font-size: 16px; }
-.e-206433b8 > .holder.size-l > .icon { font-size: 20px; }
+.e-206433b8 > .box.size-s > .icon { font-size: 16px; }
+.e-206433b8 > .box.size-l > .icon { font-size: 20px; }
 
-/* Count (optional, at the end) */
+/* ===== COUNT ===== */
 
-.e-206433b8 > .holder > .count
+.e-206433b8 > .box > .count
 {
 	margin-left: auto;
 	padding-left: var(--ot-spacing-s);
-	font-size: 11px;
+	font-size: var(--ot-size-s);
 	font-weight: 700;
 	color: var(--ot-text-3);
 	font-variant-numeric: tabular-nums;

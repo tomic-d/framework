@@ -4,46 +4,99 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-color',
 		icon: 'palette',
 		name: 'Color',
-		description: 'Premium color picker with native input, hex validation, presets and copy action.',
+		description: 'Color picker with native input, hex validation, presets and copy action.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
-				type: 'string'
-			},
-			name: {
-				type: 'string'
-			},
-			placeholder: {
+		config:
+		{
+			value:
+			{
 				type: 'string',
-				value: '#000000'
+				value: '',
+				description: 'Hex color value.'
 			},
-			presets: {
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Input name attribute.'
+			},
+			placeholder:
+			{
+				type: 'string',
+				value: '#000000',
+				description: 'Placeholder text.'
+			},
+			presets:
+			{
 				type: 'array',
 				value: [],
-				each: {
-					type: 'string'
-				}
+				each: { type: 'string' },
+				description: 'Preset color swatches.'
 			},
-			disabled: {
-				type: 'boolean'
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				description: 'Background depth.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-2', 'border', 'size-m'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent', 'border', 'size-s', 'size-m', 'size-l']
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
 			},
-			_input: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Picker size.'
 			},
-			_change: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			_input:
+			{
+				type: 'function',
+				description: 'Live input handler. Receives { event, value }.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Commit handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.copied = false;
 			this.hasPresets = this.presets && this.presets.length > 0;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.background, 'size-' + this.size];
+
+				if(this.border)
+				{
+					list.push('border');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.normalize = (value) =>
 			{
@@ -125,7 +178,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const native = event.target.closest('.holder').querySelector('.native');
+				const native = event.target.closest('.box')?.querySelector('.native');
 
 				if(native)
 				{
@@ -176,8 +229,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (disabled ? ' disabled' : '')">
+				<div :class="classes()">
 					<div class="field">
 						<div class="swatch" :style="value ? 'background: ' + value : ''" ot-click="open">
 							<input class="native" type="color" :value="value || '#000000'" ot-input="pick" ot-change="commit" tabindex="-1" :disabled="disabled" />

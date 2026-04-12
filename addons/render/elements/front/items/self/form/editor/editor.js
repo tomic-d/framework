@@ -4,36 +4,86 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-editor',
 		icon: 'edit_note',
 		name: 'Editor',
-		description: 'Premium WYSIWYG editor with toolbar, floating selection bar, slash menu, paste cleanup and clean HTML output.',
+		description: 'WYSIWYG editor with toolbar, floating bar, slash menu and clean HTML output.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			value: {
+		config:
+		{
+			value:
+			{
 				type: 'string',
-				value: ''
+				value: '',
+				description: 'HTML content.'
 			},
-			placeholder: {
+			placeholder:
+			{
 				type: 'string',
-				value: 'Start writing…'
+				value: 'Start writing…',
+				description: 'Placeholder text.'
 			},
-			name: {
+			name:
+			{
 				type: 'string',
-				value: ''
+				value: '',
+				description: 'Hidden input name for forms.'
 			},
-			variant: {
-				type: 'array',
-				value: ['bg-1', 'border', 'size-m', 'floating', 'slash'],
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'compact', 'no-toolbar', 'floating', 'slash', 'size-s', 'size-m', 'size-l']
+			background:
+			{
+				type: 'string',
+				value: 'bg-1',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
 			},
-			_change: {
-				type: 'function'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Editor size.'
+			},
+			border:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show border.'
+			},
+			toolbar:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show fixed toolbar.'
+			},
+			floating:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show floating bar on selection.'
+			},
+			slash:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Enable slash command menu.'
+			},
+			compact:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Tighter padding and shorter height.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { value }.'
 			}
 		},
 		render: function()
 		{
-			this.hasToolbar = !this.variant.includes('no-toolbar');
-			this.hasFloating = this.variant.includes('floating');
-			this.hasSlash = this.variant.includes('slash');
+			/* ===== STATE ===== */
+
+			this.body = null;
+			this.hidden = null;
+			this.floatingEl = null;
+			this.slashEl = null;
 
 			this.tools = [
 				{ cmd: 'bold', icon: 'format_bold', label: 'Bold', shortcut: '⌘B' },
@@ -79,103 +129,96 @@ onetype.AddonReady('elements', (elements) =>
 				{ cmd: 'image', icon: 'image', label: 'Image', description: 'Insert image from URL.' }
 			];
 
-			// ---- HTML cleanup (used on paste and on output) ----
+			/* ===== CLASSES ===== */
 
-			this.cleanHtml = (html) =>
+			this.classes = () =>
 			{
-				const allowed = {
-					P: [], H2: [], H3: [], H4: [],
-					STRONG: [], B: [], EM: [], I: [], U: [], S: [], STRIKE: [], DEL: [],
-					A: ['href'], UL: [], OL: [], LI: [],
-					BLOCKQUOTE: [], PRE: [], CODE: [],
-					BR: [], HR: [], IMG: ['src', 'alt']
-				};
+				const list = ['box', this.background, 'size-' + this.size];
 
-				const build = (node, output) =>
+				if(this.border)
 				{
-					Array.from(node.childNodes).forEach((child) =>
-					{
-						if(child.nodeType === 3)
-						{
-							output.appendChild(document.createTextNode(child.textContent));
-							return;
-						}
+					list.push('border');
+				}
 
-						if(child.nodeType !== 1)
-						{
-							return;
-						}
+				if(this.compact)
+				{
+					list.push('compact');
+				}
 
-						let tag = child.tagName;
+				return list.join(' ');
+			};
 
-						if(tag === 'H1')
-						{
-							tag = 'H2';
-						}
+			/* ===== CLEAN ===== */
 
-						if(tag === 'B' || tag === 'STRONG')
-						{
-							const node = document.createElement('strong');
-							build(child, node);
-							output.appendChild(node);
-							return;
-						}
+			this.allowed = {
+				P: [], H2: [], H3: [], H4: [],
+				STRONG: [], B: [], EM: [], I: [], U: [], S: [], STRIKE: [], DEL: [],
+				A: ['href'], UL: [], OL: [], LI: [],
+				BLOCKQUOTE: [], PRE: [], CODE: [],
+				BR: [], HR: [], IMG: ['src', 'alt']
+			};
 
-						if(tag === 'I' || tag === 'EM')
-						{
-							const node = document.createElement('em');
-							build(child, node);
-							output.appendChild(node);
-							return;
-						}
+			this.normalize = {
+				H1: 'H2',
+				B: 'STRONG',
+				I: 'EM',
+				STRIKE: 'S',
+				DEL: 'S'
+			};
 
-						if(tag === 'STRIKE' || tag === 'DEL')
-						{
-							const node = document.createElement('s');
-							build(child, node);
-							output.appendChild(node);
-							return;
-						}
-
-						if(tag in allowed)
-						{
-							const node = document.createElement(tag);
-							const attrs = allowed[tag];
-
-							attrs.forEach((attr) =>
-							{
-								const value = child.getAttribute(attr);
-
-								if(value)
-								{
-									node.setAttribute(attr, value);
-								}
-							});
-
-							build(child, node);
-							output.appendChild(node);
-							return;
-						}
-
-						build(child, output);
-					});
-				};
-
+			this.clean = (html) =>
+			{
 				const source = document.createElement('div');
 				source.innerHTML = html;
 
 				const target = document.createElement('div');
-				build(source, target);
+				this.walkNodes(source, target);
 
-				let result = target.innerHTML.trim();
-
-				// Strip empty paragraphs
-				result = result.replace(/<p>(\s|&nbsp;|<br>)*<\/p>/g, '');
-
-				return result;
+				return target.innerHTML.trim().replace(/<p>(\s|&nbsp;|<br>)*<\/p>/g, '');
 			};
 
-			// ---- Command execution ----
+			this.walkNodes = (source, target) =>
+			{
+				Array.from(source.childNodes).forEach((child) =>
+				{
+					if(child.nodeType === 3)
+					{
+						target.appendChild(document.createTextNode(child.textContent));
+						return;
+					}
+
+					if(child.nodeType !== 1)
+					{
+						return;
+					}
+
+					const tag = this.normalize[child.tagName] || child.tagName;
+
+					if(!(tag in this.allowed))
+					{
+						this.walkNodes(child, target);
+						return;
+					}
+
+					const node = document.createElement(tag);
+					const attrs = this.allowed[tag];
+
+					attrs.forEach((attr) =>
+					{
+						const value = child.getAttribute(attr);
+
+						if(value)
+						{
+							node.setAttribute(attr, value);
+						}
+					});
+
+					this.walkNodes(child, node);
+					target.appendChild(node);
+				});
+			};
+
+			/* ===== COMMANDS ===== */
 
 			this.exec = async (cmd) =>
 			{
@@ -235,42 +278,40 @@ onetype.AddonReady('elements', (elements) =>
 					const selection = window.getSelection();
 					const text = selection ? selection.toString() : '';
 
-					const url = await $ot.confirm({
-						type: 'default',
+					const url = await $ot.confirm('Insert link', 'Enter the destination URL.', {
 						icon: 'link',
-						title: 'Insert link',
-						description: 'Enter the destination URL.',
-						input: { placeholder: 'https://', value: '' },
-						confirm: 'Insert',
-						cancel: 'Cancel'
+						input: true,
+						placeholder: 'https://',
+						confirm: 'Insert'
 					});
 
 					if(url)
 					{
+						this.body.focus();
+
 						if(text)
 						{
 							document.execCommand('createLink', false, url);
 						}
 						else
 						{
-							document.execCommand('insertHTML', false, `<a href="${url}">${url}</a>`);
+							const safe = url.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+							document.execCommand('insertHTML', false, '<a href="' + safe + '">' + safe + '</a>');
 						}
 					}
 				}
 				else if(cmd === 'image')
 				{
-					const url = await $ot.confirm({
-						type: 'default',
+					const url = await $ot.confirm('Insert image', 'Enter the image URL.', {
 						icon: 'image',
-						title: 'Insert image',
-						description: 'Enter the image URL.',
-						input: { placeholder: 'https://…', value: '' },
-						confirm: 'Insert',
-						cancel: 'Cancel'
+						input: true,
+						placeholder: 'https://…',
+						confirm: 'Insert'
 					});
 
 					if(url)
 					{
+						this.body.focus();
 						document.execCommand('insertImage', false, url);
 					}
 				}
@@ -279,15 +320,15 @@ onetype.AddonReady('elements', (elements) =>
 					document.execCommand(cmd, false, null);
 				}
 
-				this.syncButtons();
+				this.sync();
 				this.emit();
 			};
 
-			// ---- State tracking ----
+			/* ===== STATE TRACKING ===== */
 
-			this.getState = () =>
+			this.state = () =>
 			{
-				const state = {
+				const result = {
 					bold: document.queryCommandState('bold'),
 					italic: document.queryCommandState('italic'),
 					underline: document.queryCommandState('underline'),
@@ -297,57 +338,83 @@ onetype.AddonReady('elements', (elements) =>
 				};
 
 				const block = document.queryCommandValue('formatBlock');
-				state.heading1 = block === 'h2';
-				state.heading2 = block === 'h3';
-				state.heading3 = block === 'h4';
-				state.blockquote = block === 'blockquote';
+				result.heading1 = block === 'h2';
+				result.heading2 = block === 'h3';
+				result.heading3 = block === 'h4';
+				result.blockquote = block === 'blockquote';
 
-				return state;
+				return result;
 			};
 
-			this.syncButtons = () =>
+			this.sync = () =>
 			{
 				if(!this.Element)
 				{
 					return;
 				}
 
-				const state = this.getState();
+				const current = this.state();
 				const buttons = this.Element.querySelectorAll('[data-cmd]');
 
 				buttons.forEach((btn) =>
 				{
 					const cmd = btn.getAttribute('data-cmd');
-					btn.classList.toggle('active', !!(cmd && state[cmd]));
+					btn.classList.toggle('active', !!(cmd && current[cmd]));
 				});
 			};
 
-			// ---- Emit change ----
+			/* ===== EMIT ===== */
 
 			this.emit = () =>
 			{
-				if(!this.body || !this._change)
+				if(!this.body)
 				{
 					return;
 				}
 
-				const clean = this.cleanHtml(this.body.innerHTML);
+				const value = this.clean(this.body.innerHTML);
 
 				if(this.hidden)
 				{
-					this.hidden.value = clean;
+					this.hidden.value = value;
 				}
 
-				this._change({ value: clean });
+				if(this._change)
+				{
+					this._change({ value });
+				}
 			};
 
-			// ---- Floating toolbar ----
+			/* ===== FLOATING BAR ===== */
 
-			this.floatingId = null;
+			this.buildFloating = () =>
+			{
+				const el = document.createElement('div');
+				el.className = 'float';
+
+				this.floatingTools.forEach((tool) =>
+				{
+					const btn = document.createElement('button');
+					btn.type = 'button';
+					btn.className = 'btn';
+					btn.setAttribute('data-cmd', tool.cmd);
+					btn.innerHTML = '<i>' + tool.icon + '</i>';
+
+					btn.addEventListener('mousedown', (event) =>
+					{
+						event.preventDefault();
+						this.exec(tool.cmd);
+					});
+
+					el.appendChild(btn);
+				});
+
+				return el;
+			};
 
 			this.showFloating = () =>
 			{
-				if(!this.hasFloating)
+				if(!this.floating || !this.body)
 				{
 					return;
 				}
@@ -360,7 +427,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				if(!this.body || !this.body.contains(selection.anchorNode))
+				if(!this.body.contains(selection.anchorNode))
 				{
 					return;
 				}
@@ -373,89 +440,58 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				this.hideFloating();
-
-				const anchor = document.createElement('div');
-				anchor.style.position = 'fixed';
-				anchor.style.left = rect.left + rect.width / 2 + 'px';
-				anchor.style.top = rect.top + 'px';
-				anchor.style.width = '1px';
-				anchor.style.height = '1px';
-				anchor.style.pointerEvents = 'none';
-				document.body.appendChild(anchor);
-
-				this.floatingAnchor = anchor;
-
-				const tools = this.floatingTools;
-
-				const id = $ot.popup.open(anchor, function()
+				if(!this.floatingEl)
 				{
-					this.click = (cmd) =>
-					{
-						this.Destroy();
-					};
+					this.floatingEl = this.buildFloating();
+					this.Element.querySelector('.box').appendChild(this.floatingEl);
+				}
 
-					return /* html */ `
-						<div class="e-45c96e98-float">
-							${tools.map((tool) => `
-								<button type="button" class="btn" data-cmd="${tool.cmd}">
-									<i>${tool.icon}</i>
-								</button>
-							`).join('')}
-						</div>
-					`;
-				}, {
-					position: { x: 'center', y: 'top' },
-					offset: { x: 0, y: -8 },
-					closeable: false
-				});
+				const box = this.Element.querySelector('.box').getBoundingClientRect();
 
-				this.floatingId = id;
-
-				// Delegate button clicks
-				setTimeout(() =>
-				{
-					const overlay = document.querySelector('[data-overlay-id="' + id + '"]');
-
-					if(overlay)
-					{
-						overlay.addEventListener('mousedown', (event) =>
-						{
-							const btn = event.target.closest('[data-cmd]');
-
-							if(btn)
-							{
-								event.preventDefault();
-								const cmd = btn.getAttribute('data-cmd');
-								this.exec(cmd);
-							}
-						});
-					}
-				}, 0);
+				this.floatingEl.style.left = (rect.left + rect.width / 2 - box.left) + 'px';
+				this.floatingEl.style.top = (rect.top - box.top - 8) + 'px';
+				this.floatingEl.style.display = 'flex';
 			};
 
 			this.hideFloating = () =>
 			{
-				if(this.floatingId)
+				if(this.floatingEl)
 				{
-					$ot.popup.close(this.floatingId);
-					this.floatingId = null;
-				}
-
-				if(this.floatingAnchor)
-				{
-					this.floatingAnchor.remove();
-					this.floatingAnchor = null;
+					this.floatingEl.style.display = 'none';
 				}
 			};
 
-			// ---- Slash menu ----
+			/* ===== SLASH MENU ===== */
 
-			this.slashId = null;
+			this.buildSlash = () =>
+			{
+				const el = document.createElement('div');
+				el.className = 'slash';
+
+				this.slashItems.forEach((item) =>
+				{
+					const btn = document.createElement('button');
+					btn.type = 'button';
+					btn.className = 'item';
+					btn.innerHTML = '<div class="icon"><i>' + item.icon + '</i></div><div class="text"><div class="label">' + item.label + '</div><div class="desc">' + item.description + '</div></div>';
+
+					btn.addEventListener('mousedown', (event) =>
+					{
+						event.preventDefault();
+						this.removeSlash();
+						this.hideSlash();
+						this.exec(item.cmd);
+					});
+
+					el.appendChild(btn);
+				});
+
+				return el;
+			};
 
 			this.showSlash = () =>
 			{
-				if(!this.hasSlash)
+				if(!this.slash || !this.body)
 				{
 					return;
 				}
@@ -470,83 +506,28 @@ onetype.AddonReady('elements', (elements) =>
 				const range = selection.getRangeAt(0);
 				const rect = range.getBoundingClientRect();
 
-				this.hideSlash();
-
-				const anchor = document.createElement('div');
-				anchor.style.position = 'fixed';
-				anchor.style.left = rect.left + 'px';
-				anchor.style.top = rect.bottom + 'px';
-				anchor.style.width = '1px';
-				anchor.style.height = '1px';
-				anchor.style.pointerEvents = 'none';
-				document.body.appendChild(anchor);
-
-				this.slashAnchor = anchor;
-
-				const items = this.slashItems;
-				const self = this;
-
-				const id = $ot.popup.open(anchor, function()
+				if(!this.slashEl)
 				{
-					return /* html */ `
-						<div class="e-45c96e98-slash">
-							${items.map((item) => `
-								<button type="button" class="item" data-cmd="${item.cmd}">
-									<div class="icon"><i>${item.icon}</i></div>
-									<div class="text">
-										<div class="label">${item.label}</div>
-										<div class="description">${item.description}</div>
-									</div>
-								</button>
-							`).join('')}
-						</div>
-					`;
-				}, {
-					position: { x: 'left-in', y: 'bottom' },
-					offset: { x: 0, y: 8 }
-				});
+					this.slashEl = this.buildSlash();
+					this.Element.querySelector('.box').appendChild(this.slashEl);
+				}
 
-				this.slashId = id;
+				const box = this.Element.querySelector('.box').getBoundingClientRect();
 
-				setTimeout(() =>
-				{
-					const overlay = document.querySelector('[data-overlay-id="' + id + '"]');
-
-					if(overlay)
-					{
-						overlay.addEventListener('mousedown', (event) =>
-						{
-							const btn = event.target.closest('[data-cmd]');
-
-							if(btn)
-							{
-								event.preventDefault();
-								const cmd = btn.getAttribute('data-cmd');
-								self.removeSlashChar();
-								self.hideSlash();
-								self.exec(cmd);
-							}
-						});
-					}
-				}, 0);
+				this.slashEl.style.left = (rect.left - box.left) + 'px';
+				this.slashEl.style.top = (rect.bottom - box.top + 8) + 'px';
+				this.slashEl.style.display = 'flex';
 			};
 
 			this.hideSlash = () =>
 			{
-				if(this.slashId)
+				if(this.slashEl)
 				{
-					$ot.popup.close(this.slashId);
-					this.slashId = null;
-				}
-
-				if(this.slashAnchor)
-				{
-					this.slashAnchor.remove();
-					this.slashAnchor = null;
+					this.slashEl.style.display = 'none';
 				}
 			};
 
-			this.removeSlashChar = () =>
+			this.removeSlash = () =>
 			{
 				const selection = window.getSelection();
 
@@ -565,15 +546,166 @@ onetype.AddonReady('elements', (elements) =>
 					const after = text.substring(range.startOffset);
 					node.textContent = before + after;
 
-					const newRange = document.createRange();
-					newRange.setStart(node, before.length);
-					newRange.collapse(true);
+					const cursor = document.createRange();
+					cursor.setStart(node, before.length);
+					cursor.collapse(true);
 					selection.removeAllRanges();
-					selection.addRange(newRange);
+					selection.addRange(cursor);
 				}
 			};
 
-			// ---- Lifecycle ----
+			/* ===== HANDLERS ===== */
+
+			this.onInput = () =>
+			{
+				if(this.slash)
+				{
+					const selection = window.getSelection();
+
+					if(selection && selection.rangeCount)
+					{
+						const range = selection.getRangeAt(0);
+						const node = range.startContainer;
+
+						if(node.nodeType === 3)
+						{
+							const text = node.textContent.substring(0, range.startOffset);
+
+							if(text.endsWith('/'))
+							{
+								const prev = text.length >= 2 ? text.charAt(text.length - 2) : '';
+
+								if(!prev || prev === ' ' || prev === '\n')
+								{
+									this.showSlash();
+									return;
+								}
+							}
+						}
+					}
+
+					if(this.slashEl && this.slashEl.style.display !== 'none')
+					{
+						this.hideSlash();
+					}
+				}
+
+				this.emit();
+			};
+
+			this.onPaste = (event) =>
+			{
+				event.preventDefault();
+
+				const html = event.clipboardData.getData('text/html');
+				const text = event.clipboardData.getData('text/plain');
+
+				let content;
+
+				if(html)
+				{
+					content = this.clean(html);
+				}
+				else
+				{
+					const safe = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+					content = '<p>' + safe.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
+				}
+
+				document.execCommand('insertHTML', false, content);
+			};
+
+			this.onKeydown = (event) =>
+			{
+				const meta = event.metaKey || event.ctrlKey;
+
+				if(meta && event.key === 'b')
+				{
+					event.preventDefault();
+					this.exec('bold');
+					return;
+				}
+
+				if(meta && event.key === 'i')
+				{
+					event.preventDefault();
+					this.exec('italic');
+					return;
+				}
+
+				if(meta && event.key === 'u')
+				{
+					event.preventDefault();
+					this.exec('underline');
+					return;
+				}
+
+				if(meta && event.key === 'k')
+				{
+					event.preventDefault();
+					this.exec('link');
+					return;
+				}
+
+				if(event.key === 'Escape' && this.slashEl && this.slashEl.style.display !== 'none')
+				{
+					event.preventDefault();
+					this.hideSlash();
+					return;
+				}
+
+				if(event.key === 'Enter' && !event.shiftKey)
+				{
+					const block = document.queryCommandValue('formatBlock');
+
+					if(block === 'blockquote')
+					{
+						const selection = window.getSelection();
+
+						if(selection && selection.anchorNode)
+						{
+							const text = selection.anchorNode.textContent || '';
+
+							if(!text.trim())
+							{
+								event.preventDefault();
+								document.execCommand('formatBlock', false, 'p');
+							}
+						}
+					}
+				}
+			};
+
+			this.onSelection = () =>
+			{
+				if(!this.body)
+				{
+					return;
+				}
+
+				const selection = window.getSelection();
+
+				if(!selection || !selection.anchorNode || !this.body.contains(selection.anchorNode))
+				{
+					return;
+				}
+
+				this.sync();
+
+				if(this.floating)
+				{
+					if(!selection.isCollapsed && selection.toString().trim())
+					{
+						this.showFloating();
+					}
+					else
+					{
+						this.hideFloating();
+					}
+				}
+			};
+
+			/* ===== LIFECYCLE ===== */
 
 			this.OnReady(() =>
 			{
@@ -590,192 +722,53 @@ onetype.AddonReady('elements', (elements) =>
 					this.body.innerHTML = this.value;
 				}
 
-				// Toolbar clicks (fixed toolbar)
-				this.Element.querySelectorAll('.toolbar [data-cmd]').forEach((btn) =>
+				/* Toolbar clicks */
+				this.Element.querySelectorAll('.bar [data-cmd]').forEach((btn) =>
 				{
 					btn.addEventListener('mousedown', (event) =>
 					{
 						event.preventDefault();
-						const cmd = btn.getAttribute('data-cmd');
-						this.exec(cmd);
+						this.exec(btn.getAttribute('data-cmd'));
 					});
 				});
 
-				// Body input
-				this.body.addEventListener('input', () =>
-				{
-					// Slash menu trigger
-					if(this.hasSlash)
-					{
-						const selection = window.getSelection();
+				/* Body events */
+				this.body.addEventListener('input', this.onInput);
+				this.body.addEventListener('paste', this.onPaste);
+				this.body.addEventListener('keydown', this.onKeydown);
 
-						if(selection && selection.rangeCount)
-						{
-							const range = selection.getRangeAt(0);
-							const node = range.startContainer;
+				/* Selection tracking */
+				document.addEventListener('selectionchange', this.onSelection);
 
-							if(node.nodeType === 3)
-							{
-								const text = node.textContent.substring(0, range.startOffset);
-
-								if(text.endsWith('/'))
-								{
-									// Only trigger if slash is at start of block or after space/newline
-									const char = text.length >= 2 ? text.charAt(text.length - 2) : '';
-
-									if(!char || char === ' ' || char === '\n')
-									{
-										this.showSlash();
-									}
-								}
-								else if(this.slashId)
-								{
-									this.hideSlash();
-								}
-							}
-						}
-					}
-
-					this.emit();
-				});
-
-				// Paste cleanup
-				this.body.addEventListener('paste', (event) =>
-				{
-					event.preventDefault();
-
-					const html = event.clipboardData.getData('text/html');
-					const text = event.clipboardData.getData('text/plain');
-
-					let content;
-
-					if(html)
-					{
-						content = this.cleanHtml(html);
-					}
-					else
-					{
-						const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-						content = '<p>' + escaped.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
-					}
-
-					document.execCommand('insertHTML', false, content);
-				});
-
-				// Keyboard shortcuts + special keys
-				this.body.addEventListener('keydown', (event) =>
-				{
-					const meta = event.metaKey || event.ctrlKey;
-
-					if(meta && event.key === 'b')
-					{
-						event.preventDefault();
-						this.exec('bold');
-						return;
-					}
-
-					if(meta && event.key === 'i')
-					{
-						event.preventDefault();
-						this.exec('italic');
-						return;
-					}
-
-					if(meta && event.key === 'u')
-					{
-						event.preventDefault();
-						this.exec('underline');
-						return;
-					}
-
-					if(meta && event.key === 'k')
-					{
-						event.preventDefault();
-						this.exec('link');
-						return;
-					}
-
-					// Escape closes slash menu
-					if(event.key === 'Escape' && this.slashId)
-					{
-						event.preventDefault();
-						this.hideSlash();
-						return;
-					}
-
-					// Enter inside blockquote/heading exits to paragraph on double enter
-					if(event.key === 'Enter' && !event.shiftKey)
-					{
-						const block = document.queryCommandValue('formatBlock');
-
-						if(block === 'blockquote')
-						{
-							const selection = window.getSelection();
-
-							if(selection && selection.anchorNode)
-							{
-								const text = selection.anchorNode.textContent || '';
-
-								if(!text.trim())
-								{
-									event.preventDefault();
-									document.execCommand('formatBlock', false, 'p');
-								}
-							}
-						}
-					}
-				});
-
-				// Selection tracking for active buttons + floating toolbar
-				const onSelection = () =>
-				{
-					if(!this.body)
-					{
-						return;
-					}
-
-					const selection = window.getSelection();
-
-					if(!selection || !selection.anchorNode || !this.body.contains(selection.anchorNode))
-					{
-						return;
-					}
-
-					this.syncButtons();
-
-					if(this.hasFloating)
-					{
-						if(!selection.isCollapsed && selection.toString().trim())
-						{
-							this.showFloating();
-						}
-						else
-						{
-							this.hideFloating();
-						}
-					}
-				};
-
-				document.addEventListener('selectionchange', onSelection);
-
-				this.OnDestroy(() =>
-				{
-					document.removeEventListener('selectionchange', onSelection);
-					this.hideFloating();
-					this.hideSlash();
-				});
-
+				/* Blur — hide floating after click resolves */
 				this.body.addEventListener('blur', () =>
 				{
-					// Keep floating until click resolves
 					setTimeout(() => this.hideFloating(), 150);
+				});
+
+				/* Click outside slash */
+				document.addEventListener('mousedown', (event) =>
+				{
+					if(this.slashEl && this.slashEl.style.display !== 'none' && !this.slashEl.contains(event.target))
+					{
+						this.hideSlash();
+					}
 				});
 			});
 
+			this.OnDestroy(() =>
+			{
+				document.removeEventListener('selectionchange', this.onSelection);
+				this.hideFloating();
+				this.hideSlash();
+			});
+
+			/* ===== RENDER ===== */
+
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ')">
+				<div :class="classes()">
 					<input ot-if="name" class="hidden" type="hidden" :name="name" :value="value" />
-					<div ot-if="hasToolbar" class="toolbar">
+					<div ot-if="toolbar" class="bar">
 						<div ot-for="tool in tools">
 							<div ot-if="tool.sep" class="sep"></div>
 							<button ot-if="!tool.sep" type="button" class="btn" :data-cmd="tool.cmd" :title="tool.label + (tool.shortcut ? ' (' + tool.shortcut + ')' : '')">
@@ -783,8 +776,7 @@ onetype.AddonReady('elements', (elements) =>
 							</button>
 						</div>
 					</div>
-
-					<div class="content">
+					<div class="area">
 						<div class="body" contenteditable="true" :data-placeholder="placeholder"></div>
 					</div>
 				</div>

@@ -4,60 +4,119 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'form-rating',
 		icon: 'star',
 		name: 'Rating',
-		description: 'Premium star rating with half-stars, custom icon, label and review count.',
+		description: 'Star rating with half-stars, custom icon, label and review count.',
 		category: 'Form',
-		author: 'OneType',
-		config: {
-			label: {
-				type: 'string'
+		config:
+		{
+			label:
+			{
+				type: 'string',
+				value: '',
+				description: 'Label above stars.'
 			},
-			description: {
-				type: 'string'
+			description:
+			{
+				type: 'string',
+				value: '',
+				description: 'Description below label.'
 			},
-			value: {
+			value:
+			{
 				type: 'number',
-				value: 0
+				value: 0,
+				description: 'Current rating value.'
 			},
-			max: {
+			max:
+			{
 				type: 'number',
-				value: 5
+				value: 5,
+				description: 'Maximum number of stars.'
 			},
-			precision: {
+			precision:
+			{
 				type: 'number',
 				value: 1,
-				options: [1, 0.5]
+				options: [1, 0.5],
+				description: 'Rating step. 1 for full, 0.5 for half.'
 			},
-			icon: {
+			icon:
+			{
 				type: 'string',
-				value: 'star'
+				value: 'star',
+				description: 'Icon name for each star.'
 			},
-			count: {
-				type: 'number'
+			count:
+			{
+				type: 'number',
+				description: 'Review count shown after stars.'
 			},
-			showValue: {
-				type: 'boolean'
+			showValue:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Show numeric value after stars.'
 			},
-			readonly: {
-				type: 'boolean'
+			color:
+			{
+				type: 'string',
+				value: 'brand',
+				options: ['brand', 'blue', 'red', 'orange', 'green'],
+				description: 'Fill color for active stars.'
 			},
-			disabled: {
-				type: 'boolean'
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Star size.'
 			},
-			variant: {
-				type: 'array',
-				value: ['brand', 'size-m'],
-				options: ['brand', 'blue', 'red', 'orange', 'green', 'size-s', 'size-m', 'size-l']
+			readonly:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Display only, no interaction.'
 			},
-			_change: {
-				type: 'function'
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { event, value }.'
 			}
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.hover = null;
 			this.hasInfo = !!this.label || !!this.description;
 			this.hasMeta = this.showValue || this.count != null;
 			this.locked = this.readonly || this.disabled;
+
+			/* ===== CLASSES ===== */
+
+			this.classes = () =>
+			{
+				const list = ['box', this.color, 'size-' + this.size];
+
+				if(this.readonly)
+				{
+					list.push('readonly');
+				}
+
+				if(this.disabled)
+				{
+					list.push('disabled');
+				}
+
+				return list.join(' ');
+			};
+
+			/* ===== HELPERS ===== */
 
 			this.stars = () =>
 			{
@@ -107,6 +166,18 @@ onetype.AddonReady('elements', (elements) =>
 					};
 				});
 			};
+
+			this.formatValue = (value) =>
+			{
+				if(value == null)
+				{
+					return '';
+				}
+
+				return Number(value).toFixed(this.precision === 0.5 ? 1 : 0);
+			};
+
+			/* ===== HANDLERS ===== */
 
 			this.select = (event, index, half) =>
 			{
@@ -168,21 +239,13 @@ onetype.AddonReady('elements', (elements) =>
 				this.hover = null;
 			};
 
-			this.formatValue = (value) =>
-			{
-				if(value == null)
-				{
-					return '';
-				}
-
-				return Number(value).toFixed(this.precision === 0.5 ? 1 : 0);
-			};
+			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<div :class="'holder ' + variant.join(' ') + (readonly ? ' readonly' : '') + (disabled ? ' disabled' : '')">
+				<div :class="classes()">
 					<div ot-if="hasInfo" class="info">
 						<span ot-if="label" class="label">{{ label }}</span>
-						<span ot-if="description" class="description">{{ description }}</span>
+						<span ot-if="description" class="text">{{ description }}</span>
 					</div>
 					<div class="row">
 						<div class="stars" ot-mouse-leave="leave">
