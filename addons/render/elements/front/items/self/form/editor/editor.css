@@ -88,6 +88,7 @@
 
 .e-2248d40 > .box > .area
 {
+	position: relative;
 	padding: var(--ot-spacing-l);
 	width: 100%;
 	border-radius: 0 0 var(--ot-radius-m) var(--ot-radius-m);
@@ -269,6 +270,38 @@
 	margin: 2em 0;
 }
 
+/* Tables */
+
+.e-2248d40 > .box > .area > .body table
+{
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1.5em 0;
+	font-size: var(--ot-size-s);
+}
+
+.e-2248d40 > .box > .area > .body th,
+.e-2248d40 > .box > .area > .body td
+{
+	padding: var(--ot-spacing-s) var(--ot-spacing-m);
+	border: 1px solid var(--ot-bg-2-border);
+	text-align: left;
+	vertical-align: top;
+}
+
+.e-2248d40 > .box > .area > .body thead td,
+.e-2248d40 > .box > .area > .body th
+{
+	font-weight: 600;
+	color: var(--ot-text-1);
+	background: var(--ot-bg-2);
+}
+
+.e-2248d40 > .box > .area > .body td
+{
+	color: var(--ot-text-2);
+}
+
 /* ===== BACKGROUND ===== */
 
 .e-2248d40 > .box.bg-1 { background: var(--ot-bg-1); }
@@ -319,131 +352,3 @@
 .e-2248d40 > .box.compact > .area { padding: var(--ot-spacing-m); }
 .e-2248d40 > .box.compact > .area > .body { min-height: 120px; }
 
-/* ===== FLOATING BAR ===== */
-
-.e-2248d40 > .box > .float
-{
-	position: absolute;
-	display: none;
-	align-items: center;
-	gap: 2px;
-	padding: var(--ot-spacing-x);
-	background: var(--ot-bg-1);
-	border: 1px solid var(--ot-bg-2-border);
-	border-radius: var(--ot-radius-m);
-	box-shadow: var(--ot-shadow-m);
-	z-index: 10;
-	transform: translateX(-50%) translateY(-100%);
-}
-
-.e-2248d40 > .box > .float > .btn
-{
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 30px;
-	height: 30px;
-	padding: 0;
-	background: transparent;
-	border: none;
-	border-radius: var(--ot-radius-s);
-	color: var(--ot-text-2);
-	cursor: pointer;
-	outline: none;
-	transition: background var(--ot-transition-fast), color var(--ot-transition-fast);
-}
-
-.e-2248d40 > .box > .float > .btn:hover
-{
-	background: var(--ot-bg-2);
-	color: var(--ot-text-1);
-}
-
-.e-2248d40 > .box > .float > .btn > i
-{
-	font-size: 18px;
-}
-
-/* ===== SLASH MENU ===== */
-
-.e-2248d40 > .box > .slash
-{
-	position: absolute;
-	display: none;
-	flex-direction: column;
-	min-width: 280px;
-	max-width: 320px;
-	padding: var(--ot-spacing-x);
-	background: var(--ot-bg-1);
-	border: 1px solid var(--ot-bg-2-border);
-	border-radius: var(--ot-radius-m);
-	box-shadow: var(--ot-shadow-l);
-	max-height: 340px;
-	overflow-y: auto;
-	z-index: 10;
-}
-
-.e-2248d40 > .box > .slash > .item
-{
-	display: flex;
-	align-items: center;
-	gap: var(--ot-spacing-s);
-	width: 100%;
-	padding: var(--ot-spacing-s);
-	background: transparent;
-	border: none;
-	border-radius: var(--ot-radius-s);
-	text-align: left;
-	cursor: pointer;
-	outline: none;
-	transition: background var(--ot-transition-fast);
-}
-
-.e-2248d40 > .box > .slash > .item:hover
-{
-	background: var(--ot-bg-2);
-}
-
-.e-2248d40 > .box > .slash > .item > .icon
-{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	width: 36px;
-	height: 36px;
-	background: var(--ot-bg-2);
-	border: 1px solid var(--ot-bg-2-border);
-	border-radius: var(--ot-radius-s);
-	color: var(--ot-text-1);
-}
-
-.e-2248d40 > .box > .slash > .item > .icon > i
-{
-	font-size: 18px;
-}
-
-.e-2248d40 > .box > .slash > .item > .text
-{
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-	min-width: 0;
-	flex: 1;
-}
-
-.e-2248d40 > .box > .slash > .item > .text > .label
-{
-	font-family: var(--ot-font-primary);
-	font-size: var(--ot-size-m);
-	font-weight: 600;
-	color: var(--ot-text-1);
-}
-
-.e-2248d40 > .box > .slash > .item > .text > .desc
-{
-	font-family: var(--ot-font-primary);
-	font-size: var(--ot-size-s);
-	color: var(--ot-text-3);
-	line-height: 1.3;
-}

@@ -97,8 +97,6 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			const path = onetype.RouteCurrent();
-
 			this.isActive = (item) =>
 			{
 				const match = item.match || item.href;
@@ -110,10 +108,10 @@ onetype.AddonReady('elements', (elements) =>
 
 				if(match === '/')
 				{
-					return path === '/';
+					return this.path === '/';
 				}
 
-				return path.startsWith(match);
+				return this.path.startsWith(match);
 			};
 
 			this.compute = (groups) =>
@@ -126,8 +124,12 @@ onetype.AddonReady('elements', (elements) =>
 					}));
 			};
 
-			this.top = this.compute(this.groups.filter(group => (group.placement || 'top') === 'top'));
-			this.bottom = this.compute(this.groups.filter(group => group.placement === 'bottom'));
+			this.Compute(() =>
+			{
+				this.path = onetype.RouteCurrent();
+				this.top = this.compute(this.groups.filter(group => (group.placement || 'top') === 'top'));
+				this.bottom = this.compute(this.groups.filter(group => group.placement === 'bottom'));
+			});
 
 			/* ===== CLASSES ===== */
 

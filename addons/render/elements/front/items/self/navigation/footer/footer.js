@@ -156,15 +156,19 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.hasTopSlot = !!this.Slots.top;
 			this.hasBottomSlot = !!this.Slots.bottom;
-			this.hasLogo = !!this.logo;
-			this.hasTagline = !!this.tagline;
-			this.hasGroups = this.groups && this.groups.length > 0;
-			this.hasSocial = this.social && this.social.length > 0;
-			this.hasLegal = this.legal && this.legal.length > 0;
-			this.hasCopyright = !!this.copyright;
-			this.hasBottomBar = this.hasLegal || this.hasCopyright || this.hasSocial;
-			this.hasNewsletter = !!this.newsletter;
 			this.newsletterEmail = '';
+
+			this.Compute(() =>
+			{
+				this.hasLogo = !!this.logo;
+				this.hasTagline = !!this.tagline;
+				this.hasGroups = this.groups && this.groups.length > 0;
+				this.hasSocial = this.social && this.social.length > 0;
+				this.hasLegal = this.legal && this.legal.length > 0;
+				this.hasCopyright = !!this.copyright;
+				this.hasBottomBar = this.hasLegal || this.hasCopyright || this.hasSocial;
+				this.hasNewsletter = !!this.newsletter;
+			});
 
 			/* ===== CLASSES ===== */
 

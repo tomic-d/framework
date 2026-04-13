@@ -236,20 +236,23 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasCover = !!this.cover || !!this.coverIcon;
-			this.hasHeader = !!this.icon || !!this.eyebrow || !!this.title || !!this.description || !!this.badge;
-			this.hasStats = this.value !== undefined && this.value !== '' && this.value !== null;
-			this.hasMeta = this.meta && this.meta.length > 0;
-			this.hasTags = this.tags && this.tags.length > 0;
-			this.hasAction = !!this.action;
-			this.isClickable = !!this.href || !!this._click;
-			this.tag = this.href ? 'a' : 'div';
+			this.Compute(() =>
+			{
+				this.hasCover = !!this.cover || !!this.coverIcon;
+				this.hasHeader = !!this.icon || !!this.eyebrow || !!this.title || !!this.description || !!this.badge;
+				this.hasStats = this.value !== undefined && this.value !== '' && this.value !== null;
+				this.hasMeta = this.meta && this.meta.length > 0;
+				this.hasTags = this.tags && this.tags.length > 0;
+				this.hasAction = !!this.action;
+				this.isClickable = !!this.href || !!this._click;
+				this.tag = this.href ? 'a' : 'div';
 
-			this.deltaIcon = this.deltaDirection === 'up'
-				? 'trending_up'
-				: this.deltaDirection === 'down'
-					? 'trending_down'
-					: 'trending_flat';
+				this.deltaIcon = this.deltaDirection === 'up'
+					? 'trending_up'
+					: this.deltaDirection === 'down'
+						? 'trending_down'
+						: 'trending_flat';
+			});
 
 			/* ===== CLASSES ===== */
 

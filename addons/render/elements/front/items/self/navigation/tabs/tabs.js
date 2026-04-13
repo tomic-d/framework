@@ -79,7 +79,18 @@ onetype.AddonReady('elements', (elements) =>
 				this.active = this.items[0].id;
 			}
 
-			this.hasContent = this.items.some(item => item.content);
+			this.Compute(() =>
+			{
+				this.hasContent = this.items.some(item => item.content);
+
+				this.panels = this.items
+					.filter(item => item.content)
+					.map(item =>
+					{
+						return '<div class="panel' + (this.active === item.id ? ' active' : '') + '" data-panel="' + item.id + '">' + item.content + '</div>';
+					})
+					.join('');
+			});
 
 			/* ===== CLASSES ===== */
 
@@ -123,14 +134,6 @@ onetype.AddonReady('elements', (elements) =>
 			};
 
 			/* ===== RENDER ===== */
-
-			this.panels = this.items
-				.filter(item => item.content)
-				.map(item =>
-				{
-					return '<div class="panel' + (this.active === item.id ? ' active' : '') + '" data-panel="' + item.id + '">' + item.content + '</div>';
-				})
-				.join('');
 
 			return /* html */ `
 				<div :class="classes()">

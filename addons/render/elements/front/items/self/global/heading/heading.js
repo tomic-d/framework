@@ -66,8 +66,11 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasRight = !!this.Slots.right;
-			this.hasBottom = !!this.Slots.bottom;
+			this.Compute(() =>
+			{
+				this.hasRight = !!this.Slots.right;
+				this.hasBottom = !!this.Slots.bottom;
+			});
 
 			/* ===== CLASSES ===== */
 

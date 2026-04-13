@@ -132,6 +132,12 @@ onetype.AddonReady('elements', (elements) =>
 			this.rightSearch = '';
 			this.loading = false;
 
+			this.Compute(() =>
+			{
+				this.totalCount = this.items.length;
+				this.maxLabel = this.max ? this.max : this.items.length;
+			});
+
 			/* ===== ASYNC ITEMS ===== */
 
 			if(typeof this.items === 'function')
@@ -420,8 +426,6 @@ onetype.AddonReady('elements', (elements) =>
 				this.selectedList = state.selectedFiltered;
 				this.availableCount = state.available.length;
 				this.selectedCount = state.selected.length;
-				this.totalCount = this.items.length;
-				this.maxLabel = this.max ? this.max : this.items.length;
 			};
 
 			this.sync();

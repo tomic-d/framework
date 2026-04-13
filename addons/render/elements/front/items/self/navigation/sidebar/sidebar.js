@@ -94,67 +94,68 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			const path = onetype.RouteCurrent();
-
-			this.isActive = (item) =>
+			this.Compute(() =>
 			{
-				if(item.soon || item.disabled)
+				const path = onetype.RouteCurrent();
+
+				this.isActive = (item) =>
 				{
-					return false;
-				}
+					if(item.soon || item.disabled)
+					{
+						return false;
+					}
 
-				if(item.value && this.active)
+					if(item.value && this.active)
+					{
+						return item.value === this.active;
+					}
+
+					if(item.match)
+					{
+						return path === item.match;
+					}
+
+					if(!item.href)
+					{
+						return false;
+					}
+
+					if(item.href === '/')
+					{
+						return path === '/';
+					}
+
+					return path.startsWith(item.href);
+				};
+
+				this.annotate = (groups) =>
 				{
-					return item.value === this.active;
-				}
+					return (groups || [])
+						.filter(group => group.items && group.items.length)
+						.map(group => ({
+							...group,
+							items: group.items.map(item => ({ ...item, active: this.isActive(item) }))
+						}));
+				};
 
-				if(item.match)
+				this.top = this.annotate(this.groups.filter(group => (group.placement || 'top') === 'top'));
+				this.bottom = this.annotate(this.groups.filter(group => group.placement === 'bottom'));
+
+				this.hasHead = !!this.title || !!this.subtitle || !!this.version || !!this.Slots.top;
+				this.hasFoot = !!this.Slots.bottom;
+
+				this.classes = () =>
 				{
-					return path === item.match;
-				}
+					const list = ['box', this.background];
 
-				if(!item.href)
-				{
-					return false;
-				}
+					this.variant.forEach(v =>
+					{
+						list.push(v);
+					});
 
-				if(item.href === '/')
-				{
-					return path === '/';
-				}
-
-				return path.startsWith(item.href);
-			};
-
-			this.annotate = (groups) =>
-			{
-				return (groups || [])
-					.filter(group => group.items && group.items.length)
-					.map(group => ({
-						...group,
-						items: group.items.map(item => ({ ...item, active: this.isActive(item) }))
-					}));
-			};
-
-			this.top = this.annotate(this.groups.filter(group => (group.placement || 'top') === 'top'));
-			this.bottom = this.annotate(this.groups.filter(group => group.placement === 'bottom'));
-
-			this.hasHead = !!this.title || !!this.subtitle || !!this.version || !!this.Slots.top;
-			this.hasFoot = !!this.Slots.bottom;
-
-			/* ===== CLASSES ===== */
-
-			this.classes = () =>
-			{
-				const list = ['box', this.background];
-
-				this.variant.forEach(v =>
-				{
-					list.push(v);
-				});
-
-				return list.join(' ');
-			};
+					return list.join(' ');
+				};
+			});
 
 			/* ===== HANDLERS ===== */
 

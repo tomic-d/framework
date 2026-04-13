@@ -123,38 +123,41 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasHead = !!this.title || !!this.description;
-			this.hasCenter = !!this.center && (!!this.center.label || this.center.value !== undefined);
-
-			const palette = ['brand', 'blue', 'green', 'orange', 'red'];
-			const radius = 100 - this.thickness / 2 - 2;
-			const circumference = 2 * Math.PI * radius;
-			const total = this.items.reduce((sum, item) => sum + (item.value || 0), 0) || 1;
-
-			let offset = 0;
-
-			this.segments = this.items.map((item, index) =>
+			this.Compute(() =>
 			{
-				const value = item.value || 0;
-				const percent = (value / total) * 100;
-				const dash = (value / total) * circumference;
-				const gap = circumference - dash;
-				const color = item.color || palette[index % palette.length];
+				this.hasHead = !!this.title || !!this.description;
+				this.hasCenter = !!this.center && (!!this.center.label || this.center.value !== undefined);
 
-				const segment = {
-					index,
-					value,
-					label: item.label || '',
-					color,
-					percent: Math.round(percent * 10) / 10,
-					dash,
-					gap,
-					offset: -offset
-				};
+				const palette = ['brand', 'blue', 'green', 'orange', 'red'];
+				const radius = 100 - this.thickness / 2 - 2;
+				const circumference = 2 * Math.PI * radius;
+				const total = this.items.reduce((sum, item) => sum + (item.value || 0), 0) || 1;
 
-				offset += dash;
+				let offset = 0;
 
-				return segment;
+				this.segments = this.items.map((item, index) =>
+				{
+					const value = item.value || 0;
+					const percent = (value / total) * 100;
+					const dash = (value / total) * circumference;
+					const gap = circumference - dash;
+					const color = item.color || palette[index % palette.length];
+
+					const segment = {
+						index,
+						value,
+						label: item.label || '',
+						color,
+						percent: Math.round(percent * 10) / 10,
+						dash,
+						gap,
+						offset: -offset
+					};
+
+					offset += dash;
+
+					return segment;
+				});
 			});
 
 			/* ===== CLASSES ===== */

@@ -365,61 +365,64 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.visibleColumns = this.columns.filter(column => !column.hidden);
-			this.hasHead = !!this.title || !!this.icon || !!this.description || !!this.Slots.actions;
-			this.hasActions = this.actions && this.actions.length > 0;
-			this.hasPagination = !!this.pagination;
-			this.hasToolbar = this.search.enabled;
-			this.isLoading = !!this.loading.enabled;
-			this.loadingSkeleton = Array.from({ length: this.loading.rows || 6 }, (_, index) => index);
-
-			this.template = (() =>
+			this.Compute(() =>
 			{
-				const parts = this.visibleColumns.map(column => column.width || '1fr');
+				this.visibleColumns = this.columns.filter(column => !column.hidden);
+				this.hasHead = !!this.title || !!this.icon || !!this.description || !!this.Slots.actions;
+				this.hasActions = this.actions && this.actions.length > 0;
+				this.hasPagination = !!this.pagination;
+				this.hasToolbar = this.search.enabled;
+				this.isLoading = !!this.loading.enabled;
+				this.loadingSkeleton = Array.from({ length: this.loading.rows || 6 }, (_, index) => index);
 
-				if(this.hasActions)
+				this.template = (() =>
 				{
-					parts.push('60px');
-				}
+					const parts = this.visibleColumns.map(column => column.width || '1fr');
 
-				return parts.join(' ');
-			})();
+					if(this.hasActions)
+					{
+						parts.push('60px');
+					}
 
-			this.headerCells = this.visibleColumns.map(column => ({
-				id: column.id,
-				label: column.label || '',
-				align: column.align || 'left',
-				sortable: column.sortable !== false,
-				isSorted: this.sort.field === column.id,
-				sortIcon: this.sort.field === column.id
-					? (this.sort.direction === 'asc' ? 'arrow_upward' : 'arrow_downward')
-					: 'unfold_more'
-			}));
+					return parts.join(' ');
+				})();
 
-			this.rows = this.items.map((item, index) =>
-			{
-				const key = (item && item.id !== undefined) ? item.id : index;
-				const cells = this.visibleColumns.map(column => ({
-					html: elements.Fn('type.render', column, item),
-					align: column.align || 'left'
+				this.headerCells = this.visibleColumns.map(column => ({
+					id: column.id,
+					label: column.label || '',
+					align: column.align || 'left',
+					sortable: column.sortable !== false,
+					isSorted: this.sort.field === column.id,
+					sortIcon: this.sort.field === column.id
+						? (this.sort.direction === 'asc' ? 'arrow_upward' : 'arrow_downward')
+						: 'unfold_more'
 				}));
 
-				return { key, item, index, cells };
+				this.rows = this.items.map((item, index) =>
+				{
+					const key = (item && item.id !== undefined) ? item.id : index;
+					const cells = this.visibleColumns.map(column => ({
+						html: elements.Fn('type.render', column, item),
+						align: column.align || 'left'
+					}));
+
+					return { key, item, index, cells };
+				});
+
+				this.hasItems = this.rows.length > 0;
+
+				if(this.hasPagination)
+				{
+					const page = this.pagination.page || 1;
+					const size = this.pagination.size || 20;
+					const total = this.pagination.total !== undefined ? this.pagination.total : this.items.length;
+					const pages = Math.max(1, Math.ceil(total / size));
+					const start = total === 0 ? 0 : (page - 1) * size + 1;
+					const end = Math.min(page * size, total);
+
+					this.paginationComputed = { page, size, total, pages, start, end };
+				}
 			});
-
-			this.hasItems = this.rows.length > 0;
-
-			if(this.hasPagination)
-			{
-				const page = this.pagination.page || 1;
-				const size = this.pagination.size || 20;
-				const total = this.pagination.total !== undefined ? this.pagination.total : this.items.length;
-				const pages = Math.max(1, Math.ceil(total / size));
-				const start = total === 0 ? 0 : (page - 1) * size + 1;
-				const end = Math.min(page * size, total);
-
-				this.paginationComputed = { page, size, total, pages, start, end };
-			}
 
 			/* ===== CLASSES ===== */
 
@@ -501,6 +504,7 @@ onetype.AddonReady('elements', (elements) =>
 
 				const popupId = 'data-table-actions-' + row.key;
 				const actions = this.actions;
+				const background = this.background;
 				const item = row.item;
 				const index = row.index;
 				const emit = this._action;
@@ -508,6 +512,7 @@ onetype.AddonReady('elements', (elements) =>
 				$ot.popup(event.target, function()
 				{
 					this.actions = actions;
+					this.background = background;
 
 					this.onSelect = ({ value }) =>
 					{
@@ -536,6 +541,7 @@ onetype.AddonReady('elements', (elements) =>
 						<e-global-menu
 							:items="actions"
 							:_select="onSelect"
+							:background="background"
 						></e-global-menu>
 					`;
 				}, {

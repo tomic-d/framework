@@ -99,9 +99,12 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasInfo = !!this.label || !!this.description;
-			this.hasIcon = !!this.icon;
-			this.hasCount = this.count !== undefined && this.count !== null && this.count !== '';
+			this.Compute(() =>
+			{
+				this.hasInfo = !!this.label || !!this.description;
+				this.hasIcon = !!this.icon;
+				this.hasCount = this.count !== undefined && this.count !== null && this.count !== '';
+			});
 
 			/* ===== CLASSES ===== */
 

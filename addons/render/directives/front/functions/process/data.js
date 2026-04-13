@@ -1,6 +1,7 @@
 directives.Fn('process.data', function(attributes, node, compile)
 {
     const data = {};
+    const tag = node.tagName ? node.tagName.toLowerCase() : 'text';
 
     Object.entries(attributes).forEach(([name, definition]) =>
     {
@@ -16,17 +17,17 @@ directives.Fn('process.data', function(attributes, node, compile)
         if (find)
         {
             attribute = {
-                original: { name: find.name, value: find.value }, 
+                original: { name: find.name, value: find.value },
                 name: find.name,
                 value: find.value,
                 dynamic: false,
                 modifiers: []
             };
         }
-        else 
+        else
         {
             attribute = {
-                original: { name: name, value: null }, 
+                original: { name: name, value: null },
                 name: name,
                 value: null,
                 dynamic: false,
@@ -50,12 +51,13 @@ directives.Fn('process.data', function(attributes, node, compile)
 
         if(attribute.dynamic)
         {
-            try 
+            try
             {
                 attribute.value = onetype.Function(attribute.value, compile.data, false);
             }
             catch(error)
             {
+                onetype.Error(400, '<:tag:> :attribute: — :reason:', {tag, attribute: attribute.name, reason: error.message, expression: attribute.original.value});
                 attribute.value = null;
             }
         }
@@ -70,11 +72,7 @@ directives.Fn('process.data', function(attributes, node, compile)
                 ? attribute.name + '.' + error.path.join('.').replace(/\.\[/g, '[')
                 : attribute.name;
 
-            onetype.Error(400, 'Directive attribute :path: failed — :reason:', {
-                path,
-                reason: error.message,
-                value: attribute.value
-            });
+            onetype.Error(400, '<:tag:> :path: — :reason:', {tag, path, reason: error.message});
 
             attribute.value = null;
         }

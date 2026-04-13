@@ -177,9 +177,12 @@ onetype.AddonReady('elements', (elements) =>
 				return slash !== -1 ? clean.substring(slash + 1) : clean;
 			};
 
-			this.isInput = this.mode === 'input';
-			this.url = this.value.length > 0 ? this.value[0] : '';
-			this.hasPreview = this.url && this.isImage(this.url);
+			this.Compute(() =>
+			{
+				this.isInput = this.mode === 'input';
+				this.url = this.value.length > 0 ? this.value[0] : '';
+				this.hasPreview = this.url && this.isImage(this.url);
+			});
 
 			/* ===== CLASSES ===== */
 

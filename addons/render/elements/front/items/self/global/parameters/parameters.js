@@ -210,7 +210,10 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* ===== RENDER ===== */
 
-			this.html = this.items.map(item => this.renderItem(item, 0)).join('');
+			this.Compute(() =>
+			{
+				this.html = this.items.map(item => this.renderItem(item, 0)).join('');
+			});
 
 			return /* html */ `
 				<div :class="classes()">

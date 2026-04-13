@@ -52,7 +52,10 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.html = this.content ? onetype.Markdown(this.content) : '';
+			this.Compute(() =>
+			{
+				this.html = this.content ? onetype.Markdown(this.content) : '';
+			});
 
 			/* ===== CLASSES ===== */
 

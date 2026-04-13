@@ -153,12 +153,15 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasCover = !!this.cover;
-			this.hasTags = this.tags && this.tags.length > 0;
-			this.hasStats = this.stats && this.stats.length > 0;
-			this.hasSocials = this.socials && this.socials.length > 0;
-			this.hasActions = !!this.Slots.actions;
-			this.hasFollow = !this.hasActions && !!this._follow;
+			this.Compute(() =>
+			{
+				this.hasCover = !!this.cover;
+				this.hasTags = this.tags && this.tags.length > 0;
+				this.hasStats = this.stats && this.stats.length > 0;
+				this.hasSocials = this.socials && this.socials.length > 0;
+				this.hasActions = !!this.Slots.actions;
+				this.hasFollow = !this.hasActions && !!this._follow;
+			});
 
 			/* ===== CLASSES ===== */
 

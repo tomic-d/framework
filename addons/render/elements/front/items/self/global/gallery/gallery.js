@@ -83,38 +83,42 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.normalized = this.images.map((image, index) =>
+			this.Compute(() =>
 			{
-				if(typeof image === 'string')
+				this.normalized = this.images.map((image, index) =>
 				{
-					return { src: image, alt: '', caption: '', thumb: image, index };
-				}
+					if(typeof image === 'string')
+					{
+						return { src: image, alt: '', caption: '', thumb: image, index };
+					}
 
-				return {
-					src: image.src || '',
-					alt: image.alt || '',
-					caption: image.caption || '',
-					thumb: image.thumb || image.src || '',
-					index
-				};
+					return {
+						src: image.src || '',
+						alt: image.alt || '',
+						caption: image.caption || '',
+						thumb: image.thumb || image.src || '',
+						index
+					};
+				});
+
+				this.total = this.normalized.length;
+				this.hero = this.normalized[0] || null;
+				this.thumbs = this.normalized.slice(1, this.maxVisible);
+				this.remaining = Math.max(0, this.total - this.maxVisible);
+				this.hasThumbs = this.thumbs.length > 0;
+				this.hasHero = !!this.hero;
+				this.gridImages = this.normalized;
+
+				this.isBento = this.layout === 'bento';
+				this.isGrid = this.layout === 'grid';
+				this.isCarousel = this.layout === 'carousel';
+
+				this.gridStyle = `grid-template-columns: repeat(${this.columns}, minmax(0, 1fr)); gap: ${this.gap}px;`;
+				this.bentoStyle = `gap: ${this.gap}px;`;
 			});
 
-			this.total = this.normalized.length;
-			this.hero = this.normalized[0] || null;
-			this.thumbs = this.normalized.slice(1, this.maxVisible);
-			this.remaining = Math.max(0, this.total - this.maxVisible);
-			this.hasThumbs = this.thumbs.length > 0;
-			this.hasHero = !!this.hero;
-			this.gridImages = this.normalized;
 			this.activeIndex = 0;
 			this.activeImage = this.normalized[0] || null;
-
-			this.isBento = this.layout === 'bento';
-			this.isGrid = this.layout === 'grid';
-			this.isCarousel = this.layout === 'carousel';
-
-			this.gridStyle = `grid-template-columns: repeat(${this.columns}, minmax(0, 1fr)); gap: ${this.gap}px;`;
-			this.bentoStyle = `gap: ${this.gap}px;`;
 
 			/* ===== CLASSES ===== */
 

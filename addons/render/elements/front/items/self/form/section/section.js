@@ -71,9 +71,12 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasHeader = !!this.title || !!this.description || !!this.eyebrow || !!this.icon || !!this.Slots.actions;
-			this.hasActions = !!this.Slots.actions;
-			this.isCollapsible = !!this.collapsible && !!this.title;
+			this.Compute(() =>
+			{
+				this.hasHeader = !!this.title || !!this.description || !!this.eyebrow || !!this.icon || !!this.Slots.actions;
+				this.hasActions = !!this.Slots.actions;
+				this.isCollapsible = !!this.collapsible && !!this.title;
+			});
 
 			/* ===== CLASSES ===== */
 

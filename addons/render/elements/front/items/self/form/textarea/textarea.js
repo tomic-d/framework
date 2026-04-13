@@ -126,7 +126,11 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== STATE ===== */
 
 			this.length = (this.value || '').length;
-			this.showCounter = this.counter && this.maxlength > 0;
+
+			this.Compute(() =>
+			{
+				this.showCounter = this.counter && this.maxlength > 0;
+			});
 
 			/* ===== CLASSES ===== */
 

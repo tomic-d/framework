@@ -39,7 +39,20 @@ onetype.AddonReady('directives', function(directives)
 		{
 			if ('otTooltipConfig' in node && node.otTooltipShow)
 			{
-				if (!node.contains(event.relatedTarget))
+				const related = event.relatedTarget;
+
+				/* Skip if mouse moved into the tooltip overlay itself */
+				if (related && node.otTooltipOverlay)
+				{
+					const overlay = node.otTooltipOverlay.Get('element');
+
+					if (overlay && overlay.contains(related))
+					{
+						break;
+					}
+				}
+
+				if (!node.contains(related))
 				{
 					node.otTooltipShow = false;
 
@@ -54,6 +67,53 @@ onetype.AddonReady('directives', function(directives)
 			}
 
 			node = node.parentNode;
+		}
+	});
+
+	/* Close tooltip when mouse leaves the overlay itself */
+	document.addEventListener('mouseout', function(event)
+	{
+		const overlay = event.target.closest('.ot-overlay');
+
+		if (!overlay)
+		{
+			return;
+		}
+
+		const id = overlay.getAttribute('data-id');
+
+		if (!id || !id.startsWith('tooltip-'))
+		{
+			return;
+		}
+
+		const related = event.relatedTarget;
+
+		if (overlay.contains(related))
+		{
+			return;
+		}
+
+		const item = overlays.ItemGet(id);
+
+		if (!item)
+		{
+			return;
+		}
+
+		const target = item.Get('target');
+
+		if (related && target && target.contains(related))
+		{
+			return;
+		}
+
+		item.Remove();
+
+		if (target && 'otTooltipShow' in target)
+		{
+			target.otTooltipShow = false;
+			target.otTooltipOverlay = null;
 		}
 	});
 

@@ -98,51 +98,60 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasSteps = this.steps.length > 0;
-			this.activeStep = this.hasSteps ? this.steps[0].id : '';
-			this.hasSave = !!this.save;
+			this.activeStep = '';
 
-			this.hasConditions = (() =>
+			this.Compute(() =>
 			{
-				const scan = (sections) =>
-				{
-					for(const section of sections)
-					{
-						if(section.condition)
-						{
-							return true;
-						}
+				this.hasSteps = this.steps.length > 0;
+				this.hasSave = !!this.save;
 
-						if(section.fields)
+				if(!this.activeStep && this.hasSteps)
+				{
+					this.activeStep = this.steps[0].id;
+				}
+
+				this.hasConditions = (() =>
+				{
+					const scan = (sections) =>
+					{
+						for(const section of sections)
 						{
-							for(const field of section.fields)
+							if(section.condition)
 							{
-								if(field.condition)
+								return true;
+							}
+
+							if(section.fields)
+							{
+								for(const field of section.fields)
 								{
-									return true;
+									if(field.condition)
+									{
+										return true;
+									}
 								}
 							}
 						}
-					}
 
-					return false;
-				};
+						return false;
+					};
 
-				if(this.hasSteps)
-				{
-					for(const step of this.steps)
+					if(this.hasSteps)
 					{
-						if(scan(step.sections || []))
+						for(const step of this.steps)
 						{
-							return true;
+							if(scan(step.sections || []))
+							{
+								return true;
+							}
 						}
+
+						return false;
 					}
 
-					return false;
-				}
-
-				return scan(this.sections);
-			})();
+					return scan(this.sections);
+				})();
+			});
 
 			/* ===== CLASSES ===== */
 

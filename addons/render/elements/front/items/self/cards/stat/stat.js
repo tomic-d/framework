@@ -155,13 +155,16 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasDelta = !!this.delta && !!this.delta.value;
-			this.hasSparkline = this.sparkline && this.sparkline.length > 1;
-			this.hasIcon = !!this.icon;
-			this.isClickable = !!this.href || !!this._click;
-			this.tag = this.href ? 'a' : 'div';
-			this.deltaDir = this.hasDelta ? (this.delta.direction || 'up') : 'neutral';
-			this.deltaIcon = this.deltaDir === 'up' ? 'trending_up' : (this.deltaDir === 'down' ? 'trending_down' : 'trending_flat');
+			this.Compute(() =>
+			{
+				this.hasDelta = !!this.delta && !!this.delta.value;
+				this.hasSparkline = this.sparkline && this.sparkline.length > 1;
+				this.hasIcon = !!this.icon;
+				this.isClickable = !!this.href || !!this._click;
+				this.tag = this.href ? 'a' : 'div';
+				this.deltaDir = this.hasDelta ? (this.delta.direction || 'up') : 'neutral';
+				this.deltaIcon = this.deltaDir === 'up' ? 'trending_up' : (this.deltaDir === 'down' ? 'trending_down' : 'trending_flat');
+			});
 
 			/* ===== CLASSES ===== */
 

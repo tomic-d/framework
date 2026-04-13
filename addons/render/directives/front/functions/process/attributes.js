@@ -10,6 +10,8 @@ directives.Fn('process.attributes', function(node, compile)
         return;
     }
 
+    const tag = node.tagName.toLowerCase();
+
     node.__attributes.forEach(attribute =>
     {
         if (!attribute.name.startsWith(':'))
@@ -45,7 +47,7 @@ directives.Fn('process.attributes', function(node, compile)
         }
         catch(error)
         {
-            onetype.Error(500, 'Dynamic attribute error.');
+            onetype.Error(500, '<:tag:> :attribute: — :reason:', {tag, attribute: attributeName, reason: error.message, expression});
             node.removeAttribute(attribute.name);
         }
     });

@@ -279,28 +279,29 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.copied = false;
 
-			const raw = (this.source || '').replace(/^\n+|\n+$/g, '');
-			const highlighted = tokenize(raw, this.language);
-			const lines = parseHighlight(this.highlight);
-
-			this.hasHead = !!this.filename || !!this.language || this.copy;
-
-			/* ===== OUTPUT ===== */
-
-			if(this.lines)
+			this.Compute(() =>
 			{
-				this.output = '<div class="numbered">' + highlighted.split('\n').map((line, index) =>
+				const raw = (this.source || '').replace(/^\n+|\n+$/g, '');
+				const highlighted = tokenize(raw, this.language);
+				const lines = parseHighlight(this.highlight);
+
+				this.hasHead = !!this.filename || !!this.language || this.copy;
+
+				if(this.lines)
 				{
-					const number = index + 1;
-					const cls = 'line' + (lines.includes(number) ? ' highlighted' : '');
+					this.output = '<div class="numbered">' + highlighted.split('\n').map((line, index) =>
+					{
+						const number = index + 1;
+						const cls = 'line' + (lines.includes(number) ? ' highlighted' : '');
 
-					return '<div class="' + cls + '"><span class="number">' + number + '</span><span class="code">' + (line || ' ') + '</span></div>';
-				}).join('') + '</div>';
-			}
-			else
-			{
-				this.output = '<span class="plain">' + highlighted + '</span>';
-			}
+						return '<div class="' + cls + '"><span class="number">' + number + '</span><span class="code">' + (line || ' ') + '</span></div>';
+					}).join('') + '</div>';
+				}
+				else
+				{
+					this.output = '<span class="plain">' + highlighted + '</span>';
+				}
+			});
 
 			/* ===== CLASSES ===== */
 
@@ -322,9 +323,11 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.copyCode = () =>
 			{
-				if(navigator.clipboard && raw)
+				const text = (this.source || '').replace(/^\n+|\n+$/g, '');
+
+				if(navigator.clipboard && text)
 				{
-					navigator.clipboard.writeText(raw);
+					navigator.clipboard.writeText(text);
 				}
 
 				this.copied = true;

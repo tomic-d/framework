@@ -39,7 +39,14 @@ onetype.AddonReady('directives', function(directives)
 				}
 				else if(attr.name.startsWith(':'))
 				{
-					attributes.data[toCamel(attr.name.substring(1))] = onetype.Function(attr.value, compile.data, false);
+					try
+					{
+						attributes.data[toCamel(attr.name.substring(1))] = onetype.Function(attr.value, compile.data, false);
+					}
+					catch(error)
+					{
+						onetype.Error(400, '<:tag:> :attribute: — :reason:', {tag: tagName, attribute: attr.name, reason: error.message, expression: attr.value});
+					}
 				}
 				else
 				{
@@ -75,7 +82,6 @@ onetype.AddonReady('directives', function(directives)
 
 			if(render)
 			{
-				render.Element.__otExternal = { render, name: elementName, key, data: attributes.data };
 				node.replaceWith(render.Element);
 			}
 			else

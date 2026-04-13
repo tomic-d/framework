@@ -79,8 +79,12 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== STATE ===== */
 
 			this.closed = false;
-			this.hasActions = !!this.Slots.actions;
-			this.resolvedIcon = this.icon || ICONS[this.color] || 'info';
+
+			this.Compute(() =>
+			{
+				this.hasActions = !!this.Slots.actions;
+				this.resolvedIcon = this.icon || ICONS[this.color] || 'info';
+			});
 
 			/* ===== CLASSES ===== */
 

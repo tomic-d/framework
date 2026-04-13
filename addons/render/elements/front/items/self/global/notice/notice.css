@@ -11,7 +11,7 @@
 {
 	position: relative;
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	gap: var(--ot-spacing-m);
 	width: 100%;
 	padding: var(--ot-spacing-m);

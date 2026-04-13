@@ -2,8 +2,7 @@
 
 .e-435be612
 {
-	display: block;
-	width: 100%;
+	display: contents;
 }
 
 /* Box */
@@ -13,6 +12,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	height: 100%;
 	border: 1px solid transparent;
 	border-radius: var(--ot-radius-m);
 	overflow: hidden;
@@ -39,6 +39,20 @@
 .e-435be612 > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-435be612 > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
 .e-435be612 > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
+
+/* ===== BORDER-LEFT ===== */
+
+.e-435be612 > .box.border-left
+{
+	border: none;
+	border-left: 1px solid var(--ot-bg-2-border);
+	border-radius: 0;
+}
+
+.e-435be612 > .box.bg-1.border-left { border-left-color: var(--ot-bg-1-border); }
+.e-435be612 > .box.bg-2.border-left { border-left-color: var(--ot-bg-2-border); }
+.e-435be612 > .box.bg-3.border-left { border-left-color: var(--ot-bg-3-border); }
+.e-435be612 > .box.bg-4.border-left { border-left-color: var(--ot-bg-4-border); }
 
 /* ===== MODIFIERS ===== */
 
@@ -152,7 +166,8 @@
 	display: flex;
 	align-items: center;
 	gap: 6px;
-	padding: var(--ot-spacing-m) var(--ot-spacing-m) var(--ot-spacing-s);
+	height: 44px;
+	padding: 0 var(--ot-spacing-m);
 	user-select: none;
 }
 
@@ -238,6 +253,11 @@
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
+}
+
+.e-435be612 > .box > .groups > .group > .group-body:first-child
+{
+	padding-top: var(--ot-spacing-m);
 }
 
 /* ===== OPTIONS (checkbox / radio wrappers) ===== */

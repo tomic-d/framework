@@ -6,23 +6,17 @@ database.Fn('find', function(addon, translation)
 		sort_field: null,
 		sort_direction: 'asc',
 		page: 1,
-		limit: 50,
+		limit: 250,
 		translation
 	};
 
 	const request = async function()
 	{
-		const response = await fetch('/api/database/find', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(state)
-		});
-
-		const result = await response.json();
+		const result = await database.Fn('batch', 'find', state);
 
 		if(result.code !== 200)
 		{
-			throw new Error(result.message);
+			throw onetype.Error(result.code, result.message);
 		}
 
 		return result.data;
@@ -60,7 +54,7 @@ database.Fn('find', function(addon, translation)
 		state.select = Array.isArray(fields) ? fields : [fields];
 		return methods;
 	};
-	
+
 	methods.many = async function(set = false)
 	{
 		const data = await request();

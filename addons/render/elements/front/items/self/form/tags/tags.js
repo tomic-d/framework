@@ -127,7 +127,11 @@ onetype.AddonReady('elements', (elements) =>
 			this.activeIndex = 0;
 			this.shakeIndex = -1;
 			this.loading = false;
-			this.isSelect = this.mode === 'select';
+
+			this.Compute(() =>
+			{
+				this.isSelect = this.mode === 'select';
+			});
 
 			/* ===== ASYNC OPTIONS ===== */
 

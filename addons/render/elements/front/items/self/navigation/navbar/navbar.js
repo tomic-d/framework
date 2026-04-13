@@ -157,46 +157,49 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			const path = onetype.RouteCurrent();
-
-			const isActive = (item) =>
+			this.Compute(() =>
 			{
-				if(!item.href && !item.match)
+				const path = onetype.RouteCurrent();
+
+				const isActive = (item) =>
 				{
-					return false;
-				}
+					if(!item.href && !item.match)
+					{
+						return false;
+					}
 
-				if(item.match)
-				{
-					const patterns = Array.isArray(item.match) ? item.match : [item.match];
-					return patterns.some(pattern => onetype.RouteMatch(pattern, path).match);
-				}
+					if(item.match)
+					{
+						const patterns = Array.isArray(item.match) ? item.match : [item.match];
+						return patterns.some(pattern => onetype.RouteMatch(pattern, path).match);
+					}
 
-				if(item.href === '/')
-				{
-					return path === '/';
-				}
+					if(item.href === '/')
+					{
+						return path === '/';
+					}
 
-				return path.startsWith(item.href);
-			};
+					return path.startsWith(item.href);
+				};
 
-			const annotate = (item) => ({
-				...item,
-				active: isActive(item),
-				hasChildren: item.children && item.children.length > 0
+				const annotate = (item) => ({
+					...item,
+					active: isActive(item),
+					hasChildren: item.children && item.children.length > 0
+				});
+
+				this.left = this.items.filter(item => (item.position || 'left') === 'left').map(annotate);
+				this.right = this.items.filter(item => item.position === 'right').map(annotate);
+				this.all = [...this.left, ...this.right];
+
+				this.hasBanner = !!this.Slots.banner;
+				this.hasActions = !!this.Slots.actions;
+				this.hasLogo = !!this.logo;
+				this.hasCrumbs = this.crumbs && this.crumbs.length > 0;
+				this.hasUser = !!this.user;
+				this.hasNotifications = !!this.notificationsHref || this.notifications > 0;
+				this.hasUserMenu = this.hasUser && this.userMenu && this.userMenu.length > 0;
 			});
-
-			this.left = this.items.filter(item => (item.position || 'left') === 'left').map(annotate);
-			this.right = this.items.filter(item => item.position === 'right').map(annotate);
-			this.all = [...this.left, ...this.right];
-
-			this.hasBanner = !!this.Slots.banner;
-			this.hasActions = !!this.Slots.actions;
-			this.hasLogo = !!this.logo;
-			this.hasCrumbs = this.crumbs && this.crumbs.length > 0;
-			this.hasUser = !!this.user;
-			this.hasNotifications = !!this.notificationsHref || this.notifications > 0;
-			this.hasUserMenu = this.hasUser && this.userMenu && this.userMenu.length > 0;
 
 			this.open = false;
 			this.hidden = false;

@@ -33,6 +33,7 @@ import '#database/items/commands/find.js';
 import '#database/items/commands/create.js';
 import '#database/items/commands/update.js';
 import '#database/items/commands/delete.js';
+import '#database/items/commands/batch.js';
 
 onetype.DataSchema('filter', {
     field: ['string', null, true],

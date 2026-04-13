@@ -130,11 +130,6 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== STATE ===== */
 
 			this.copied = false;
-			this.hasCopy = this.actions.includes('copy');
-			this.hasShare = this.actions.includes('share');
-			this.hasBookmark = this.actions.includes('bookmark');
-			this.hasLike = this.actions.includes('like');
-			this.hasPlatforms = this.platforms.length > 0;
 
 			this.buildHref = (key) =>
 			{
@@ -153,23 +148,32 @@ onetype.AddonReady('elements', (elements) =>
 				return urls[key] || '#';
 			};
 
-			this.platformList = this.platforms.map(key =>
+			this.Compute(() =>
 			{
-				const meta = platforms[key];
+				this.hasCopy = this.actions.includes('copy');
+				this.hasShare = this.actions.includes('share');
+				this.hasBookmark = this.actions.includes('bookmark');
+				this.hasLike = this.actions.includes('like');
+				this.hasPlatforms = this.platforms.length > 0;
 
-				if(!meta)
+				this.platformList = this.platforms.map(key =>
 				{
-					return null;
-				}
+					const meta = platforms[key];
 
-				return {
-					id: key,
-					label: meta.label,
-					svg: meta.svg || '',
-					icon: meta.icon || '',
-					href: this.buildHref(key)
-				};
-			}).filter(Boolean);
+					if(!meta)
+					{
+						return null;
+					}
+
+					return {
+						id: key,
+						label: meta.label,
+						svg: meta.svg || '',
+						icon: meta.icon || '',
+						href: this.buildHref(key)
+					};
+				}).filter(Boolean);
+			});
 
 			/* ===== CLASSES ===== */
 
