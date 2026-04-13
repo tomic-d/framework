@@ -102,21 +102,24 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.normalized = this.items.map(item =>
+			this.Compute(() =>
 			{
-				if(typeof item === 'string')
+				this.normalized = this.items.map(item =>
 				{
-					return { id: item, label: item };
-				}
+					if(typeof item === 'string')
+					{
+						return { id: item, label: item };
+					}
 
-				return {
-					id: item.id || item.label,
-					label: item.label || item.id,
-					icon: item.icon,
-					count: item.count,
-					color: item.color,
-					disabled: item.disabled
-				};
+					return {
+						id: item.id || item.label,
+						label: item.label || item.id,
+						icon: item.icon,
+						count: item.count,
+						color: item.color,
+						disabled: item.disabled
+					};
+				});
 			});
 
 			/* ===== CLASSES ===== */

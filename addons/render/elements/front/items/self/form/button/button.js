@@ -104,9 +104,12 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.iconOnly = this.variant.includes('icon-only');
-			this.hasText = !!this.text && !this.iconOnly;
-			this.isLink = !!this.href;
+			this.Compute(() =>
+			{
+				this.iconOnly = this.variant.includes('icon-only');
+				this.hasText = !!this.text && !this.iconOnly;
+				this.isLink = !!this.href;
+			});
 
 			/* ===== CLASSES ===== */
 

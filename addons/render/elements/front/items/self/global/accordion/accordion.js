@@ -101,30 +101,31 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.normalized = this.items.map((item, index) => ({
-				id: item.id || String(index),
-				title: item.title || '',
-				description: item.description,
-				icon: item.icon,
-				content: item.content || '',
-				disabled: !!item.disabled
-			}));
-
-			/* ===== CLASSES ===== */
-
-			this.classes = () =>
+			this.Compute(() =>
 			{
-				const list = ['box', this.tone, 'size-' + this.size];
+				this.normalized = this.items.map((item, index) => ({
+					id: item.id || String(index),
+					title: item.title || '',
+					description: item.description,
+					icon: item.icon,
+					content: item.content || '',
+					disabled: !!item.disabled
+				}));
 
-				if(this.background)
+				this.classes = () =>
 				{
-					list.push(this.background);
-				}
+					const list = ['box', this.tone, 'size-' + this.size];
 
-				this.variant.forEach(v => list.push(v));
+					if(this.background)
+					{
+						list.push(this.background);
+					}
 
-				return list.join(' ');
-			};
+					this.variant.forEach(v => list.push(v));
+
+					return list.join(' ');
+				};
+			});
 
 			/* ===== HANDLERS ===== */
 

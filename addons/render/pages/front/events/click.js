@@ -16,12 +16,18 @@ document.addEventListener('click', (e) =>
 
 	const match = pages.Fn('match', url.pathname);
 
-	if(!match)
+	if(match)
 	{
+		e.preventDefault();
+		pages.Fn('change', match.page.Get('id'), null, match.parameters, true, url.search);
 		return;
 	}
 
-	e.preventDefault();
+	const notFound = Object.values(pages.Items()).find(p => p.Get('404'));
 
-	pages.Fn('change', match.page.Get('id'), null, match.parameters, true, url.search);
+	if(notFound)
+	{
+		e.preventDefault();
+		pages.Fn('change', null, url.pathname, {}, true, url.search);
+	}
 });

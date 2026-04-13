@@ -124,14 +124,10 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* ===== CLASSES ===== */
 
-			this.classes = () =>
+			this.Compute(() =>
 			{
-				const list = ['box', this.orientation, this.background, 'size-' + this.size];
-
-				this.variant.forEach(v => list.push(v));
-
-				return list.join(' ');
-			};
+				this.classes = ['box', this.orientation, this.background, 'size-' + this.size].concat(this.variant).join(' ');
+			});
 
 			/* ===== HANDLERS ===== */
 

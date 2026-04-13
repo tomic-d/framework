@@ -167,7 +167,10 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasSave = !!this.save;
+			this.Compute(() =>
+			{
+				this.hasSave = !!this.save;
+			});
 
 			/* ===== CLASSES ===== */
 

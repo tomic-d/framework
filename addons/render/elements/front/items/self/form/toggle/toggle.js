@@ -77,7 +77,10 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasInfo = !!this.label || !!this.description;
+			this.Compute(() =>
+			{
+				this.hasInfo = !!this.label || !!this.description;
+			});
 
 			/* ===== CLASSES ===== */
 

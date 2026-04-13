@@ -88,7 +88,7 @@ onetype.AddonReady('elements', (elements) =>
 				type: 'array',
 				value: ['border'],
 				each: { type: 'string' },
-				options: ['border', 'clean'],
+				options: ['border', 'border-left', 'clean'],
 				description: 'Visual modifiers.'
 			},
 			_change:
@@ -123,7 +123,10 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			});
 
-			this.hasApply = !!this.applyLabel;
+			this.Compute(() =>
+			{
+				this.hasApply = !!this.applyLabel;
+			});
 
 			/* ===== CLASSES ===== */
 

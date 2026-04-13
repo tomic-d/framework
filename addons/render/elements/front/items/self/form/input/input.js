@@ -151,8 +151,12 @@ onetype.AddonReady('elements', (elements) =>
 			this.open = false;
 			this.activeIndex = 0;
 			this.revealed = false;
-			this.hasOptions = this.options && this.options.length > 0;
-			this.isPassword = this.type === 'password';
+
+			this.Compute(() =>
+			{
+				this.hasOptions = this.options && this.options.length > 0;
+				this.isPassword = this.type === 'password';
+			});
 
 			/* ===== CLASSES ===== */
 

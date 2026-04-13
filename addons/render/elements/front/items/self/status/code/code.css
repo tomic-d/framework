@@ -20,13 +20,6 @@
 	gap: var(--ot-spacing-m);
 	text-align: center;
 	max-width: 480px;
-	animation: e-471f3f12-fade 0.4s var(--ot-transition-slow);
-}
-
-@keyframes e-471f3f12-fade
-{
-	from { opacity: 0; transform: translateY(8px); }
-	to { opacity: 1; transform: translateY(0); }
 }
 
 /* Code number */

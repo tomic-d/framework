@@ -69,20 +69,27 @@ directives.Fn('process', function(trigger, item, compile, node, identifier)
             continue;
         }
 
-        const attributes = data(directive.attributes, node, compile);
+        if(!node.parentNode && !node.isConnected)
+        {
+            break;
+        }
 
         try
         {
+            const attributes = data(directive.attributes, node, compile);
             const result = directive.code.call({}, attributes, item, compile, node, identifier);
 
-            if(result === false)
+            if(result === false || (!node.parentNode && !node.isConnected))
             {
                 break;
             }
         }
         catch (error)
         {
-            onetype.Error(500, 'Directive processing error.');
+            const tag = node.tagName ? node.tagName.toLowerCase() : 'text';
+            const name = directive.item.Get('id');
+
+            onetype.Error(500, '<:tag:> directive ":name:" — :reason:', {tag, name, reason: error.message});
         }
     }
 

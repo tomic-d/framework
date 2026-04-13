@@ -54,6 +54,7 @@ onetype.AddonReady('directives', function(directives)
 		}, !!config.capture);
 	};
 
+	register({ id: 'ot-mousedown', event: 'mousedown', property: 'otMousedown' });
 	register({ id: 'ot-click', event: 'click', property: 'otClick' });
 	register({ id: 'ot-double-click', event: 'dblclick', property: 'otDoubleClick' });
 	register({ id: 'ot-input', event: 'input', property: 'otInput', value: true });

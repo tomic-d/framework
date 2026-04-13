@@ -160,10 +160,13 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasRibbon = !!this.ribbon;
-			this.hasFeatures = this.features.length > 0;
-			this.hasOriginal = !!this.original;
-			this.hasYearly = !!this.yearly;
+			this.Compute(() =>
+			{
+				this.hasRibbon = !!this.ribbon;
+				this.hasFeatures = this.features.length > 0;
+				this.hasOriginal = !!this.original;
+				this.hasYearly = !!this.yearly;
+			});
 
 			/* ===== CLASSES ===== */
 

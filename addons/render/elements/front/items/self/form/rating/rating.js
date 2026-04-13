@@ -93,9 +93,13 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== STATE ===== */
 
 			this.hover = null;
-			this.hasInfo = !!this.label || !!this.description;
-			this.hasMeta = this.showValue || this.count != null;
-			this.locked = this.readonly || this.disabled;
+
+			this.Compute(() =>
+			{
+				this.hasInfo = !!this.label || !!this.description;
+				this.hasMeta = this.showValue || this.count != null;
+				this.locked = this.readonly || this.disabled;
+			});
 
 			/* ===== CLASSES ===== */
 

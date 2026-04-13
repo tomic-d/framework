@@ -122,12 +122,6 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
-			/* ===== STATE ===== */
-
-			this.hasHead = !!this.title || !!this.description;
-			this.isInline = this.variant.includes('inline');
-			this.isClean = this.variant.includes('clean');
-
 			/* ===== CLASSES ===== */
 
 			this.classes = () =>
@@ -171,30 +165,37 @@ onetype.AddonReady('elements', (elements) =>
 				return String(Math.round(value));
 			};
 
-			/* ===== DATA ===== */
+			/* ===== STATE ===== */
 
-			const values = this.items.map(item => item.value || 0);
-			const max = Math.max(...values, 0) || 1;
-
-			this.gridLines = [0, 0.25, 0.5, 0.75, 1].map(fraction => ({
-				percent: fraction * 100,
-				value: this.formatValue(max * fraction)
-			}));
-
-			this.bars = this.items.map((item, index) =>
+			this.Compute(() =>
 			{
-				const value = item.value || 0;
-				const percent = max === 0 ? 0 : Math.max(0, value / max) * 100;
+				this.hasHead = !!this.title || !!this.description;
+				this.isInline = this.variant.includes('inline');
+				this.isClean = this.variant.includes('clean');
 
-				return {
-					index,
-					value,
-					label: item.label || '',
-					color: item.color || this.color,
-					active: !!item.active,
-					percent,
-					display: this.formatValue(value)
-				};
+				const values = this.items.map(item => item.value || 0);
+				const max = Math.max(...values, 0) || 1;
+
+				this.gridLines = [0, 0.25, 0.5, 0.75, 1].map(fraction => ({
+					percent: fraction * 100,
+					value: this.formatValue(max * fraction)
+				}));
+
+				this.bars = this.items.map((item, index) =>
+				{
+					const value = item.value || 0;
+					const percent = max === 0 ? 0 : Math.max(0, value / max) * 100;
+
+					return {
+						index,
+						value,
+						label: item.label || '',
+						color: item.color || this.color,
+						active: !!item.active,
+						percent,
+						display: this.formatValue(value)
+					};
+				});
 			});
 
 			/* ===== RENDER ===== */

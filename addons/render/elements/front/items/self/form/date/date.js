@@ -94,8 +94,12 @@ onetype.AddonReady('elements', (elements) =>
 			const today = new Date().toISOString().slice(0, 10);
 
 			this.todayIso = today;
-			this.hasPresets = this.presets && this.presets.length > 0;
 			this.isToday = this.value === today;
+
+			this.Compute(() =>
+			{
+				this.hasPresets = this.presets && this.presets.length > 0;
+			});
 
 			/* ===== CLASSES ===== */
 

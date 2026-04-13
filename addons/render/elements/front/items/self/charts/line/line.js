@@ -125,11 +125,6 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
-			/* ===== STATE ===== */
-
-			this.hasHead = !!this.title || !!this.description;
-			this.hasLegend = this.showLegend && this.series.length > 0;
-
 			/* ===== CLASSES ===== */
 
 			this.classes = () =>
@@ -146,7 +141,7 @@ onetype.AddonReady('elements', (elements) =>
 				return list.join(' ');
 			};
 
-			/* ===== COMPUTE ===== */
+			/* ===== FORMAT ===== */
 
 			this.formatValue = (value) =>
 			{
@@ -168,90 +163,92 @@ onetype.AddonReady('elements', (elements) =>
 				return String(Math.round(value));
 			};
 
-			this.width = 640;
-			this.padding = { top: 12, right: 12, bottom: this.showLabels ? 28 : 12, left: 40 };
+			/* ===== STATE ===== */
 
-			const allValues = this.series.flatMap(s => s.values || []);
-			const max = allValues.length ? Math.max(...allValues) : 1;
-			const min = Math.min(0, ...allValues);
-			const niceMax = max > 0 ? max * 1.1 : 1;
-
-			const pointCount = this.labels.length || Math.max(...this.series.map(s => (s.values || []).length), 0);
-			const chartWidth = this.width - this.padding.left - this.padding.right;
-			const chartHeight = this.height - this.padding.top - this.padding.bottom;
-
-			const stepX = pointCount > 1 ? chartWidth / (pointCount - 1) : 0;
-
-			/* Series paths */
-
-			this.computedSeries = this.series.map(series =>
+			this.Compute(() =>
 			{
-				const values = series.values || [];
+				this.hasHead = !!this.title || !!this.description;
+				this.hasLegend = this.showLegend && this.series.length > 0;
 
-				const points = values.map((value, index) =>
+				this.width = 640;
+				this.padding = { top: 12, right: 12, bottom: this.showLabels ? 28 : 12, left: 40 };
+
+				const allValues = this.series.flatMap(s => s.values || []);
+				const max = allValues.length ? Math.max(...allValues) : 1;
+				const min = Math.min(0, ...allValues);
+				const niceMax = max > 0 ? max * 1.1 : 1;
+
+				const pointCount = this.labels.length || Math.max(...this.series.map(s => (s.values || []).length), 0);
+				const chartWidth = this.width - this.padding.left - this.padding.right;
+				const chartHeight = this.height - this.padding.top - this.padding.bottom;
+
+				const stepX = pointCount > 1 ? chartWidth / (pointCount - 1) : 0;
+
+				this.computedSeries = this.series.map(series =>
 				{
-					const x = this.padding.left + index * stepX;
-					const y = this.padding.top + chartHeight * (1 - (value - min) / (niceMax - min || 1));
-					return { x, y, value, index };
-				});
+					const values = series.values || [];
 
-				let linePath = '';
-
-				if(points.length)
-				{
-					if(this.smooth)
+					const points = values.map((value, index) =>
 					{
-						linePath = `M ${points[0].x} ${points[0].y}`;
+						const x = this.padding.left + index * stepX;
+						const y = this.padding.top + chartHeight * (1 - (value - min) / (niceMax - min || 1));
+						return { x, y, value, index };
+					});
 
-						for(let i = 0; i < points.length - 1; i++)
+					let linePath = '';
+
+					if(points.length)
+					{
+						if(this.smooth)
 						{
-							const current = points[i];
-							const next = points[i + 1];
-							const controlX = (current.x + next.x) / 2;
-							linePath += ` C ${controlX} ${current.y}, ${controlX} ${next.y}, ${next.x} ${next.y}`;
+							linePath = `M ${points[0].x} ${points[0].y}`;
+
+							for(let i = 0; i < points.length - 1; i++)
+							{
+								const current = points[i];
+								const next = points[i + 1];
+								const controlX = (current.x + next.x) / 2;
+								linePath += ` C ${controlX} ${current.y}, ${controlX} ${next.y}, ${next.x} ${next.y}`;
+							}
+						}
+						else
+						{
+							linePath = 'M ' + points.map(p => `${p.x} ${p.y}`).join(' L ');
 						}
 					}
-					else
-					{
-						linePath = 'M ' + points.map(p => `${p.x} ${p.y}`).join(' L ');
-					}
-				}
 
-				const areaPath = linePath && points.length > 1
-					? linePath + ` L ${points[points.length - 1].x} ${this.padding.top + chartHeight} L ${points[0].x} ${this.padding.top + chartHeight} Z`
-					: '';
+					const areaPath = linePath && points.length > 1
+						? linePath + ` L ${points[points.length - 1].x} ${this.padding.top + chartHeight} L ${points[0].x} ${this.padding.top + chartHeight} Z`
+						: '';
 
-				return {
-					label: series.label || '',
-					color: series.color || 'brand',
-					linePath,
-					areaPath,
-					points
-				};
+					return {
+						label: series.label || '',
+						color: series.color || 'brand',
+						linePath,
+						areaPath,
+						points
+					};
+				});
+
+				this.gridLines = [0, 0.25, 0.5, 0.75, 1].map(fraction =>
+				{
+					const y = this.padding.top + chartHeight * (1 - fraction);
+					const value = min + (niceMax - min) * fraction;
+
+					return {
+						y,
+						x1: this.padding.left,
+						x2: this.width - this.padding.right,
+						label: this.formatValue(value)
+					};
+				});
+
+				this.xLabels = (this.labels || []).map((label, index) => ({
+					x: this.padding.left + index * stepX,
+					y: this.height - 4,
+					label
+				}));
 			});
-
-			/* Grid lines */
-
-			this.gridLines = [0, 0.25, 0.5, 0.75, 1].map(fraction =>
-			{
-				const y = this.padding.top + chartHeight * (1 - fraction);
-				const value = min + (niceMax - min) * fraction;
-
-				return {
-					y,
-					x1: this.padding.left,
-					x2: this.width - this.padding.right,
-					label: this.formatValue(value)
-				};
-			});
-
-			/* X-axis labels */
-
-			this.xLabels = (this.labels || []).map((label, index) => ({
-				x: this.padding.left + index * stepX,
-				y: this.height - 4,
-				label
-			}));
 
 			/* ===== SVG ===== */
 

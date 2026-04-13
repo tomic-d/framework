@@ -199,26 +199,30 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.hasHeader = !!this.title || !!this.icon || !!this.badge;
-			this.hasStatus = this.status && this.status.label;
-			this.hasStats = this.stats && this.stats.length > 0;
-			this.hasRows = this.rows && this.rows.length > 0;
-			this.hasTags = this.tags && this.tags.length > 0;
-			this.hasNotice = this.notice && this.notice.text;
 			this.hasActions = !!this.Slots.actions;
 			this.hasBody = !!this.Slots.default;
 
-			this.rows = (this.rows || []).map(row =>
+			this.Compute(() =>
 			{
-				if(row.type)
-				{
-					return {
-						...row,
-						html: elements.Fn('type.render', row, row.item || {})
-					};
-				}
+				this.hasHeader = !!this.title || !!this.icon || !!this.badge;
+				this.hasStatus = this.status && this.status.label;
+				this.hasStats = this.stats && this.stats.length > 0;
+				this.hasRows = this.rows && this.rows.length > 0;
+				this.hasTags = this.tags && this.tags.length > 0;
+				this.hasNotice = this.notice && this.notice.text;
 
-				return row;
+				this.rows = (this.rows || []).map(row =>
+				{
+					if(row.type)
+					{
+						return {
+							...row,
+							html: elements.Fn('type.render', row, row.item || {})
+						};
+					}
+
+					return row;
+				});
 			});
 
 			/* ===== CLASSES ===== */

@@ -77,7 +77,11 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== STATE ===== */
 
 			this.copied = false;
-			this.hasPresets = this.presets && this.presets.length > 0;
+
+			this.Compute(() =>
+			{
+				this.hasPresets = this.presets && this.presets.length > 0;
+			});
 
 			/* ===== CLASSES ===== */
 
