@@ -55,6 +55,11 @@ database.Fn('item.update', async function(item, {connection = 'primary', transla
 
 		Object.entries(record).forEach(([key, value]) =>
 		{
+			if(translations && !isDefault && translations.includes(key))
+			{
+				return;
+			}
+
 			if(value instanceof Date)
 			{
 				value = value.toISOString();

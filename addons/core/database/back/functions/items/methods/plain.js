@@ -6,6 +6,7 @@ database.Fn('items.methods.plain', async function(query)
 	const countQuery = query.knex(query.table.name).count('* as count');
 
 	builder.applyFilters(countQuery, query.filters);
+	builder.applySearch(countQuery, query.search, query.addon, query.select);
 
 	let [records, countResult] = await Promise.all([
 		database.Fn('items.methods.query', query),

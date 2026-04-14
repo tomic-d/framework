@@ -42,7 +42,8 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, 'Invalid or missing id.', 400);
 			}
 
-			const item = await addon.Find({translation: properties.translation}).filter('id', properties.data.id).one(true);
+			const translation = properties.translation || this.http?.state?.language;
+			const item = await addon.Find({translation}).filter('id', properties.data.id).one(true);
 
 			if(!item)
 			{
@@ -61,7 +62,7 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, typeof allowed === 'string' ? allowed : 'Update not allowed.', 400);
 			}
 
-			await item.Update({translation: properties.translation});
+			await item.Update({translation});
 			const fields = expose.select || Object.keys(addon.Fields().data);
 
 			resolve({item: item.Get(fields)});

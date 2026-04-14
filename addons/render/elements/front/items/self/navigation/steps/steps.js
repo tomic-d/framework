@@ -150,7 +150,7 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<nav :class="classes()">
+				<nav :class="classes">
 					<button
 						ot-for="item in computed"
 						type="button"

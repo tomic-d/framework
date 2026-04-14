@@ -131,6 +131,11 @@ onetype.AddonReady('directives', function(directives)
 		{
 			const value = data['ot-tooltip'].value;
 
+			if (!value)
+			{
+				return;
+			}
+
 			if (typeof value === 'string')
 			{
 				node.otTooltipConfig = {text: value};

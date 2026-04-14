@@ -3,11 +3,11 @@ import onetype from '#framework/load.js';
 const pages = onetype.Addon('pages', (addon) =>
 {
 	addon.Field('id', ['string|number']);
-	addon.Field('route', ['string|array'], null, (value) =>
+	addon.Field('route', ['string|array'], (value) =>
 	{
 		const base = onetype.Base();
 
-		if(!base)
+		if(!base || !value)
 		{
 			return value;
 		}

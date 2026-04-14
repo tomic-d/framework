@@ -45,7 +45,8 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, typeof allowed === 'string' ? allowed : 'Create not allowed.', 400);
 			}
 
-			const created = await item.Create({translation: properties.translation});
+			const translation = properties.translation || this.http?.state?.language;
+			const created = await item.Create({translation});
 			const fields = expose.select || Object.keys(addon.Fields().data);
 
 			resolve({item: created.Get(fields)});

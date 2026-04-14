@@ -123,6 +123,51 @@ database.Fn('items.builder', function()
 		return map[operator] || operator.toLowerCase();
 	};
 
+	builder.applySearch = (knexQuery, search, addon, select) =>
+	{
+		if(!search)
+		{
+			return;
+		}
+
+		const fields = addon.Fields().data;
+		const columns = select || Object.keys(fields);
+		const searchable = [];
+
+		for(const key of columns)
+		{
+			const field = fields[key];
+
+			if(!field)
+			{
+				continue;
+			}
+
+			const type = field.define?.type || (Array.isArray(field.define) ? field.define[0] : null);
+
+			if(type === 'string' || type === 'number')
+			{
+				searchable.push(key);
+			}
+		}
+
+		if(!searchable.length)
+		{
+			return;
+		}
+
+		const term = '%' + search + '%';
+
+		knexQuery.where(function()
+		{
+			for(let i = 0; i < searchable.length; i++)
+			{
+				const method = i === 0 ? 'whereRaw' : 'orWhereRaw';
+				this[method]('??::text ILIKE ?', [searchable[i], term]);
+			}
+		});
+	};
+
 	builder.applySort = (knexQuery, sort) =>
 	{
 		if(sort)

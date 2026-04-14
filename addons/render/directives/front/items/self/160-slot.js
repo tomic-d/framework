@@ -25,12 +25,18 @@ onetype.AddonReady('directives', function(directives)
 
             const slot = item.Slots[name];
 
-            if (slot && slot.Element)
+            if(slot && slot.element && slot.data)
+            {
+                const compiled = item.Compile(slot.element.outerHTML, slot.data);
+
+                node.replaceWith(...compiled.element.childNodes);
+            }
+            else if(slot && slot.Element)
             {
                 slot.Element.__otExternal = { name: 'slot', key: name };
                 node.replaceWith(slot.Element);
             }
-            else if (slot && slot.html && slot.data)
+            else if(slot && slot.html && slot.data)
             {
                 const compiled = item.Compile(slot.html, slot.data);
                 node.replaceWith(...compiled.element.childNodes);

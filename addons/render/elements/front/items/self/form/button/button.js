@@ -82,6 +82,12 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['full', 'rounded', 'icon-only'],
 				description: 'Visual modifiers.'
 			},
+			tooltip:
+			{
+				type: 'string',
+				value: '',
+				description: 'Tooltip text shown on hover.'
+			},
 			disabled:
 			{
 				type: 'boolean',
@@ -183,14 +189,14 @@ onetype.AddonReady('elements', (elements) =>
 			if(this.isLink)
 			{
 				return /* html */ `
-					<a :class="classes()" :href="href" :target="target || null" ot-click="click">
+					<a :class="classes()" :href="href" :target="target || null" :ot-tooltip="tooltip ? { text: tooltip, position: { x: 'center', y: 'top' } } : null" ot-click="click">
 						${body}
 					</a>
 				`;
 			}
 
 			return /* html */ `
-				<button :class="classes()" :type="type" :disabled="disabled" ot-click="click">
+				<button :class="classes()" :type="type" :disabled="disabled" :ot-tooltip="tooltip ? { text: tooltip, position: { x: 'center', y: 'top' } } : null" ot-click="click">
 					${body}
 				</button>
 			`;

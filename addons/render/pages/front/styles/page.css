@@ -18,5 +18,5 @@
 
 .ot-page-area > div
 {
-	height: 100%;
+	display: contents;
 }
