@@ -68,7 +68,7 @@ onetype.AddonReady('directives', function(directives)
 						if(slot)
 						{
 							child.removeAttribute('slot');
-							slots[slot] = { element: child, data: compile.data };
+							slots[slot] = { html: child.outerHTML, data: compile.data };
 						}
 					}
 				});
