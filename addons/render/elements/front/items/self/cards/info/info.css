@@ -13,10 +13,17 @@
 	flex-direction: column;
 	gap: var(--ot-spacing-m);
 	width: 100%;
-	padding: var(--ot-spacing-m);
-	background: var(--ot-bg-1);
 	border: 1px solid transparent;
 	border-radius: var(--ot-radius-l);
+}
+
+.e-7e93ff6e > .box.bg-1,
+.e-7e93ff6e > .box.bg-2,
+.e-7e93ff6e > .box.bg-3,
+.e-7e93ff6e > .box.bg-4,
+.e-7e93ff6e > .box.border
+{
+	padding: var(--ot-spacing-m);
 }
 
 /* ===== HEADER ===== */

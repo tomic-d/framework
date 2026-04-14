@@ -113,24 +113,9 @@ onetype.AddonReady('elements', (elements) =>
 			},
 			search:
 			{
-				type: 'object',
-				value: { enabled: true, value: '' },
-				config:
-				{
-					enabled:
-					{
-						type: 'boolean',
-						value: true,
-						description: 'Show search field in toolbar.'
-					},
-					value:
-					{
-						type: 'string',
-						value: '',
-						description: 'Current search query.'
-					}
-				},
-				description: 'Search toolbar config.'
+				type: 'string',
+				value: '',
+				description: 'Search value. Toolbar shows when _search is provided.'
 			},
 			sort:
 			{
@@ -371,7 +356,7 @@ onetype.AddonReady('elements', (elements) =>
 				this.hasHead = !!this.title || !!this.icon || !!this.description || !!this.Slots.actions;
 				this.hasActions = this.actions && this.actions.length > 0;
 				this.hasPagination = !!this.pagination;
-				this.hasToolbar = this.search.enabled;
+				this.hasToolbar = !!this._search;
 				this.isLoading = !!this.loading.enabled;
 				this.loadingSkeleton = Array.from({ length: this.loading.rows || 6 }, (_, index) => index);
 
@@ -569,11 +554,11 @@ onetype.AddonReady('elements', (elements) =>
 					</header>
 
 					<div ot-if="hasToolbar" class="toolbar">
-						<div ot-if="search.enabled" class="toolbar-search">
+						<div class="toolbar-search">
 							<e-form-input
 								icon="search"
 								placeholder="Search…"
-								:value="search.value || ''"
+								:value="search"
 								:_input="onSearchInput"
 								background="bg-2"
 								size="s"

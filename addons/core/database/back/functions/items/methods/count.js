@@ -6,6 +6,7 @@ database.Fn('items.methods.count', async function(query)
 	const knexQuery = query.knex(query.table.name).count('* as count');
 
 	builder.applyFilters(knexQuery, query.filters);
+	builder.applySearch(knexQuery, query.search, query.addon, query.select);
 
 	const result = await knexQuery;
 	return parseInt(result[0]?.count || 0);

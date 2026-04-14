@@ -38,6 +38,12 @@ database.Fn('items.methods', function(query, context = null, groupId = 'default'
 		return methods;
 	};
 
+	methods.search = term =>
+	{
+		query.search = typeof term === 'string' && term.trim() ? term.trim() : null;
+		return methods;
+	};
+
 	methods.distinct = (value = true) =>
 	{
 		query.distinct = Boolean(value);

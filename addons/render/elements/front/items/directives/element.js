@@ -19,6 +19,7 @@ onetype.AddonReady('directives', function(directives)
 			const tagName = node.tagName.toLowerCase();
 			const elementName = tagName.substring(2);
 
+
 			const attributes = {
 				wrapper: {},
 				data: {}
@@ -67,7 +68,7 @@ onetype.AddonReady('directives', function(directives)
 						if(slot)
 						{
 							child.removeAttribute('slot');
-							slots[slot] = { html: child.outerHTML, data: compile.data };
+							slots[slot] = { element: child, data: compile.data };
 						}
 					}
 				});
@@ -82,6 +83,13 @@ onetype.AddonReady('directives', function(directives)
 
 			if(render)
 			{
+				render.Element.__otExternal = {
+					name: elementName,
+					key,
+					render,
+					data: attributes.data
+				};
+
 				node.replaceWith(render.Element);
 			}
 			else

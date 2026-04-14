@@ -32,7 +32,7 @@
 	min-width: 260px;
 	max-width: 260px;
 	position: sticky;
-	top: var(--ot-spacing-m);
+	top: 0;
 }
 
 /* Main */

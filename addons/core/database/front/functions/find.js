@@ -3,6 +3,7 @@ database.Fn('find', function(addon, translation)
 	const state = {
 		addon: addon.name,
 		filters: [],
+		search: null,
 		sort_field: null,
 		sort_direction: 'asc',
 		page: 1,
@@ -27,6 +28,12 @@ database.Fn('find', function(addon, translation)
 	methods.filter = function(field, value, operator = 'EQUALS')
 	{
 		state.filters.push({ field, value, operator });
+		return methods;
+	};
+
+	methods.search = function(term)
+	{
+		state.search = typeof term === 'string' && term.trim() ? term.trim() : null;
 		return methods;
 	};
 

@@ -56,7 +56,7 @@
 {
 	display: flex;
 	flex-direction: column;
-	gap: var(--ot-spacing-x);
+	gap: var(--ot-spacing-s);
 	min-width: 0;
 	flex: 1;
 }

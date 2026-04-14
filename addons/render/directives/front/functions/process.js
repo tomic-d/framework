@@ -69,7 +69,7 @@ directives.Fn('process', function(trigger, item, compile, node, identifier)
             continue;
         }
 
-        if(!node.parentNode && !node.isConnected)
+        if(directive.trigger !== 'after' && !node.parentNode && !node.isConnected)
         {
             break;
         }
@@ -79,7 +79,7 @@ directives.Fn('process', function(trigger, item, compile, node, identifier)
             const attributes = data(directive.attributes, node, compile);
             const result = directive.code.call({}, attributes, item, compile, node, identifier);
 
-            if(result === false || (!node.parentNode && !node.isConnected))
+            if(result === false || (directive.trigger !== 'after' && !node.parentNode && !node.isConnected))
             {
                 break;
             }

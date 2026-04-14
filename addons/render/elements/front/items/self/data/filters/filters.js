@@ -123,6 +123,32 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			});
 
+			/* ===== ASYNC OPTIONS ===== */
+
+			this.groups.forEach((group, index) =>
+			{
+				if(typeof group.options === 'function')
+				{
+					const callback = group.options;
+					this.groups[index] = { ...group, options: [] };
+
+					this.OnInit(async () =>
+					{
+						try
+						{
+							const result = await callback.call(this);
+							this.groups[index] = { ...group, options: Array.isArray(result) ? result : [] };
+						}
+						catch(error)
+						{
+							this.groups[index] = { ...group, options: [] };
+						}
+
+						this.Update();
+					});
+				}
+			});
+
 			this.Compute(() =>
 			{
 				this.hasApply = !!this.applyLabel;
@@ -353,8 +379,8 @@ onetype.AddonReady('elements', (elements) =>
 											:label="option.label"
 											:icon="option.icon || ''"
 											:count="option.count != null ? option.count : ''"
-											:value="isChecked(group.id, option.id)"
-											:_change="() => toggleCheckbox(group, option.id)"
+											:value="isChecked(group.id, option.value)"
+											:_change="() => toggleCheckbox(group, option.value)"
 											background="bg-2"
 											:variant="['border']"
 										></e-form-checkbox>
@@ -378,8 +404,8 @@ onetype.AddonReady('elements', (elements) =>
 											:label="option.label"
 											:icon="option.icon || ''"
 											:count="option.count != null ? option.count : ''"
-											:value="isSelected(group.id, option.id)"
-											:_change="() => selectRadio(group, option.id)"
+											:value="isSelected(group.id, option.value)"
+											:_change="() => selectRadio(group, option.value)"
 											background="bg-2"
 											:variant="['border']"
 										></e-form-radio>
@@ -401,8 +427,8 @@ onetype.AddonReady('elements', (elements) =>
 									<button
 										ot-for="option in group.options"
 										type="button"
-										:class="'tag' + (isChecked(group.id, option.id) ? ' active' : '')"
-										ot-click="() => toggleCheckbox(group, option.id)"
+										:class="'tag' + (isChecked(group.id, option.value) ? ' active' : '')"
+										ot-click="() => toggleCheckbox(group, option.value)"
 									>
 										<i ot-if="option.icon">{{ option.icon }}</i>
 										<span>{{ option.label }}</span>

@@ -201,7 +201,7 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.chipClass = (option) =>
 			{
-				const selected = this.value.includes(option.value);
+				const selected = this.value.some(v => v == option.value);
 
 				return 'chip' + (selected ? ' selected' : '');
 			};
@@ -222,7 +222,7 @@ onetype.AddonReady('elements', (elements) =>
 
 				return this.options.filter(option =>
 				{
-					if(this.value.includes(option.value))
+					if(this.value.some(v => v == option.value))
 					{
 						return false;
 					}
@@ -255,7 +255,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const existing = this.value.indexOf(option.value);
+				const existing = this.value.findIndex(v => v == option.value);
 
 				if(existing !== -1)
 				{
@@ -307,7 +307,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				if(this.value.includes(text))
+				if(this.value.some(v => v == text))
 				{
 					return;
 				}
@@ -347,7 +347,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const index = this.value.indexOf(option.value);
+				const index = this.value.findIndex(v => v == option.value);
 
 				if(index !== -1)
 				{

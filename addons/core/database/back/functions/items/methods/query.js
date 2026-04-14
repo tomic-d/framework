@@ -7,6 +7,7 @@ database.Fn('items.methods.query', async function(query)
 
 	builder.applySelect(knexQuery, query.select, query.distinct);
 	builder.applyFilters(knexQuery, query.filters);
+	builder.applySearch(knexQuery, query.search, query.addon, query.select);
 	builder.applySort(knexQuery, query.sort);
 	builder.applyPagination(knexQuery, query.limit, query.page);
 

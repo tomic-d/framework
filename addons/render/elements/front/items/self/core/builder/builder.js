@@ -56,12 +56,51 @@ onetype.AddonReady('elements', (elements) =>
 				value: false,
 				description: 'Disable save button.'
 			},
-			background:
+			section:
 			{
-				type: 'string',
-				value: '',
-				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
-				description: 'Container background depth.'
+				type: 'object',
+				value: { background: 'bg-1', variant: ['border'] },
+				config:
+				{
+					background:
+					{
+						type: 'string',
+						value: 'bg-1',
+						options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+						description: 'Section background depth.'
+					},
+					variant:
+					{
+						type: 'array',
+						value: ['border'],
+						each: { type: 'string' },
+						description: 'Section visual modifiers.'
+					}
+				},
+				description: 'Section appearance.'
+			},
+			stepper:
+			{
+				type: 'object',
+				value: { background: 'bg-1', variant: ['border', 'connected'] },
+				config:
+				{
+					background:
+					{
+						type: 'string',
+						value: 'bg-1',
+						options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+						description: 'Steps background depth.'
+					},
+					variant:
+					{
+						type: 'array',
+						value: ['border', 'connected'],
+						each: { type: 'string' },
+						description: 'Steps visual modifiers.'
+					}
+				},
+				description: 'Steps sidebar appearance.'
 			},
 			size:
 			{
@@ -69,6 +108,13 @@ onetype.AddonReady('elements', (elements) =>
 				value: 'm',
 				options: ['s', 'm', 'l'],
 				description: 'Section spacing.'
+			},
+			background:
+			{
+				type: 'string',
+				value: '',
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Container background depth.'
 			},
 			variant:
 			{
@@ -99,6 +145,8 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== STATE ===== */
 
 			this.activeStep = '';
+
+			this.sectionVariant = this.section.variant || ['border'];
 
 			this.Compute(() =>
 			{
@@ -316,8 +364,7 @@ onetype.AddonReady('elements', (elements) =>
 					? `ot-if="visible(${scope}[${sectionIndex}].condition)"`
 					: '';
 
-				const background = section.background || '';
-				const sectionVariant = (section.border !== false) ? "['border']" : '[]';
+				const background = section.background || this.section.background || '';
 
 				return `
 					<e-form-section
@@ -329,7 +376,7 @@ onetype.AddonReady('elements', (elements) =>
 						:collapsible="${section.collapsible ? 'true' : 'false'}"
 						:collapsed="${section.collapsed ? 'true' : 'false'}"
 						background="${background}"
-						:variant="${sectionVariant}"
+						:variant="sectionVariant"
 					>
 						<div slot="content">
 							<div class="grid" style="grid-template-columns: repeat(${columns}, minmax(0, 1fr));">
@@ -367,8 +414,8 @@ onetype.AddonReady('elements', (elements) =>
 							:items="steps"
 							:active="activeStep"
 							orientation="vertical"
-							background="bg-1"
-							:variant="['border', 'connected']"
+							:background="stepper.background"
+							:variant="stepper.variant"
 							:_change="selectStep"
 						></e-navigation-steps>
 					</div>

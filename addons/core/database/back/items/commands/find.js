@@ -16,6 +16,7 @@ onetype.AddonReady('commands', (commands) =>
 					config: 'filter'
 				}
 			},
+			search: ['string'],
 			sort_field: ['string'],
 			sort_direction: ['string', 'asc'],
 			select: {
@@ -55,7 +56,8 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, 'Addon is not exposed.', 403);
 			}
 
-			let query = addon.Find({translation: properties.translation});
+			const translation = properties.translation || this.http?.state?.language;
+			let query = addon.Find({translation});
 
 			if(properties.filters)
 			{
@@ -78,6 +80,11 @@ onetype.AddonReady('commands', (commands) =>
 				}
 
 				query = query.sort(properties.sort_field, properties.sort_direction || 'asc');
+			}
+
+			if(properties.search)
+			{
+				query = query.search(properties.search);
 			}
 
 			if(expose.find)
