@@ -1,0 +1,9 @@
+import '#database/addons/versions/functions/tracked.js';
+import '#database/addons/versions/functions/diff.js';
+import '#database/addons/versions/functions/history.js';
+import '#database/addons/versions/functions/restore.js';
+import '#database/addons/versions/events/find.js';
+import '#database/addons/versions/events/execute.js';
+import '#database/addons/versions/events/create.js';
+import '#database/addons/versions/events/update.js';
+import '#database/addons/versions/events/delete.js';
