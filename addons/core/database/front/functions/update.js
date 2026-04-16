@@ -1,10 +1,10 @@
-database.Fn('update', async function(item, translation)
+database.Fn('update', async function(item, language)
 {
 	const result = await database.Fn('batch', 'update', {
 		addon: item.addon.name,
 		id: item.Get('id'),
 		data: item.data,
-		translation
+		language
 	});
 
 	if(result.code !== 200)

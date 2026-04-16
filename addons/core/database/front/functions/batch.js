@@ -8,16 +8,13 @@ database.Fn('batch', function(type, data)
 	this.methods.push = (entry) =>
 	{
 		const queue = this.methods.queue();
-
 		queue.push(entry);
-
 		this.StoreSet('queue', queue);
 	};
 
 	this.methods.flush = () =>
 	{
 		const batch = this.methods.queue().splice(0);
-
 		this.StoreSet('scheduled', false);
 
 		if(batch.length === 1)
@@ -41,7 +38,6 @@ database.Fn('batch', function(type, data)
 			});
 
 			const result = await response.json();
-
 			entry.resolve({ data: result.data, message: result.message, code: result.code });
 		}
 		catch(error)
@@ -70,11 +66,9 @@ database.Fn('batch', function(type, data)
 				return;
 			}
 
-			const results = result.data.results;
-
 			batch.forEach((entry, index) =>
 			{
-				const item = results[index];
+				const item = result.data.results[index];
 
 				if(!item)
 				{
@@ -100,7 +94,6 @@ database.Fn('batch', function(type, data)
 		}
 
 		this.StoreSet('scheduled', true);
-
 		queueMicrotask(() => this.methods.flush());
 	};
 

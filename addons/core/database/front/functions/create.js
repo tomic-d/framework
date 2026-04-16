@@ -1,9 +1,9 @@
-database.Fn('create', async function(item, translation)
+database.Fn('create', async function(item, language)
 {
 	const result = await database.Fn('batch', 'create', {
 		addon: item.addon.name,
 		data: item.data,
-		translation
+		language
 	});
 
 	if(result.code !== 200)
