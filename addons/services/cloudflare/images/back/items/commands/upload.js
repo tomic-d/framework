@@ -7,9 +7,9 @@ commands.Item({
 	method: 'POST',
 	endpoint: '/api/images',
 	in: {
-		site_id: ['string', null, true],
-		file: ['binary', null, true],
-		filename: ['string', null, true],
+		file: ['binary'],
+		url: ['string'],
+		filename: ['string'],
 		alt: ['string']
 	},
 	out: {
@@ -18,7 +18,7 @@ commands.Item({
 			config: {
 				id: ['string'],
 				team_id: ['string'],
-				site_id: ['string'],
+				metadata: ['object'],
 				cloudflare_id: ['string'],
 				filename: ['string'],
 				url: ['string'],
@@ -42,38 +42,51 @@ commands.Item({
 			return resolve(null, 'Not authenticated.', 401);
 		}
 
-		const { file, filename, site_id, alt } = properties;
-		const meta = images.Fn('meta', file);
+		const { file, url, filename, alt } = properties;
 
-		if(!meta.type)
+		if(!file && !url)
 		{
-			return resolve(null, 'Unsupported image format.', 400);
+			return resolve(null, 'File or URL is required.', 400);
 		}
 
 		const form = new FormData();
 
-		form.append('file', new Blob([file]), filename);
+		if(file)
+		{
+			form.append('file', new Blob([file]), filename || 'upload');
+		}
+		else
+		{
+			form.append('url', url);
+		}
 
 		const result = await images.Fn('api', 'POST', '', form);
 
+		const meta = file ? images.Fn('meta', file) : { type: null, width: 0, height: 0 };
+		const name = filename || (url ? url.split('?')[0].split('/').pop() : 'upload');
+
+		const hash = process.env.CLOUDFLARE_IMAGES_HASH;
+		const ext = meta.type ? meta.type.split('/')[1] : '';
+		const image = 'https://images.onetype.ai/' + result.id + '/public' + (ext ? '#.' + ext : '');
+
 		const item = images.Item({
 			team_id: user.team.id,
-			site_id,
 			cloudflare_id: result.id,
-			filename,
-			url: result.variants?.[0] || '',
+			filename: name,
+			url: hash ? image : (result.variants?.[0] || ''),
 			variants: result.variants || [],
+			metadata: {},
 			alt: alt || '',
-			size: file.length,
-			type: meta.type,
-			width: meta.width,
-			height: meta.height
+			size: file ? file.length : 0,
+			type: meta.type || '',
+			width: meta.width || 0,
+			height: meta.height || 0
 		});
 
 		await item.Create();
 
 		resolve({
-			image: item.Get(['id', 'team_id', 'site_id', 'cloudflare_id', 'filename', 'url', 'variants', 'alt', 'size', 'type', 'width', 'height', 'updated_at', 'created_at'])
+			image: item.Get(['id', 'team_id', 'cloudflare_id', 'filename', 'url', 'variants', 'metadata', 'alt', 'size', 'type', 'width', 'height', 'updated_at', 'created_at'])
 		});
 	}
 });

@@ -3,7 +3,7 @@ import translations from '../addon.js';
 
 translations.Fn('context', function({ language, languages } = {})
 {
-	const pattern = /^[a-z]{2}$/;
+	const pattern = /^[A-Z]{2}$/;
 
 	if(language !== null && language !== undefined)
 	{

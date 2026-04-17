@@ -1,38 +1,19 @@
 onetype.AddonReady('elements', (elements) =>
 {
 	elements.ItemAdd({
-		id: 'form-upload',
+		id: 'form-upload-many',
 		icon: 'cloud_upload',
 		name: 'Upload',
 		description: 'File upload with drag-and-drop, URL preview grid, suffix detection and remove.',
 		category: 'Form',
 		config:
 		{
-			mode:
-			{
-				type: 'string',
-				value: 'grid',
-				options: ['grid', 'input'],
-				description: 'Display mode. Grid shows cards, input shows URL field with preview.'
-			},
 			value:
 			{
 				type: 'array',
 				value: [],
 				each: { type: 'string' },
 				description: 'Array of file URLs.'
-			},
-			placeholder:
-			{
-				type: 'string',
-				value: 'Paste URL or drop file…',
-				description: 'Placeholder for input mode.'
-			},
-			multiple:
-			{
-				type: 'boolean',
-				value: true,
-				description: 'Allow multiple files.'
 			},
 			max:
 			{
@@ -48,7 +29,7 @@ onetype.AddonReady('elements', (elements) =>
 			label:
 			{
 				type: 'string',
-				value: 'Drop files here or click to browse',
+				value: 'Click to browse',
 				description: 'Dropzone label text.'
 			},
 			hint:
@@ -111,7 +92,6 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.dragging = false;
 			this.uploading = false;
 			this.inputId = 'upload-' + onetype.GenerateUID();
 
@@ -124,15 +104,24 @@ onetype.AddonReady('elements', (elements) =>
 					return '';
 				}
 
-				const clean = url.split('?')[0].split('#')[0];
-				const dot = clean.lastIndexOf('.');
+				const hash = url.split('#')[1];
+
+				if(hash)
+				{
+					const dot = hash.lastIndexOf('.');
+					return dot !== -1 ? hash.substring(dot + 1).toLowerCase() : hash.toLowerCase();
+				}
+
+				const clean = url.split('?')[0];
+				const segment = clean.split('/').pop();
+				const dot = segment.lastIndexOf('.');
 
 				if(dot === -1)
 				{
 					return '';
 				}
 
-				return clean.substring(dot + 1).toLowerCase();
+				return segment.substring(dot + 1).toLowerCase();
 			};
 
 			this.isImage = (url) =>
@@ -177,12 +166,6 @@ onetype.AddonReady('elements', (elements) =>
 				return slash !== -1 ? clean.substring(slash + 1) : clean;
 			};
 
-			this.Compute(() =>
-			{
-				this.isInput = this.mode === 'input';
-				this.url = this.value.length > 0 ? this.value[0] : '';
-				this.hasPreview = this.url && this.isImage(this.url);
-			});
 
 			/* ===== CLASSES ===== */
 
@@ -200,12 +183,7 @@ onetype.AddonReady('elements', (elements) =>
 					list.push('border-bottom');
 				}
 
-				if(this.isInput)
-				{
-					list.push('mode-input');
-				}
-
-				if(this.disabled)
+if(this.disabled)
 				{
 					list.push('disabled');
 				}
@@ -215,26 +193,14 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.zoneClasses = () =>
 			{
-				const list = ['zone'];
-
-				if(this.dragging)
-				{
-					list.push('dragging');
-				}
-
-				if(this.value.length > 0)
-				{
-					list.push('compact');
-				}
-
-				return list.join(' ');
+				return this.value.length > 0 ? 'zone compact' : 'zone';
 			};
 
 			/* ===== HANDLERS ===== */
 
 			this.addUrls = (urls) =>
 			{
-				const errors = [];
+const errors = [];
 				const accepted = [];
 
 				for(const url of urls)
@@ -248,8 +214,9 @@ onetype.AddonReady('elements', (elements) =>
 					{
 						const ext = this.suffix(url);
 						const patterns = this.accept.split(',').map(p => p.trim().toLowerCase().replace('.', ''));
+						const mime = patterns.some(p => p.includes('/'));
 
-						if(ext && !patterns.includes(ext))
+						if(ext && !mime && !patterns.includes(ext))
 						{
 							errors.push('File "' + this.fileName(url) + '" type not allowed.');
 							continue;
@@ -265,14 +232,7 @@ onetype.AddonReady('elements', (elements) =>
 					accepted.push(url);
 				}
 
-				if(!this.multiple && accepted.length)
-				{
-					this.value = [accepted[0]];
-				}
-				else
-				{
-					this.value = [...this.value, ...accepted];
-				}
+				this.value = [...this.value, ...accepted];
 
 				if(errors.length && this._error)
 				{
@@ -281,7 +241,7 @@ onetype.AddonReady('elements', (elements) =>
 
 				if(this._change)
 				{
-					this._change({ value: this.value });
+this._change({ value: this.value });
 				}
 
 				this.Update();
@@ -289,11 +249,11 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.uploadFile = async (file) =>
 			{
-				if(this._upload)
+if(this._upload)
 				{
 					const url = await this._upload({ file });
 
-					if(url && typeof url === 'string')
+if(url && typeof url === 'string')
 					{
 						return url;
 					}
@@ -310,23 +270,21 @@ onetype.AddonReady('elements', (elements) =>
 				}
 
 				const files = Array.from(fileList);
-				const urls = [];
 
 				this.uploading = true;
 				this.Update();
 
-				for(const file of files)
+				await Promise.all(files.map(async (file) =>
 				{
 					const url = await this.uploadFile(file);
 
 					if(url)
 					{
-						urls.push(url);
+						this.addUrls([url]);
 					}
-				}
+				}));
 
 				this.uploading = false;
-				this.addUrls(urls);
 			};
 
 			this.remove = (index) =>
@@ -363,57 +321,6 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
-			/* ===== DRAG EVENTS ===== */
-
-			this.dragenter = ({ event }) =>
-			{
-				event.preventDefault();
-				event.stopPropagation();
-
-				if(!this.disabled)
-				{
-					this.dragging = true;
-				}
-			};
-
-			this.dragover = ({ event }) =>
-			{
-				event.preventDefault();
-				event.stopPropagation();
-			};
-
-			this.dragleave = ({ event }) =>
-			{
-				event.preventDefault();
-				event.stopPropagation();
-
-				if(event.currentTarget.contains(event.relatedTarget))
-				{
-					return;
-				}
-
-				this.dragging = false;
-			};
-
-			this.drop = ({ event }) =>
-			{
-				event.preventDefault();
-				event.stopPropagation();
-				this.dragging = false;
-
-				if(this.disabled)
-				{
-					return;
-				}
-
-				const files = event.dataTransfer.files;
-
-				if(files && files.length)
-				{
-					this.addFiles(files);
-				}
-			};
-
 			this.pick = ({ event }) =>
 			{
 				const files = event.target.files;
@@ -441,113 +348,22 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			/* ===== INPUT MODE ===== */
-
-			this.onUrl = ({ event, value }) =>
-			{
-				this.url = value;
-				this.hasPreview = value && this.isImage(value);
-
-				if(value)
-				{
-					this.value = [value];
-				}
-				else
-				{
-					this.value = [];
-				}
-
-				if(this._change)
-				{
-					this._change({ value: this.value });
-				}
-			};
-
-			this.clearUrl = () =>
-			{
-				this.url = '';
-				this.hasPreview = false;
-				this.value = [];
-
-				if(this._change)
-				{
-					this._change({ value: this.value });
-				}
-			};
-
 			/* ===== RENDER ===== */
-
-			if(this.isInput)
-			{
-				return /* html */ `
-					<div :class="classes()">
-						<div class="row">
-							<div ot-if="hasPreview" class="preview">
-								<img :src="url" />
-							</div>
-							<div ot-if="url && !hasPreview" class="preview placeholder">
-								<i>{{ fileIcon(url) }}</i>
-							</div>
-							<div class="field">
-								<i class="icon">link</i>
-								<input
-									class="text"
-									type="text"
-									:value="url"
-									:placeholder="placeholder"
-									:disabled="disabled || null"
-									autocomplete="off"
-									ot-change="onUrl"
-								/>
-								<button
-									ot-if="url && !disabled"
-									type="button"
-									class="action"
-									ot-click.stop="clearUrl"
-								>
-									<i>close</i>
-								</button>
-								<button
-									ot-if="!disabled"
-									type="button"
-									class="action"
-									ot-click.stop="browse"
-								>
-									<i>upload</i>
-								</button>
-							</div>
-							<input
-								class="input"
-								type="file"
-								:accept="accept || null"
-								:disabled="disabled || null"
-								ot-change="pick"
-							/>
-						</div>
-					</div>
-				`;
-			}
 
 			return /* html */ `
 				<div :class="classes()">
-					<div
-						:class="zoneClasses()"
-						ot-dragenter="dragenter"
-						ot-dragover="dragover"
-						ot-dragleave="dragleave"
-						ot-drop="drop"
-					>
+					<div :class="zoneClasses()">
 						<input
 							class="input"
 							type="file"
 							:id="inputId"
 							:accept="accept || null"
-							:multiple="multiple || null"
+							multiple
 							:disabled="disabled || null"
 							ot-change="pick"
 						/>
 
-						<div ot-if="value.length === 0" class="prompt" ot-click="browse">
+						<div ot-if="value.length === 0" class="prompt" ot-click.stop="browse">
 							<div class="badge">
 								<i ot-if="!uploading">{{ icon }}</i>
 								<i ot-if="uploading" class="spin">progress_activity</i>
@@ -567,7 +383,6 @@ onetype.AddonReady('elements', (elements) =>
 								<div ot-if="!isImage(url)" class="thumb placeholder">
 									<i>{{ fileIcon(url) }}</i>
 								</div>
-								<span class="name">{{ fileName(url) }}</span>
 								<button
 									type="button"
 									class="remove"
@@ -577,7 +392,10 @@ onetype.AddonReady('elements', (elements) =>
 								</button>
 							</div>
 
-							<div ot-if="multiple && (!max || value.length < max)" class="card add" ot-click="browse">
+							<div ot-if="uploading" class="card add loading">
+								<i class="spin">progress_activity</i>
+							</div>
+							<div ot-if="!uploading && (!max || value.length < max)" class="card add" ot-click="browse">
 								<i>add</i>
 							</div>
 						</div>

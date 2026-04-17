@@ -6,7 +6,7 @@ const images = onetype.Addon('cloudflare.images', (addon) =>
 
 	addon.Field('id', ['string']);
 	addon.Field('team_id', ['string', null, true]);
-	addon.Field('site_id', ['string', null, true]);
+	addon.Field('metadata', ['object', {}]);
 	addon.Field('cloudflare_id', ['string', null, true]);
 	addon.Field('filename', ['string', null, true]);
 	addon.Field('url', ['string']);

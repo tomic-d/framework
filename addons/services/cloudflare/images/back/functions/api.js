@@ -2,16 +2,15 @@ import images from '#cloudflare-images/addon.js';
 
 images.Fn('api', async function(method, path, body, headers = {})
 {
-	const url = process.env.CLOUDFLARE_API_URL;
 	const account = process.env.CLOUDFLARE_ACCOUNT_ID;
-	const token = process.env.CLOUDFLARE_API_TOKEN;
+	const token = process.env.CLOUDFLARE_ACCOUNT_TOKEN;
 
-	if(!url || !account || !token)
+	if(!account || !token)
 	{
 		throw new Error('Cloudflare credentials not configured.');
 	}
 
-	const endpoint = `${url}/${account}/images/v1${path}`;
+	const endpoint = `https://api.cloudflare.com/client/v4/accounts/${account}/images/v1${path}`;
 
 	const options = {
 		method,
