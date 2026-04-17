@@ -14,8 +14,5 @@ import '#cloudflare-images/functions/meta/dimensions/webp.js';
 
 /* Commands */
 import '#cloudflare-images/items/commands/upload.js';
-import '#cloudflare-images/items/commands/delete.js';
-import '#cloudflare-images/items/commands/list.js';
-import '#cloudflare-images/items/commands/get.js';
 
 export default images;

@@ -1,6 +1,7 @@
 import onetype from '#framework/load.js';
+import database from '../../addon.js';
 
-const translations = onetype.Addon('database.translations', (addon) =>
+database.translations = onetype.Addon('database.translations', (addon) =>
 {
 	addon.Table('database_translations');
 
@@ -14,4 +15,4 @@ const translations = onetype.Addon('database.translations', (addon) =>
 	addon.Field('created_at', ['string']);
 });
 
-export default translations;
+export default database.translations;

@@ -1,147 +1,128 @@
-elements.ItemAdd({
-	id: 'cloudflare-input',
-	icon: 'image',
-	name: 'Image Input',
-	description: 'Image picker input that opens browse modal.',
-	category: 'Form',
-	author: 'OneType',
-	config: {
-		value: {
-			type: 'string',
-			value: ''
-		},
-		name: {
-			type: 'string',
-			value: ''
-		},
-		site: {
-			type: 'object',
-			value: null
-		},
-		multiple: {
-			type: 'boolean',
-			value: false
-		},
-		placeholder: {
-			type: 'string',
-			value: 'Select image...'
-		},
-		disabled: {
-			type: 'boolean',
-			value: false
-		},
-		variant: {
-			type: 'array',
-			value: ['bg-2', 'border', 'size-m'],
-			options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'border', 'size-s', 'size-m', 'size-l']
-		},
-		_change: {
-			type: 'function'
-		}
-	},
-	render: function()
-	{
-		const self = this;
-
-		this.images = () =>
+onetype.AddonReady('elements', (elements) =>
+{
+	elements.ItemAdd({
+		id: 'cloudflare-images-input',
+		icon: 'cloud_upload',
+		name: 'Images Input',
+		description: 'Cloudflare Images single upload input.',
+		category: 'Form',
+		config:
 		{
-			if(!this.value)
+			value:
 			{
-				return [];
+				type: 'string',
+				value: '',
+				description: 'Image URL.'
+			},
+			name:
+			{
+				type: 'string',
+				value: '',
+				description: 'Input name attribute.'
+			},
+			placeholder:
+			{
+				type: 'string',
+				value: 'Paste URL or drop file…',
+				description: 'Placeholder text.'
+			},
+			accept:
+			{
+				type: 'string',
+				value: 'image/*',
+				description: 'Accepted file types.'
+			},
+			disabled:
+			{
+				type: 'boolean',
+				value: false,
+				description: 'Disabled state.'
+			},
+			background:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background depth.'
+			},
+			variant:
+			{
+				type: 'array',
+				value: ['border'],
+				each: { type: 'string' },
+				options: ['border', 'border-bottom'],
+				description: 'Visual modifiers.'
+			},
+			size:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Input size.'
+			},
+			_change:
+			{
+				type: 'function',
+				description: 'Change handler. Receives { value }.'
+			},
+			_error:
+			{
+				type: 'function',
+				description: 'Error handler. Receives { error }.'
 			}
-
-			return this.multiple ? this.value.split(',').filter(Boolean) : [this.value];
-		};
-
-		this.browse = () =>
+		},
+		render: function()
 		{
-			if(this.disabled)
+			this.upload = async ({ file }) =>
 			{
-				return;
-			}
+				const form = new FormData();
 
-			const site = self.site || $ot.get('site');
+				form.append('file', file);
+				form.append('filename', file.name);
 
-			$ot.modal(function()
-			{
-				this.site = site;
-				this.pick = (item) =>
+				try
 				{
-					$ot.modal.close();
-					callback(item.url);
-				};
+					const response = await fetch('/api/images', { method: 'POST', body: form });
+					const result = await response.json();
 
-				return `<e-cloudflare-images :site="site" :_pick="pick"></e-cloudflare-images>`;
-			});
-		};
+					if(result.code !== 200)
+					{
+						if(this._error)
+						{
+							this._error({ error: result.message || 'Upload failed.' });
+						}
 
-		const callback = (url) =>
-		{
-			if(this.multiple)
-			{
-				const current = this.value ? this.value.split(',').filter(Boolean) : [];
+						return null;
+					}
 
-				current.push(url);
-				this.value = current.join(',');
-			}
-			else
-			{
-				this.value = url;
-			}
+					return result.data.image.url;
+				}
+				catch(error)
+				{
+					if(this._error)
+					{
+						this._error({ error: error.message || 'Upload failed.' });
+					}
 
-			if(this._change)
-			{
-				this._change({ value: this.value });
-			}
-		};
+					return null;
+				}
+			};
 
-		this.remove = (event, url) =>
-		{
-			event.stopPropagation();
-
-			if(this.multiple)
-			{
-				const current = this.value.split(',').filter(v => v !== url);
-
-				this.value = current.join(',');
-			}
-			else
-			{
-				this.value = '';
-			}
-
-			if(this._change)
-			{
-				this._change({ value: this.value });
-			}
-		};
-
-		this.clear = (event) =>
-		{
-			event.stopPropagation();
-			this.value = '';
-
-			if(this._change)
-			{
-				this._change({ value: this.value });
-			}
-		};
-
-		return `
-			<div :class="'holder ' + variant.join(' ')">
-				<input type="hidden" :name="name" :value="value" />
-				<div ot-if="!images().length" class="empty" ot-click="browse">
-					<i class="icon">image</i>
-					<span class="text">{{ placeholder }}</span>
-				</div>
-				<div ot-if="images().length" class="preview" ot-click="browse">
-					<div ot-for="url in images()" class="thumb">
-						<img :src="url" loading="lazy" />
-						<button class="remove" ot-click="(e) => remove(e, url)"><i>close</i></button>
-					</div>
-					<button ot-if="value" class="clear" ot-click="clear"><i>delete</i></button>
-				</div>
-			</div>
-		`;
-	}
+			return /* html */ `
+				<e-form-upload-one
+					:value="value"
+					:name="name"
+					:placeholder="placeholder"
+					:accept="accept"
+					:disabled="disabled"
+					:background="background"
+					:variant="variant"
+					:size="size"
+					:_upload="upload"
+					:_change="_change"
+					:_error="_error"
+				></e-form-upload-one>
+			`;
+		}
+	});
 });
