@@ -55,22 +55,19 @@ onetype.AddonReady('directives', function(directives)
                 items.forEach((value, index) =>
                 {
                     const loopData = Object.assign({}, compile.data);
+                    
                     loopData[forName] = value;
                     loopData[forIndex] = index;
 
-                    const compiled = item.Compile(html, loopData);
-                    const key = onetype.GenerateHash(index + ':' + (typeof value === 'object' ? JSON.stringify(value) : String(value)));
+                    const key = value && typeof value === 'object' && 'id' in value
+                        ? String(value.id)
+                        : onetype.GenerateHash(index + ':' + (typeof value === 'object' ? JSON.stringify(value) : String(value)));
+
+                    const compiled = item.Compile(html, loopData, { key });
 
                     while(compiled.element.firstChild)
                     {
-                        const child = compiled.element.firstChild;
-
-                        if(child.nodeType === Node.ELEMENT_NODE)
-                        {
-                            child.setAttribute('ot-key', key);
-                        }
-
-                        fragment.appendChild(child);
+                        fragment.appendChild(compiled.element.firstChild);
                     }
                 });
 

@@ -8,9 +8,9 @@ onetype.EmitOn('@addon.item.init', (item) =>
 		return database.Fn('create', item, {connection, language, languages});
 	};
 
-	item.Update = async function({connection = 'primary', language = null, languages = null} = {})
+	item.Update = async function({connection = 'primary', language = null, languages = null, whitelist = null} = {})
 	{
-		return database.Fn('update', item, {connection, language, languages});
+		return database.Fn('update', item, {connection, language, languages, whitelist});
 	};
 
 	item.Delete = async function({connection = 'primary'} = {})

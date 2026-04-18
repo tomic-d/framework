@@ -119,9 +119,6 @@ onetype.AddonReady('commands', (commands) =>
 			const language = properties.language || this.http?.state?.language || null;
 			const languages = this.http?.state?.languages || null;
 
-
-			console.log({ language, languages });
-
 			const find = addon.Find({ language, languages });
 
 			if(properties.filters)

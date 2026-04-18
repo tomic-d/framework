@@ -74,7 +74,7 @@ onetype.AddonReady('directives', function(directives)
 				});
 			}
 
-			const key = attributes.wrapper['ot-key'] || attributes.data['ot-key'] || identifier;
+			const key = attributes.wrapper['ot-key'] || attributes.data['ot-key'] || compile.key || identifier;
 
 			delete attributes.wrapper['ot-key'];
 			delete attributes.data['ot-key'];

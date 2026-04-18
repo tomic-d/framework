@@ -175,6 +175,7 @@
 {
 	display: flex;
 	align-items: center;
+	gap: var(--ot-spacing-s);
 	width: 100%;
 	padding: var(--ot-spacing-s) var(--ot-spacing-m);
 	background: transparent;
@@ -187,6 +188,22 @@
 	cursor: pointer;
 	outline: none;
 	transition: background var(--ot-transition-fast), color var(--ot-transition-fast);
+}
+
+.e-283fbe2c > .box > .dropdown > .option > .label
+{
+	font-weight: 500;
+	flex-shrink: 0;
+}
+
+.e-283fbe2c > .box > .dropdown > .option > .description
+{
+	color: var(--ot-text-3);
+	font-size: var(--ot-size-s);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
 }
 
 .e-283fbe2c > .box > .dropdown > .option:hover,
@@ -220,6 +237,7 @@
 {
 	display: inline-flex;
 	align-items: center;
+	gap: var(--ot-spacing-x);
 	padding: 4px var(--ot-spacing-s);
 	border-radius: 100px;
 	background: var(--ot-bg-3);

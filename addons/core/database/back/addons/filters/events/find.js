@@ -4,6 +4,7 @@ import database from '#database/addon.js';
 onetype.EmitOn('@database.find', ({ methods, query }) =>
 {
 	query.filters = [];
+	query.impossible = false;
 
 	const group = query._filterGroup || 'default';
 	const validation = database.Fn('validation');
@@ -32,7 +33,16 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 		{
 			validation.field(field);
 			validation.operator(normalized, operators);
-			validation.inList(value);
+
+			if(!Array.isArray(value) || !value.length)
+			{
+				if(normalized === 'IN')
+				{
+					query.impossible = true;
+				}
+
+				return;
+			}
 		}
 		else
 		{
