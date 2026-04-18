@@ -18,7 +18,7 @@
 /* Grid - responsive auto layouts */
 .ot-grid-auto-s { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--ot-spacing-s); }
 .ot-grid-auto-m { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--ot-spacing-m); }
-.ot-grid-auto-l { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ot-spacing-l); }
+.ot-grid-auto-l { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ot-spacing-m); }
 
 /* Scrollbar - opt-in tanke skrol regije */
 .ot-scrollbar { overflow: auto; scrollbar-width: thin; scrollbar-color: var(--ot-bg-4) var(--ot-bg-1); }
@@ -35,5 +35,21 @@
 .ot-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .ot-clamp-4 { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
-.ot-flex-vertical { display: flex; gap: var(--ot-spacing-l); flex-direction: column; }
+/* Flex */
+
+.ot-flex-vertical { display: flex; flex-direction: column; gap: var(--ot-spacing-l); }
 .ot-flex-horizontal { display: flex; gap: var(--ot-spacing-l); }
+.ot-flex-between { display: flex; align-items: center; justify-content: space-between; gap: var(--ot-spacing-m); }
+.ot-flex-center { display: flex; align-items: center; justify-content: center; gap: var(--ot-spacing-m); }
+.ot-flex-start { display: flex; align-items: center; gap: var(--ot-spacing-m); }
+.ot-flex-end { display: flex; align-items: center; justify-content: flex-end; gap: var(--ot-spacing-m); }
+.ot-flex-wrap { display: flex; flex-wrap: wrap; gap: var(--ot-spacing-m); }
+.ot-flex-1 { flex: 1; min-width: 0; }
+
+/* Gap overrides */
+
+.ot-gap-0 { gap: 0; }
+.ot-gap-x { gap: var(--ot-spacing-x); }
+.ot-gap-s { gap: var(--ot-spacing-s); }
+.ot-gap-m { gap: var(--ot-spacing-m); }
+.ot-gap-l { gap: var(--ot-spacing-l); }

@@ -1,7 +1,7 @@
 import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
-database.Fn('update', async function(item, {connection = 'primary', language = null, languages = null} = {})
+database.Fn('update', async function(item, {connection = 'primary', language = null, languages = null, whitelist = null} = {})
 {
 	const { knex, table } = database.Fn('connection', item.addon, connection);
 	const fields = {};
@@ -17,6 +17,12 @@ database.Fn('update', async function(item, {connection = 'primary', language = n
 		const parsed = onetype.DataParseConfig(field.define);
 
 		if(parsed.virtual)
+		{
+			skip.add(field.name);
+			continue;
+		}
+
+		if(whitelist && !whitelist.includes(field.name))
 		{
 			skip.add(field.name);
 			continue;

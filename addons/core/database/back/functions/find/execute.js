@@ -3,6 +3,11 @@ import database from '#database/addon.js';
 
 database.Fn('find.execute', async function(query)
 {
+	if(query.impossible)
+	{
+		return [];
+	}
+
 	const from = query.from || query.table.name;
 	const knex = query.knex(from);
 
