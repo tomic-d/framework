@@ -300,7 +300,7 @@ const logged = onetype.Pipeline('logged', {in: {}, out: {}});
 logged.Join('step', 10, {
     callback: async function(properties, resolve)
     {
-        console.log('[step] this.id =', this.id);
+        console.log('[step] this.id.trace =', this.id.trace, 'root =', this.id.root, 'parent =', this.id.parent);
         this.log('started');
         this.log('processing item 1');
         this.log('processing item 2');
@@ -389,5 +389,126 @@ testsResult.results.forEach(r =>
 {
     console.log(' -', r.passed ? 'PASS' : 'FAIL', r.name, 'code=' + r.code);
 });
+
+/* Test 10: Nested pipelines — trace/parent/root propagation */
+
+console.log('\n─── NESTED TRACE TEST ───');
+
+const inner = onetype.Pipeline('inner', {in: {}, out: {}});
+
+inner.Join('step', 10, {
+    callback: async function(properties, resolve)
+    {
+        console.log('[inner] trace =', this.id.trace, 'parent =', this.id.parent, 'root =', this.id.root);
+        resolve({inner: true});
+    }
+});
+
+const outer = onetype.Pipeline('outer', {in: {}, out: {}});
+
+outer.Join('step', 10, {
+    callback: async function(properties, resolve)
+    {
+        console.log('[outer] trace =', this.id.trace, 'parent =', this.id.parent, 'root =', this.id.root);
+
+        await this.Pipeline('inner', {});
+
+        resolve({outer: true});
+    }
+});
+
+await onetype.PipelineRun('outer', {});
+
+/* Test 11: Nested running registry — child appears under root */
+
+console.log('\n─── NESTED REGISTRY TEST ───');
+
+const child = onetype.Pipeline('child', {in: {}, out: {}});
+
+child.Join('step', 10, {
+    callback: async function(properties, resolve)
+    {
+        const running = onetype.PipelineRunning();
+        const keys    = Object.keys(running);
+
+        console.log('[child] running roots =', keys.length);
+
+        if(keys.length === 1)
+        {
+            const root = running[keys[0]];
+
+            console.log('[child] root pipeline =', root.pipeline, 'children =', root.children.length);
+
+            if(root.children.length > 0)
+            {
+                console.log('[child] child pipeline =', root.children[0].pipeline);
+            }
+        }
+
+        const found = onetype.PipelineRunningFind(this.id.trace);
+
+        console.log('[child] find by trace =', found ? found.pipeline : null);
+
+        resolve({});
+    }
+});
+
+const parent = onetype.Pipeline('parent', {in: {}, out: {}});
+
+parent.Join('step', 10, {
+    callback: async function(properties, resolve)
+    {
+        await this.Pipeline('child', {});
+        resolve({});
+    }
+});
+
+await onetype.PipelineRun('parent', {});
+
+/* Test 12: Nested must skip own wrap */
+
+console.log('\n─── NESTED WRAP SKIP TEST ───');
+
+let outerWrapRan = 0;
+let innerWrapRan = 0;
+
+const outerWrap = onetype.Pipeline('outer-wrap', {
+    wrap: (run) =>
+    {
+        outerWrapRan++;
+        return run({tx: 'outer'});
+    },
+    in: {}, out: {}
+});
+
+outerWrap.Join('step', 10, {
+    callback: async function(properties, resolve)
+    {
+        console.log('[outer-wrap] wrap =', properties, 'context.wrap =', this.wrap);
+        await this.Pipeline('inner-wrap', {});
+        resolve({});
+    }
+});
+
+const innerWrap = onetype.Pipeline('inner-wrap', {
+    wrap: (run) =>
+    {
+        innerWrapRan++;
+        return run({tx: 'inner'});
+    },
+    in: {}, out: {}
+});
+
+innerWrap.Join('step', 10, {
+    callback: async function(properties, resolve)
+    {
+        console.log('[inner-wrap] context.wrap =', this.wrap);
+        resolve({});
+    }
+});
+
+await onetype.PipelineRun('outer-wrap', {});
+
+console.log('outer wrap ran:', outerWrapRan, '(expect 1) | inner wrap ran:', innerWrapRan, '(expect 0 — nested inherits parent tx)');
 
 process.exit(0);
