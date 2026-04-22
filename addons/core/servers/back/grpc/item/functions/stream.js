@@ -5,7 +5,7 @@ serversGRPC.Fn('item.stream', function(item, stream)
 {
     stream.id = onetype.GenerateUID();
 
-    stream.request = function(name, data, onChunk = null, id = null)
+    stream.request = function(name, data, onChunk = null, id = null, timeout = 60000)
     {
         id = id || onetype.GenerateUID();
 
@@ -18,7 +18,7 @@ serversGRPC.Fn('item.stream', function(item, stream)
 
         item.Get('onStreamRequest') && item.Get('onStreamRequest').call(item, stream, {type: 'request', name, data, binaries: extracted.binaries, id});
 
-        return item.Fn('resolve', id, null, onChunk);
+        return item.Fn('resolve', id, null, onChunk, timeout);
     };
 
     stream.respond = function(data, message, code, end = true, id = null)

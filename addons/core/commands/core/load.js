@@ -3,7 +3,10 @@ import commands from '#commands/core/addon.js';
 
 /* Core */
 import '#commands/core/item/functions/run.js';
+import '#commands/core/item/functions/test.js';
+import '#commands/core/item/functions/tests.js';
 import '#commands/core/functions/run.js';
+import '#commands/core/functions/tests.js';
 
 /* Back */
 import '#commands/back/functions/grpc/server.js';
@@ -27,17 +30,10 @@ onetype.$ot.command = async function(id, properties = {}, api = false, context =
 
 	if(!command)
 	{
-		throw onetype.Error(404, 'Command :id: not found.', {id});
+		return { data: null, message: 'Command ' + id + ' not found.', code: 404 };
 	}
 
-	const result = await command.Fn('run', properties, onChunk, context);
-
-	if(result.code !== 200)
-	{
-		throw onetype.Error(result.code, result.message);
-	}
-
-	return result.data;
+	return await command.Fn('run', properties, onChunk, context);
 };
 
 export default commands;

@@ -42,7 +42,9 @@ onetype.AddonReady('directives', function(directives)
 				{
 					try
 					{
-						attributes.data[toCamel(attr.name.substring(1))] = onetype.Function(attr.value, compile.data, false);
+						const evaluated = onetype.Function(attr.value, compile.data, false);
+
+						attributes.data[toCamel(attr.name.substring(1))] = evaluated;
 					}
 					catch(error)
 					{
@@ -68,7 +70,7 @@ onetype.AddonReady('directives', function(directives)
 						if(slot)
 						{
 							child.removeAttribute('slot');
-							slots[slot] = { html: child.outerHTML, data: compile.data };
+							slots[slot] = { html: child.outerHTML, context: () => Object.assign({}, item.GetData(), compile.data) };
 						}
 					}
 				});

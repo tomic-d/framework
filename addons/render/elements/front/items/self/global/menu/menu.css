@@ -33,7 +33,7 @@
 	display: flex;
 	align-items: center;
 	gap: var(--ot-spacing-s);
-	padding: 0 var(--ot-spacing-s);
+	padding: var(--ot-spacing-s);
 	min-height: var(--ot-height-m);
 	background: transparent;
 	border: none;

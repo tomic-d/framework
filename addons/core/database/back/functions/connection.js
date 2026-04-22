@@ -3,7 +3,7 @@ import database from '#database/addon.js';
 
 database.Fn('connection', function(addon, connection = 'primary')
 {
-	const knex = database.ItemGet(connection)?.Get('connection');
+	const knex = typeof connection === 'string' ? database.ItemGet(connection)?.Get('connection') : connection;
 	const table = addon.Table();
 
 	if(!knex)

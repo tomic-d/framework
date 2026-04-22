@@ -344,7 +344,13 @@ onetype.AddonReady('elements', (elements) =>
 				{
 					const val = props[key];
 
-					if(typeof val === 'string')
+					if(typeof val === 'function')
+					{
+						const ref = '__fn_' + field.key + '_' + key;
+						this[ref] = val;
+						attrs += ` :${key}="${ref}"`;
+					}
+					else if(typeof val === 'string')
 					{
 						attrs += ` ${key}="${val}"`;
 					}

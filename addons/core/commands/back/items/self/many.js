@@ -1,4 +1,3 @@
-import onetype from '#framework/load.js';
 import commands from '#commands/core/addon.js';
 
 commands.Item({
@@ -57,8 +56,8 @@ commands.Item({
                     description: item.Get('description'),
                 },
                 data: {
-                    in: (item.Get('in') ? onetype.DataConfig(item.Get('in')) : null),
-                    out: (item.Get('out') ? onetype.DataConfig(item.Get('out')) : null)
+                    in:  item.Get('in'),
+                    out: item.Get('out')
                 },
                 api: {
                     type: item.Get('type'),
