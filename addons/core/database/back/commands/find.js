@@ -91,6 +91,7 @@ onetype.AddonReady('commands', (commands) =>
 			},
 			total: ['number'],
 			page: ['number'],
+			pages: ['number'],
 			limit: ['number'],
 			value: ['number'],
 			data: {

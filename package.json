@@ -22,7 +22,8 @@
         "./sources": "./addons/modules/sources/back/load.js",
         "./variables": "./addons/modules/variables/core/load.js",
         "./ai": "./addons/ai/load.js",
-        "./services/cloudflare/images": "./addons/services/cloudflare/images/back/load.js"
+        "./services/cloudflare/images": "./addons/services/cloudflare/images/back/load.js",
+        "./services/playwright": "./addons/services/playwright/back/load.js"
     },
     "imports": {
         "#framework/*": "./lib/*",
@@ -40,7 +41,8 @@
         "#sources/*": "./addons/modules/sources/*",
         "#variables/*": "./addons/modules/variables/*",
         "#ai/*": "./addons/ai/*",
-        "#cloudflare-images/*": "./addons/services/cloudflare/images/back/*"
+        "#cloudflare-images/*": "./addons/services/cloudflare/images/back/*",
+        "#playwright/*": "./addons/services/playwright/*"
     },
     "dependencies": {
         "@grpc/grpc-js": "^1.13.3",
@@ -51,6 +53,7 @@
         "knex": "^3.1.0",
         "linkedom": "^0.18.9",
         "pg": "^8.13.3",
+        "playwright": "^1.59.1",
         "terser": "^5.37.0"
     },
     "author": "Dejan Tomic <hi@iamdejan.com>",

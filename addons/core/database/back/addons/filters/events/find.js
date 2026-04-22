@@ -3,10 +3,9 @@ import database from '#database/addon.js';
 
 onetype.EmitOn('@database.find', ({ methods, query }) =>
 {
-	query.filters = [];
+	query.filters = { kind: 'group', type: 'AND', children: [] };
 	query.impossible = false;
 
-	const group = query._filterGroup || 'default';
 	const validation = database.Fn('validation');
 
 	const operators = [
@@ -16,7 +15,7 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 		'CONTAINS', 'CONTAINED', 'HAS'
 	];
 
-	function push(field, value, operator, type)
+	function push(group, field, value, operator, type)
 	{
 		const normalized = operator.toUpperCase();
 
@@ -51,30 +50,53 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 			validation.value(value);
 		}
 
-		query.filters.push({ field, value, operator: normalized, type, group });
+		group.children.push({ kind: 'filter', field, value, operator: normalized, type });
+	}
+
+	function scope(group, parent)
+	{
+		const frame = {};
+
+		frame.filter = (field, value, operator = 'EQUALS') =>
+		{
+			push(group, field, value, operator, 'AND');
+			return frame;
+		};
+
+		frame.orFilter = (field, value, operator = 'EQUALS') =>
+		{
+			push(group, field, value, operator, 'OR');
+			return frame;
+		};
+
+		frame.group = (type = 'AND') =>
+		{
+			const child = { kind: 'group', type, children: [] };
+			group.children.push(child);
+			return scope(child, frame);
+		};
+
+		frame.end = () => parent;
+
+		return frame;
 	}
 
 	methods.filter = (field, value, operator = 'EQUALS') =>
 	{
-		push(field, value, operator, 'AND');
+		push(query.filters, field, value, operator, 'AND');
 		return methods;
 	};
 
 	methods.orFilter = (field, value, operator = 'EQUALS') =>
 	{
-		push(field, value, operator, 'OR');
+		push(query.filters, field, value, operator, 'OR');
 		return methods;
 	};
 
 	methods.group = (type = 'AND') =>
 	{
-		const id = onetype.GenerateTID();
-		query.filters.push({ groupStart: true, group: id, type });
-
-		const child = { ...query, _filterGroup: id };
-		child.filters = query.filters;
-		child.addon = query.addon;
-
-		return database.Fn('find.methods', child, methods);
+		const child = { kind: 'group', type, children: [] };
+		query.filters.children.push(child);
+		return scope(child, methods);
 	};
 });

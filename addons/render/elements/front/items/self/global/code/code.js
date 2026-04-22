@@ -5,14 +5,14 @@ onetype.AddonReady('elements', (elements) =>
 	const LANG_JS = {
 		keywords: /\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|class|extends|super|this|typeof|instanceof|in|of|try|catch|finally|throw|async|await|import|from|export|default|null|undefined|true|false|void|delete|yield|static)\b/g,
 		comment: /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g,
-		string: /(`(?:[^`\\]|\\.)*`|'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")/g,
+		string: /(`(?:[^`\\]|\\.)*`|'(?:[^'\\]|\\.)*'|&quot;(?:(?!&quot;)[^\\]|\\.)*&quot;)/g,
 		number: /\b(\d+(\.\d+)?)\b/g,
 		fn: /\b([a-zA-Z_$][\w$]*)\s*(?=\()/g
 	};
 
 	const LANG_CSS = {
 		comment: /(\/\*[\s\S]*?\*\/)/g,
-		string: /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g,
+		string: /(&quot;(?:(?!&quot;)[^\\]|\\.)*&quot;|'(?:[^'\\]|\\.)*')/g,
 		selector: /([.#]?[a-zA-Z_-][\w-]*(?:\s*[>+~]\s*[.#]?[a-zA-Z_-][\w-]*)*)(?=\s*\{)/g,
 		prop: /([a-zA-Z-]+)(?=\s*:)/g,
 		number: /\b(\d+(\.\d+)?(px|em|rem|vh|vw|%|s|ms)?)\b/g
@@ -26,7 +26,7 @@ onetype.AddonReady('elements', (elements) =>
 	};
 
 	const LANG_JSON = {
-		string: /("(?:[^"\\]|\\.)*")/g,
+		string: /(&quot;(?:(?!&quot;)[^\\]|\\.)*&quot;)/g,
 		number: /(-?\d+(\.\d+)?([eE][+-]?\d+)?)/g,
 		keyword: /\b(true|false|null)\b/g
 	};
@@ -34,14 +34,14 @@ onetype.AddonReady('elements', (elements) =>
 	const LANG_PYTHON = {
 		keywords: /\b(def|class|return|if|elif|else|for|while|import|from|as|pass|break|continue|try|except|finally|raise|with|lambda|yield|global|nonlocal|in|is|not|and|or|None|True|False|self)\b/g,
 		comment: /(#[^\n]*)/g,
-		string: /("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g,
+		string: /(&quot;&quot;&quot;[\s\S]*?&quot;&quot;&quot;|'''[\s\S]*?'''|&quot;(?:(?!&quot;)[^\\]|\\.)*&quot;|'(?:[^'\\]|\\.)*')/g,
 		number: /\b(\d+(\.\d+)?)\b/g,
 		fn: /\b([a-zA-Z_][\w]*)\s*(?=\()/g
 	};
 
 	const LANG_BASH = {
 		comment: /(#[^\n]*)/g,
-		string: /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g,
+		string: /(&quot;(?:(?!&quot;)[^\\]|\\.)*&quot;|'(?:[^'\\]|\\.)*')/g,
 		variable: /(\$\w+|\$\{[^}]+\})/g,
 		flag: /(\s)(-{1,2}[\w-]+)/g,
 		command: /^(\s*)([a-zA-Z_][\w-]*)/gm
@@ -58,16 +58,28 @@ onetype.AddonReady('elements', (elements) =>
 			.replace(/"/g, '&quot;');
 	};
 
+	const toKey = (n) =>
+	{
+		const map = 'abcdefghij';
+		return String(n).split('').map((d) => map[parseInt(d)]).join('');
+	};
+
+	const fromKey = (key) =>
+	{
+		const map = 'abcdefghij';
+		return parseInt(key.split('').map((c) => map.indexOf(c)).join(''));
+	};
+
 	const stash = (placeholders, html) =>
 	{
 		const index = placeholders.length;
 		placeholders.push(html);
-		return '\u0000ph' + index + 'hp\u0000';
+		return '\u0001' + toKey(index) + '\u0002';
 	};
 
 	const unstash = (code, placeholders) =>
 	{
-		return code.replace(/\u0000ph(\d+)hp\u0000/g, (m, i) => placeholders[parseInt(i)]);
+		return code.replace(/\u0001([a-j]+)\u0002/g, (m, key) => placeholders[fromKey(key)]);
 	};
 
 	/* ===== TOKENIZERS ===== */

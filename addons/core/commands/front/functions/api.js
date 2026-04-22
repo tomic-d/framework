@@ -14,17 +14,13 @@ commands.Fn('api', async function(id, data = {})
 
         if(result.code !== 200)
         {
-            throw new Error(result.message);
+            return { data: null, message: result.message, code: result.code };
         }
 
-        return { time: result.time, ...result.data };
+        return result.data;
     }
     catch(error)
     {
-        return {
-            data: null,
-            message: error.message,
-            code: 500
-        };
+        return { data: null, message: error.message, code: 500 };
     }
 });

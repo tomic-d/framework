@@ -39,7 +39,7 @@ onetype.AddonReady('elements', (elements) =>
 					config:
 					{
 						label: { type: 'string', description: 'Display text.' },
-						value: { type: 'string', description: 'Option value.' },
+						value: { type: 'string|number', description: 'Option value.' },
 						icon: { type: 'string', description: 'Option icon.' },
 						description: { type: 'string', description: 'Secondary text.' },
 						disabled: { type: 'boolean', description: 'Disabled option.' }

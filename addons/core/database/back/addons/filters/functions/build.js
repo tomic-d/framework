@@ -1,8 +1,8 @@
 import filters from '../addon.js';
 
-filters.Fn('build', function(knex, list)
+filters.Fn('build', function(knex, root)
 {
-	if(!list.length)
+	if(!root || !root.children || !root.children.length)
 	{
 		return;
 	}
@@ -70,46 +70,30 @@ filters.Fn('build', function(knex, list)
 		}
 	}
 
-	const groups = {};
-
-	list.forEach(filter =>
+	function walk(group, query, index)
 	{
-		if(!groups[filter.group])
+		if(!group.children.length)
 		{
-			groups[filter.group] = { type: 'AND', filters: [] };
+			return;
 		}
 
-		if(filter.groupStart)
-		{
-			groups[filter.group].type = filter.type;
-		}
-		else
-		{
-			groups[filter.group].filters.push(filter);
-		}
-	});
+		const method = index === 0 ? 'where' : (group.type === 'OR' ? 'orWhere' : 'where');
 
-	knex.where(function()
-	{
-		let first = true;
-
-		Object.entries(groups).forEach(([id, group]) =>
+		query[method](function()
 		{
-			if(!group.filters.length)
+			group.children.forEach((child, childIndex) =>
 			{
-				return;
-			}
-
-			const method = first ? 'where' : (group.type === 'OR' ? 'orWhere' : 'andWhere');
-			first = false;
-
-			this[method](function()
-			{
-				group.filters.forEach((filter, i) =>
+				if(child.kind === 'filter')
 				{
-					apply(this, filter, i);
-				});
+					apply(this, child, childIndex);
+				}
+				else
+				{
+					walk(child, this, childIndex);
+				}
 			});
 		});
-	});
+	}
+
+	walk(root, knex, 0);
 });

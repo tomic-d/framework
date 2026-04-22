@@ -4,7 +4,7 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'global-markdown',
 		icon: 'article',
 		name: 'Markdown',
-		description: 'Markdown renderer with premium typography and collapsible read more.',
+		description: 'Markdown renderer with premium typography, code blocks via global-code, collapsible read more.',
 		category: 'Global',
 		config:
 		{
@@ -46,6 +46,26 @@ onetype.AddonReady('elements', (elements) =>
 				each: { type: 'string' },
 				options: ['border'],
 				description: 'Visual modifiers.'
+			},
+			codeBackground:
+			{
+				type: 'string',
+				value: 'bg-2',
+				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				description: 'Background for code blocks.'
+			},
+			codeSize:
+			{
+				type: 'string',
+				value: 'm',
+				options: ['s', 'm', 'l'],
+				description: 'Size for code blocks.'
+			},
+			codeLines:
+			{
+				type: 'boolean',
+				value: true,
+				description: 'Show line numbers in code blocks.'
 			}
 		},
 		render: function()
@@ -54,7 +74,26 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.Compute(() =>
 			{
-				this.html = this.content ? onetype.Markdown(this.content) : '';
+				const parts = (this.content || '').split(/```(\w*)\n([\s\S]*?)```/g);
+
+				this.segments = [];
+
+				for(let i = 0; i < parts.length; i += 3)
+				{
+					const text = parts[i];
+					const language = parts[i + 1];
+					const source = parts[i + 2];
+
+					if(text && text.trim())
+					{
+						this.segments.push({ type: 'html', content: onetype.Markdown(text) });
+					}
+
+					if(source !== undefined)
+					{
+						this.segments.push({ type: 'code', language: language || 'text', source: source.replace(/^\n+|\n+$/g, '') });
+					}
+				}
 			});
 
 			/* ===== CLASSES ===== */
@@ -101,7 +140,19 @@ onetype.AddonReady('elements', (elements) =>
 						class="body"
 						:style="collapsible && !expanded ? 'max-height: ' + maxHeight + 'px' : ''"
 					>
-						<div class="prose"><span ot-html="html"></span></div>
+						<div class="prose">
+							<div ot-for="segment in segments" class="segment">
+								<div ot-if="segment.type === 'html'" ot-html="segment.content"></div>
+								<e-global-code
+									ot-if="segment.type === 'code'"
+									:source="segment.source"
+									:language="segment.language"
+									:lines="codeLines"
+									:background="codeBackground"
+									:size="codeSize"
+								></e-global-code>
+							</div>
+						</div>
 					</div>
 					<div ot-if="collapsible && !expanded" class="fade"></div>
 					<button ot-if="collapsible" type="button" class="toggle" ot-click="toggle">

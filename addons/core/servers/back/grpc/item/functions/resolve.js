@@ -2,15 +2,15 @@ import serversGRPC from '#servers/grpc/addon.js';
 
 const promises = {};
 
-serversGRPC.Fn('item.resolve', function(item, id, payload = null, onChunk = null)
+serversGRPC.Fn('item.resolve', function(item, id, payload = null, onChunk = null, timeoutMs = 60000)
 {
     if(payload === null)
     {
         const timeout = setTimeout(() =>
         {
-            promises[id].resolve({data: null, message: 'Request timed out after 60 seconds. No response received.', code: 500, id, time: 60000});
+            promises[id].resolve({data: null, message: 'Request timed out after ' + timeoutMs + 'ms. No response received.', code: 408, id, time: timeoutMs});
             delete(promises[id]);
-        }, 60000);
+        }, timeoutMs);
 
         return new Promise((resolve) =>
         {

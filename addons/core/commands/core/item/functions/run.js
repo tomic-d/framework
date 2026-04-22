@@ -23,11 +23,11 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
             {
                 try
                 {
-                    data = onetype.DataDefine(data, item.Get('out'));
+                    data = onetype.DataDefine(data, onetype.DataConfig(item.Get('out')), true);
                 }
                 catch(error)
                 {
-                    throw onetype.Error(500, 'Command OUT error.', {command: item.Get('id')});
+                    throw onetype.Error(500, 'Command :command: OUT error: :reason:', {command: item.Get('id'), reason: error.message});
                 }
             }
 
@@ -54,15 +54,15 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
         {
             if(item.Get('in'))
             {
-                try 
+                try
                 {
-                    properties = onetype.DataDefine(properties, item.Get('in'));
+                    properties = onetype.DataDefine(properties, onetype.DataConfig(item.Get('in')), true);
                 }
                 catch(error)
                 {
                     return resolve({
-                        data: error.message, 
-                        message: 'Request contains invalid parameters.', 
+                        data: error.message,
+                        message: 'Command ' + item.Get('id') + ' invalid input: ' + error.message,
                         code: 400,
                         time: (performance.now() - startTime).toFixed(2),
                         end: true

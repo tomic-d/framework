@@ -11,6 +11,7 @@ import '#database/events/connection.js';
 /* Functions */
 import '#database/functions/validation.js';
 import '#database/functions/connection.js';
+import '#database/functions/transaction.js';
 import '#database/functions/create.js';
 import '#database/functions/update.js';
 import '#database/functions/delete.js';
