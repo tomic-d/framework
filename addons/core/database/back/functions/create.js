@@ -27,7 +27,7 @@ database.Fn('create', async function(item, {connection = 'primary', language = n
 		}
 		catch(error)
 		{
-			throw onetype.Error(500, 'Field :1: error: :2:.', field.name, error.message);
+			throw onetype.Error(500, 'Field :field: error: :reason:.', { field: field.name, reason: error.message });
 		}
 	});
 
