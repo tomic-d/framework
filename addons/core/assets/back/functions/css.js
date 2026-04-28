@@ -1,19 +1,19 @@
 import assets from '../addon.js';
 
-assets.Fn('css', function()
+assets.Fn('css', function(context = {})
 {
     const css = [];
     const items = Object.values(this.Items()).filter(item => item.Get('type') === 'css').sort((a, b) => a.Get('order') - b.Get('order'));
-    
-    items.forEach((item) => 
+
+    items.forEach((item) =>
     {
         if(item.Get('content'))
         {
             if(typeof item.Get('content') === 'function')
             {
-                css.push(item.Get('content')());
+                css.push(item.Get('content').call(context));
             }
-            else 
+            else
             {
                 css.push(item.Get('content'));
             }

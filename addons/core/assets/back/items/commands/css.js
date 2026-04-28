@@ -11,7 +11,7 @@ onetype.AddonReady('commands', (commands) =>
         type: 'CSS',
         callback: async function(properties, resolve)
         {
-            resolve(await assets.Fn('css'));
+            resolve(await assets.Fn('css', {http: this.http}));
         }
     });
 });
