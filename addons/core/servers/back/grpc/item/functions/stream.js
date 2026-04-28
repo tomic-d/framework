@@ -35,6 +35,20 @@ serversGRPC.Fn('item.stream', function(item, stream)
         item.Get('onStreamRespond') && item.Get('onStreamRespond').call(item, stream, {type: 'respond', data, binaries: extracted.binaries, message, code, end, id});
     };
 
+    stream.event = function(name, data, id = null)
+    {
+        id = id || onetype.GenerateUID();
+
+        const extracted = onetype.BinariesExtract(data);
+
+        stream.write({
+            data: JSON.stringify({type: 'event', name, data: extracted.data, id}),
+            binaries: extracted.binaries
+        });
+
+        item.Get('onStreamEvent') && item.Get('onStreamEvent').call(item, stream, {type: 'event', name, data, binaries: extracted.binaries, id});
+    };
+
     stream.on('data', (response) =>
     {
         const payload = JSON.parse(response.data);
