@@ -121,7 +121,7 @@ onetype.AddonReady('directives', function(directives)
 
 					if(result === false)
 					{
-						compile.data.Update();
+						item.Update();
 						return;
 					}
 				}
@@ -131,14 +131,14 @@ onetype.AddonReady('directives', function(directives)
 					state.data = submitData;
 					config.onSuccess && await config.onSuccess(submitData);
 					config.reset && form.reset();
-					compile.data.Update();
+					item.Update();
 					return;
 				}
 
 				state.loading = true;
 				state.message = null;
 				state.code = null;
-				compile.data.Update();
+				item.Update();
 
 				try
 				{
@@ -160,7 +160,7 @@ onetype.AddonReady('directives', function(directives)
 					if(!response.ok)
 					{
 						config.onError && config.onError(state);
-						compile.data.Update();
+						item.Update();
 						return;
 					}
 
@@ -185,7 +185,7 @@ onetype.AddonReady('directives', function(directives)
 				}
 				finally
 				{
-					compile.data.Update();
+					item.Update();
 				}
 			};
 
