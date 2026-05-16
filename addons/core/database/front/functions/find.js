@@ -226,7 +226,7 @@ database.Fn('find', function(addon, language)
 			throw onetype.Error(result.code, result.message);
 		}
 
-		return result.data;
+		return result.data.data;
 	};
 
 	return methods;

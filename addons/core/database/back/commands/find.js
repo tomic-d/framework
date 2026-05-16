@@ -182,12 +182,12 @@ onetype.AddonReady('commands', (commands) =>
 			{
 				const { field, interval, aggregate, value } = properties.metrics;
 				const data = await find.metrics(field, interval, aggregate, value);
-				return resolve(data);
+				return resolve({ data });
 			}
 
 			const result = await find.plain();
 
-			if(expose.select)
+			if(expose.select && expose.select.length)
 			{
 				const allowed = properties.select?.length
 					? properties.select.filter(field => expose.select.includes(field))

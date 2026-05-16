@@ -29,7 +29,7 @@ onetype.AddonReady('elements', (elements) =>
 			background:
 			{
 				type: 'string',
-				value: 'bg-1',
+				value: 'bg-2',
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Background depth.'
 			},
