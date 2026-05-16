@@ -31,19 +31,8 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'array|function',
 				value: [],
-				each:
-				{
-					type: 'object',
-					config:
-					{
-						label: { type: 'string', description: 'Display text.' },
-						value: { type: 'string|number', description: 'Option value.' },
-						icon: { type: 'string', description: 'Option icon.' },
-						description: { type: 'string', description: 'Secondary text.' },
-						disabled: { type: 'boolean', description: 'Disabled option.' }
-					}
-				},
-				description: 'Array of {label, value} objects or async function returning the same.'
+				each: { type: 'object|string|number' },
+				description: 'Array of {label, value} objects (or strings/numbers, auto-wrapped) or async function returning the same.'
 			},
 			mode:
 			{
@@ -133,6 +122,19 @@ onetype.AddonReady('elements', (elements) =>
 				this.isSelect = this.mode === 'select';
 			});
 
+			this.normalize = (list) =>
+			{
+				return list.map(option =>
+				{
+					if(typeof option === 'object' && option !== null)
+					{
+						return option;
+					}
+
+					return { label: String(option), value: option };
+				});
+			};
+
 			/* ===== ASYNC OPTIONS ===== */
 
 			if(typeof this.options === 'function')
@@ -146,7 +148,7 @@ onetype.AddonReady('elements', (elements) =>
 					try
 					{
 						const result = await callback.call(this);
-						this.options = Array.isArray(result) ? result : [];
+						this.options = Array.isArray(result) ? this.normalize(result) : [];
 					}
 					catch(error)
 					{
@@ -156,6 +158,10 @@ onetype.AddonReady('elements', (elements) =>
 					this.loading = false;
 					this.Update();
 				});
+			}
+			else
+			{
+				this.options = this.normalize(this.options);
 			}
 
 			/* ===== HELPERS ===== */
@@ -400,7 +406,7 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			this.handleKey = (event) =>
+			this.handleKey = ({ event }) =>
 			{
 				const filtered = this.filtered();
 

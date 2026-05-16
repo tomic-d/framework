@@ -16,16 +16,22 @@
 	gap: var(--ot-spacing-l);
 }
 
-.e-7d599f7d > .box.has-steps
+.e-7d599f7d > .box.has-steps.steps-vertical
 {
 	flex-direction: row;
 	align-items: flex-start;
 	gap: var(--ot-spacing-m);
 }
 
+.e-7d599f7d > .box.has-steps.steps-horizontal
+{
+	flex-direction: column;
+	gap: var(--ot-spacing-m);
+}
+
 /* Steps sidebar */
 
-.e-7d599f7d > .box > .steps
+.e-7d599f7d > .box.steps-vertical > .steps
 {
 	flex-shrink: 0;
 	width: 260px;
@@ -33,6 +39,11 @@
 	max-width: 260px;
 	position: sticky;
 	top: 0;
+}
+
+.e-7d599f7d > .box.steps-horizontal > .steps
+{
+	width: 100%;
 }
 
 /* Main */

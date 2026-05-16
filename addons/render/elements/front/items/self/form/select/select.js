@@ -33,19 +33,8 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'array|function',
 				value: [],
-				each:
-				{
-					type: 'object',
-					config:
-					{
-						label: { type: 'string', description: 'Display text.' },
-						value: { type: 'string|number', description: 'Option value.' },
-						icon: { type: 'string', description: 'Option icon.' },
-						description: { type: 'string', description: 'Secondary text.' },
-						disabled: { type: 'boolean', description: 'Disabled option.' }
-					}
-				},
-				description: 'List of options or async function returning options.'
+				each: { type: 'object|string|number' },
+				description: 'List of options or async function returning options. Strings/numbers auto-wrap to { label, value }.'
 			},
 			searchable:
 			{
@@ -93,7 +82,7 @@ onetype.AddonReady('elements', (elements) =>
 				description: 'Change handler. Receives { value }.'
 			}
 		},
-		render: async function()
+		render: function()
 		{
 			/* ===== STATE ===== */
 
@@ -103,27 +92,47 @@ onetype.AddonReady('elements', (elements) =>
 			this.activeIndex = 0;
 			this.loading = false;
 
+			this.normalize = (list) =>
+			{
+				return list.map(option =>
+				{
+					if(typeof option === 'object' && option !== null)
+					{
+						return option;
+					}
+
+					return { label: String(option), value: option };
+				});
+			};
+
 			/* ===== ASYNC OPTIONS ===== */
 
 			if(typeof this.options === 'function')
 			{
 				const callback = this.options;
-				
+
 				this.options = [];
 				this.loading = true;
-			
-				try
-				{
-					const result = await callback.call(this);
-					this.options = Array.isArray(result) ? result : [];
-				}
-				catch(error)
-				{
-					this.options = [];
-				}
 
-				this.loading = false;
-				this.Update();
+				this.OnInit(async () =>
+				{
+					try
+					{
+						const result = await callback.call(this);
+						this.options = Array.isArray(result) ? this.normalize(result) : [];
+					}
+					catch(error)
+					{
+						this.options = [];
+					}
+
+					this.loading = false;
+					this.Update();
+				});
+			}
+			else
+			{
+				this.options = this.normalize(this.options);
 			}
 
 			/* ===== CLASSES ===== */

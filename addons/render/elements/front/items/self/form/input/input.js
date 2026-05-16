@@ -213,8 +213,22 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* ===== HANDLERS ===== */
 
+			this.cast = (value) =>
+			{
+				if(this.type !== 'number')
+				{
+					return value;
+				}
+
+				const number = Number(value);
+
+				return Number.isFinite(number) ? number : null;
+			};
+
 			this.input = ({ event, value }) =>
 			{
+				value = this.cast(value);
+
 				this.value = value;
 				this.activeIndex = 0;
 
@@ -232,6 +246,8 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.change = ({ event, value }) =>
 			{
+				value = this.cast(value);
+
 				if(this.restrict && this.hasOptions && !this.options.includes(value))
 				{
 					this.value = '';

@@ -82,7 +82,7 @@ onetype.AddonReady('elements', (elements) =>
 			stepper:
 			{
 				type: 'object',
-				value: { background: 'bg-1', variant: ['border', 'connected'] },
+				value: { background: 'bg-1', variant: ['border', 'connected'], orientation: 'vertical' },
 				config:
 				{
 					background:
@@ -98,6 +98,13 @@ onetype.AddonReady('elements', (elements) =>
 						value: ['border', 'connected'],
 						each: { type: 'string' },
 						description: 'Steps visual modifiers.'
+					},
+					orientation:
+					{
+						type: 'string',
+						value: 'vertical',
+						options: ['vertical', 'horizontal'],
+						description: 'Stepper layout direction.'
 					}
 				},
 				description: 'Steps sidebar appearance.'
@@ -217,6 +224,7 @@ onetype.AddonReady('elements', (elements) =>
 				if(this.hasSteps)
 				{
 					list.push('has-steps');
+					list.push('steps-' + this.stepper.orientation);
 				}
 
 				return list.join(' ');
@@ -413,7 +421,7 @@ onetype.AddonReady('elements', (elements) =>
 						<e-navigation-steps
 							:items="steps"
 							:active="activeStep"
-							orientation="vertical"
+							:orientation="stepper.orientation"
 							:background="stepper.background"
 							:variant="stepper.variant"
 							:_change="selectStep"
