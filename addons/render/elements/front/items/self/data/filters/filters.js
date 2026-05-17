@@ -114,6 +114,7 @@ onetype.AddonReady('elements', (elements) =>
 			this.state = this.value ? { ...this.value } : {};
 			this.collapsed = {};
 			this.expanded = {};
+			this.searches = {};
 
 			this.groups.forEach(group =>
 			{
@@ -269,6 +270,29 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
+			this.setSearch = (groupId, value) =>
+			{
+				this.searches[groupId] = value;
+				this.Update();
+			};
+
+			this.filterOptions = (group) =>
+			{
+				const query = this.searches[group.id];
+
+				if(!query)
+				{
+					return group.options;
+				}
+
+				const lower = String(query).toLowerCase();
+
+				return group.options.filter(option =>
+				{
+					return String(option.label).toLowerCase().includes(lower);
+				});
+			};
+
 			this.toggleCheckbox = (group, optionId) =>
 			{
 				const current = Array.isArray(this.state[group.id]) ? [...this.state[group.id]] : [];
@@ -374,7 +398,15 @@ onetype.AddonReady('elements', (elements) =>
 
 								<!-- CHECKBOX -->
 								<div ot-if="group.type === 'checkbox'" class="options">
-									<div ot-for="option, index in group.options" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
+									<e-form-input
+										ot-if="group.searchable"
+										:value="searches[group.id] || ''"
+										:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
+										icon="search"
+										background="bg-2"
+										:_change="({ value }) => setSearch(group.id, value)"
+									></e-form-input>
+									<div ot-for="option, index in filterOptions(group)" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
 										<e-form-checkbox
 											:label="option.label"
 											:icon="option.icon || ''"
@@ -387,19 +419,27 @@ onetype.AddonReady('elements', (elements) =>
 									</div>
 
 									<button
-										ot-if="group.max && group.options.length > group.max"
+										ot-if="group.max && filterOptions(group).length > group.max"
 										type="button"
 										class="show-more"
 										ot-click="() => toggleExpand(group.id)"
 									>
 										<i>{{ expanded[group.id] ? 'expand_less' : 'expand_more' }}</i>
-										<span>{{ expanded[group.id] ? 'Show less' : 'Show ' + (group.options.length - group.max) + ' more' }}</span>
+										<span>{{ expanded[group.id] ? 'Show less' : 'Show ' + (filterOptions(group).length - group.max) + ' more' }}</span>
 									</button>
 								</div>
 
 								<!-- RADIO -->
 								<div ot-if="group.type === 'radio'" class="options">
-									<div ot-for="option, index in group.options" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
+									<e-form-input
+										ot-if="group.searchable"
+										:value="searches[group.id] || ''"
+										:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
+										icon="search"
+										background="bg-2"
+										:_change="({ value }) => setSearch(group.id, value)"
+									></e-form-input>
+									<div ot-for="option, index in filterOptions(group)" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
 										<e-form-radio
 											:label="option.label"
 											:icon="option.icon || ''"
@@ -412,13 +452,13 @@ onetype.AddonReady('elements', (elements) =>
 									</div>
 
 									<button
-										ot-if="group.max && group.options.length > group.max"
+										ot-if="group.max && filterOptions(group).length > group.max"
 										type="button"
 										class="show-more"
 										ot-click="() => toggleExpand(group.id)"
 									>
 										<i>{{ expanded[group.id] ? 'expand_less' : 'expand_more' }}</i>
-										<span>{{ expanded[group.id] ? 'Show less' : 'Show ' + (group.options.length - group.max) + ' more' }}</span>
+										<span>{{ expanded[group.id] ? 'Show less' : 'Show ' + (filterOptions(group).length - group.max) + ' more' }}</span>
 									</button>
 								</div>
 
