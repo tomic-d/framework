@@ -102,7 +102,7 @@
 
 .e-206433b8 > .box > input:focus-visible ~ .mark
 {
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
+	box-shadow: 0 0 0 1px var(--ot-brand-opacity);
 }
 
 /* Active */
@@ -310,22 +310,22 @@
 
 .e-206433b8 > .box.color-blue > input:focus-visible ~ .mark
 {
-	box-shadow: 0 0 0 3px var(--ot-blue-opacity);
+	box-shadow: 0 0 0 1px var(--ot-blue-opacity);
 }
 
 .e-206433b8 > .box.color-red > input:focus-visible ~ .mark
 {
-	box-shadow: 0 0 0 3px var(--ot-red-opacity);
+	box-shadow: 0 0 0 1px var(--ot-red-opacity);
 }
 
 .e-206433b8 > .box.color-orange > input:focus-visible ~ .mark
 {
-	box-shadow: 0 0 0 3px var(--ot-orange-opacity);
+	box-shadow: 0 0 0 1px var(--ot-orange-opacity);
 }
 
 .e-206433b8 > .box.color-green > input:focus-visible ~ .mark
 {
-	box-shadow: 0 0 0 3px var(--ot-green-opacity);
+	box-shadow: 0 0 0 1px var(--ot-green-opacity);
 }
 
 /* ===== ICON ===== */

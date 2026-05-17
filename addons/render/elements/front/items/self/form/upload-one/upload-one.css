@@ -36,7 +36,7 @@
 
 .e-37c1b86d > .box > .field:focus-within
 {
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
+	box-shadow: 0 0 0 1px var(--ot-brand-opacity);
 }
 
 /* Preview */

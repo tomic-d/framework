@@ -22,7 +22,7 @@
 .e-20dcefe9 > .box:focus-within
 {
 	border-color: var(--ot-brand);
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
+	box-shadow: 0 0 0 1px var(--ot-brand-opacity);
 }
 
 /* Field */
