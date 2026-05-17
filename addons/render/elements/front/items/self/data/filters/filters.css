@@ -270,6 +270,11 @@
 	gap: 2px;
 }
 
+.e-435be612 > .box > .groups > .group > .group-body > .options > .search
+{
+	margin-bottom: var(--ot-spacing-s);
+}
+
 /* Show more */
 
 .e-435be612 > .box > .groups > .group > .group-body > .options > .show-more
