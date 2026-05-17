@@ -34,7 +34,7 @@
 
 .e-64e877b > .box:hover { transform: translateY(-1px); }
 .e-64e877b > .box:active { transform: translateY(0) scale(0.97); transition-duration: 100ms; }
-.e-64e877b > .box:focus-visible { box-shadow: 0 0 0 3px var(--ot-brand-opacity); }
+.e-64e877b > .box:focus-visible { box-shadow: 0 0 0 1px var(--ot-brand-opacity); }
 
 /* Body */
 

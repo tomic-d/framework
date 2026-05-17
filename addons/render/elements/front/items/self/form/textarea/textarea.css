@@ -22,7 +22,7 @@
 
 .e-5973ffcd > .box:focus-within
 {
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
+	box-shadow: 0 0 0 1px var(--ot-brand-opacity);
 }
 
 /* Textarea */

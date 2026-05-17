@@ -78,7 +78,7 @@
 
 .e-180e0ca7 > .box > input:focus-visible ~ .track
 {
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
+	box-shadow: 0 0 0 1px var(--ot-brand-opacity);
 }
 
 /* Info */
@@ -152,10 +152,10 @@
 
 /* Focus per color */
 
-.e-180e0ca7 > .box.blue > input:focus-visible ~ .track { box-shadow: 0 0 0 3px var(--ot-blue-opacity); }
-.e-180e0ca7 > .box.red > input:focus-visible ~ .track { box-shadow: 0 0 0 3px var(--ot-red-opacity); }
-.e-180e0ca7 > .box.orange > input:focus-visible ~ .track { box-shadow: 0 0 0 3px var(--ot-orange-opacity); }
-.e-180e0ca7 > .box.green > input:focus-visible ~ .track { box-shadow: 0 0 0 3px var(--ot-green-opacity); }
+.e-180e0ca7 > .box.blue > input:focus-visible ~ .track { box-shadow: 0 0 0 1px var(--ot-blue-opacity); }
+.e-180e0ca7 > .box.red > input:focus-visible ~ .track { box-shadow: 0 0 0 1px var(--ot-red-opacity); }
+.e-180e0ca7 > .box.orange > input:focus-visible ~ .track { box-shadow: 0 0 0 1px var(--ot-orange-opacity); }
+.e-180e0ca7 > .box.green > input:focus-visible ~ .track { box-shadow: 0 0 0 1px var(--ot-green-opacity); }
 
 /* ===== SIZE ===== */
 

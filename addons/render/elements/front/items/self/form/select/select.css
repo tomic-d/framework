@@ -21,7 +21,7 @@
 
 .e-15ce864f > .box.open
 {
-	box-shadow: 0 0 0 3px var(--ot-brand-opacity);
+	box-shadow: 0 0 0 1px var(--ot-brand-opacity);
 }
 
 /* Trigger */
