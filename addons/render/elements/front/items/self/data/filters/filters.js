@@ -445,7 +445,7 @@ onetype.AddonReady('elements', (elements) =>
 											:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
 											icon="search"
 											background="bg-2"
-											:_change="({ value }) => setSearch(group.id, value)"
+											:_input="({ value }) => setSearch(group.id, value)"
 										></e-form-input>
 									</div>
 									<div ot-for="option, index in filterOptions(group)" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
@@ -480,7 +480,7 @@ onetype.AddonReady('elements', (elements) =>
 											:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
 											icon="search"
 											background="bg-2"
-											:_change="({ value }) => setSearch(group.id, value)"
+											:_input="({ value }) => setSearch(group.id, value)"
 										></e-form-input>
 									</div>
 									<div ot-for="option, index in filterOptions(group)" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
