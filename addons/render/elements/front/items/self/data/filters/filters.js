@@ -115,6 +115,8 @@ onetype.AddonReady('elements', (elements) =>
 			this.collapsed = {};
 			this.expanded = {};
 			this.searches = {};
+			this.callbacks = {};
+			this.loading = {};
 
 			this.groups.forEach(group =>
 			{
@@ -126,27 +128,54 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* ===== ASYNC OPTIONS ===== */
 
+			this.fetchGroup = async (groupId, search) =>
+			{
+				const callback = this.callbacks[groupId];
+
+				if(!callback)
+				{
+					return;
+				}
+
+				const index = this.groups.findIndex(g => g.id === groupId);
+
+				if(index === -1)
+				{
+					return;
+				}
+
+				this.loading[groupId] = true;
+				this.Update();
+
+				const selectedValue = this.state[groupId];
+				const selected = Array.isArray(selectedValue)
+					? selectedValue
+					: (selectedValue !== null && selectedValue !== undefined && selectedValue !== '' ? [selectedValue] : []);
+
+				try
+				{
+					const result = await callback.call(this, { search: search || '', selected });
+					this.groups[index] = { ...this.groups[index], options: Array.isArray(result) ? result : [] };
+				}
+				catch(error)
+				{
+					this.groups[index] = { ...this.groups[index], options: [] };
+				}
+
+				this.loading[groupId] = false;
+				this.Update();
+			};
+
+			this.fetchGroupDebounced = onetype.HelperDebounce((groupId, search) => this.fetchGroup(groupId, search), 300);
+
 			this.groups.forEach((group, index) =>
 			{
 				if(typeof group.options === 'function')
 				{
-					const callback = group.options;
-					this.groups[index] = { ...group, options: [] };
+					this.callbacks[group.id] = group.options;
+					this.groups[index] = { ...group, options: [], searchable: true };
 
-					this.OnInit(async () =>
-					{
-						try
-						{
-							const result = await callback.call(this);
-							this.groups[index] = { ...group, options: Array.isArray(result) ? result : [] };
-						}
-						catch(error)
-						{
-							this.groups[index] = { ...group, options: [] };
-						}
-
-						this.Update();
-					});
+					this.OnInit(() => this.fetchGroup(group.id, ''));
 				}
 			});
 
@@ -273,11 +302,22 @@ onetype.AddonReady('elements', (elements) =>
 			this.setSearch = (groupId, value) =>
 			{
 				this.searches[groupId] = value;
+
+				if(this.callbacks[groupId])
+				{
+					this.fetchGroupDebounced(groupId, value);
+				}
+
 				this.Update();
 			};
 
 			this.filterOptions = (group) =>
 			{
+				if(this.callbacks[group.id])
+				{
+					return group.options;
+				}
+
 				const query = this.searches[group.id];
 
 				if(!query)
@@ -398,14 +438,16 @@ onetype.AddonReady('elements', (elements) =>
 
 								<!-- CHECKBOX -->
 								<div ot-if="group.type === 'checkbox'" class="options">
-									<e-form-input
-										ot-if="group.searchable"
-										:value="searches[group.id] || ''"
-										:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
-										icon="search"
-										background="bg-2"
-										:_change="({ value }) => setSearch(group.id, value)"
-									></e-form-input>
+									<div ot-if="group.searchable" class="search">
+										<e-form-input
+											size="s"
+											:value="searches[group.id] || ''"
+											:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
+											icon="search"
+											background="bg-2"
+											:_change="({ value }) => setSearch(group.id, value)"
+										></e-form-input>
+									</div>
 									<div ot-for="option, index in filterOptions(group)" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
 										<e-form-checkbox
 											:label="option.label"
@@ -431,14 +473,16 @@ onetype.AddonReady('elements', (elements) =>
 
 								<!-- RADIO -->
 								<div ot-if="group.type === 'radio'" class="options">
-									<e-form-input
-										ot-if="group.searchable"
-										:value="searches[group.id] || ''"
-										:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
-										icon="search"
-										background="bg-2"
-										:_change="({ value }) => setSearch(group.id, value)"
-									></e-form-input>
+									<div ot-if="group.searchable" class="search">
+										<e-form-input
+											size="s"
+											:value="searches[group.id] || ''"
+											:placeholder="'Search ' + (group.label || '').toLowerCase() + '…'"
+											icon="search"
+											background="bg-2"
+											:_change="({ value }) => setSearch(group.id, value)"
+										></e-form-input>
+									</div>
 									<div ot-for="option, index in filterOptions(group)" ot-if="!group.max || expanded[group.id] || index < group.max" class="option-wrap">
 										<e-form-radio
 											:label="option.label"
