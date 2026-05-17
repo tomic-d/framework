@@ -24,7 +24,7 @@ onetype.AddonReady('elements', (elements) =>
 					type: 'object',
 					config:
 					{
-						id:
+						value:
 						{
 							type: 'string|number',
 							description: 'Unique item identifier.'
@@ -91,7 +91,7 @@ onetype.AddonReady('elements', (elements) =>
 			background:
 			{
 				type: 'string',
-				value: 'bg-1',
+				value: 'bg-2',
 				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
 				description: 'Panel background depth.'
 			},
@@ -140,17 +140,22 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* ===== ASYNC ITEMS ===== */
 
+			this.itemsCallback = null;
+
 			if(typeof this.items === 'function')
 			{
-				const callback = this.items;
+				this.itemsCallback = this.items;
 				this.items = [];
 				this.loading = true;
 
-				this.OnInit(async () =>
+				this.fetchItems = async (search) =>
 				{
+					this.loading = true;
+					this.Update();
+
 					try
 					{
-						const result = await callback.call(this);
+						const result = await this.itemsCallback.call(this, { search: search || '', selected: this.value || [] });
 						this.items = Array.isArray(result) ? result : [];
 					}
 					catch(error)
@@ -161,7 +166,11 @@ onetype.AddonReady('elements', (elements) =>
 					this.loading = false;
 					this.sync();
 					this.Update();
-				});
+				};
+
+				this.fetchItemsDebounced = onetype.HelperDebounce((search) => this.fetchItems(search), 300);
+
+				this.OnInit(() => this.fetchItems(''));
 			}
 
 			/* ===== CLASSES ===== */
@@ -197,7 +206,7 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.filter = (list, query) =>
 			{
-				if(!query)
+				if(this.itemsCallback || !query)
 				{
 					return list;
 				}
@@ -230,8 +239,8 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.computed = () =>
 			{
-				const available = this.items.filter(item => !this.isSelected(item.id));
-				const selected = this.items.filter(item => this.isSelected(item.id));
+				const available = this.items.filter(item => !this.isSelected(item.value));
+				const selected = this.items.filter(item => this.isSelected(item.value));
 
 				return {
 					available,
@@ -250,11 +259,11 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const index = this.leftSelected.indexOf(item.id);
+				const index = this.leftSelected.indexOf(item.value);
 
 				if(index === -1)
 				{
-					this.leftSelected.push(item.id);
+					this.leftSelected.push(item.value);
 				}
 				else
 				{
@@ -271,11 +280,11 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const index = this.rightSelected.indexOf(item.id);
+				const index = this.rightSelected.indexOf(item.value);
 
 				if(index === -1)
 				{
-					this.rightSelected.push(item.id);
+					this.rightSelected.push(item.value);
 				}
 				else
 				{
@@ -287,7 +296,7 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.emit = () =>
 			{
-				const ordered = this.items.filter(item => this.value.includes(item.id)).map(item => item.id);
+				const ordered = this.items.filter(item => this.value.includes(item.value)).map(item => item.value);
 				this.value = ordered;
 
 				if(this._change)
@@ -341,9 +350,9 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const eligible = this.items.filter(item => !item.disabled && !this.isSelected(item.id));
+				const eligible = this.items.filter(item => !item.disabled && !this.isSelected(item.value));
 				const slots = this.slotsLeft();
-				const ids = eligible.slice(0, slots).map(item => item.id);
+				const ids = eligible.slice(0, slots).map(item => item.value);
 
 				ids.forEach(id =>
 				{
@@ -366,7 +375,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const keepIds = this.items.filter(item => item.disabled && this.isSelected(item.id)).map(item => item.id);
+				const keepIds = this.items.filter(item => item.disabled && this.isSelected(item.value)).map(item => item.value);
 				this.value = keepIds;
 				this.rightSelected = [];
 				this.emit();
@@ -377,6 +386,11 @@ onetype.AddonReady('elements', (elements) =>
 			this.changeLeftSearch = ({ value }) =>
 			{
 				this.leftSearch = value;
+
+				if(this.itemsCallback)
+				{
+					this.fetchItemsDebounced(value);
+				}
 			};
 
 			this.changeRightSearch = ({ value }) =>
@@ -403,7 +417,7 @@ onetype.AddonReady('elements', (elements) =>
 					return false;
 				}
 
-				return this.items.some(item => !item.disabled && !this.isSelected(item.id));
+				return this.items.some(item => !item.disabled && !this.isSelected(item.value));
 			};
 
 			this.canMoveAllLeft = () =>
@@ -413,7 +427,7 @@ onetype.AddonReady('elements', (elements) =>
 					return false;
 				}
 
-				return this.items.some(item => !item.disabled && this.isSelected(item.id));
+				return this.items.some(item => !item.disabled && this.isSelected(item.value));
 			};
 
 			/* ===== SYNC ===== */
@@ -459,7 +473,7 @@ onetype.AddonReady('elements', (elements) =>
 							<button
 								ot-for="item in availableList"
 								type="button"
-								:class="'item' + (leftSelected.includes(item.id) ? ' selected' : '') + (item.disabled ? ' disabled' : '')"
+								:class="'item' + (leftSelected.includes(item.value) ? ' selected' : '') + (item.disabled ? ' disabled' : '')"
 								:disabled="item.disabled || disabled"
 								ot-click="() => toggleLeft(item)"
 							>
@@ -468,7 +482,7 @@ onetype.AddonReady('elements', (elements) =>
 									<span class="item-label">{{ item.label }}</span>
 									<span ot-if="item.description" class="item-desc">{{ item.description }}</span>
 								</div>
-								<i ot-if="leftSelected.includes(item.id)" class="item-check">check</i>
+								<i ot-if="leftSelected.includes(item.value)" class="item-check">check</i>
 							</button>
 						</div>
 					</div>
@@ -537,7 +551,7 @@ onetype.AddonReady('elements', (elements) =>
 							<button
 								ot-for="item in selectedList"
 								type="button"
-								:class="'item' + (rightSelected.includes(item.id) ? ' selected' : '') + (item.disabled ? ' disabled' : '')"
+								:class="'item' + (rightSelected.includes(item.value) ? ' selected' : '') + (item.disabled ? ' disabled' : '')"
 								:disabled="item.disabled || disabled"
 								ot-click="() => toggleRight(item)"
 							>
@@ -546,7 +560,7 @@ onetype.AddonReady('elements', (elements) =>
 									<span class="item-label">{{ item.label }}</span>
 									<span ot-if="item.description" class="item-desc">{{ item.description }}</span>
 								</div>
-								<i ot-if="rightSelected.includes(item.id)" class="item-check">check</i>
+								<i ot-if="rightSelected.includes(item.value)" class="item-check">check</i>
 							</button>
 						</div>
 					</div>
