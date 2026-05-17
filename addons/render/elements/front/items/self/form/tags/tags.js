@@ -137,17 +137,22 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* ===== ASYNC OPTIONS ===== */
 
+			this.optionsCallback = null;
+
 			if(typeof this.options === 'function')
 			{
-				const callback = this.options;
+				this.optionsCallback = this.options;
 				this.options = [];
 				this.loading = true;
 
-				this.OnInit(async () =>
+				this.fetchOptions = async (search) =>
 				{
+					this.loading = true;
+					this.Update();
+
 					try
 					{
-						const result = await callback.call(this);
+						const result = await this.optionsCallback.call(this, { search: search || '', selected: this.value || [] });
 						this.options = Array.isArray(result) ? this.normalize(result) : [];
 					}
 					catch(error)
@@ -157,7 +162,11 @@ onetype.AddonReady('elements', (elements) =>
 
 					this.loading = false;
 					this.Update();
-				});
+				};
+
+				this.fetchOptionsDebounced = onetype.HelperDebounce((search) => this.fetchOptions(search), 300);
+
+				this.OnInit(() => this.fetchOptions(''));
 			}
 			else
 			{
@@ -233,7 +242,7 @@ onetype.AddonReady('elements', (elements) =>
 						return false;
 					}
 
-					if(!query)
+					if(this.optionsCallback || !query)
 					{
 						return true;
 					}
@@ -382,6 +391,19 @@ onetype.AddonReady('elements', (elements) =>
 				this.query = value;
 				this.activeIndex = 0;
 
+				if(this.optionsCallback)
+				{
+					this.fetchOptionsDebounced(value);
+
+					if(!this.open)
+					{
+						this.openDropdown();
+					}
+
+					this.Update();
+					return;
+				}
+
 				const filtered = this.filtered();
 
 				if(filtered.length > 0 && !this.open)
@@ -524,9 +546,9 @@ onetype.AddonReady('elements', (elements) =>
 				return /* html */ `
 					<div :class="classes()">
 						<input type="hidden" :name="name" :value="value.join(',')" />
-						<div ot-if="loading" class="empty">Loading…</div>
-						<div ot-if="!loading" class="chips">
-							<span ot-if="!options.length" class="placeholder">{{ placeholder }}</span>
+						<div ot-if="loading && !options.length" class="empty">Loading…</div>
+						<div ot-if="!loading || options.length" class="chips">
+							<span ot-if="!options.length && !loading" class="placeholder">{{ placeholder }}</span>
 							<button
 								ot-for="option in options"
 								type="button"
@@ -567,7 +589,10 @@ onetype.AddonReady('elements', (elements) =>
 						/>
 					</div>
 					<div ot-if="open" class="dropdown">
+						<div ot-if="loading" class="empty">Loading…</div>
+						<div ot-if="!loading && filtered().length === 0" class="empty">No results</div>
 						<button
+							ot-if="!loading"
 							ot-for="option, index in filtered()"
 							type="button"
 							:class="'option' + (activeIndex === index ? ' active' : '')"

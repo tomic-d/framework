@@ -107,18 +107,23 @@ onetype.AddonReady('elements', (elements) =>
 
 			/* ===== ASYNC OPTIONS ===== */
 
+			this.optionsCallback = null;
+
 			if(typeof this.options === 'function')
 			{
-				const callback = this.options;
-
+				this.optionsCallback = this.options;
 				this.options = [];
 				this.loading = true;
 
-				this.OnInit(async () =>
+				this.fetchOptions = async (search) =>
 				{
+					this.loading = true;
+					this.Update();
+
 					try
 					{
-						const result = await callback.call(this);
+						const selected = this.value !== null && this.value !== undefined && this.value !== '' ? [this.value] : [];
+						const result = await this.optionsCallback.call(this, { search: search || '', selected });
 						this.options = Array.isArray(result) ? this.normalize(result) : [];
 					}
 					catch(error)
@@ -128,7 +133,11 @@ onetype.AddonReady('elements', (elements) =>
 
 					this.loading = false;
 					this.Update();
-				});
+				};
+
+				this.fetchOptionsDebounced = onetype.HelperDebounce((search) => this.fetchOptions(search), 300);
+
+				this.OnInit(() => this.fetchOptions(''));
 			}
 			else
 			{
@@ -183,7 +192,7 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.filtered = () =>
 			{
-				if(!this.query)
+				if(this.optionsCallback || !this.query)
 				{
 					return this.options;
 				}
@@ -282,6 +291,11 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				this.query = value;
 				this.activeIndex = 0;
+
+				if(this.optionsCallback)
+				{
+					this.fetchOptionsDebounced(value);
+				}
 			};
 
 			this.dismiss = () =>
@@ -365,8 +379,8 @@ onetype.AddonReady('elements', (elements) =>
 						<i ot-if="icon" class="icon">{{ icon }}</i>
 						<i ot-if="!icon && current() && current().icon" class="icon">{{ current().icon }}</i>
 						<span ot-if="current()" class="selected">{{ current().label }}</span>
+						<span ot-if="!current() && loading" class="placeholder">Loading…</span>
 						<span ot-if="!current() && !loading" class="placeholder">{{ placeholder }}</span>
-						<span ot-if="loading" class="placeholder">Loading…</span>
 						<button
 							ot-if="clearable && value && !disabled"
 							type="button"
