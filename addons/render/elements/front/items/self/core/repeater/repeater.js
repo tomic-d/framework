@@ -152,6 +152,24 @@ onetype.AddonReady('elements', (elements) =>
 				options: ['border'],
 				description: 'Visual modifiers.'
 			},
+			actions:
+			{
+				type: 'array',
+				value: [],
+				each:
+				{
+					type: 'object',
+					config:
+					{
+						id:      ['string'],
+						icon:    ['string'],
+						tooltip: ['string'],
+						danger:  ['boolean', false],
+						_click:  ['function']
+					}
+				},
+				description: 'Custom per-row actions rendered before duplicate and remove.'
+			},
 			_change:
 			{
 				type: 'function',
@@ -420,6 +438,15 @@ onetype.AddonReady('elements', (elements) =>
 							</div>
 
 							<div ot-if="!disabled" class="actions">
+								<button
+									ot-for="action in actions"
+									type="button"
+									:class="'action' + (action.danger ? ' danger' : '')"
+									ot-click="() => action._click({ row, index: row_index })"
+									:ot-tooltip="action.tooltip ? { text: action.tooltip, position: { x: 'center', y: 'top' } } : null"
+								>
+									<i>{{ action.icon }}</i>
+								</button>
 								<button
 									ot-if="duplicable && canAdd()"
 									type="button"
