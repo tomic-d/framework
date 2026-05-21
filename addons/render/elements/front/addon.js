@@ -7,6 +7,7 @@ const elements = onetype.Addon('elements', (addon) =>
     addon.Field('category', ['string', '']);
     addon.Field('collection', ['string', '']);
     addon.Field('config', ['object', {}]);
+    addon.Field('metadata', ['object', {}]);
     addon.Field('example', ['array', []]);
     addon.Field('render', ['function']);
 });
