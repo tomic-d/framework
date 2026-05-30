@@ -145,6 +145,12 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'function',
 				description: 'Save handler. Receives { value }.'
+			},
+			variables:
+			{
+				type: 'object',
+				value: {},
+				description: 'Available variables propagated to every field that supports the variable builder.'
 			}
 		},
 		render: function()
@@ -337,6 +343,7 @@ onetype.AddonReady('elements', (elements) =>
 						:value="val('${field.key}')"
 						:_input="(data) => input('${field.key}', data)"
 						:_change="(data) => change('${field.key}', data)"
+						:variables="variables"
 						${attrs}
 					></${tag}>
 				`;
