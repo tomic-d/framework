@@ -179,6 +179,12 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'function',
 				description: 'Save handler. Receives { value }.'
+			},
+			variables:
+			{
+				type: 'object',
+				value: {},
+				description: 'Available variables propagated to every row field that supports the variable builder.'
 			}
 		},
 		render: function()
@@ -388,7 +394,7 @@ onetype.AddonReady('elements', (elements) =>
 				return `
 					<div class="field">
 						${label}
-						<${tag} :value="row['${field.key}']" :_change="(data) => change(row_index, '${field.key}', data)"${attrs}></${tag}>
+						<${tag} :value="row['${field.key}']" :variables="variables" :_change="(data) => change(row_index, '${field.key}', data)"${attrs}></${tag}>
 					</div>
 				`;
 			}).join('');

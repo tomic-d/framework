@@ -119,6 +119,12 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'function',
 				description: 'Blur handler. Receives { event, value }.'
+			},
+			variables:
+			{
+				type: 'object',
+				value: {},
+				description: 'Available variables to insert into the value via the variable builder modal.'
 			}
 		},
 		render: function()
@@ -237,6 +243,56 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== VARIABLES ===== */
+
+			this.hasVariables = () =>
+			{
+				return this.variables && typeof this.variables === 'object' && Object.keys(this.variables).length > 0;
+			};
+
+			this.openVariableBuilder = () =>
+			{
+				const modalId = 'modal-var-builder-' + Date.now();
+				const currentValue = this.value || '';
+
+				const initial = (() =>
+				{
+					const m = /^\{\{\s*([\s\S]*?)\s*\}\}$/.exec(String(currentValue).trim());
+					return m ? m[1] : '';
+				})();
+
+				const onSave = ({ expression }) =>
+				{
+					const wrapped = '{{ ' + expression + ' }}';
+					this.value = wrapped;
+
+					if(this._change)
+					{
+						this._change({ event: null, value: wrapped });
+					}
+
+					$ot.modal.close(modalId);
+					this.Update();
+				};
+
+				const onCancel = () =>
+				{
+					$ot.modal.close(modalId);
+				};
+
+				const variables = this.variables;
+
+				$ot.modal(function()
+				{
+					this.variables = variables;
+					this.initial = initial;
+					this.onSave = onSave;
+					this.onCancel = onCancel;
+
+					return /* html */ `<e-variable-builder :variables="variables" :value="initial" :_save="onSave" :_cancel="onCancel"></e-variable-builder>`;
+				}, { id: modalId });
+			};
+
 			/* ===== RENDER ===== */
 
 			return /* html */ `
@@ -255,6 +311,15 @@ onetype.AddonReady('elements', (elements) =>
 						ot-focus="focus"
 						ot-blur="blur"
 					>{{ value }}</textarea>
+					<button
+						ot-if="hasVariables() && !disabled && !readonly"
+						type="button"
+						class="variable-btn"
+						ot-click.stop="openVariableBuilder"
+						:ot-tooltip="{ text: 'Insert variable', position: { x: 'center', y: 'top' } }"
+					>
+						<i>data_object</i>
+					</button>
 					<div ot-if="showCounter" class="counter">
 						<span :class="length >= maxlength ? 'full' : ''">{{ length }}</span>
 						<span class="slash">/</span>
