@@ -69,6 +69,12 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'function',
 				description: 'Error handler. Receives { error }.'
+			},
+			variables:
+			{
+				type: 'object',
+				value: {},
+				description: 'Available variables propagated to the upload input.'
 			}
 		},
 		render: function()
@@ -118,6 +124,7 @@ onetype.AddonReady('elements', (elements) =>
 					:background="background"
 					:variant="variant"
 					:size="size"
+					:variables="variables"
 					:_upload="upload"
 					:_change="_change"
 					:_error="_error"

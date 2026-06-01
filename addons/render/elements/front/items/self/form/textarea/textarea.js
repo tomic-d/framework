@@ -250,6 +250,11 @@ onetype.AddonReady('elements', (elements) =>
 				return this.variables && typeof this.variables === 'object' && Object.keys(this.variables).length > 0;
 			};
 
+			this.isExpression = () =>
+			{
+				return /^\{\{\s*[\s\S]+\s*\}\}$/.test(String(this.value || '').trim());
+			};
+
 			this.openVariableBuilder = () =>
 			{
 				const modalId = 'modal-var-builder-' + Date.now();
@@ -293,11 +298,33 @@ onetype.AddonReady('elements', (elements) =>
 				}, { id: modalId });
 			};
 
+			this.clearExpression = () =>
+			{
+				this.value = '';
+
+				if(this._change)
+				{
+					this._change({ event: null, value: '' });
+				}
+
+				this.Update();
+			};
+
 			/* ===== RENDER ===== */
 
 			return /* html */ `
 				<div :class="classes()">
+					<e-variable-chip
+						ot-if="isExpression()"
+						:value="value"
+						:size="'m'"
+						:disabled="disabled"
+						:_edit="openVariableBuilder"
+						:_clear="clearExpression"
+					></e-variable-chip>
+
 					<textarea
+						ot-if="!isExpression()"
 						:placeholder="placeholder"
 						:name="name"
 						:rows="rows"
@@ -312,7 +339,7 @@ onetype.AddonReady('elements', (elements) =>
 						ot-blur="blur"
 					>{{ value }}</textarea>
 					<button
-						ot-if="hasVariables() && !disabled && !readonly"
+						ot-if="!isExpression() && hasVariables() && !disabled && !readonly"
 						type="button"
 						class="variable-btn"
 						ot-click.stop="openVariableBuilder"
@@ -320,7 +347,7 @@ onetype.AddonReady('elements', (elements) =>
 					>
 						<i>data_object</i>
 					</button>
-					<div ot-if="showCounter" class="counter">
+					<div ot-if="!isExpression() && showCounter" class="counter">
 						<span :class="length >= maxlength ? 'full' : ''">{{ length }}</span>
 						<span class="slash">/</span>
 						<span>{{ maxlength }}</span>

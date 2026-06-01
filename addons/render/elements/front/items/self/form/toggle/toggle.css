@@ -5,6 +5,46 @@
 	display: contents;
 }
 
+/* Expression wrapper */
+
+.e-180e0ca7 > .expression
+{
+	display: block;
+	width: 100%;
+}
+
+/* Variable button */
+
+.e-180e0ca7 > .box > .variable-btn
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: var(--ot-height-s);
+	height: var(--ot-height-s);
+	padding: 0;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	border-radius: var(--ot-radius-s);
+	color: var(--ot-text-3);
+	cursor: pointer;
+	outline: none;
+	transition: background var(--ot-transition), color var(--ot-transition), border-color var(--ot-transition);
+}
+
+.e-180e0ca7 > .box > .variable-btn:hover
+{
+	background: var(--ot-brand-opacity);
+	border-color: var(--ot-brand-opacity);
+	color: var(--ot-brand);
+}
+
+.e-180e0ca7 > .box > .variable-btn > i
+{
+	font-size: 14px;
+}
+
 /* Box */
 
 .e-180e0ca7 > .box

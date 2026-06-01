@@ -4,7 +4,7 @@ onetype.AddonReady('elements', (elements) =>
 		id: 'variable-builder',
 		icon: 'data_object',
 		name: 'Variable Builder',
-		description: 'Build a JavaScript expression with available variables and live preview.',
+		description: 'Build a JavaScript expression from real values with live preview.',
 		category: 'Variable',
 		config:
 		{
@@ -12,7 +12,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'object',
 				value: {},
-				description: 'Map of available variable definitions (key → { type, label, description, config, each }).'
+				description: 'Real values object. Structure and types are auto-detected.'
 			},
 			value:
 			{
@@ -33,117 +33,281 @@ onetype.AddonReady('elements', (elements) =>
 		},
 		render: function()
 		{
+			/* ===== STATE ===== */
+
 			this.expression = this.value || '';
-			this.preview = '';
-			this.error = '';
+			this.preview    = '';
+			this.error      = '';
+			this.query      = '';
+			this.expanded   = new Set();
+			this.activePath = '';
 
-			/* ===== SAMPLE DATA ===== */
+			/* ===== HELPERS ===== */
 
-			const sampleFor = (spec) =>
+			const detect = (value) =>
 			{
-				const def  = spec && typeof spec === 'object' ? spec : { type: String(spec) };
-				const type = def.type || 'string';
-
-				if(def.value !== undefined && def.value !== null)
+				if(value === null || value === undefined)
 				{
-					return def.value;
+					return 'null';
 				}
 
-				if(type === 'string') return 'Sample text';
-				if(type === 'number') return 123;
-				if(type === 'boolean') return true;
-				if(type === 'date') return new Date().toISOString().slice(0, 10);
-
-				if(type === 'array')
+				if(Array.isArray(value))
 				{
-					const each = def.each;
+					return 'array';
+				}
 
-					if(each && each.config)
+				if(value instanceof Date)
+				{
+					return 'date';
+				}
+
+				const type = typeof value;
+
+				if(type === 'string')
+				{
+					if(/^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})?)?)?$/.test(value))
 					{
-						const item = {};
+						return 'date';
+					}
 
-						for(const [k, v] of Object.entries(each.config))
+					return 'string';
+				}
+
+				if(type === 'number' || type === 'boolean' || type === 'function')
+				{
+					return type;
+				}
+
+				return 'object';
+			};
+
+			const humanize = (key) =>
+			{
+				return String(key)
+					.replace(/[_-]/g, ' ')
+					.replace(/([a-z])([A-Z])/g, '$1 $2')
+					.replace(/^./, c => c.toUpperCase());
+			};
+
+			const truncate = (text, length) =>
+			{
+				const string = String(text);
+
+				if(string.length <= length)
+				{
+					return string;
+				}
+
+				return string.slice(0, length) + '…';
+			};
+
+			const summary = (value, type) =>
+			{
+				if(type === 'null')    return value === null ? 'null' : 'undefined';
+				if(type === 'string')  return '"' + truncate(value, 32) + '"';
+				if(type === 'number')  return String(value);
+				if(type === 'boolean') return value ? 'true' : 'false';
+				if(type === 'date')    return value instanceof Date ? value.toISOString().slice(0, 10) : truncate(value, 20);
+				if(type === 'array')   return '[' + value.length + ' item' + (value.length === 1 ? '' : 's') + ']';
+				if(type === 'object')  return '{' + Object.keys(value).length + ' key' + (Object.keys(value).length === 1 ? '' : 's') + '}';
+
+				return '';
+			};
+
+			/* ===== TREE ===== */
+
+			const buildTree = (values, prefix, depth) =>
+			{
+				const nodes = [];
+
+				if(depth > 8)
+				{
+					return nodes;
+				}
+
+				for(const [key, value] of Object.entries(values || {}))
+				{
+					if(typeof value === 'function')
+					{
+						continue;
+					}
+
+					const path     = prefix ? prefix + '.' + key : key;
+					const label    = humanize(key);
+					const type     = detect(value);
+					const expand   = type === 'object' && value && Object.keys(value).length > 0;
+					const children = expand ? buildTree(value, path, depth + 1) : [];
+
+					nodes.push({
+						path,
+						key,
+						label,
+						type,
+						depth,
+						preview: summary(value, type),
+						expandable: expand,
+						children
+					});
+				}
+
+				return nodes;
+			};
+
+			this.tree = buildTree(this.variables || {}, '', 0);
+
+			/* Auto-expand top level */
+
+			for(const node of this.tree)
+			{
+				if(node.expandable)
+				{
+					this.expanded.add(node.path);
+				}
+			}
+
+			/* ===== FLATTEN (visible) ===== */
+
+			this.visible = () =>
+			{
+				const query = this.query.toLowerCase();
+				const match = (node) =>
+				{
+					if(!query) return true;
+					if(node.path.toLowerCase().includes(query)) return true;
+					if(node.label.toLowerCase().includes(query)) return true;
+					return false;
+				};
+
+				const hasMatchDeep = (node) =>
+				{
+					if(match(node)) return true;
+
+					for(const child of node.children)
+					{
+						if(hasMatchDeep(child)) return true;
+					}
+
+					return false;
+				};
+
+				const walk = (nodes, output) =>
+				{
+					for(const node of nodes)
+					{
+						const visibleByQuery = query ? hasMatchDeep(node) : true;
+
+						if(!visibleByQuery)
 						{
-							item[k] = sampleFor(v);
+							continue;
 						}
 
-						return [item, item];
+						output.push(node);
+
+						const open = query ? hasMatchDeep(node) : this.expanded.has(node.path);
+
+						if(node.expandable && open)
+						{
+							walk(node.children, output);
+						}
 					}
 
-					if(each)
+					return output;
+				};
+
+				return walk(this.tree, []);
+			};
+
+			this.visibleCount = () =>
+			{
+				const count = (nodes) =>
+				{
+					let total = 0;
+
+					for(const node of nodes)
 					{
-						return [sampleFor(each), sampleFor(each)];
+						total += 1;
+						total += count(node.children);
 					}
 
+					return total;
+				};
+
+				return count(this.tree);
+			};
+
+			/* ===== QUICK INSERTS ===== */
+
+			this.quickInserts = () =>
+			{
+				if(!this.activePath)
+				{
 					return [];
 				}
 
-				if(type === 'object' && def.config)
+				const node = (() =>
 				{
-					const obj = {};
-
-					for(const [k, v] of Object.entries(def.config))
+					const find = (nodes) =>
 					{
-						obj[k] = sampleFor(v);
-					}
+						for(const item of nodes)
+						{
+							if(item.path === this.activePath) return item;
 
-					return obj;
+							const inner = find(item.children);
+
+							if(inner) return inner;
+						}
+
+						return null;
+					};
+
+					return find(this.tree);
+				})();
+
+				if(!node)
+				{
+					return [];
 				}
 
-				return null;
-			};
-
-			this.sampleContext = {};
-
-			for(const [k, v] of Object.entries(this.variables || {}))
-			{
-				this.sampleContext[k] = sampleFor(v);
-			}
-
-			/* ===== FLATTEN VARIABLES ===== */
-
-			const flatten = (variables, prefix) =>
-			{
-				const result = [];
-
-				for(const [key, spec] of Object.entries(variables || {}))
+				if(node.type === 'array')
 				{
-					const def  = spec && typeof spec === 'object' ? spec : { type: String(spec) };
-					const type = def.type || 'string';
-					const path = prefix ? prefix + '.' + key : key;
-					const label = def.label || key;
-
-					result.push({
-						path,
-						label,
-						description: def.description || '',
-						type
-					});
-
-					if(type === 'object' && def.config)
-					{
-						result.push(...flatten(def.config, path));
-					}
-
-					if(type === 'array' && def.each && def.each.config)
-					{
-						const itemPath = path + '[0]';
-
-						result.push({
-							path:        itemPath,
-							label:       label + ' (item)',
-							description: 'First item of array',
-							type:        'object'
-						});
-
-						result.push(...flatten(def.each.config, itemPath));
-					}
+					return [
+						{ label: 'length',    insert: '.length' },
+						{ label: 'join …',    insert: ".join(', ')" },
+						{ label: 'first',     insert: '[0]' },
+						{ label: 'map name',  insert: ".map(x => x.name).join(', ')" }
+					];
 				}
 
-				return result;
-			};
+				if(node.type === 'string')
+				{
+					return [
+						{ label: 'upper',     insert: '.toUpperCase()' },
+						{ label: 'lower',     insert: '.toLowerCase()' },
+						{ label: 'trim',      insert: '.trim()' },
+						{ label: 'truncate',  insert: ".slice(0, 50) + '…'" }
+					];
+				}
 
-			this.flatList = flatten(this.variables);
+				if(node.type === 'number')
+				{
+					return [
+						{ label: 'round',     insert: 'Math.round(' + this.activePath + ')', replace: true },
+						{ label: '2 decimal', insert: '.toFixed(2)' },
+						{ label: 'absolute',  insert: 'Math.abs(' + this.activePath + ')', replace: true }
+					];
+				}
+
+				if(node.type === 'date')
+				{
+					return [
+						{ label: 'date',      insert: 'new Date(' + this.activePath + ').toLocaleDateString()', replace: true },
+						{ label: 'time',      insert: 'new Date(' + this.activePath + ').toLocaleTimeString()', replace: true },
+						{ label: 'year',      insert: 'new Date(' + this.activePath + ').getFullYear()', replace: true }
+					];
+				}
+
+				return [];
+			};
 
 			/* ===== PREVIEW ===== */
 
@@ -152,13 +316,13 @@ onetype.AddonReady('elements', (elements) =>
 				if(!this.expression || !this.expression.trim())
 				{
 					this.preview = '';
-					this.error = '';
+					this.error   = '';
 					return;
 				}
 
 				try
 				{
-					const result = onetype.Function(this.expression, this.sampleContext, false);
+					const result = onetype.Function(this.expression, this.variables || {}, false);
 
 					if(result === null || result === undefined)
 					{
@@ -178,13 +342,57 @@ onetype.AddonReady('elements', (elements) =>
 				catch(error)
 				{
 					this.preview = '';
-					this.error = error.message || String(error);
+					this.error   = error.message || String(error);
 				}
 			};
 
 			this.updatePreview();
 
 			/* ===== HANDLERS ===== */
+
+			this.toggle = (path) =>
+			{
+				if(this.expanded.has(path))
+				{
+					this.expanded.delete(path);
+				}
+				else
+				{
+					this.expanded.add(path);
+				}
+
+				this.Update();
+			};
+
+			this.pick = (node) =>
+			{
+				if(node.expandable)
+				{
+					this.toggle(node.path);
+					this.activePath = node.path;
+					return;
+				}
+
+				this.expression = node.path;
+				this.activePath = node.path;
+				this.updatePreview();
+				this.Update();
+			};
+
+			this.quick = (item) =>
+			{
+				if(item.replace)
+				{
+					this.expression = item.insert;
+				}
+				else
+				{
+					this.expression = (this.expression || '') + item.insert;
+				}
+
+				this.updatePreview();
+				this.Update();
+			};
 
 			this.handleChange = (event) =>
 			{
@@ -193,53 +401,10 @@ onetype.AddonReady('elements', (elements) =>
 				this.Update();
 			};
 
-			this.insertVariable = (item) =>
-			{
-				const textarea = this.Element.querySelector('textarea');
-
-				if(!textarea)
-				{
-					this.expression = (this.expression || '') + item.path;
-				}
-				else
-				{
-					const start = textarea.selectionStart || 0;
-					const end   = textarea.selectionEnd   || 0;
-					const before = this.expression.slice(0, start);
-					const after  = this.expression.slice(end);
-
-					this.expression = before + item.path + after;
-
-					setTimeout(() =>
-					{
-						textarea.focus();
-						const pos = start + item.path.length;
-						textarea.setSelectionRange(pos, pos);
-					}, 0);
-				}
-
-				this.updatePreview();
-				this.Update();
-			};
-
 			this.handleQuery = (event) =>
 			{
-				this.query = (event && event.target ? event.target.value : '').toLowerCase();
+				this.query = event && event.target ? event.target.value : '';
 				this.Update();
-			};
-
-			this.filteredList = () =>
-			{
-				if(!this.query)
-				{
-					return this.flatList;
-				}
-
-				return this.flatList.filter(item =>
-				{
-					return item.path.toLowerCase().includes(this.query) ||
-					       item.label.toLowerCase().includes(this.query);
-				});
 			};
 
 			this.handleSave = () =>
@@ -258,75 +423,117 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
-			this.query = '';
+			/* ===== CLASSES ===== */
+
+			this.nodeClass = (node) =>
+			{
+				const classes = ['node', 'type-' + node.type];
+
+				if(node.expandable) classes.push('expandable');
+				if(this.expanded.has(node.path)) classes.push('expanded');
+				if(this.activePath === node.path) classes.push('active');
+
+				return classes.join(' ');
+			};
+
+			/* ===== RENDER ===== */
 
 			return /* html */ `
-				<div class="holder">
+				<div class="box">
 					<header class="head">
-						<i class="head-icon">data_object</i>
+						<div class="head-icon"><i>data_object</i></div>
 						<div class="head-text">
 							<span class="head-eyebrow">Expression</span>
 							<span class="head-title">Variable Builder</span>
 						</div>
-						<button class="head-close" type="button" ot-click="handleCancel"><i>close</i></button>
+						<button type="button" class="head-close" ot-click="handleCancel">
+							<i>close</i>
+						</button>
 					</header>
 
 					<div class="body">
-						<div class="left">
-							<div class="left-head">
-								<span class="left-label">Available variables</span>
-								<span ot-if="flatList.length" class="left-count">{{ flatList.length }}</span>
+						<aside class="picker">
+							<div class="picker-head">
+								<span class="picker-label">Variables</span>
+								<span class="picker-count">{{ visibleCount() }}</span>
 							</div>
 
-							<div ot-if="flatList.length > 6" class="left-search">
+							<div class="picker-search">
 								<i>search</i>
-								<input type="text" placeholder="Search variables…" :value="query" ot-input="handleQuery" />
+								<input
+									type="text"
+									placeholder="Search…"
+									:value="query"
+									ot-input="handleQuery"
+								/>
 							</div>
 
-							<div class="left-list">
+							<div class="picker-tree">
 								<button
-									ot-for="item in filteredList()"
+									ot-for="node in visible()"
 									type="button"
-									class="var-item"
-									ot-click="() => insertVariable(item)"
-									:title="item.description || item.path"
+									:class="nodeClass(node)"
+									:style="'--depth: ' + node.depth"
+									ot-click="() => pick(node)"
+									:title="node.path"
 								>
-									<span class="var-name">{{ item.path }}</span>
-									<span ot-if="item.label && item.label !== item.path" class="var-label">{{ item.label }}</span>
-									<span class="var-type">{{ item.type }}</span>
+									<span class="node-chevron">
+										<i ot-if="node.expandable">chevron_right</i>
+									</span>
+									<span class="node-key">{{ node.key }}</span>
+									<span class="node-preview">{{ node.preview }}</span>
+									<span class="node-type">{{ node.type }}</span>
 								</button>
+
+								<div ot-if="!visible().length" class="picker-empty">
+									<i>search_off</i>
+									<span>No matches</span>
+								</div>
 							</div>
+						</aside>
 
-							<div ot-if="!filteredList().length" class="left-empty">No variables.</div>
-						</div>
-
-						<div class="right">
-							<div class="field">
-								<span class="field-label">Expression</span>
+						<section class="editor">
+							<div class="editor-field">
+								<label class="editor-label">Expression</label>
 								<textarea
-									class="expr"
-									placeholder="Write any JavaScript expression. Click a variable on the left to insert."
+									class="editor-area"
+									placeholder="Click a variable or write any JavaScript. e.g. user.name + ' — ' + site.name"
 									ot-input="handleChange"
 								>{{ expression }}</textarea>
-								<span class="field-hint">Will be wrapped in <code>{{ '{{ ... }}' }}</code> when inserted.</span>
+								<span class="editor-hint">
+									Wrapped as <code>&#123;&#123; expression &#125;&#125;</code> when inserted.
+								</span>
 							</div>
 
-							<div class="field">
-								<span class="field-label">Preview</span>
-								<div ot-if="error" class="preview error">
+							<div ot-if="quickInserts().length" class="editor-quick">
+								<span class="editor-quick-label">Quick</span>
+								<button
+									ot-for="item in quickInserts()"
+									type="button"
+									class="editor-quick-item"
+									ot-click="() => quick(item)"
+								>{{ item.label }}</button>
+							</div>
+
+							<div class="editor-field">
+								<label class="editor-label">Preview</label>
+
+								<div ot-if="error" class="editor-preview error">
 									<i>error</i>
 									<span>{{ error }}</span>
 								</div>
-								<div ot-if="!error && expression" class="preview ok">
+
+								<div ot-if="!error && expression" class="editor-preview ok">
 									<i>check_circle</i>
 									<pre>{{ preview }}</pre>
 								</div>
-								<div ot-if="!expression" class="preview empty">
+
+								<div ot-if="!expression" class="editor-preview empty">
 									<i>info</i>
-									<span>Start typing an expression to see preview.</span>
+									<span>Type an expression to see the result.</span>
 								</div>
 							</div>
-						</div>
+						</section>
 					</div>
 
 					<footer class="foot">

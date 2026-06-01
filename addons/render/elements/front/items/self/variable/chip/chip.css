@@ -1,0 +1,147 @@
+/* ===== VARIABLE CHIP ===== */
+
+.e-22d0c6a7
+{
+	display: contents;
+}
+
+/* Box */
+
+.e-22d0c6a7 > .box
+{
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ot-spacing-s);
+	width: 100%;
+	height: var(--ot-height-m);
+	padding: 0 var(--ot-spacing-s) 0 var(--ot-spacing-m);
+	background: var(--ot-brand-opacity);
+	border: 1px solid var(--ot-brand-opacity);
+	border-radius: var(--ot-radius-m);
+	transition: background var(--ot-transition), border-color var(--ot-transition);
+}
+
+.e-22d0c6a7 > .box:hover:not(.disabled)
+{
+	border-color: var(--ot-brand);
+}
+
+/* Icon */
+
+.e-22d0c6a7 > .box > .icon
+{
+	flex-shrink: 0;
+	font-size: 16px;
+	color: var(--ot-brand);
+}
+
+/* Text */
+
+.e-22d0c6a7 > .box > .text
+{
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-family: var(--ot-font-mono, ui-monospace, Menlo, Consolas, monospace);
+	font-size: var(--ot-size-m);
+	font-weight: 600;
+	color: var(--ot-brand);
+}
+
+/* Actions */
+
+.e-22d0c6a7 > .box > .action
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	background: transparent;
+	border: none;
+	border-radius: var(--ot-radius-s);
+	color: var(--ot-brand);
+	cursor: pointer;
+	outline: none;
+	transition: background var(--ot-transition), color var(--ot-transition);
+}
+
+.e-22d0c6a7 > .box > .action:hover
+{
+	background: var(--ot-bg-1);
+}
+
+.e-22d0c6a7 > .box > .action.clear:hover
+{
+	background: rgba(244,63,94,0.18);
+	color: var(--ot-red);
+}
+
+.e-22d0c6a7 > .box > .action > i
+{
+	font-size: 14px;
+}
+
+/* Disabled */
+
+.e-22d0c6a7 > .box.disabled
+{
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* ===== SIZE ===== */
+
+.e-22d0c6a7 > .box.size-s
+{
+	height: var(--ot-height-s);
+	padding: 0 var(--ot-spacing-x) 0 var(--ot-spacing-s);
+	gap: var(--ot-spacing-x);
+}
+
+.e-22d0c6a7 > .box.size-s > .icon
+{
+	font-size: 13px;
+}
+
+.e-22d0c6a7 > .box.size-s > .text
+{
+	font-size: var(--ot-size-s);
+}
+
+.e-22d0c6a7 > .box.size-s > .action
+{
+	width: 18px;
+	height: 18px;
+}
+
+.e-22d0c6a7 > .box.size-s > .action > i
+{
+	font-size: 12px;
+}
+
+.e-22d0c6a7 > .box.size-l
+{
+	height: var(--ot-height-l);
+	padding: 0 var(--ot-spacing-s) 0 var(--ot-spacing-l);
+}
+
+.e-22d0c6a7 > .box.size-l > .icon
+{
+	font-size: 18px;
+}
+
+.e-22d0c6a7 > .box.size-l > .action
+{
+	width: 26px;
+	height: 26px;
+}
+
+.e-22d0c6a7 > .box.size-l > .action > i
+{
+	font-size: 16px;
+}
