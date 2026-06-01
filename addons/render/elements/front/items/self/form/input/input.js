@@ -22,7 +22,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'string',
 				value: 'text',
-				options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search'],
+				options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search', 'time', 'date'],
 				description: 'Input type.'
 			},
 			placeholder:
