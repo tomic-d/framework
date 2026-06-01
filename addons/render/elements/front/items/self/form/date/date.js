@@ -97,6 +97,11 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
+			if(this.value && typeof this.value === 'string' && this.value.length > 10)
+			{
+				this.value = this.value.slice(0, 10);
+			}
+
 			const today = new Date().toISOString().slice(0, 10);
 
 			this.todayIso = today;
