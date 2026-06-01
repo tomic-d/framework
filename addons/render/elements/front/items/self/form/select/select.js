@@ -383,6 +383,11 @@ onetype.AddonReady('elements', (elements) =>
 				return this.variables && typeof this.variables === 'object' && Object.keys(this.variables).length > 0;
 			};
 
+			this.isExpression = () =>
+			{
+				return /^\{\{\s*[\s\S]+\s*\}\}$/.test(String(this.value || '').trim());
+			};
+
 			this.openVariableBuilder = () =>
 			{
 				const modalId = 'modal-var-builder-' + Date.now();
@@ -426,12 +431,34 @@ onetype.AddonReady('elements', (elements) =>
 				}, { id: modalId });
 			};
 
+			this.clearExpression = () =>
+			{
+				this.value = '';
+
+				if(this._change)
+				{
+					this._change({ value: '' });
+				}
+
+				this.Update();
+			};
+
 			/* ===== RENDER ===== */
 
 			return /* html */ `
 				<div :class="classes()" ot-click-outside="dismiss">
 					<input type="hidden" :name="name" :value="value" />
-					<div class="trigger" ot-click="toggle">
+
+					<e-variable-chip
+						ot-if="isExpression()"
+						:value="value"
+						:size="size"
+						:disabled="disabled"
+						:_edit="openVariableBuilder"
+						:_clear="clearExpression"
+					></e-variable-chip>
+
+					<div ot-if="!isExpression()" class="trigger" ot-click="toggle">
 						<i ot-if="icon" class="icon">{{ icon }}</i>
 						<i ot-if="!icon && current() && current().icon" class="icon">{{ current().icon }}</i>
 						<span ot-if="current()" class="selected">{{ current().label }}</span>
@@ -457,7 +484,7 @@ onetype.AddonReady('elements', (elements) =>
 						</button>
 						<i class="arrow">expand_more</i>
 					</div>
-					<div ot-if="open" class="dropdown">
+					<div ot-if="!isExpression() && open" class="dropdown">
 						<div ot-if="searchable" class="search">
 							<i>search</i>
 							<input type="text" :value="query" placeholder="Search…" autocomplete="off" ot-input="search" />

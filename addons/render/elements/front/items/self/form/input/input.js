@@ -385,6 +385,11 @@ onetype.AddonReady('elements', (elements) =>
 				return this.variables && typeof this.variables === 'object' && Object.keys(this.variables).length > 0;
 			};
 
+			this.isExpression = () =>
+			{
+				return /^\{\{\s*[\s\S]+\s*\}\}$/.test(String(this.value || '').trim());
+			};
+
 			this.openVariableBuilder = () =>
 			{
 				const modalId = 'modal-var-builder-' + Date.now();
@@ -428,11 +433,32 @@ onetype.AddonReady('elements', (elements) =>
 				}, { id: modalId });
 			};
 
+			this.clearExpression = () =>
+			{
+				this.value = '';
+
+				if(this._change)
+				{
+					this._change({ event: null, value: '' });
+				}
+
+				this.Update();
+			};
+
 			/* ===== RENDER ===== */
 
 			return /* html */ `
 				<div :class="classes()" ot-click-outside="close">
-					<div class="field">
+					<e-variable-chip
+						ot-if="isExpression()"
+						:value="value"
+						:size="size"
+						:disabled="disabled"
+						:_edit="openVariableBuilder"
+						:_clear="clearExpression"
+					></e-variable-chip>
+
+					<div ot-if="!isExpression()" class="field">
 						<i ot-if="icon" class="icon">{{ icon }}</i>
 						<span ot-if="prefix" class="affix">{{ prefix }}</span>
 						<input
@@ -485,7 +511,8 @@ onetype.AddonReady('elements', (elements) =>
 						</button>
 						<i ot-if="iconRight" class="icon">{{ iconRight }}</i>
 					</div>
-					<div ot-if="open && hasOptions" class="dropdown">
+
+					<div ot-if="!isExpression() && open && hasOptions" class="dropdown">
 						<button
 							ot-for="option, index in filtered()"
 							type="button"

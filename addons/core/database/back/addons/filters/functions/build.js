@@ -46,14 +46,14 @@ filters.Fn('build', function(knex, root)
 		else if(operator === 'CONTAINS')
 		{
 			const values = Array.isArray(filter.value) ? filter.value : [filter.value];
-			const cast = typeof values[0] === 'number' ? '::int[]' : '::text[]';
-			query.whereRaw(`?? @> ARRAY[${values.map(() => '?').join(',')}]${cast}`, [filter.field, ...values]);
+			const placeholders = values.map(() => '?').join(',');
+			query.whereRaw(`??::text[] @> ARRAY[${placeholders}]::text[]`, [filter.field, ...values.map(value => String(value))]);
 		}
 		else if(operator === 'CONTAINED')
 		{
 			const values = Array.isArray(filter.value) ? filter.value : [filter.value];
-			const cast = typeof values[0] === 'number' ? '::int[]' : '::text[]';
-			query.whereRaw(`?? <@ ARRAY[${values.map(() => '?').join(',')}]${cast}`, [filter.field, ...values]);
+			const placeholders = values.map(() => '?').join(',');
+			query.whereRaw(`??::text[] <@ ARRAY[${placeholders}]::text[]`, [filter.field, ...values.map(value => String(value))]);
 		}
 		else if(operator === 'HAS')
 		{

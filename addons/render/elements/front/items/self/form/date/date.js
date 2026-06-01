@@ -85,6 +85,12 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'function',
 				description: 'Change handler. Receives { event, value }.'
+			},
+			variables:
+			{
+				type: 'object',
+				value: {},
+				description: 'Available variables to set the value via the variable builder modal.'
 			}
 		},
 		render: function()
@@ -187,11 +193,87 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			/* ===== VARIABLES ===== */
+
+			this.hasVariables = () =>
+			{
+				return this.variables && typeof this.variables === 'object' && Object.keys(this.variables).length > 0;
+			};
+
+			this.isExpression = () =>
+			{
+				return /^\{\{\s*[\s\S]+\s*\}\}$/.test(String(this.value || '').trim());
+			};
+
+			this.openVariableBuilder = () =>
+			{
+				const modalId = 'modal-var-builder-' + Date.now();
+				const currentValue = this.value || '';
+
+				const initial = (() =>
+				{
+					const m = /^\{\{\s*([\s\S]*?)\s*\}\}$/.exec(String(currentValue).trim());
+					return m ? m[1] : '';
+				})();
+
+				const onSave = ({ expression }) =>
+				{
+					const wrapped = '{{ ' + expression + ' }}';
+					this.value = wrapped;
+
+					if(this._change)
+					{
+						this._change({ event: null, value: wrapped });
+					}
+
+					$ot.modal.close(modalId);
+					this.Update();
+				};
+
+				const onCancel = () =>
+				{
+					$ot.modal.close(modalId);
+				};
+
+				const variables = this.variables;
+
+				$ot.modal(function()
+				{
+					this.variables = variables;
+					this.initial = initial;
+					this.onSave = onSave;
+					this.onCancel = onCancel;
+
+					return /* html */ `<e-variable-builder :variables="variables" :value="initial" :_save="onSave" :_cancel="onCancel"></e-variable-builder>`;
+				}, { id: modalId });
+			};
+
+			this.clearExpression = () =>
+			{
+				this.value = '';
+
+				if(this._change)
+				{
+					this._change({ event: null, value: '' });
+				}
+
+				this.Update();
+			};
+
 			/* ===== RENDER ===== */
 
 			return /* html */ `
 				<div :class="classes()">
-					<div class="field">
+					<e-variable-chip
+						ot-if="isExpression()"
+						:value="value"
+						:size="size"
+						:disabled="disabled"
+						:_edit="openVariableBuilder"
+						:_clear="clearExpression"
+					></e-variable-chip>
+
+					<div ot-if="!isExpression()" class="field">
 						<i class="icon">calendar_today</i>
 						<input
 							class="input"
@@ -205,6 +287,15 @@ onetype.AddonReady('elements', (elements) =>
 							ot-change="handle"
 						/>
 						<button
+							ot-if="hasVariables() && !disabled"
+							type="button"
+							class="action"
+							ot-click.stop="openVariableBuilder"
+							:ot-tooltip="{ text: 'Insert variable', position: { x: 'center', y: 'top' } }"
+						>
+							<i>data_object</i>
+						</button>
+						<button
 							ot-if="value && !disabled"
 							type="button"
 							class="action"
@@ -214,7 +305,7 @@ onetype.AddonReady('elements', (elements) =>
 							<i>close</i>
 						</button>
 					</div>
-					<div ot-if="hasPresets" class="presets">
+					<div ot-if="!isExpression() && hasPresets" class="presets">
 						<button
 							ot-for="preset in presets"
 							type="button"
