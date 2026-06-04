@@ -96,6 +96,29 @@
 	padding-top: var(--ot-spacing-l);
 }
 
+/* When a background or border is set, wrap the panel content in a card. */
+
+.e-1a8b6ac1 > .box.border > .body,
+.e-1a8b6ac1 > .box.bg-1 > .body,
+.e-1a8b6ac1 > .box.bg-2 > .body,
+.e-1a8b6ac1 > .box.bg-3 > .body,
+.e-1a8b6ac1 > .box.bg-4 > .body
+{
+	margin-top: var(--ot-spacing-s);
+	padding: var(--ot-spacing-m) var(--ot-spacing-l);
+	border-radius: var(--ot-radius-l);
+}
+
+.e-1a8b6ac1 > .box.bg-1 > .body { background: var(--ot-bg-1); }
+.e-1a8b6ac1 > .box.bg-2 > .body { background: var(--ot-bg-2); }
+.e-1a8b6ac1 > .box.bg-3 > .body { background: var(--ot-bg-3); }
+.e-1a8b6ac1 > .box.bg-4 > .body { background: var(--ot-bg-4); }
+
+.e-1a8b6ac1 > .box.border > .body
+{
+	border: 1px solid var(--ot-bg-2-border);
+}
+
 .e-1a8b6ac1 > .box > .body .panel
 {
 	display: none;
@@ -221,6 +244,12 @@
 	border-radius: 100px;
 	flex: 1;
 }
+
+.e-1a8b6ac1 > .box.border.segmented > .tabs { border: 1px solid var(--ot-bg-2-border); }
+.e-1a8b6ac1 > .box.bg-1.border.segmented > .tabs { border-color: var(--ot-bg-1-border); }
+.e-1a8b6ac1 > .box.bg-2.border.segmented > .tabs { border-color: var(--ot-bg-2-border); }
+.e-1a8b6ac1 > .box.bg-3.border.segmented > .tabs { border-color: var(--ot-bg-3-border); }
+.e-1a8b6ac1 > .box.bg-4.border.segmented > .tabs { border-color: var(--ot-bg-4-border); }
 
 .e-1a8b6ac1 > .box.segmented > .tabs > .tab:hover:not(.disabled)
 {

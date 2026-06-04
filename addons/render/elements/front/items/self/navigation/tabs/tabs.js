@@ -81,15 +81,8 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.Compute(() =>
 			{
-				this.hasContent = this.items.some(item => item.content);
-
-				this.panels = this.items
-					.filter(item => item.content)
-					.map(item =>
-					{
-						return '<div class="panel' + (this.active === item.id ? ' active' : '') + '" data-panel="' + item.id + '">' + item.content + '</div>';
-					})
-					.join('');
+				this.contentItems = this.items.filter(item => item.content);
+				this.hasContent = this.contentItems.length > 0;
 			});
 
 			/* ===== CLASSES ===== */
@@ -151,7 +144,13 @@ onetype.AddonReady('elements', (elements) =>
 						</a>
 					</nav>
 					<div ot-if="hasContent" class="body">
-						<span ot-html="panels"></span>
+						<div
+							ot-for="item in contentItems"
+							:class="'panel' + (active === item.id ? ' active' : '')"
+							:data-panel="item.id"
+						>
+							<span ot-html="item.content"></span>
+						</div>
 					</div>
 				</div>
 			`;
