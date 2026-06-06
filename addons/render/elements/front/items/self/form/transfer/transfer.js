@@ -259,17 +259,21 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const index = this.leftSelected.indexOf(item.value);
+				/* Single click moves the item to the selected side immediately. */
 
-				if(index === -1)
+				if(this.slotsLeft() <= 0 && !this.value.includes(item.value))
 				{
-					this.leftSelected.push(item.value);
-				}
-				else
-				{
-					this.leftSelected.splice(index, 1);
+					return;
 				}
 
+				if(!this.value.includes(item.value))
+				{
+					this.value.push(item.value);
+				}
+
+				this.leftSelected = [];
+				this.emit();
+				this.sync();
 				this.Update();
 			};
 
@@ -280,17 +284,12 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const index = this.rightSelected.indexOf(item.value);
+				/* Single click moves the item back to the available side. */
 
-				if(index === -1)
-				{
-					this.rightSelected.push(item.value);
-				}
-				else
-				{
-					this.rightSelected.splice(index, 1);
-				}
-
+				this.value = this.value.filter(id => id !== item.value);
+				this.rightSelected = [];
+				this.emit();
+				this.sync();
 				this.Update();
 			};
 
