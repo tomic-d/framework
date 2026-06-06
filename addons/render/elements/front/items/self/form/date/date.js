@@ -171,6 +171,27 @@ onetype.AddonReady('elements', (elements) =>
 				}
 			};
 
+			this.openPicker = (event) =>
+			{
+				if(this.disabled)
+				{
+					return;
+				}
+
+				const input = event && event.target;
+
+				if(input && typeof input.showPicker === 'function')
+				{
+					try
+					{
+						input.showPicker();
+					}
+					catch(error)
+					{
+					}
+				}
+			};
+
 			this.clear = () =>
 			{
 				this.value = '';
@@ -290,6 +311,7 @@ onetype.AddonReady('elements', (elements) =>
 							:placeholder="placeholder"
 							:disabled="disabled"
 							ot-change="handle"
+							ot-click="(event) => openPicker(event)"
 						/>
 						<button
 							ot-if="hasVariables() && !disabled"
