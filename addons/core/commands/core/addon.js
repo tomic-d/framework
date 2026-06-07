@@ -6,6 +6,7 @@ const commands = onetype.Addon('commands', (addon) =>
     addon.Field('type', ['string', 'JSON']);
     addon.Field('description', ['string']);
     addon.Field('meta', ['object', {}]);
+    addon.Field('metadata', ['object', {}]);
     addon.Field('in', ['object|string']);
     addon.Field('out', ['object|string']);
     addon.Field('exposed', ['boolean', false]);
