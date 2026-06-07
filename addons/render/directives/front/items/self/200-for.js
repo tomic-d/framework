@@ -67,7 +67,14 @@ onetype.AddonReady('directives', function(directives)
 
                     while(compiled.element.firstChild)
                     {
-                        fragment.appendChild(compiled.element.firstChild);
+                        const child = compiled.element.firstChild;
+
+                        if(child.nodeType === Node.ELEMENT_NODE && !child.hasAttribute('ot-key') && !child.__otExternal)
+                        {
+                            child.setAttribute('ot-key', key);
+                        }
+
+                        fragment.appendChild(child);
                     }
                 });
 
