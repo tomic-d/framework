@@ -178,9 +178,18 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const input = event && event.target;
+				const target = event && event.target;
+				const field = target && target.closest ? target.closest('.field') : null;
+				const input = field ? field.querySelector('.input') : null;
 
-				if(input && typeof input.showPicker === 'function')
+				if(!input)
+				{
+					return;
+				}
+
+				input.focus();
+
+				if(typeof input.showPicker === 'function')
 				{
 					try
 					{
@@ -299,7 +308,7 @@ onetype.AddonReady('elements', (elements) =>
 						:_clear="clearExpression"
 					></e-variable-chip>
 
-					<div ot-if="!isExpression()" class="field">
+					<div ot-if="!isExpression()" class="field" ot-click="({ event }) => openPicker(event)">
 						<i class="icon">calendar_today</i>
 						<input
 							class="input"
@@ -311,7 +320,6 @@ onetype.AddonReady('elements', (elements) =>
 							:placeholder="placeholder"
 							:disabled="disabled"
 							ot-change="handle"
-							ot-click="(event) => openPicker(event)"
 						/>
 						<button
 							ot-if="hasVariables() && !disabled"

@@ -28,6 +28,7 @@
 	border: 1px solid transparent;
 	border-radius: var(--ot-radius-m);
 	background: transparent;
+	cursor: pointer;
 	transition: background var(--ot-transition), border-color var(--ot-transition), box-shadow var(--ot-transition);
 }
 
@@ -65,6 +66,7 @@
 	font-family: var(--ot-font-primary);
 	font-size: var(--ot-size-m);
 	font-weight: 500;
+	cursor: pointer;
 }
 
 .e-283879c1 > .box > .field > .input::placeholder
@@ -73,17 +75,10 @@
 	font-weight: 400;
 }
 
+/* Hide native indicator — the whole field opens the picker now. */
 .e-283879c1 > .box > .field > .input::-webkit-calendar-picker-indicator
 {
-	cursor: pointer;
-	opacity: 0.5;
-	filter: invert(0.45);
-	transition: opacity var(--ot-transition);
-}
-
-.e-283879c1 > .box > .field > .input::-webkit-calendar-picker-indicator:hover
-{
-	opacity: 1;
+	display: none;
 }
 
 .e-283879c1 > .box > .field > .input:disabled
