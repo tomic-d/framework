@@ -126,8 +126,6 @@ onetype.AddonReady('elements', (elements) =>
 		{
 			/* ===== STATE ===== */
 
-			this.leftSelected = [];
-			this.rightSelected = [];
 			this.leftSearch = '';
 			this.rightSearch = '';
 			this.loading = false;
@@ -271,7 +269,6 @@ onetype.AddonReady('elements', (elements) =>
 					this.value.push(item.value);
 				}
 
-				this.leftSelected = [];
 				this.emit();
 				this.sync();
 				this.Update();
@@ -287,7 +284,6 @@ onetype.AddonReady('elements', (elements) =>
 				/* Single click moves the item back to the available side. */
 
 				this.value = this.value.filter(id => id !== item.value);
-				this.rightSelected = [];
 				this.emit();
 				this.sync();
 				this.Update();
@@ -302,44 +298,6 @@ onetype.AddonReady('elements', (elements) =>
 				{
 					this._change({ value: this.value });
 				}
-			};
-
-			this.moveRight = () =>
-			{
-				if(this.disabled)
-				{
-					return;
-				}
-
-				const slots = this.slotsLeft();
-				const ids = this.leftSelected.slice(0, slots);
-
-				ids.forEach(id =>
-				{
-					if(!this.value.includes(id))
-					{
-						this.value.push(id);
-					}
-				});
-
-				this.leftSelected = [];
-				this.emit();
-				this.sync();
-				this.Update();
-			};
-
-			this.moveLeft = () =>
-			{
-				if(this.disabled)
-				{
-					return;
-				}
-
-				this.value = this.value.filter(id => !this.rightSelected.includes(id));
-				this.rightSelected = [];
-				this.emit();
-				this.sync();
-				this.Update();
 			};
 
 			this.moveAllRight = () =>
@@ -361,7 +319,6 @@ onetype.AddonReady('elements', (elements) =>
 					}
 				});
 
-				this.leftSelected = [];
 				this.emit();
 				this.sync();
 				this.Update();
@@ -376,7 +333,6 @@ onetype.AddonReady('elements', (elements) =>
 
 				const keepIds = this.items.filter(item => item.disabled && this.isSelected(item.value)).map(item => item.value);
 				this.value = keepIds;
-				this.rightSelected = [];
 				this.emit();
 				this.sync();
 				this.Update();
@@ -398,16 +354,6 @@ onetype.AddonReady('elements', (elements) =>
 			};
 
 			/* ===== BUTTON STATES ===== */
-
-			this.canMoveRight = () =>
-			{
-				return !this.disabled && this.leftSelected.length > 0 && !this.atMax();
-			};
-
-			this.canMoveLeft = () =>
-			{
-				return !this.disabled && this.rightSelected.length > 0;
-			};
 
 			this.canMoveAllRight = () =>
 			{
@@ -472,7 +418,7 @@ onetype.AddonReady('elements', (elements) =>
 							<button
 								ot-for="item in availableList"
 								type="button"
-								:class="'item' + (leftSelected.includes(item.value) ? ' selected' : '') + (item.disabled ? ' disabled' : '')"
+								:class="'item' + (item.disabled ? ' disabled' : '')"
 								:disabled="item.disabled || disabled"
 								ot-click="() => toggleLeft(item)"
 							>
@@ -481,7 +427,7 @@ onetype.AddonReady('elements', (elements) =>
 									<span class="item-label">{{ item.label }}</span>
 									<span ot-if="item.description" class="item-desc">{{ item.description }}</span>
 								</div>
-								<i ot-if="leftSelected.includes(item.value)" class="item-check">check</i>
+								<i class="item-move">add</i>
 							</button>
 						</div>
 					</div>
@@ -495,24 +441,6 @@ onetype.AddonReady('elements', (elements) =>
 							:ot-tooltip="{ text: 'Move all', position: { x: 'center', y: 'top' } }"
 						>
 							<i>keyboard_double_arrow_right</i>
-						</button>
-						<button
-							type="button"
-							class="control accent"
-							:disabled="!canMoveRight()"
-							ot-click="moveRight"
-							:ot-tooltip="{ text: 'Move selected', position: { x: 'center', y: 'top' } }"
-						>
-							<i>chevron_right</i>
-						</button>
-						<button
-							type="button"
-							class="control accent"
-							:disabled="!canMoveLeft()"
-							ot-click="moveLeft"
-							:ot-tooltip="{ text: 'Remove selected', position: { x: 'center', y: 'top' } }"
-						>
-							<i>chevron_left</i>
 						</button>
 						<button
 							type="button"
@@ -550,7 +478,7 @@ onetype.AddonReady('elements', (elements) =>
 							<button
 								ot-for="item in selectedList"
 								type="button"
-								:class="'item' + (rightSelected.includes(item.value) ? ' selected' : '') + (item.disabled ? ' disabled' : '')"
+								:class="'item' + (item.disabled ? ' disabled' : '')"
 								:disabled="item.disabled || disabled"
 								ot-click="() => toggleRight(item)"
 							>
@@ -559,7 +487,7 @@ onetype.AddonReady('elements', (elements) =>
 									<span class="item-label">{{ item.label }}</span>
 									<span ot-if="item.description" class="item-desc">{{ item.description }}</span>
 								</div>
-								<i ot-if="rightSelected.includes(item.value)" class="item-check">check</i>
+								<i class="item-move">close</i>
 							</button>
 						</div>
 					</div>
