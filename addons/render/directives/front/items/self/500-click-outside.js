@@ -1,48 +1,43 @@
 onetype.AddonReady('directives', function(directives)
 {
-	onetype.AddonReady('directives', function()
+	document.addEventListener('click', function(event)
 	{
-		const tracked = new Set();
+		const nodes = document.querySelectorAll('[ot-click-outside-bound]');
 
-		document.addEventListener('click', function(event)
+		nodes.forEach((node) =>
 		{
-			tracked.forEach((entry) =>
+			if(!node.otClickOutside)
 			{
-				if(!document.contains(entry.element))
-				{
-					tracked.delete(entry);
-					return;
-				}
+				return;
+			}
 
-				if(!entry.element.contains(event.target) && entry.element !== event.target)
-				{
-					entry.handler(event);
-				}
-			});
-		});
-
-		directives.ItemAdd({
-			id: 'ot-click-outside',
-			trigger: 'node',
-			order: 500,
-			attributes: { 'ot-click-outside': ['string'] },
-			code: function(data, item, compile, node)
+			if(!node.contains(event.target) && node !== event.target)
 			{
-				const attribute = data['ot-click-outside'].value;
-
-				tracked.add({
-					element: node,
-					handler: (event) =>
-					{
-						const result = onetype.Function(attribute, compile.data, false);
-
-						if(typeof result === 'function')
-						{
-							result({ event });
-						}
-					}
-				});
+				node.otClickOutside(event);
 			}
 		});
+	});
+
+	directives.ItemAdd({
+		id: 'ot-click-outside',
+		trigger: 'node',
+		order: 500,
+		attributes: { 'ot-click-outside': ['string'] },
+		code: function(data, item, compile, node)
+		{
+			const attribute = data['ot-click-outside'].value;
+
+			node.setAttribute('ot-click-outside-bound', '');
+
+			node.otClickOutside = (event) =>
+			{
+				const result = onetype.Function(attribute, compile.data, false);
+
+				if(typeof result === 'function')
+				{
+					result({ event });
+				}
+			};
+		}
 	});
 });

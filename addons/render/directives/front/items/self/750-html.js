@@ -1,47 +1,47 @@
 onetype.AddonReady('directives', function(directives)
 {
-    directives.ItemAdd({
-        id: 'ot-html',
-        icon: 'code',
-        name: 'HTML',
-        description: 'Set element innerHTML dynamically. Renders HTML content from data expressions.',
-        category: 'content',
-        trigger: 'node',
-        order: 750,
-        strict: true,
-        type: '1',
-        attributes: {
-            'ot-html': ['string']
-        },
-        code: function(data, item, compile, node, identifier)
-        {
-            const html = data['ot-html'].value;
+	directives.ItemAdd({
+		id: 'ot-html',
+		icon: 'code',
+		name: 'HTML',
+		description: 'Set element innerHTML dynamically. Renders HTML content from data expressions.',
+		category: 'content',
+		trigger: 'node',
+		order: 750,
+		strict: true,
+		type: '1',
+		attributes: {
+			'ot-html': ['string']
+		},
+		code: function(data, item, compile, node, identifier)
+		{
+			const html = data['ot-html'].value;
 
-            if(html)
-            {
-                const results = onetype.Function(html, compile.data, false);
+			if(html)
+			{
+				const results = onetype.Function(html, compile.data, false);
 
-                if(typeof results === 'string' && results.trim())
-                {
-                    const originalChildren = compile.children;
-                    compile.children = false;
+				if(typeof results === 'string' && results.trim())
+				{
+					const originalChildren = compile.children;
+					compile.children = false;
 
-                    const compiled = item.Compile(results, compile.data, {locale: false});
-                    const fragment = document.createDocumentFragment();
+					const compiled = item.Compile(results, compile.data, {locale: false});
+					const fragment = document.createDocumentFragment();
 
-                    while(compiled.element.firstChild)
-                    {
-                        fragment.appendChild(compiled.element.firstChild);
-                    }
+					while(compiled.element.firstChild)
+					{
+						fragment.appendChild(compiled.element.firstChild);
+					}
 
-                    node.replaceWith(fragment);
-                    compile.children = originalChildren;
-                }
-                else
-                {
-                    node.remove();
-                }
-            }
-        }
-    });
+					node.replaceWith(fragment);
+					compile.children = originalChildren;
+				}
+				else
+				{
+					node.remove();
+				}
+			}
+		}
+	});
 });

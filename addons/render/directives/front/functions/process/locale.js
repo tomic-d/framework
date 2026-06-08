@@ -18,24 +18,24 @@ directives.Fn('process.locale', function(node)
 	{
 		for(let i = 0; i < node.attributes.length; i++)
 		{
-			const attr = node.attributes[i];
+			const attribute = node.attributes[i];
 
-			if(attr.name.startsWith(':') || attr.name.startsWith('ot-'))
+			if(attribute.name.startsWith(':') || attribute.name.startsWith('ot-'))
 			{
 				continue;
 			}
 
-			if(skip.includes(attr.name))
+			if(skip.includes(attribute.name))
 			{
 				continue;
 			}
 
-			if(!attr.value || !attr.value.trim())
+			if(!attribute.value || !attribute.value.trim())
 			{
 				continue;
 			}
 
-			attr.value = onetype.LocaleGet(attr.value);
+			attribute.value = onetype.LocaleGet(attribute.value);
 		}
 
 		for(let i = 0; i < node.childNodes.length; i++)

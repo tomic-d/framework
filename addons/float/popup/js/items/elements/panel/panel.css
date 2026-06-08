@@ -1,0 +1,144 @@
+/* ===== POPUP PANEL — chrome for modals, drawers and sheets ===== */
+
+.e-5ea275cd
+{
+	display: contents;
+}
+
+.e-5ea275cd > .box
+{
+	display: flex;
+	flex-direction: column;
+	background: var(--ot-bg-2);
+	border: 1px solid var(--ot-bg-2-border);
+	overflow: hidden;
+}
+
+/* ===== PLACEMENT — all floating cards: full border, radius, margin from edges ===== */
+
+.e-5ea275cd > .box
+{
+	border-radius: var(--ot-radius-l);
+}
+
+/* Center — modal card */
+.e-5ea275cd > .box.place-center
+{
+	max-height: 85vh;
+}
+
+/* Right / Left — drawer, full height minus margin */
+.e-5ea275cd > .box.place-right,
+.e-5ea275cd > .box.place-left
+{
+	height: calc(100vh - var(--ot-spacing-m) * 2);
+}
+
+/* Bottom / Top — sheet, full width minus margin */
+.e-5ea275cd > .box.place-bottom,
+.e-5ea275cd > .box.place-top
+{
+	width: calc(100vw - var(--ot-spacing-m) * 2);
+	max-height: 85vh;
+}
+
+/* ===== WIDTH (center / right / left) ===== */
+
+.e-5ea275cd > .box.place-center.width-s, .e-5ea275cd > .box.place-right.width-s, .e-5ea275cd > .box.place-left.width-s { width: 320px; }
+.e-5ea275cd > .box.place-center.width-m, .e-5ea275cd > .box.place-right.width-m, .e-5ea275cd > .box.place-left.width-m { width: 420px; }
+.e-5ea275cd > .box.place-center.width-l, .e-5ea275cd > .box.place-right.width-l, .e-5ea275cd > .box.place-left.width-l { width: 560px; }
+
+.e-5ea275cd > .box.place-center { max-width: 90vw; }
+
+/* ===== HEADER ===== */
+
+.e-5ea275cd > .box > .head
+{
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--ot-spacing-m);
+	padding: var(--ot-spacing-m);
+	border-bottom: 1px solid var(--ot-bg-2-border);
+	flex-shrink: 0;
+}
+
+.e-5ea275cd > .box > .head > .titles
+{
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+
+.e-5ea275cd > .box > .head > .titles > .title
+{
+	font-size: var(--ot-size-m);
+	font-weight: 600;
+	color: var(--ot-text-1);
+}
+
+.e-5ea275cd > .box > .head > .titles > .description
+{
+	font-size: var(--ot-size-s);
+	color: var(--ot-text-3);
+}
+
+.e-5ea275cd > .box > .head > .close
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	background: transparent;
+	border: none;
+	border-radius: var(--ot-radius-s);
+	color: var(--ot-text-3);
+	cursor: pointer;
+	flex-shrink: 0;
+	transition: background var(--ot-transition-fast), color var(--ot-transition-fast);
+}
+
+.e-5ea275cd > .box > .head > .close:hover
+{
+	background: var(--ot-bg-3);
+	color: var(--ot-text-1);
+}
+
+.e-5ea275cd > .box > .head > .close > i
+{
+	font-size: 18px;
+}
+
+/* ===== BODY ===== */
+
+.e-5ea275cd > .box > .body
+{
+	overflow-y: auto;
+	flex: 1;
+}
+
+.e-5ea275cd > .box > .body.pad-none { padding: 0; }
+.e-5ea275cd > .box > .body.pad-s { padding: var(--ot-spacing-s); }
+.e-5ea275cd > .box > .body.pad-m { padding: var(--ot-spacing-m); }
+.e-5ea275cd > .box > .body.pad-l { padding: var(--ot-spacing-l); }
+
+.e-5ea275cd > .box.clean > .body
+{
+	padding: 0;
+}
+
+/* ===== FOOTER ===== */
+
+.e-5ea275cd > .box > .foot
+{
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--ot-spacing-s);
+	padding: var(--ot-spacing-m);
+	border-top: 1px solid var(--ot-bg-2-border);
+	flex-shrink: 0;
+}

@@ -43,6 +43,16 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 				return;
 			}
 		}
+		else if(normalized === 'CONTAINS' || normalized === 'CONTAINED')
+		{
+			validation.field(field);
+			validation.operator(normalized, operators);
+
+			if(!Array.isArray(value) || !value.length)
+			{
+				return;
+			}
+		}
 		else
 		{
 			validation.field(field);

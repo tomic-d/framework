@@ -33,6 +33,8 @@ onetype.AddonReady('directives', function(directives)
 
 				result.__otExternal = { name: 'node', key: key || value };
 				node.replaceWith(result);
+
+				return;
 			}
 
 			node.removeAttribute('ot-node');

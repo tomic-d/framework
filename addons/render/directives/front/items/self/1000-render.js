@@ -18,7 +18,7 @@ onetype.AddonReady('directives', function(directives)
 
 			if(!name)
 			{
-				console.error('Render directive requires a name attribute');
+				onetype.Error(400, 'Render directive requires a name attribute.');
 				node.remove();
 				return false;
 			}
@@ -30,7 +30,7 @@ onetype.AddonReady('directives', function(directives)
 			}
 			else
 			{
-				console.warn(`Render property "${name}" not found or is not a render instance`);
+				onetype.Error(400, 'Render property :name: not found or is not a render instance.', {name});
 				node.remove();
 			}
 
