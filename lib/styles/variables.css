@@ -41,9 +41,9 @@
     --ot-bg-4-opacity: rgba(44, 44, 46, 0.85);
     --ot-bg-4-hover: rgba(48, 48, 50, 1);
 
-    --ot-text-1: rgba(225, 228, 232, 1);
-    --ot-text-2: rgba(156, 156, 156, 1);
-    --ot-text-3: rgba(100, 100, 100, 1);
+    --ot-text-1: rgb(237, 233, 233);
+    --ot-text-2: rgb(161, 153, 153);
+    --ot-text-3: rgb(131, 130, 130);
 
     --ot-brand: rgba(226, 112, 85, 1);
     --ot-brand-border: rgba(236, 142, 120, 1);

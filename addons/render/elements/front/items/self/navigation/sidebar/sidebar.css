@@ -128,7 +128,7 @@
 
 .e-210c16c7 .item > i
 {
-	color: var(--ot-text-3);
+	color: var(--ot-text-2);
 	font-size: 18px;
 	flex-shrink: 0;
 	transition: color var(--ot-transition);

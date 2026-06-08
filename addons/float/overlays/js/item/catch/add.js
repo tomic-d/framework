@@ -98,18 +98,18 @@ overlays.ItemOn('add', function(item)
 
 	this.track = () =>
 	{
-		if(!item.Get('track') || !item.Get('target'))
-		{
-			return;
-		}
-
 		const reposition = () => overlays.Fn('reposition', item);
 
-		item.StoreSet('scroll', reposition);
+		/* Resize always repositions — viewport floats (modal, drawer) and tracked popups alike. */
 		item.StoreSet('resize', reposition);
-
-		window.addEventListener('scroll', reposition, true);
 		window.addEventListener('resize', reposition);
+
+		/* Scroll only repositions popups anchored to a target that scrolls with the page. */
+		if(item.Get('track') && item.Get('target'))
+		{
+			item.StoreSet('scroll', reposition);
+			window.addEventListener('scroll', reposition, true);
+		}
 	};
 
 	this.replace();
