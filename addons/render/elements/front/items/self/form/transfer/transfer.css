@@ -124,15 +124,9 @@
 	transition: background var(--ot-transition-fast), border-color var(--ot-transition-fast), color var(--ot-transition-fast);
 }
 
-.e-1e66ff82 > .box > .panel > .list > .item:hover:not(.disabled):not(.selected)
+.e-1e66ff82 > .box > .panel > .list > .item:hover:not(.disabled)
 {
 	background: var(--ot-bg-2);
-}
-
-.e-1e66ff82 > .box > .panel > .list > .item.selected
-{
-	background: var(--ot-brand-opacity);
-	border-color: var(--ot-brand-border);
 }
 
 .e-1e66ff82 > .box > .panel > .list > .item.disabled
@@ -150,10 +144,6 @@
 	color: var(--ot-text-2);
 }
 
-.e-1e66ff82 > .box > .panel > .list > .item.selected > .item-icon
-{
-	color: var(--ot-brand);
-}
 
 /* Item text */
 
@@ -187,12 +177,20 @@
 	text-overflow: ellipsis;
 }
 
-/* Item check */
+/* Item move indicator (revealed on hover) */
 
-.e-1e66ff82 > .box > .panel > .list > .item > .item-check
+.e-1e66ff82 > .box > .panel > .list > .item > .item-move
 {
 	flex-shrink: 0;
 	font-size: 18px;
+	color: var(--ot-text-3);
+	opacity: 0;
+	transition: opacity var(--ot-transition-fast), color var(--ot-transition-fast);
+}
+
+.e-1e66ff82 > .box > .panel > .list > .item:hover:not(.disabled) > .item-move
+{
+	opacity: 1;
 	color: var(--ot-brand);
 }
 
