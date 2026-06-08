@@ -162,6 +162,25 @@
 	to { opacity: 1; transform: scale(1); }
 }
 
+/* Drag and drop reorder */
+
+.e-3f8bc2c8 > .box > .zone > .grid > .card[draggable="true"]
+{
+	cursor: grab;
+}
+
+.e-3f8bc2c8 > .box > .zone > .grid > .card.dragging
+{
+	opacity: 0.4;
+	cursor: grabbing;
+}
+
+.e-3f8bc2c8 > .box > .zone > .grid > .card.drag-over
+{
+	border-color: var(--ot-brand);
+	background: var(--ot-brand-opacity);
+}
+
 /* Thumbnail */
 
 .e-3f8bc2c8 > .box > .zone > .grid > .card > .thumb

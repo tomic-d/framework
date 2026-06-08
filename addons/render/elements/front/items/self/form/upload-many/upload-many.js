@@ -310,6 +310,84 @@ if(url && typeof url === 'string')
 				this.Update();
 			};
 
+			/* ===== REORDER ===== */
+
+			this.dragIndex = null;
+
+			this.onDragStart = (index) => ({ event }) =>
+			{
+				if(this.disabled)
+				{
+					return;
+				}
+
+				this.dragIndex = index;
+
+				const card = event.target.closest('.card');
+
+				if(card)
+				{
+					card.classList.add('dragging');
+				}
+			};
+
+			this.onDragOver = (index) => ({ event }) =>
+			{
+				if(this.disabled || this.dragIndex === null || this.dragIndex === index)
+				{
+					return;
+				}
+
+				const card = event.target.closest('.card');
+
+				if(card)
+				{
+					card.classList.add('drag-over');
+				}
+			};
+
+			this.onDragLeave = () => ({ event }) =>
+			{
+				const card = event.target.closest('.card');
+
+				if(card)
+				{
+					card.classList.remove('drag-over');
+				}
+			};
+
+			this.onDrop = (index) => () =>
+			{
+				if(this.disabled || this.dragIndex === null || this.dragIndex === index)
+				{
+					return;
+				}
+
+				const moved = this.value[this.dragIndex];
+
+				this.value.splice(this.dragIndex, 1);
+				this.value.splice(index, 0, moved);
+
+				this.dragIndex = null;
+
+				if(this._change)
+				{
+					this._change({ value: this.value });
+				}
+
+				this.Update();
+			};
+
+			this.onDragEnd = () =>
+			{
+				this.dragIndex = null;
+
+				this.Element.querySelectorAll('.card.dragging, .card.drag-over').forEach((card) =>
+				{
+					card.classList.remove('dragging', 'drag-over');
+				});
+			};
+
 			this.clear = () =>
 			{
 				if(this.disabled)
@@ -473,7 +551,15 @@ if(url && typeof url === 'string')
 						</div>
 
 						<div ot-if="value.length > 0" class="grid">
-							<div ot-for="url, index in value" class="card">
+							<div
+								ot-for="url, index in value"
+								class="card"
+								ot-dragstart="onDragStart(index)"
+								ot-dragover="onDragOver(index)"
+								ot-dragleave="onDragLeave()"
+								ot-drop="onDrop(index)"
+								ot-dragend="onDragEnd"
+							>
 								<div ot-if="isImage(url)" class="thumb">
 									<img :src="url" :alt="fileName(url)" />
 								</div>
