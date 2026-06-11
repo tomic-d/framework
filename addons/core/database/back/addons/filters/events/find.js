@@ -12,7 +12,7 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 		'EQUALS', 'NOT EQUALS', 'LESS', 'GREATER', 'LESS EQUALS', 'GREATER EQUALS',
 		'LIKE', 'NOT LIKE', 'ILIKE', 'NOT ILIKE', 'IN', 'NOT IN',
 		'BETWEEN', 'NOT BETWEEN', 'NULL', 'NOT NULL',
-		'CONTAINS', 'CONTAINED', 'HAS'
+		'CONTAINS', 'CONTAINED', 'OVERLAP', 'HAS'
 	];
 
 	function push(group, field, value, operator, type)
@@ -43,7 +43,7 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 				return;
 			}
 		}
-		else if(normalized === 'CONTAINS' || normalized === 'CONTAINED')
+		else if(normalized === 'CONTAINS' || normalized === 'CONTAINED' || normalized === 'OVERLAP')
 		{
 			validation.field(field);
 			validation.operator(normalized, operators);

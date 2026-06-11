@@ -2,6 +2,7 @@ import onetype from '#framework/load.js';
 import commands from '#commands/core/addon.js';
 
 /* Core */
+import '#commands/core/emitters/run.js';
 import '#commands/core/item/functions/run.js';
 import '#commands/core/item/functions/test.js';
 import '#commands/core/item/functions/tests.js';

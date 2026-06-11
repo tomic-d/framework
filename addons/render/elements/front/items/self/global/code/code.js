@@ -229,7 +229,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'string',
 				value: 'js',
-				options: ['js', 'javascript', 'css', 'html', 'json', 'python', 'py', 'bash', 'sh', 'shell'],
+				options: ['js', 'javascript', 'css', 'html', 'json', 'python', 'py', 'bash', 'sh', 'shell', 'text'],
 				description: 'Syntax language.'
 			},
 			filename:

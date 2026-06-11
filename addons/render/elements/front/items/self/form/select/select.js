@@ -114,41 +114,55 @@ onetype.AddonReady('elements', (elements) =>
 			/* ===== ASYNC OPTIONS ===== */
 
 			this.optionsCallback = null;
+			this.resolved = [];
 
-			if(typeof this.options === 'function')
+			this.fetchOptions = async (search) =>
 			{
-				this.optionsCallback = this.options;
-				this.options = [];
 				this.loading = true;
+				this.State.ready && this.Update();
 
-				this.fetchOptions = async (search) =>
+				try
 				{
-					this.loading = true;
-					this.Update();
+					const selected = this.value !== null && this.value !== undefined && this.value !== '' ? [this.value] : [];
+					const result = await this.optionsCallback.call(this, { search: search || '', selected });
+					this.resolved = Array.isArray(result) ? this.normalize(result) : [];
+				}
+				catch(error)
+				{
+					this.resolved = [];
+				}
 
-					try
-					{
-						const selected = this.value !== null && this.value !== undefined && this.value !== '' ? [this.value] : [];
-						const result = await this.optionsCallback.call(this, { search: search || '', selected });
-						this.options = Array.isArray(result) ? this.normalize(result) : [];
-					}
-					catch(error)
-					{
-						this.options = [];
-					}
+				this.loading = false;
+				this.State.ready && this.Update();
+			};
 
-					this.loading = false;
-					this.Update();
-				};
+			this.fetchOptionsDebounced = onetype.HelperDebounce((search) => this.fetchOptions(search), 300);
 
-				this.fetchOptionsDebounced = onetype.HelperDebounce((search) => this.fetchOptions(search), 300);
+			/* Props can re-push the raw options on every data update, so the template never
+			   reads them directly. list() resolves at read time, a function becomes the
+			   fetched list, an array is normalized. */
 
-				this.OnInit(() => this.fetchOptions(''));
-			}
-			else
+			this.list = () =>
 			{
-				this.options = this.normalize(this.options);
-			}
+				if(typeof this.options === 'function')
+				{
+					if(this.optionsCallback !== this.options)
+					{
+						this.optionsCallback = this.options;
+						this.resolved = [];
+						this.fetchOptions(this.query || '');
+					}
+
+					return this.resolved;
+				}
+
+				if(this.optionsCallback)
+				{
+					return this.resolved;
+				}
+
+				return this.normalize(Array.isArray(this.options) ? this.options : []);
+			};
 
 			/* ===== CLASSES ===== */
 
@@ -193,17 +207,17 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.current = () =>
 			{
-				return this.options.find(o => o.value === this.value);
+				return this.list().find(o => o.value === this.value);
 			};
 
 			this.filtered = () =>
 			{
 				if(this.optionsCallback || !this.query)
 				{
-					return this.options;
+					return this.list();
 				}
 
-				return this.options.filter(o =>
+				return this.list().filter(o =>
 					String(o.label || '').toLowerCase().includes(this.query.toLowerCase())
 				);
 			};
