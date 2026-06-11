@@ -50,13 +50,17 @@ onetype.AddonReady('directives', function(directives)
 					return;
 				}
 
-				const html = node.outerHTML;
+				/* Rows re-parse as standalone HTML, which would drop the SVG namespace —
+				   inside an svg the row compiles wrapped in one, then unwraps. */
+
+				const foreign = node.namespaceURI === 'http://www.w3.org/2000/svg';
+				const html = foreign ? '<svg>' + node.outerHTML + '</svg>' : node.outerHTML;
 				const fragment = document.createDocumentFragment();
 
 				items.forEach((value, index) =>
 				{
 					const loopData = Object.assign({}, compile.data);
-					
+
 					loopData[forName] = value;
 					loopData[forIndex] = index;
 
@@ -65,10 +69,11 @@ onetype.AddonReady('directives', function(directives)
 						: onetype.GenerateHash(index + ':' + (typeof value === 'object' ? JSON.stringify(value) : String(value)));
 
 					const compiled = item.Compile(html, loopData, { key });
+					const source = foreign ? compiled.element.firstChild : compiled.element;
 
-					while(compiled.element.firstChild)
+					while(source.firstChild)
 					{
-						const child = compiled.element.firstChild;
+						const child = source.firstChild;
 
 						if(child.nodeType === Node.ELEMENT_NODE && !child.hasAttribute('ot-key') && !child.__otExternal)
 						{

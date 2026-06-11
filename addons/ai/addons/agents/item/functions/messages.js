@@ -2,8 +2,6 @@ import ai from '#ai/addon.js';
 
 ai.agents.Fn('item.messages', function(item, data = {}, history = null)
 {
-	const state = onetype.StateGet();
-
 	const instructions = item.Get('instructions');
 	const input = item.Get('input');
 	const output = typeof item.Get('output') === 'function' ? item.Get('output')({input}) : item.Get('output');
@@ -11,7 +9,6 @@ ai.agents.Fn('item.messages', function(item, data = {}, history = null)
 
 	const system = [
 		instructions,
-		state && Object.keys(state).length ? 'State:\n' + JSON.stringify(state, null, 2) : null,
 		input && Object.keys(input).length ? 'Input fields:\n' + item.Fn('describe', input) : null,
 		output && Object.keys(output).length && item.Get('format') === 'json' ? 'Output fields:\n' + item.Fn('describe', output) : null,
 	].filter(Boolean).join('\n\n');

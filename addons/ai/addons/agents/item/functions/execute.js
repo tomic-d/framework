@@ -1,38 +1,33 @@
 import ai from '#ai/addon.js';
 
-
-ai.agents.Fn('item.execute', async function(item, payload, stream = null)
+ai.agents.Fn('item.execute', async function(item, payload)
 {
-	const provider = item.Get('provider') ? ai.providers.ItemGet(item.Get('provider')) : ai.providers.Fn('default');
+	const result = await onetype.PipelineRun('ai:agents:request', payload);
 
-	if (!provider)
+	if(result.code !== 200)
 	{
-		throw new Error('Provider not found: ' + (item.Get('provider') || 'default'));
+		throw onetype.Error(result.code, result.message);
 	}
 
-	const result = await provider.Fn('request', payload, stream);
-
-	const meta = { 
+	const meta = {
 		time: result.time,
-		tokens: result.tokens,
-		tps: result.tps,
-		reasoning: result.reasoning
+		tokens: result.data.usage
 	};
 
-	if (item.Get('format') === 'text')
+	if(item.Get('format') === 'text')
 	{
-		return { content: result.content, _meta: meta };
+		return { content: result.data.content, _meta: meta };
 	}
 
 	let parsed;
 
 	try
 	{
-		parsed = JSON.parse(result.content);
+		parsed = JSON.parse(result.data.content);
 	}
-	catch (error)
+	catch(error)
 	{
-		throw new Error('Failed to parse agent response as JSON: ' + result.content.slice(0, 200));
+		throw onetype.Error(500, 'Agent response is not valid JSON: ' + result.data.content.slice(0, 200));
 	}
 
 	parsed._meta = meta;

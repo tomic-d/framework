@@ -1,8 +1,6 @@
 import ai from '#ai/addon.js';
 
-import '#ai/addons/providers/load.js';
 import '#ai/addons/agents/load.js';
-import '#ai/addons/pipelines/load.js';
 import '#ai/addons/orchestrators/load.js';
 
 /* Items */

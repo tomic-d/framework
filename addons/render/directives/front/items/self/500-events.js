@@ -63,6 +63,7 @@ onetype.AddonReady('directives', function(directives)
 	register({ id: 'ot-blur', event: 'blur', property: 'otBlur', value: true, capture: true });
 	register({ id: 'ot-keydown', event: 'keydown', property: 'otKeydown', value: true });
 	register({ id: 'ot-keyup', event: 'keyup', property: 'otKeyup', value: true });
+	register({ id: 'ot-paste', event: 'paste', property: 'otPaste', value: true });
 	register({ id: 'ot-mouse-move', event: 'mousemove', property: 'otMouseMove' });
 	register({ id: 'ot-scroll', event: 'scroll', property: 'otScroll', capture: true });
 	register({ id: 'ot-submit', event: 'submit', property: 'otSubmit' });

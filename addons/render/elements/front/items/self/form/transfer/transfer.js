@@ -130,46 +130,58 @@ onetype.AddonReady('elements', (elements) =>
 			this.rightSearch = '';
 			this.loading = false;
 
-			this.Compute(() =>
-			{
-				this.totalCount = this.items.length;
-				this.maxLabel = this.max ? this.max : this.items.length;
-			});
-
 			/* ===== ASYNC ITEMS ===== */
 
 			this.itemsCallback = null;
+			this.resolved = [];
 
-			if(typeof this.items === 'function')
+			this.fetchItems = async (search) =>
 			{
-				this.itemsCallback = this.items;
-				this.items = [];
 				this.loading = true;
+				this.State.ready && this.Update();
 
-				this.fetchItems = async (search) =>
+				try
 				{
-					this.loading = true;
-					this.Update();
+					const result = await this.itemsCallback.call(this, { search: search || '', selected: this.value || [] });
+					this.resolved = Array.isArray(result) ? result : [];
+				}
+				catch(error)
+				{
+					this.resolved = [];
+				}
 
-					try
+				this.loading = false;
+				this.sync();
+				this.State.ready && this.Update();
+			};
+
+			this.fetchItemsDebounced = onetype.HelperDebounce((search) => this.fetchItems(search), 300);
+
+			/* Props can re-push the raw items on every data update, so nothing reads them
+			   directly. list() resolves at read time, a function becomes the fetched list. */
+
+			this.list = () =>
+			{
+				if(typeof this.items === 'function')
+				{
+					if(this.itemsCallback !== this.items)
 					{
-						const result = await this.itemsCallback.call(this, { search: search || '', selected: this.value || [] });
-						this.items = Array.isArray(result) ? result : [];
-					}
-					catch(error)
-					{
-						this.items = [];
+						this.itemsCallback = this.items;
+						this.resolved = [];
+						this.fetchItems('');
 					}
 
-					this.loading = false;
-					this.sync();
-					this.Update();
-				};
+					return this.resolved;
+				}
 
-				this.fetchItemsDebounced = onetype.HelperDebounce((search) => this.fetchItems(search), 300);
+				if(this.itemsCallback)
+				{
+					return this.resolved;
+				}
 
-				this.OnInit(() => this.fetchItems(''));
-			}
+				return Array.isArray(this.items) ? this.items : [];
+			};
+
 
 			/* ===== CLASSES ===== */
 
@@ -237,8 +249,8 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.computed = () =>
 			{
-				const available = this.items.filter(item => !this.isSelected(item.value));
-				const selected = this.items.filter(item => this.isSelected(item.value));
+				const available = this.list().filter(item => !this.isSelected(item.value));
+				const selected = this.list().filter(item => this.isSelected(item.value));
 
 				return {
 					available,
@@ -291,7 +303,7 @@ onetype.AddonReady('elements', (elements) =>
 
 			this.emit = () =>
 			{
-				const ordered = this.items.filter(item => this.value.includes(item.value)).map(item => item.value);
+				const ordered = this.list().filter(item => this.value.includes(item.value)).map(item => item.value);
 				this.value = ordered;
 
 				if(this._change)
@@ -307,7 +319,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const eligible = this.items.filter(item => !item.disabled && !this.isSelected(item.value));
+				const eligible = this.list().filter(item => !item.disabled && !this.isSelected(item.value));
 				const slots = this.slotsLeft();
 				const ids = eligible.slice(0, slots).map(item => item.value);
 
@@ -331,7 +343,7 @@ onetype.AddonReady('elements', (elements) =>
 					return;
 				}
 
-				const keepIds = this.items.filter(item => item.disabled && this.isSelected(item.value)).map(item => item.value);
+				const keepIds = this.list().filter(item => item.disabled && this.isSelected(item.value)).map(item => item.value);
 				this.value = keepIds;
 				this.emit();
 				this.sync();
@@ -362,7 +374,7 @@ onetype.AddonReady('elements', (elements) =>
 					return false;
 				}
 
-				return this.items.some(item => !item.disabled && !this.isSelected(item.value));
+				return this.list().some(item => !item.disabled && !this.isSelected(item.value));
 			};
 
 			this.canMoveAllLeft = () =>
@@ -372,7 +384,7 @@ onetype.AddonReady('elements', (elements) =>
 					return false;
 				}
 
-				return this.items.some(item => !item.disabled && this.isSelected(item.value));
+				return this.list().some(item => !item.disabled && this.isSelected(item.value));
 			};
 
 			/* ===== SYNC ===== */
@@ -385,9 +397,14 @@ onetype.AddonReady('elements', (elements) =>
 				this.selectedList = state.selectedFiltered;
 				this.availableCount = state.available.length;
 				this.selectedCount = state.selected.length;
+				this.totalCount = this.list().length;
+				this.maxLabel = this.max ? this.max : this.list().length;
 			};
 
-			this.sync();
+			this.Compute(() =>
+			{
+				this.sync();
+			});
 
 			/* ===== RENDER ===== */
 

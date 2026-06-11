@@ -55,6 +55,12 @@ filters.Fn('build', function(knex, root)
 			const placeholders = values.map(() => '?').join(',');
 			query.whereRaw(`??::text[] <@ ARRAY[${placeholders}]::text[]`, [filter.field, ...values.map(value => String(value))]);
 		}
+		else if(operator === 'OVERLAP')
+		{
+			const values = Array.isArray(filter.value) ? filter.value : [filter.value];
+			const placeholders = values.map(() => '?').join(',');
+			query.whereRaw(`??::text[] && ARRAY[${placeholders}]::text[]`, [filter.field, ...values.map(value => String(value))]);
+		}
 		else if(operator === 'HAS')
 		{
 			query.whereRaw(`?? ? ?`, [filter.field, filter.value]);

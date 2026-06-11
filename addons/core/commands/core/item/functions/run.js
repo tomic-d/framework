@@ -12,6 +12,18 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
             properties = {};
         }
 
+        const emit = (result) =>
+        {
+            onetype.Emit('@commands.run', {
+                id: item.Get('id'),
+                input: properties,
+                data: result.data,
+                message: result.message,
+                code: result.code,
+                time: result.time
+            });
+        };
+
         const callback = (data, message = "Command '{{command}}' executed successfully.", code = 200, end = true) =>
         {
             if(message === null && code === 404)
@@ -46,6 +58,7 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
 
             if(result.end)
             {
+                emit(result);
                 resolve(result);
             }
         };
@@ -60,13 +73,17 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
                 }
                 catch(error)
                 {
-                    return resolve({
+                    const result = {
                         data: error.message,
                         message: 'Command ' + item.Get('id') + ' invalid input: ' + error.message,
                         code: 400,
                         time: (performance.now() - startTime).toFixed(2),
                         end: true
-                    });
+                    };
+
+                    emit(result);
+
+                    return resolve(result);
                 }
             }
 
@@ -74,6 +91,13 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
         }
         catch(error)
         {
+            emit({
+                data: null,
+                message: error.message || String(error),
+                code: 500,
+                time: (performance.now() - startTime).toFixed(2)
+            });
+
             reject(error);
         }
     })
