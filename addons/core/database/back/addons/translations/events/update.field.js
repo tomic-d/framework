@@ -18,10 +18,11 @@ onetype.MiddlewareIntercept('@database.update.field', async (middleware) =>
 		return await middleware.next();
 	}
 
-	if(fields.includes(field.name))
-	{
-		middleware.value.skip = true;
-	}
+	/* Writing a non-default language must not touch the head table at all:
+	   translatable fields go to database_translations, and non-translatable
+	   fields keep their default-language value (the edit carries only the
+	   translation, not real values for shared columns). Skip every field. */
+	middleware.value.skip = true;
 
 	await middleware.next();
 });

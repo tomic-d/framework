@@ -22,8 +22,8 @@ onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 	{
 		for(let i = 0; i < fields.length; i++)
 		{
-			const method = i === 0 ? 'whereRaw' : 'orWhereRaw';
-			this[method]('??::text ILIKE ?', [fields[i], term]);
+			const method = i === 0 ? 'whereILike' : 'orWhereILike';
+			this[method](fields[i], term);
 		}
 	});
 

@@ -1,3 +1,4 @@
+import '#database/addons/translations/events/addon.js';
 import '#database/addons/translations/functions/context.js';
 import '#database/addons/translations/events/create.js';
 import '#database/addons/translations/events/update.js';

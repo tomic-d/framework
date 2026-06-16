@@ -34,6 +34,14 @@ assets.Fn('scan.files', function(dirPath, extension = 'css', ignore = [], recurs
         }
     }
 
+    const index = files.find(f => f.endsWith('/index.js'));
+
+    if (index)
+    {
+        results.push(index);
+        files.splice(files.indexOf(index), 1);
+    }
+
     const addon = files.find(f => f.endsWith('/addon.js'));
 
     if (addon)

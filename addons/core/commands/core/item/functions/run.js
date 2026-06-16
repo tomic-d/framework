@@ -87,6 +87,26 @@ commands.Fn('item.run', function(item, properties = {}, onChunk = null, context 
                 }
             }
 
+            if(item.Get('condition'))
+            {
+                const allowed = await item.Get('condition').call(context, properties);
+
+                if(typeof allowed === 'string')
+                {
+                    const result = {
+                        data: null,
+                        message: allowed,
+                        code: 403,
+                        time: (performance.now() - startTime).toFixed(2),
+                        end: true
+                    };
+
+                    emit(result);
+
+                    return resolve(result);
+                }
+            }
+
             await item.Get('callback').call(context, properties, callback);
         }
         catch(error)

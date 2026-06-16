@@ -5,6 +5,11 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 {
 	methods.metrics = async (field, interval, aggregate, value) =>
 	{
+		if(query.impossible)
+		{
+			return [];
+		}
+
 		const from = query.from || query.table.name;
 		const knex = query.knex(from);
 

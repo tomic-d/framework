@@ -1,5 +1,6 @@
 import onetype from '#framework/load.js';
 import database from '#database/addon.js';
+import filters from '../addon.js';
 
 onetype.EmitOn('@database.find', ({ methods, query }) =>
 {
@@ -8,59 +9,26 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 
 	const validation = database.Fn('validation');
 
-	const operators = [
-		'EQUALS', 'NOT EQUALS', 'LESS', 'GREATER', 'LESS EQUALS', 'GREATER EQUALS',
-		'LIKE', 'NOT LIKE', 'ILIKE', 'NOT ILIKE', 'IN', 'NOT IN',
-		'BETWEEN', 'NOT BETWEEN', 'NULL', 'NOT NULL',
-		'CONTAINS', 'CONTAINED', 'OVERLAP', 'HAS'
-	];
-
 	function push(group, field, value, operator, type)
 	{
 		const normalized = operator.toUpperCase();
+		const item = filters.ItemGet(normalized);
 
-		if(normalized === 'NULL' || normalized === 'NOT NULL')
+		if(!item)
 		{
-			validation.field(field);
-		}
-		else if(normalized === 'BETWEEN' || normalized === 'NOT BETWEEN')
-		{
-			validation.field(field);
-			validation.between(value);
-		}
-		else if(normalized === 'IN' || normalized === 'NOT IN')
-		{
-			validation.field(field);
-			validation.operator(normalized, operators);
-
-			if(!Array.isArray(value) || !value.length)
-			{
-				if(normalized === 'IN')
-				{
-					query.impossible = true;
-				}
-
-				return;
-			}
-		}
-		else if(normalized === 'CONTAINS' || normalized === 'CONTAINED' || normalized === 'OVERLAP')
-		{
-			validation.field(field);
-			validation.operator(normalized, operators);
-
-			if(!Array.isArray(value) || !value.length)
-			{
-				return;
-			}
-		}
-		else
-		{
-			validation.field(field);
-			validation.operator(normalized, operators);
-			validation.value(value);
+			throw onetype.Error(400, 'Invalid operator: :1:.', normalized);
 		}
 
-		group.children.push({ kind: 'filter', field, value, operator: normalized, type });
+		const filter = { kind: 'filter', field, value, operator: normalized, type };
+		const validate = item.Get('validate');
+		const result = validate ? validate.call({}, filter, validation, query) : undefined;
+
+		if(result === false)
+		{
+			return;
+		}
+
+		group.children.push(filter);
 	}
 
 	function scope(group, parent)

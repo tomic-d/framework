@@ -18,7 +18,7 @@ const ai = onetype.Addon('ai', (ai) =>
 		addon.Field('description', {
 			type: 'string',
 			value: '',
-			description: 'What the agent does. The orchestrator picks agents by this.'
+			description: 'What the agent does. The workflow picks agents by this.'
 		});
 
 		addon.Field('instructions', {
@@ -35,7 +35,7 @@ const ai = onetype.Addon('ai', (ai) =>
 
 		addon.Field('condition', {
 			type: 'function',
-			description: 'Returns whether the agent is currently available. Hidden from the orchestrator when falsy.'
+			description: 'Returns whether the agent is currently available. Hidden from the workflow when falsy.'
 		});
 
 		addon.Field('temperature', {
@@ -81,6 +81,12 @@ const ai = onetype.Addon('ai', (ai) =>
 			description: 'Output schema in the data define format, or a function of the input that returns one. Validated after the run.'
 		});
 
+		addon.Field('state', {
+			type: 'object|function',
+			value: null,
+			description: 'Current situational state sent with every run, or a function returning it. Included in the system message so the model knows the present context.'
+		});
+
 		addon.Field('onBefore', {
 			type: 'function',
 			description: 'Called with the input and the payload right before the model request.'
@@ -90,40 +96,30 @@ const ai = onetype.Addon('ai', (ai) =>
 			type: 'function',
 			description: 'Called with the input, payload and output after the run. For agents without instructions this is the whole job.'
 		});
-
-		addon.Field('onSuccess', {
-			type: 'function',
-			description: 'Called after a successful run.'
-		});
-
-		addon.Field('onFail', {
-			type: 'function',
-			description: 'Called after a failed run.'
-		});
 	});
 
-	ai.orchestrators = onetype.Addon('ai.orchestrators', (addon) =>
+	ai.workflows = onetype.Addon('ai.workflows', (addon) =>
 	{
 		addon.Field('id', {
 			type: 'string|number',
-			description: 'Unique orchestrator id.'
+			description: 'Unique workflow id.'
 		});
 
 		addon.Field('parent', {
 			type: 'string',
-			description: 'Id of the parent orchestrator when this one runs as a loop child.'
+			description: 'Id of the parent workflow when this one runs as a loop child.'
 		});
 
 		addon.Field('prompt', {
 			type: 'string',
-			description: 'The goal the orchestrator plans and executes.'
+			description: 'The goal the workflow plans and executes.'
 		});
 
 		addon.Field('agents', {
 			type: 'array',
 			value: [],
 			each: { type: 'string' },
-			description: 'Agent ids the orchestrator may use. Empty means every available agent.'
+			description: 'Agent ids the workflow may use. Empty means every available agent.'
 		});
 
 		addon.Field('data', {
@@ -155,7 +151,13 @@ const ai = onetype.Addon('ai', (ai) =>
 		addon.Field('steps', {
 			type: 'number',
 			value: 10,
-			description: 'Maximum steps the orchestrator may execute.'
+			description: 'Maximum steps the workflow may execute across all tasks.'
+		});
+
+		addon.Field('concurrency', {
+			type: 'number',
+			value: 3,
+			description: 'How many independent tasks may run at the same time, capped at 5.'
 		});
 
 		addon.Field('onTasks', {

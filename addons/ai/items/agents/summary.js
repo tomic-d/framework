@@ -1,29 +1,40 @@
 import ai from '#ai/addon.js';
 
 ai.agents.Item({
-	id: 'orchestrator-summary',
-	name: 'Orchestrator Summary',
-	description: 'Summarizes what happened during execution based on history.',
-	instructions: `
-You receive a conversation history of an AI assistant executing tasks.
-Write a short, friendly first-person summary of what was done.
-Include key results, numbers, and outcomes.
-If something failed or was skipped, mention it briefly.
-Keep it under 3 sentences.
-	`,
+	id: 'workflow-summary',
+	name: 'Workflow Summary',
+	description: 'Summarizes what a workflow run did based on its history.',
 	condition: () => false,
 	tokens: 500,
-	format: 'json',
 	input: {
 		history: {
 			type: 'array',
-			description: 'Conversation history of the execution'
+			required: true,
+			description: 'Conversation history of the run.',
+			each: {
+				type: 'object',
+				config: {
+					role: {
+						type: 'string',
+						required: true,
+						description: 'Entry author.'
+					},
+					content: {
+						type: 'string',
+						required: true,
+						description: 'Entry text.'
+					}
+				}
+			}
 		}
 	},
+	instructions: 'You receive the execution history of a workflow run. '
+		+ 'Write a short factual summary of what was done: key results, numbers and outcomes. '
+		+ 'If something failed or was skipped, say it plainly. Three sentences at most.',
 	output: {
 		summary: {
 			type: 'string',
-			description: 'Short first-person summary of what happened'
+			description: 'Short summary of what happened.'
 		}
 	}
 });

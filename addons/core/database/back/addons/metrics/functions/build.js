@@ -1,33 +1,37 @@
+import database from '#database/addon.js';
 import metrics from '../addon.js';
+
+/* Time-bucketed aggregation, multi-db. Buckets via dialect.dateTrunc (pg date_trunc,
+   mysql DATE_FORMAT, sqlite strftime); zero-fills gaps in JS (no generate_series). */
+
+const STEP = {
+	minute: 60000,
+	hour: 3600000,
+	day: 86400000,
+	week: 604800000,
+	month: null,
+	year: null
+};
 
 metrics.Fn('build', async function(knex, query, field, interval, aggregate, value)
 {
-	const intervals = {
-		minute: '1 minute',
-		hour: '1 hour',
-		day: '1 day',
-		week: '1 week',
-		month: '1 month',
-		year: '1 year'
-	};
-
-	if(!intervals[interval])
+	if(!(interval in STEP))
 	{
-		throw new Error(`Invalid interval '${interval}'. Must be: ${Object.keys(intervals).join(', ')}`);
+		throw new Error(`Invalid interval '${interval}'. Must be: ${Object.keys(STEP).join(', ')}`);
 	}
 
+	const dateTrunc = await database.Fn('operation', query.knex, 'dateTrunc');
 	const type = aggregate || 'count';
-	const expression = type === 'count'
-		? query.knex.raw('COUNT(*)')
-		: query.knex.raw(`${type.toUpperCase()}(??)`, [value]);
+	const bucket = dateTrunc(query.knex, interval, field);
+	const total = type === 'count' ? query.knex.raw('COUNT(*)') : query.knex.raw(`${type.toUpperCase()}(??)`, [value]);
 
 	const rows = await knex
 		.clear('select')
 		.clear('order')
-		.select(query.knex.raw('date_trunc(?, ??) AS date', [interval, field]))
-		.select(query.knex.raw(`${expression} AS value`))
+		.select({ date: bucket })
+		.select({ value: total })
 		.groupByRaw('1')
-		.orderByRaw('date ASC');
+		.orderByRaw('1 ASC');
 
 	if(!rows.length)
 	{
@@ -36,22 +40,44 @@ metrics.Fn('build', async function(knex, query, field, interval, aggregate, valu
 
 	const map = {};
 
-	rows.forEach(row =>
+	rows.forEach((row) =>
 	{
-		const key = row.date instanceof Date ? row.date.toISOString() : row.date;
+		const key = row.date instanceof Date ? row.date.toISOString() : String(row.date);
 		map[key] = parseFloat(row.value) || 0;
 	});
 
-	const dates = rows.map(row => row.date instanceof Date ? row.date : new Date(row.date));
+	const keys = Object.keys(map).sort();
 
-	const filled = await query.knex.raw(`
-		SELECT d::timestamptz AS date
-		FROM generate_series(?::timestamptz, ?::timestamptz, ?::interval) AS d
-	`, [dates[0], dates[dates.length - 1], intervals[interval]]);
+	/* render a Date back into the same key shape the engine produced (pg: ISO with
+	   'T'; mysql/sqlite: 'YYYY-MM-DD HH:MM:SS'), so synthesized gap buckets match.
+	   parse keys as UTC: a space-form key has no zone and Date() would read it local. */
+	const iso = keys[0].includes('T');
+	const parse = (key) => new Date(iso ? key : key.replace(' ', 'T') + 'Z');
+	const key = (date) => iso ? date.toISOString() : date.toISOString().slice(0, 19).replace('T', ' ');
 
-	return filled.rows.map(row =>
+	/* zero-fill empty buckets across the spanned range so the series is continuous */
+	const result = [];
+	const cursor = parse(keys[0]);
+	const last = parse(keys[keys.length - 1]).getTime();
+
+	while(cursor.getTime() <= last)
 	{
-		const key = row.date instanceof Date ? row.date.toISOString() : row.date;
-		return { date: key, value: map[key] || 0 };
-	});
+		const current = key(cursor);
+		result.push({ date: current, value: map[current] || 0 });
+
+		if(STEP[interval])
+		{
+			cursor.setTime(cursor.getTime() + STEP[interval]);
+		}
+		else if(interval === 'month')
+		{
+			cursor.setUTCMonth(cursor.getUTCMonth() + 1);
+		}
+		else
+		{
+			cursor.setUTCFullYear(cursor.getUTCFullYear() + 1);
+		}
+	}
+
+	return result;
 });
