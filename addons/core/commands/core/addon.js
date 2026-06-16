@@ -10,6 +10,7 @@ const commands = onetype.Addon('commands', (addon) =>
     addon.Field('out', ['object|string']);
     addon.Field('exposed', ['boolean', false]);
     addon.Field('silent', ['boolean', false]);
+    addon.Field('condition', ['function']);
     addon.Field('callback', ['function']);
     addon.Field('tests', ['object', {}]);
     

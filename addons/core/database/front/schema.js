@@ -1,10 +1,10 @@
-onetype.DataSchema('filter', {
+onetype.DataSchema('database.filter', {
 	field: ['string', null, true],
 	value: ['string|number|boolean|array'],
 	operator: ['string', 'EQUALS']
 });
 
-onetype.DataSchema('join', {
+onetype.DataSchema('database.join', {
 	addon: ['string', null, true],
 	field: ['string', null, true],
 	output: ['string'],
@@ -16,12 +16,12 @@ onetype.DataSchema('join', {
 	}
 });
 
-onetype.DataSchema('query', {
+onetype.DataSchema('database.query', {
 	filters: {
 		type: 'array',
 		each: {
 			type: 'object',
-			config: 'filter'
+			config: 'database.filter'
 		}
 	},
 	page: ['number', 1],

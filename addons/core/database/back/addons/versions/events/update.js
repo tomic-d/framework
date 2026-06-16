@@ -3,7 +3,7 @@ import versions from '../addon.js';
 
 onetype.MiddlewareIntercept('@database.update', async (middleware) =>
 {
-	const { item, transaction, addon, language, languages, before } = middleware.value;
+	const { item, transaction, addon, language, languages, before, skip } = middleware.value;
 
 	if(!addon.Versions())
 	{
@@ -84,8 +84,17 @@ onetype.MiddlewareIntercept('@database.update', async (middleware) =>
 	const tracked = versions.Fn('tracked', addon);
 	const after = {};
 
+	/* a field the write path skipped (whitelist / per-field skip) was NOT persisted,
+	   so its history must reflect the stored value, not the in-memory item value —
+	   otherwise time-travel/Restore would replay a change that never hit the table */
 	for(const field of tracked)
 	{
+		if(skip && skip.has(field))
+		{
+			after[field] = before ? before[field] : null;
+			continue;
+		}
+
 		try
 		{
 			after[field] = item.Get(field);

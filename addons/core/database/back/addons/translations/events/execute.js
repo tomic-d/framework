@@ -1,11 +1,18 @@
 import onetype from '#framework/load.js';
+import database from '#database/addon.js';
 import translations from '../addon.js';
 
-onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
-{
-	const { knex, query } = middleware.value;
+/* Overlay translations onto the fetched rows (batched id-IN, the relations
+   philosophy applied to i18n). Runs AFTER the SQL read on @database.find.transform:
+   page the head table by the covering index, then fetch only that page's
+   translations in one query and COALESCE in JS. Multi-db, no raw pivot/COALESCE,
+   and flat as the table grows (the pivot-join did not scale). */
 
-	if(query.from)
+onetype.MiddlewareIntercept('@database.find.transform', async (middleware) =>
+{
+	const { records, query } = middleware.value;
+
+	if(!records.length)
 	{
 		return await middleware.next();
 	}
@@ -24,45 +31,48 @@ onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 		return await middleware.next();
 	}
 
-	const table = query.table.name;
-	const entity = query.addon.name;
-	const translated = new Set(fields);
+	const ids = records.map((record) => record.id);
 
-	const columns = Object.values(query.addon.Fields().data)
-		.filter(field =>
+	const rows = await query.knex('database_translations')
+		.where({ entity: query.addon.name, language: context.language })
+		.whereIn('field', fields)
+		.whereIn('entity_id', ids.map(String))
+		.select('entity_id', 'field', 'value');
+
+	const overlay = {};
+
+	for(const row of rows)
+	{
+		const record = overlay[row.entity_id] || (overlay[row.entity_id] = {});
+		record[row.field] = row.value;
+	}
+
+	/* translations are stored as strings; cast back to each field's declared type,
+	   like the row cast does (find/execute runs before this overlay), so a numeric
+	   field's translation comes back a number, not a discarded string */
+	const types = {};
+
+	for(const field of fields)
+	{
+		const define = query.addon.FieldGet(field)?.define;
+		types[field] = define ? onetype.DataParseConfig(define).type.split('|')[0] : 'string';
+	}
+
+	for(const record of records)
+	{
+		const translated = overlay[String(record.id)];
+
+		if(translated)
 		{
-			if(translated.has(field.name))
+			for(const field of fields)
 			{
-				return false;
+				if(translated[field] !== null && translated[field] !== undefined)
+				{
+					record[field] = database.Fn('cast.value', translated[field], types[field]);
+				}
 			}
-
-			const parsed = onetype.DataParseConfig(field.define);
-			return !parsed.virtual;
-		})
-		.map(field => `m.${field.name}`)
-		.join(', ');
-
-	const pivots = fields
-		.map(field => `MAX(CASE WHEN field = '${field}' THEN value END) AS ${field}`)
-		.join(', ');
-
-	const coalesce = fields
-		.map(field => `COALESCE(t.${field}, m.${field}) AS ${field}`)
-		.join(', ');
-
-	const sub = query.knex.raw(`
-		(SELECT ${columns}, ${coalesce}
-		FROM ${table} m
-		LEFT JOIN (
-			SELECT entity_id, ${pivots}
-			FROM database_translations
-			WHERE entity = ? AND language = ?
-			GROUP BY entity_id
-		) t ON t.entity_id = m.id
-		) AS ${table}
-	`, [entity, context.language]);
-
-	knex.from(sub);
+		}
+	}
 
 	await middleware.next();
 });

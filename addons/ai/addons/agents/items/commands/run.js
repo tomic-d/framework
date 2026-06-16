@@ -17,6 +17,26 @@ onetype.AddonReady('commands', (commands) =>
 				type: 'object',
 				value: {},
 				description: 'Input for the agent, shaped by the agent input schema.'
+			},
+			history: {
+				type: 'array',
+				value: [],
+				each: {
+					type: 'object',
+					config: {
+						role: {
+							type: 'string',
+							required: true,
+							description: 'Message author, one of user or assistant.'
+						},
+						content: {
+							type: 'string',
+							required: true,
+							description: 'Message text.'
+						}
+					}
+				},
+				description: 'Prior conversation messages, oldest first. Injected between the system prompt and the user message.'
 			}
 		},
 		out: {
@@ -54,9 +74,9 @@ onetype.AddonReady('commands', (commands) =>
 
 			try
 			{
-				const { _meta, ...output } = await agent.Fn('run', properties.input);
+				const { content, meta } = await agent.Fn('run', properties.input, properties.history);
 
-				resolve({ output, time: _meta.time, tokens: _meta.tokens }, 'Agent ' + properties.id + ' ran in ' + _meta.time + ' ms.');
+				resolve({ output: content, time: meta.time, tokens: meta.tokens }, 'Agent ' + properties.id + ' ran in ' + meta.time + ' ms.');
 			}
 			catch(error)
 			{

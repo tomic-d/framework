@@ -1,4 +1,5 @@
 import onetype from '#framework/load.js';
+import database from '#database/addon.js';
 import translations from '../addon.js';
 
 onetype.MiddlewareIntercept('@database.create', async (middleware) =>
@@ -18,6 +19,8 @@ onetype.MiddlewareIntercept('@database.create', async (middleware) =>
 		return await middleware.next();
 	}
 
+	const stamp = (await database.Fn('operation', transaction, 'stamp'))();
+
 	const rows = fields
 		.filter(field => item.Get(field) !== null && item.Get(field) !== undefined)
 		.map(field => ({
@@ -26,7 +29,7 @@ onetype.MiddlewareIntercept('@database.create', async (middleware) =>
 			language: context.language,
 			field,
 			value: String(item.Get(field)),
-			updated_at: new Date().toISOString()
+			updated_at: stamp
 		}));
 
 	if(rows.length)

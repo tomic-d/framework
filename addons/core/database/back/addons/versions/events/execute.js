@@ -1,4 +1,5 @@
 import onetype from '#framework/load.js';
+import versions from '../addon.js';
 
 onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 {
@@ -10,63 +11,46 @@ onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 		return await middleware.next();
 	}
 
+	/* Time-travel: reconstruct every entity's state at the cutoff by folding diff
+	   rows in JS (multi-db, no LATERAL / DISTINCT ON / jsonb pivot). This is the
+	   cold path (1:1000), so in-memory filter/sort/paginate is acceptable.
+	   Sets query.records so find/execute skips the SQL read. */
 	if(query.versionId)
 	{
-		const table = query.table.name;
-		const entity = query.addon.name;
+		const alive = await versions.Fn('fold.many', query.knex, query.addon, query.versionId);
 
-		const fields = Object.values(query.addon.Fields().data)
-			.filter(field =>
-			{
-				const parsed = onetype.DataParseConfig(field.define);
-				return !parsed.virtual;
-			})
-			.map(field =>
-			{
-				const parsed = onetype.DataParseConfig(field.define);
+		let records = Object.entries(alive).map(([entityId, state]) => ({ ...state, id: entityId }));
 
-				if(field.name === 'id')
-				{
-					return 'entity_id AS id';
-				}
+		if(query.filters?.children?.length)
+		{
+			records = records.filter((record) => versions.Fn('match', record, query.filters));
+		}
 
-				const cast = parsed.type === 'number' ? '::bigint' :
-				             parsed.type === 'boolean' ? '::boolean' :
-				             parsed.type === 'object' || parsed.type === 'array' ? '::jsonb' :
-				             field.name.endsWith('_at') ? '::timestamptz' :
-				             '::text';
+		if(query.sort)
+		{
+			const { field, direction } = query.sort;
+			const sign = String(direction).toLowerCase() === 'desc' ? -1 : 1;
+			records.sort((a, b) => (a[field] > b[field] ? 1 : a[field] < b[field] ? -1 : 0) * sign);
+		}
 
-				return `MAX(CASE WHEN field = '${field.name}' THEN value END)${cast} AS ${field.name}`;
-			})
-			.join(', ');
+		/* full filtered count before pagination, so count()/plain().total reflect the
+		   folded historical set, not the live physical rows */
+		query.total = records.length;
 
-		const sub = query.knex.raw(`
-			(SELECT ${fields}
-			FROM (
-				SELECT DISTINCT ON (entity_id, field)
-					entity_id, field,
-					(changes->field->>'new') as value
-				FROM database_versions,
-				     LATERAL jsonb_object_keys(changes) as field
-				WHERE addon = ? AND language IS NULL AND id <= ?
-				ORDER BY entity_id, field, id DESC
-			) latest
-			WHERE EXISTS (
-				SELECT 1 FROM database_versions v
-				WHERE v.addon = ? AND v.entity_id = latest.entity_id
-				  AND v.operation = 'create' AND v.id <= ?
-			)
-			GROUP BY entity_id
-			) AS ${table}
-		`, [entity, query.versionId, entity, query.versionId]);
+		const offset = query.offset || (query.page > 1 ? (query.page - 1) * query.limit : 0);
 
-		knex.from(sub);
+		if(query.limit > 0)
+		{
+			records = records.slice(offset, offset + query.limit);
+		}
+
+		query.records = records;
+
+		return await middleware.next();
 	}
 
-	if(!query.versionId)
-	{
-		knex.whereNull(config.delete);
-	}
+	/* Live read: hide soft-deleted rows. */
+	knex.whereNull(config.delete);
 
 	await middleware.next();
 });

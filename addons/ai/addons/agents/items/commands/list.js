@@ -35,7 +35,8 @@ onetype.AddonReady('commands', (commands) =>
 			const agents = Object.values(ai.agents.Items()).filter((agent) =>
 			{
 				return !agent.Get('condition') || agent.Get('condition')();
-			}).map((agent) =>
+			})
+			.map((agent) =>
 			{
 				return {
 					id: agent.Get('id'),

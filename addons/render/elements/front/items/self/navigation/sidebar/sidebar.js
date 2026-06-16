@@ -55,6 +55,7 @@ onetype.AddonReady('elements', (elements) =>
 									value: { type: 'string' },
 									badge: { type: 'string|number' },
 									count: { type: 'string|number' },
+									depth: { type: 'number' },
 									soon: { type: 'boolean' },
 									disabled: { type: 'boolean' }
 								}
@@ -188,7 +189,8 @@ onetype.AddonReady('elements', (elements) =>
 							<div ot-if="group.title" class="group-title">{{ group.title }}</div>
 							<a
 								ot-for="item in group.items"
-								:class="'item' + (item.active ? ' active' : '') + (item.soon ? ' soon' : '') + (item.disabled ? ' disabled' : '')"
+								:class="'item' + (item.active ? ' active' : '') + (item.depth ? ' child' : '') + (item.soon ? ' soon' : '') + (item.disabled ? ' disabled' : '')"
+								:style="item.depth ? '--depth: ' + item.depth : null"
 								:href="item.href && !item.soon && !item.disabled ? item.href : 'javascript:void(0)'"
 								:target="item.target"
 								ot-click="(event) => handle(item, event)"
@@ -208,7 +210,8 @@ onetype.AddonReady('elements', (elements) =>
 							<div ot-if="group.title" class="group-title">{{ group.title }}</div>
 							<a
 								ot-for="item in group.items"
-								:class="'item' + (item.active ? ' active' : '') + (item.soon ? ' soon' : '') + (item.disabled ? ' disabled' : '')"
+								:class="'item' + (item.active ? ' active' : '') + (item.depth ? ' child' : '') + (item.soon ? ' soon' : '') + (item.disabled ? ' disabled' : '')"
+								:style="item.depth ? '--depth: ' + item.depth : null"
 								:href="item.href && !item.soon && !item.disabled ? item.href : 'javascript:void(0)'"
 								:target="item.target"
 								ot-click="(event) => handle(item, event)"

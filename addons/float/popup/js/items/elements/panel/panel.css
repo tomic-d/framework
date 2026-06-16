@@ -61,6 +61,7 @@
 	padding: var(--ot-spacing-m);
 	border-bottom: 1px solid var(--ot-bg-2-border);
 	flex-shrink: 0;
+	align-items: center;
 }
 
 .e-5ea275cd > .box > .head > .titles
