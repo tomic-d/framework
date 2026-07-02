@@ -17,7 +17,7 @@ import '#html/items/assets/favicon.js';
 
 /* Essential Items - Fonts */
 import '#html/items/fonts/preconnect.js';
-import '#html/items/fonts/outfit.js';
+import '#html/items/fonts/geist.js';
 
 /* Essential Items - SEO */
 import '#html/items/seo/robots.js';

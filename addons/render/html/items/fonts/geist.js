@@ -1,12 +1,12 @@
 import html from '#html/addon.js';
 
 html.Item({
-    id: 'font-outfit',
+    id: 'font-geist',
     tag: 'link',
     position: 'head',
     priority: -40,
     attributes: {
-        href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap',
         rel: 'stylesheet'
     }
 });
