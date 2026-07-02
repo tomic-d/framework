@@ -13,7 +13,7 @@ onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 
 	if(!fields || !fields.length)
 	{
-		throw new Error(`Search not configured on '${query.addon.name}'.`);
+		throw onetype.Error(400, 'Search not configured on :addon:.', { addon: query.addon.name });
 	}
 
 	const term = '%' + query.search + '%';

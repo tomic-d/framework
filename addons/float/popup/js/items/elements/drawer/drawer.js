@@ -1,7 +1,7 @@
 onetype.AddonReady('elements', (elements) =>
 {
 	elements.ItemAdd({
-		id: 'popup-panel',
+		id: 'popup-drawer',
 		icon: 'web_asset',
 		name: 'Popup Panel',
 		description: 'Chrome for modals, drawers and sheets: header, body and actions.',
@@ -50,7 +50,7 @@ onetype.AddonReady('elements', (elements) =>
 				return typeof content === 'function' ? content.call(this) : (content || '');
 			};
 
-			return /* html */ `
+			return `
 				<div :class="'box place-' + place + ' width-' + width + (clean ? ' clean' : '')">
 					<div ot-if="!clean" class="head">
 						<div class="titles">
@@ -65,16 +65,10 @@ onetype.AddonReady('elements', (elements) =>
 						<div ot-html="inner()"></div>
 					</div>
 					<div ot-if="actions.length" class="foot">
-						<e-form-button
-							ot-for="action in actions"
-							:ot-key="action.label"
-							:text="action.label"
-							:icon="action.icon || ''"
-							:color="action.color || ''"
-							:tone="action.tone || (action.color ? 'solid' : 'ghost')"
-							:size="'s'"
-							:_click="() => run(action)"
-						></e-form-button>
+						<button ot-for="action in actions" :ot-key="action.label" :class="'action' + (action.color ? ' ' + action.color : '')" ot-click="run(action)">
+							<i ot-if="action.icon">{{ action.icon }}</i>
+							<span>{{ action.label }}</span>
+						</button>
 					</div>
 				</div>
 			`;

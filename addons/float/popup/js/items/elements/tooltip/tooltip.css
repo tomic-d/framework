@@ -1,0 +1,54 @@
+.e-2b6a6d8c
+{
+	display: contents;
+}
+
+.e-2b6a6d8c > .box
+{
+	display: flex;
+	align-items: center;
+	gap: var(--ot-spacing-x);
+	padding: 5px 10px;
+	background: var(--ot-bg-3-opacity);
+	border: 1px solid var(--ot-bg-3-border);
+	border-radius: var(--ot-radius-m);
+	backdrop-filter: var(--ot-blur);
+	-webkit-backdrop-filter: var(--ot-blur);
+	color: var(--ot-text-1);
+	font-size: var(--ot-size-s);
+	font-weight: 500;
+	line-height: 1.4;
+	max-width: 280px;
+	white-space: normal;
+	animation: tooltip-in var(--ot-transition-fast) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tooltip-in
+{
+	from { opacity: 0; transform: translateY(3px) scale(0.98); }
+	to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.e-2b6a6d8c > .box > .icon
+{
+	font-size: 14px;
+	color: var(--ot-text-2);
+	flex-shrink: 0;
+}
+
+.e-2b6a6d8c > .box > .content > .title
+{
+	font-weight: 600;
+	margin-bottom: 1px;
+}
+
+.e-2b6a6d8c > .box > .content > .text
+{
+	color: var(--ot-text-2);
+	font-weight: 400;
+}
+
+.e-2b6a6d8c > .box.info > .icon { color: var(--ot-blue); }
+.e-2b6a6d8c > .box.success > .icon { color: var(--ot-green); }
+.e-2b6a6d8c > .box.warning > .icon { color: var(--ot-orange); }
+.e-2b6a6d8c > .box.error > .icon { color: var(--ot-red); }

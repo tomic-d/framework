@@ -1,16 +1,20 @@
 import onetype from '#framework/load.js';
-import metrics from '../addon.js';
+import crud from '#database/addons/crud/addon.js';
+import metrics from '../../addon.js';
 
-onetype.EmitOn('@database.find', ({ methods, query }) =>
-{
-	methods.metrics = async (field, interval, aggregate, value) =>
+crud.Item({
+	id: 'metrics',
+	type: ['find'],
+	async callback(chain, field, interval, aggregate, value)
 	{
+		const query = chain.query;
+
 		if(query.impossible)
 		{
 			return [];
 		}
 
-		const from = query.from || query.table.name;
+		const from = query.from || query.addon.Table().name;
 		const knex = query.knex(from);
 
 		const middleware = await onetype.Middleware('@database.find.execute', { knex, query });
@@ -21,5 +25,5 @@ onetype.EmitOn('@database.find', ({ methods, query }) =>
 		}
 
 		return metrics.Fn('build', knex, query, field, interval, aggregate, value);
-	};
+	}
 });

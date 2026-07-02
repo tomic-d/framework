@@ -1,15 +1,6 @@
-import database from '#database/addon.js';
+import sync from '#database/addons/sync/addon.js';
 
-/* Apply one column descriptor to a knex table builder. knex maps each builder
-   method per dialect.
-   primary auto -> auto-increment PK (bigserial / AUTO_INCREMENT / AUTOINCREMENT).
-   primary non-auto -> plain PK on a bounded string (the app supplies the id).
-   *_at -> timestamp.
-   object/array -> jsonb (pg containment ops); json on mysql; text on sqlite.
-   bounded string -> varchar(255) (mysql rejects a key on unbounded TEXT).
-   everything else by type. */
-
-database.Fn('sync.column', function(table, column)
+sync.Fn('apply.column', function(table, column)
 {
 	let builder;
 
@@ -25,13 +16,22 @@ database.Fn('sync.column', function(table, column)
 		return;
 	}
 
-	if(column.name.endsWith('_at'))
+	if(column.cast === 'date')
 	{
 		builder = table.timestamp(column.name, { useTz: true });
+	}
+	else if(column.type === 'number' && column.precision !== undefined)
+	{
+		builder = table.decimal(column.name, column.precision, column.scale || 0);
 	}
 	else if(column.type === 'number')
 	{
 		builder = table.bigInteger(column.name);
+
+		if(column.unsigned)
+		{
+			builder.unsigned();
+		}
 	}
 	else if(column.type === 'boolean')
 	{
@@ -40,6 +40,10 @@ database.Fn('sync.column', function(table, column)
 	else if(column.type === 'object' || column.type === 'array')
 	{
 		builder = table.jsonb(column.name);
+	}
+	else if(column.type === 'string' && column.length !== undefined)
+	{
+		builder = table.string(column.name, column.length);
 	}
 	else if(column.bounded)
 	{

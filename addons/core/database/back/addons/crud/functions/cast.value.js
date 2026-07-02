@@ -1,9 +1,5 @@
 import database from '#database/addon.js';
 
-/* Normalize one DB value to a declared type (string/number/boolean/object/array).
-   Per-type, engine-independent. This is the seam the casts registry will take
-   over; for now it lives here so the dialects extraction stays self-contained. */
-
 database.Fn('cast.value', function(value, type)
 {
 	if(value === null || value === undefined)

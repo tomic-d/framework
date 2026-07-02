@@ -1,6 +1,6 @@
 import onetype from '#framework/load.js';
 
-onetype.MiddlewareIntercept('@database.delete', async (middleware) =>
+onetype.MiddlewareIntercept('@database.delete.after', async (middleware) =>
 {
 	const { item, transaction, addon } = middleware.value;
 	const fields = addon.Translations();

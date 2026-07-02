@@ -1,11 +1,9 @@
 import database from '#database/addon.js';
+import crud from '#database/addons/crud/addon.js';
 
-/* Write a DB record back onto the item, cast to declared field types,
-   skipping fields that were not written. */
-
-database.Fn('fields.apply', function(item, knex, record, skip = null)
+crud.Fn('fields.apply', function(item, record, skip = null)
 {
-	const data = database.Fn('cast', item.addon, knex, record);
+	const data = database.Fn('cast', item.addon, record);
 
 	Object.entries(data).forEach(([key, value]) =>
 	{

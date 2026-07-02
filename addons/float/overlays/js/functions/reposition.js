@@ -1,27 +1,31 @@
 overlays.Fn('reposition', function(item)
 {
 	const element = item.Get('element');
-	const content = element?.querySelector('.content');
+
+	if (!element || element.classList.contains('ot-modal'))
+	{
+		return;
+	}
+
+	const content = element.querySelector('.content');
 
 	if (!content)
 	{
 		return;
 	}
 
-	const target = item.Get('target');
+	const target = item.Get('target') || document.body;
 	const position = item.Get('position');
 	const offset = item.Get('offset');
 	const padding = item.Get('padding');
+	const gap = item.Get('gap');
+	const method = item.Get('flip') ? 'flip' : 'position';
 
-	let result;
+	let result = overlays.Fn(method, target, content, position, offset, padding, gap);
 
-	if (item.Get('flip'))
+	if (item.Get('snap'))
 	{
-		result = overlays.Fn('flip', target, content, position, offset, padding);
-	}
-	else
-	{
-		result = overlays.Fn('position', target, content, position, offset, padding);
+		result = overlays.Fn('snap', result, content, padding);
 	}
 
 	content.style.left = result.left + 'px';

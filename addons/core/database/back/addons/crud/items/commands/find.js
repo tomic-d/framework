@@ -77,7 +77,6 @@ onetype.AddonReady('commands', (commands) =>
 			limit: ['number', 50],
 			offset: ['number'],
 			distinct: ['boolean', false],
-			language: ['string'],
 			version: ['number'],
 			aggregate: ['object'],
 			metrics: ['object']
@@ -117,10 +116,7 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, 'Addon is not exposed.', 403);
 			}
 
-			const language = properties.language || this.http?.state?.language || null;
-			const languages = this.http?.state?.languages || null;
-
-			const find = addon.Find({ language, languages });
+			const find = addon.Find();
 
 			if(properties.filters)
 			{

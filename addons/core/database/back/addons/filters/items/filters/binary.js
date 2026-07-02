@@ -1,4 +1,4 @@
-import filters from '../addon.js';
+import filters from '../../addon.js';
 
 /* Simple binary operators: query[method](field, sqlOperator, value). The value
    ones validate field + value; IN/NOT IN take an array, and an empty IN makes the

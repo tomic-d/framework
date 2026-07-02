@@ -1,8 +1,7 @@
 import onetype from '#framework/load.js';
-import database from '#database/addon.js';
 import translations from '../addon.js';
 
-onetype.MiddlewareIntercept('@database.create', async (middleware) =>
+onetype.MiddlewareIntercept('@database.create.after', async (middleware) =>
 {
 	const { item, transaction, addon, language, languages } = middleware.value;
 	const fields = addon.Translations();
@@ -19,7 +18,7 @@ onetype.MiddlewareIntercept('@database.create', async (middleware) =>
 		return await middleware.next();
 	}
 
-	const stamp = (await database.Fn('operation', transaction, 'stamp'))();
+	const stamp = transaction.client.config.stamp();
 
 	const rows = fields
 		.filter(field => item.Get(field) !== null && item.Get(field) !== undefined)

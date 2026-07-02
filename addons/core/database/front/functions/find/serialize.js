@@ -38,10 +38,14 @@ database.Fn('find.serialize', function(query)
 
 	const state = {
 		addon: query.addon,
-		language: query.language,
 		page: query.page,
 		limit: query.limit
 	};
+
+	if(query.language)
+	{
+		state.language = query.language;
+	}
 
 	if(query.filters.length)
 	{

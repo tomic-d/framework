@@ -1,16 +1,13 @@
 import onetype from '#framework/load.js';
-
-/* addon.Find opens a find chain over the addon's table; addon.Expose declares the
-   HTTP CRUD surface (which fields/ops are reachable over the API). Both live with
-   crud. Registered on @addon.init so every addon gets them. */
+import crud from '#database/addons/crud/addon.js';
 
 onetype.EmitOn('@addon.init', (addon) =>
 {
 	addon.database.expose = null;
 
-	addon.Find = function({connection = 'primary', language = null, languages = null} = {})
+	addon.Find = function({ connection = 'primary' } = {})
 	{
-		return onetype.AddonGet('database').Fn('find', {connection, language, languages, table: addon.Table(), addon});
+		return crud.Fn('chain', 'find', { addon, connection });
 	};
 
 	addon.Expose = function(config)
@@ -22,15 +19,13 @@ onetype.EmitOn('@addon.init', (addon) =>
 
 		addon.database.expose = onetype.DataDefine(config,
 		{
-			filter: ['array', []],
-			sort: ['array', []],
-			select: ['array', []],
-			find: ['function'],
-			create: ['function'],
-			update: ['function'],
-			delete: ['function'],
-			history: ['function'],
-			restore: ['function']
+			filter: { type: 'array', value: [], each: { type: 'string' } },
+			sort:   { type: 'array', value: [], each: { type: 'string' } },
+			select: { type: 'array', value: [], each: { type: 'string' } },
+			find:   { type: 'function' },
+			create: { type: 'function' },
+			update: { type: 'function' },
+			delete: { type: 'function' }
 		});
 	};
 });

@@ -7,7 +7,7 @@ onetype.MiddlewareIntercept('@database.find.transform', async (middleware) =>
 
 	if(query.joins?.length)
 	{
-		middleware.value.records = await joins.Fn('build', records, query.joins, query);
+		middleware.value.records = await joins.Fn('build', records, query.joins);
 	}
 
 	await middleware.next();
