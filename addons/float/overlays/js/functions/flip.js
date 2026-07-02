@@ -1,4 +1,4 @@
-overlays.Fn('flip', function(target, overlay, position, offset, padding)
+overlays.Fn('flip', function(target, overlay, position, offset, padding, gap)
 {
 	position = position || {x: 'center', y: 'center'};
 	padding = padding || 10;
@@ -10,7 +10,7 @@ overlays.Fn('flip', function(target, overlay, position, offset, padding)
 	const pos = {x: position.x, y: position.y};
 	let flipped = {x: false, y: false};
 
-	let result = overlays.Fn('position', target, overlay, pos, offset, padding);
+	let result = overlays.Fn('position', target, overlay, pos, offset, padding, gap);
 
 	if (pos.y === 'bottom' && (result.top + height) > (viewport.height - padding))
 	{
@@ -36,11 +36,8 @@ overlays.Fn('flip', function(target, overlay, position, offset, padding)
 
 	if (flipped.x || flipped.y)
 	{
-		result = overlays.Fn('position', target, overlay, pos, offset, padding);
+		result = overlays.Fn('position', target, overlay, pos, offset, padding, gap);
 	}
-
-	result.left = Math.max(padding, Math.min(result.left, viewport.width - width - padding));
-	result.top = Math.max(padding, Math.min(result.top, viewport.height - height - padding));
 
 	return {
 		left: Math.round(result.left),

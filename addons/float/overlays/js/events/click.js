@@ -2,28 +2,10 @@ document.addEventListener('mousedown', (event) =>
 {
 	const items = Object.values(overlays.Items()).sort((a, b) => b.Get('index') - a.Get('index'));
 
-	const insideAny = items.some((item) =>
+	for (const item of items)
 	{
 		const element = item.Get('element');
 		const content = element?.querySelector('.content');
-		return content && content.contains(event.target);
-	});
-
-	for (const item of items)
-	{
-		if (!item.Get('closeable'))
-		{
-			continue;
-		}
-
-		const element = item.Get('element');
-
-		if (!element)
-		{
-			continue;
-		}
-
-		const content = element.querySelector('.content');
 
 		if (!content)
 		{
@@ -35,11 +17,18 @@ document.addEventListener('mousedown', (event) =>
 			break;
 		}
 
-		item.Remove();
-
-		if (insideAny)
+		if (!item.Get('closeable'))
 		{
-			break;
+			continue;
 		}
+
+		const target = item.Get('target');
+
+		if (target && target.contains(event.target))
+		{
+			continue;
+		}
+
+		item.Remove();
 	}
 });

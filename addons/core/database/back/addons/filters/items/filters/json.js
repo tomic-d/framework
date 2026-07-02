@@ -1,14 +1,8 @@
-import filters from '../addon.js';
-import database from '#database/addon.js';
+import filters from '../../addon.js';
 
-/* JSON-array operators. They need the engine's jsonContains, resolved once into
-   helpers up front (build runs sync inside the knex callback and cannot await).
-   CONTAINS = every value present (AND), OVERLAP = any value present (OR),
-   HAS = a single value present. */
-
-const resolve = async (knex, helpers) =>
+const resolve = (knex, helpers) =>
 {
-	helpers.jsonContains = await database.Fn('operation', knex, 'jsonContains');
+	helpers.jsonContains = knex.client.config.jsonContains;
 };
 
 filters.Item({

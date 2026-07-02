@@ -33,3 +33,23 @@
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.ot-overlay > .backdrop
+{
+	animation: backdrop-in var(--ot-transition) ease-out;
+}
+
+@keyframes backdrop-in
+{
+	from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+	.ot-overlay,
+	.ot-overlay *
+	{
+		animation: none !important;
+		transition: none !important;
+	}
+}

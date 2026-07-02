@@ -1,69 +1,83 @@
 import onetype from '#framework/load.js';
 
-/* The schema-declaration setters live with the sync subaddon: they describe how a
-   table is shaped (primary key, indexes, unique groups, relations) and only the
-   sync addon acts on them. Registered on @addon.init so every addon gets them. */
-
 onetype.EmitOn('@addon.init', (addon) =>
 {
-	addon.database.primary = { field: 'id', auto: true };
-	addon.database.index = [];
-	addon.database.unique = [];
-	addon.database.relations = [];
-
-	addon.Primary = function(field, options = {})
-	{
-		if(field === undefined)
-		{
-			return addon.database.primary;
-		}
-
-		addon.database.primary = { field, auto: options.auto !== false };
+	addon.database.sync = {
+		primary: { fields: ['id'], auto: true },
+		index: [],
+		unique: [],
+		relations: []
 	};
 
-	/* settled by column SET so a re-defined addon (idempotent Addon reuse) does not
-	   accumulate duplicate key groups */
-	const keyed = (list, fields) =>
+	addon.Sync = function(callback)
 	{
-		const group = Array.isArray(fields) ? fields : [fields];
-		const key = [...group].sort().join(',');
-
-		if(!list.some((existing) => [...existing].sort().join(',') === key))
+		if(callback === undefined)
 		{
-			list.push(group);
+			return addon.database.sync;
 		}
+
+		const sync = addon.database.sync;
+
+		callback({
+			Primary(fields, options = {})
+			{
+				const group = Array.isArray(fields) ? fields : [fields];
+
+				sync.primary = { fields: group, auto: group.length === 1 && options.auto !== false };
+			},
+			Index(fields)
+			{
+				sync.index.push(Array.isArray(fields) ? fields : [fields]);
+			},
+			Unique(fields)
+			{
+				sync.unique.push(Array.isArray(fields) ? fields : [fields]);
+			},
+			Relation(field, target, options = {})
+			{
+				sync.relations.push({ field, addon: target, column: options.column || 'id', onDelete: options.onDelete || null, onUpdate: options.onUpdate || null });
+			}
+		});
 	};
 
-	addon.Index = function(fields)
+	addon.SyncSchema = async function({ connection = 'primary' } = {})
 	{
-		if(fields === undefined)
+		const result = await onetype.PipelineRun('database:sync:schema', { connection, addon: addon.GetName() });
+
+		if(result.code !== 200)
 		{
-			return addon.database.index;
+			throw onetype.Error(result.code, result.message);
 		}
 
-		keyed(addon.database.index, fields);
+		return result.data.schema;
 	};
 
-	addon.Unique = function(fields)
+	addon.SyncPlan = async function({ connection = 'primary' } = {})
 	{
-		if(fields === undefined)
+		const result = await onetype.PipelineRun('database:sync:plan', { connection, addon: addon.GetName() });
+
+		if(result.code !== 200)
 		{
-			return addon.database.unique;
+			throw onetype.Error(result.code, result.message);
 		}
 
-		keyed(addon.database.unique, fields);
+		return result.data.plan;
 	};
 
-	addon.Relation = function(field, target, column = 'id')
+	addon.SyncApply = async function(plan)
 	{
-		if(field === undefined)
+		const result = await onetype.PipelineRun('database:sync:apply', { plan });
+
+		if(result.code !== 200)
 		{
-			return addon.database.relations;
+			throw onetype.Error(result.code, result.message);
 		}
 
-		if(!addon.database.relations.some((relation) => relation.field === field && relation.addon === target && relation.column === column))
-		{
-			addon.database.relations.push({ field, addon: target, column });
-		}
+		return result.data;
+	};
+
+	addon.SyncRun = async function({ connection = 'primary' } = {})
+	{
+		return addon.SyncApply(await addon.SyncPlan({ connection }));
 	};
 });

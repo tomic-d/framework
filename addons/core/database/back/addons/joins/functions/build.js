@@ -1,7 +1,7 @@
 import onetype from '#framework/load.js';
 import joins from '../addon.js';
 
-joins.Fn('build', async function(records, list, parent)
+joins.Fn('build', async function(records, list)
 {
 	if(!list.length || !records.length)
 	{
@@ -44,28 +44,16 @@ joins.Fn('build', async function(records, list, parent)
 			continue;
 		}
 
-		const find = addon.Find({
-			language: parent?.language || null,
-			languages: parent?.languages || null
-		});
-
-		const original = find.select;
-
-		find.select = (selected) =>
-		{
-			const fields = Array.isArray(selected) ? selected : [selected];
-
-			if(!fields.includes('id'))
-			{
-				fields.push('id');
-			}
-
-			return original(fields);
-		};
+		const find = addon.Find();
 
 		if(join.builder)
 		{
-			join.builder(find);
+			join.builder(find, join.parent);
+		}
+
+		if(find.query.select && !find.query.select.includes('id'))
+		{
+			find.query.select.push('id');
 		}
 
 		find.filter('id', ids, 'IN').limit(ids.length);

@@ -494,7 +494,7 @@ onetype.AddonReady('elements', (elements) =>
 				const index = row.index;
 				const emit = this._action;
 
-				$ot.popup(event.target, function()
+				$ot.float.popup(event.target, function()
 				{
 					this.actions = actions;
 					this.background = background;
@@ -505,7 +505,7 @@ onetype.AddonReady('elements', (elements) =>
 
 						if(!action)
 						{
-							$ot.popup.close(popupId);
+							$ot.float.close(popupId);
 							return;
 						}
 
@@ -519,7 +519,7 @@ onetype.AddonReady('elements', (elements) =>
 							emit({ action: action.id || action.label, value: item, index });
 						}
 
-						$ot.popup.close(popupId);
+						$ot.float.close(popupId);
 					};
 
 					return /* html */ `

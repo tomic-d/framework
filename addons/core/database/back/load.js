@@ -1,23 +1,13 @@
 import database from '#database/addon.js';
 
-/* Schema */
-import '#database/core/register/schemas/filter.js';
-import '#database/core/register/schemas/join.js';
-import '#database/core/register/schemas/query.js';
-
 /* Events */
 import '#database/events/addon.js';
-import '#database/events/connection.js';
+import '#database/item/catch/add.js';
 
-/* Dialect registry + value helpers */
-import '#database/addons/dialects/load.js';
-import '#database/functions/operation.js';
-import '#database/functions/cast.value.js';
-import '#database/functions/cast.js';
-import '#database/functions/serialize.js';
+/* Clients registry */
+import '#database/addons/clients/load.js';
 
 /* Core functions */
-import '#database/functions/validation.js';
 import '#database/functions/connection.js';
 import '#database/functions/transaction.js';
 

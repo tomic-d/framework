@@ -271,7 +271,7 @@ onetype.AddonReady('elements', (elements) =>
 				const target = event.currentTarget;
 				const children = item.children;
 
-				$ot.popup(target, function()
+				$ot.float.popup(target, function()
 				{
 					this.children = children;
 
@@ -321,7 +321,7 @@ onetype.AddonReady('elements', (elements) =>
 				const user = this.user;
 				const menu = this.userMenu;
 
-				$ot.popup(target, function()
+				$ot.float.popup(target, function()
 				{
 					this.user = user;
 					this.menu = menu;

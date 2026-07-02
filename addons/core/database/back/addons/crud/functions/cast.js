@@ -1,12 +1,7 @@
 import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 
-/* Normalize a DB row to the addon's declared field types, so every engine
-   returns the same shape (pg bigint=string, sqlite/mysql number; bool 0/1;
-   json string vs object). One place, applied on every read path.
-   For union types (e.g. 'number|string') the FIRST declared type is canonical. */
-
-database.Fn('cast', function(addon, knex, record)
+database.Fn('cast', function(addon, record)
 {
 	const data = {};
 

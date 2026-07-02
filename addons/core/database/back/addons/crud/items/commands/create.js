@@ -9,8 +9,7 @@ onetype.AddonReady('commands', (commands) =>
 		endpoint: '/api/database/create',
 		in: {
 			addon: ['string', null, true],
-			data: ['object', null, true],
-			language: ['string']
+			data: ['object', null, true]
 		},
 		out: {
 			item: ['object']
@@ -44,9 +43,7 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, typeof allowed === 'string' ? allowed : 'Create not allowed.', 400);
 			}
 
-			const language = properties.language || this.http?.state?.language || null;
-			const languages = this.http?.state?.languages || null;
-			const created = await item.Create({ language, languages });
+			const created = await item.Create();
 			const fields = expose.select || Object.keys(addon.Fields().data);
 
 			resolve({ item: created.Get(fields) });

@@ -9,8 +9,7 @@ onetype.AddonReady('commands', (commands) =>
 		endpoint: '/api/database/update',
 		in: {
 			addon: ['string', null, true],
-			data: ['object', null, true],
-			language: ['string']
+			data: ['object', null, true]
 		},
 		out: {
 			item: ['object']
@@ -41,9 +40,7 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, 'Invalid or missing id.', 400);
 			}
 
-			const language = properties.language || this.http?.state?.language || null;
-			const languages = this.http?.state?.languages || null;
-			const item = await addon.Find({ language, languages }).filter('id', properties.data.id).one(true);
+			const item = await addon.Find().filter('id', properties.data.id).one(true);
 
 			if(!item)
 			{
@@ -62,7 +59,7 @@ onetype.AddonReady('commands', (commands) =>
 				return resolve(null, typeof allowed === 'string' ? allowed : 'Update not allowed.', 400);
 			}
 
-			await item.Update({ language, languages });
+			await item.Update();
 			const fields = expose.select || Object.keys(addon.Fields().data);
 
 			resolve({ item: item.Get(fields) });

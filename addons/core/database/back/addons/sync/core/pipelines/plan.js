@@ -1,8 +1,8 @@
 import onetype from '#framework/load.js';
-import database from '#database/addon.js';
+import sync from '#database/addons/sync/addon.js';
 
 onetype.Pipeline('database:sync:plan', {
-	description: 'Diff one addon table against its definition on one connection and describe what is out of sync, without changing the database.',
+	description: 'Diff one addon definition against the live database schema and describe what is out of sync, without changing anything.',
 	in: {
 		connection: {
 			type: 'string',
@@ -18,72 +18,123 @@ onetype.Pipeline('database:sync:plan', {
 	out: {
 		plan: {
 			type: 'object',
-			config: 'database.sync'
+			config: 'database.sync.plan'
 		}
 	}
 })
 
-.Join('plan', 10, {
-	description: 'Diff the addon against the real table and build its sync step.',
+.Join('schema', 10, {
+	description: 'Read the live schema and start a blank plan.',
 	out: {
-		plan: {
-			type: 'object',
-			config: 'database.sync'
-		}
+		schema: { type: 'object', config: 'database.sync.schema' },
+		plan:   { type: 'object', config: 'database.sync.plan' }
 	},
-	callback: async function({ connection, addon }, resolve)
+	callback: async function({ connection, addon })
 	{
-		const item = database.ItemGet(connection);
-		const knex = item ? item.Get('connection') : null;
-
-		if(!knex)
-		{
-			return resolve(null, 'Database connection "' + connection + '" not found.', 404);
-		}
-
-		const target = onetype.AddonGet(addon);
-
-		if(!target || typeof target.Table !== 'function' || !target.Table())
-		{
-			return resolve(null, 'Addon "' + addon + '" has no table set.', 404);
-		}
-
-		const table = target.Table();
-		const columns = database.Fn('sync.columns', target);
-		const exists = await knex.schema.hasTable(table.name);
-
-		const index = target.Index();
-		const unique = target.Unique();
+		const { schema } = await this.Pipeline('database:sync:schema', { connection, addon });
 
 		const plan = {
 			connection,
 			addon,
-			table: table.name,
-			prune: table.prune === true,
-			exists,
-			create: [],
-			add: [],
-			index: [],
-			unique: [],
-			extra: [],
-			mismatched: []
+			table: schema.table,
+			columns: { write: [], extra: [], mismatched: [] },
+			keys: { primary: [], index: [], unique: [] },
+			relations: [],
+			prune: false
 		};
 
-		if(exists)
-		{
-			const { missing, extra, mismatched } = await database.Fn('sync.diff', knex, table.name, columns);
+		return { schema, plan };
+	}
+})
 
-			plan.add = missing;
-			plan.index = await database.Fn('sync.keys', knex, table.name, index, false);
-			plan.unique = await database.Fn('sync.keys', knex, table.name, unique, true);
-			plan.extra = extra;
-			plan.mismatched = mismatched;
-		}
-		else
+.Join('columns', 20, {
+	description: 'Diff the addon columns against the live table.',
+	requires: ['schema', 'plan'],
+	out: {
+		plan: { type: 'object', config: 'database.sync.plan' }
+	},
+	callback: function({ addon, schema, plan })
+	{
+		const columns = sync.Fn('get.columns', onetype.AddonGet(addon));
+
+		if(!schema.table.exists)
 		{
-			plan.create = columns;
-			plan.index = index;
-			plan.unique = unique;
+			plan.columns.write = columns;
+			return { plan };
+		}
+
+		const existing = new Set(Object.keys(schema.columns));
+		const desired = new Set(columns.map((column) => column.name));
+
+		plan.columns.write = columns.filter((column) => !existing.has(column.name));
+		plan.columns.extra = [...existing].filter((name) => !desired.has(name));
+		plan.columns.mismatched = columns.filter((column) =>
+		{
+			if(!existing.has(column.name) || (column.type !== 'object' && column.type !== 'array'))
+			{
+				return false;
+			}
+
+			return !String(schema.columns[column.name].type).toLowerCase().includes('json');
+		}).map((column) => column.name);
+
+		return { plan };
+	}
+})
+
+.Join('keys', 30, {
+	description: 'Diff the primary key, indexes and unique constraints against the live table.',
+	requires: ['schema', 'plan'],
+	out: {
+		plan: { type: 'object', config: 'database.sync.plan' }
+	},
+	callback: function({ addon, schema, plan })
+	{
+		const config = onetype.AddonGet(addon).Sync();
+
+		plan.keys.primary = config.primary.fields.length > 1 ? config.primary.fields : [];
+
+		const missing = (groups, isUnique) =>
+		{
+			const present = schema.indexes
+				.filter((entry) => entry.unique === isUnique)
+				.map((entry) => [...entry.columns].sort().join(','));
+
+			return groups.filter((group) => !present.includes([...group].sort().join(',')));
+		};
+
+		plan.keys.index = schema.table.exists ? missing(config.index, false) : config.index;
+		plan.keys.unique = schema.table.exists ? missing(config.unique, true) : config.unique;
+
+		return { plan };
+	}
+})
+
+.Join('relations', 40, {
+	description: 'Diff the foreign keys against the live table.',
+	requires: ['schema', 'plan'],
+	out: {
+		plan: { type: 'object', config: 'database.sync.plan' }
+	},
+	callback: function({ addon, schema, plan }, resolve)
+	{
+		for(const relation of onetype.AddonGet(addon).Sync().relations)
+		{
+			const name = `${schema.table.name}_${relation.field}_foreign`;
+
+			if(schema.relations.includes(name))
+			{
+				continue;
+			}
+
+			const reference = onetype.AddonGet(relation.addon);
+
+			if(!reference || !reference.Table())
+			{
+				return resolve(null, 'Relation "' + relation.field + '" targets addon "' + relation.addon + '" which has no table set.', 400);
+			}
+
+			plan.relations.push({ name, field: relation.field, column: relation.column, table: reference.Table().name, onDelete: relation.onDelete, onUpdate: relation.onUpdate });
 		}
 
 		return { plan };

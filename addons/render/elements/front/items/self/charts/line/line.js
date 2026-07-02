@@ -322,7 +322,7 @@ onetype.AddonReady('elements', (elements) =>
 						const value = dot.getAttribute('data-value');
 						const text = label ? label + ': ' + value : value;
 
-						overlay = $ot.tooltip(dot, { text }, { position: { x: 'center', y: 'top' }, offset: { x: 0, y: -6 } });
+						overlay = $ot.float.tooltip(dot, { text }, { position: { x: 'center', y: 'top' }, offset: { x: 0, y: -6 } });
 					});
 
 					dot.addEventListener('mouseleave', () =>

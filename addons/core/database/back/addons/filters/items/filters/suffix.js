@@ -1,4 +1,4 @@
-import filters from '../addon.js';
+import filters from '../../addon.js';
 
 /* Operators applied through a knex method suffix (whereNull, whereBetween,
    whereILike, ...) rather than field-operator-value. */

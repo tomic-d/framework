@@ -23,7 +23,7 @@ onetype.AddonReady('directives', function(directives)
 					variant: config.variant || 'default'
 				};
 
-				node.otTooltipOverlay = popup.Fn('tooltip', node, content, options);
+				node.otTooltipOverlay = popup.Fn('template.tooltip', node, content, options);
 				break;
 			}
 
@@ -41,7 +41,6 @@ onetype.AddonReady('directives', function(directives)
 			{
 				const related = event.relatedTarget;
 
-				/* Skip if mouse moved into the tooltip overlay itself */
 				if (related && node.otTooltipOverlay)
 				{
 					const overlay = node.otTooltipOverlay.Get('element');
@@ -70,7 +69,6 @@ onetype.AddonReady('directives', function(directives)
 		}
 	});
 
-	/* Close tooltip when mouse leaves the overlay itself */
 	document.addEventListener('mouseout', function(event)
 	{
 		const overlay = event.target.closest('.ot-overlay');

@@ -1,12 +1,14 @@
 import Knex from 'knex';
 import database from '#database/addon.js';
+import clients from '#database/addons/clients/addon.js';
 
 database.ItemOn('add', function(item)
 {
-	const client = item.Get('client');
+	const id = item.Get('client');
+	const client = clients.ItemGet(id);
 
 	const config = {
-		client,
+		client: id,
 		acquireConnectionTimeout: 1000,
 		pool: {
 			min: 0,
@@ -16,7 +18,7 @@ database.ItemOn('add', function(item)
 		}
 	};
 
-	if(client === 'sqlite3' || client === 'better-sqlite3')
+	if(id === 'sqlite3' || id === 'better-sqlite3')
 	{
 		config.connection = { filename: item.Get('filename') };
 		config.useNullAsDefault = true;
@@ -33,6 +35,8 @@ database.ItemOn('add', function(item)
 	}
 
 	const knex = Knex(config);
+
+	Object.assign(knex.client.config, client.GetData());
 
 	item.Set('connection', knex);
 	item.Set('dialect', knex.client.dialect);

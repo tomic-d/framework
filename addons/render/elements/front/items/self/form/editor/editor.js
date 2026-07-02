@@ -265,7 +265,7 @@ onetype.AddonReady('elements', (elements) =>
 					const selection = window.getSelection();
 					if(selection?.rangeCount) this.range = selection.getRangeAt(0).cloneRange();
 
-					const url = await $ot.confirm('Insert link', { icon: 'link', input: true, placeholder: 'https://', confirm: 'Insert' });
+					const url = await $ot.float.confirm('Insert link', { icon: 'link', input: true, placeholder: 'https://', confirm: 'Insert' });
 
 					if(url)
 					{

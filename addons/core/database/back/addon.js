@@ -11,8 +11,7 @@ const database = onetype.Addon('database', (addon) =>
 	addon.Field('client', {
 		type: 'string',
 		value: 'pg',
-		options: ['pg', 'mysql2', 'better-sqlite3', 'sqlite3'],
-		description: 'Database driver. pg and mysql2 connect over host/port; sqlite uses filename.'
+		description: 'Database driver key (pg, mysql2, better-sqlite3, sqlite3). Resolved to a database.clients item by the connection event.'
 	});
 
 	addon.Field('hostname', {

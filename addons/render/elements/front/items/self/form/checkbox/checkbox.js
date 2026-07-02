@@ -207,18 +207,18 @@ onetype.AddonReady('elements', (elements) =>
 						this._change({ event: null, value: wrapped });
 					}
 
-					$ot.modal.close(modalId);
+					$ot.float.close(modalId);
 					this.Update();
 				};
 
 				const onCancel = () =>
 				{
-					$ot.modal.close(modalId);
+					$ot.float.close(modalId);
 				};
 
 				const variables = this.variables;
 
-				$ot.modal(function()
+				$ot.float.modal(function()
 				{
 					this.variables = variables;
 					this.initial = initial;

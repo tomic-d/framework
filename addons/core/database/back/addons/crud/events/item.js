@@ -1,20 +1,20 @@
 import onetype from '#framework/load.js';
-import database from '#database/addon.js';
+import crud from '#database/addons/crud/addon.js';
 
 onetype.EmitOn('@addon.item.init', (item) =>
 {
-	item.Create = async function({connection = 'primary', language = null, languages = null} = {})
+	item.Create = function({ connection = 'primary' } = {})
 	{
-		return database.Fn('crud.create', item, {connection, language, languages});
+		return crud.Fn('chain', 'create', { item, connection });
 	};
 
-	item.Update = async function({connection = 'primary', language = null, languages = null, whitelist = null} = {})
+	item.Update = function({ connection = 'primary' } = {})
 	{
-		return database.Fn('crud.update', item, {connection, language, languages, whitelist});
+		return crud.Fn('chain', 'update', { item, connection });
 	};
 
-	item.Delete = async function({connection = 'primary'} = {})
+	item.Delete = function({ connection = 'primary' } = {})
 	{
-		return database.Fn('crud.delete', item, {connection});
+		return crud.Fn('chain', 'delete', { item, connection });
 	};
 });

@@ -1,4 +1,4 @@
-overlays.Fn('position', function(target, overlay, position, offset, padding)
+overlays.Fn('position', function(target, overlay, position, offset, padding, gap)
 {
 	const body = !target || target === document.body;
 	const rect = body
@@ -9,13 +9,14 @@ overlays.Fn('position', function(target, overlay, position, offset, padding)
 	const height = overlay.offsetHeight;
 	const pos = position || {x: 'center', y: 'center'};
 	const pad = padding || 0;
+	const away = body ? 0 : (gap || 0);
 
 	let left = rect.left;
 	let top = rect.top;
 
 	if (pos.x === 'left')
 	{
-		left = body ? pad : rect.left - width;
+		left = body ? pad : rect.left - width - away;
 	}
 	else if (pos.x === 'left-in')
 	{
@@ -31,12 +32,12 @@ overlays.Fn('position', function(target, overlay, position, offset, padding)
 	}
 	else if (pos.x === 'right')
 	{
-		left = body ? rect.right - width - pad : rect.right;
+		left = body ? rect.right - width - pad : rect.right + away;
 	}
 
 	if (pos.y === 'top')
 	{
-		top = body ? pad : rect.top - height;
+		top = body ? pad : rect.top - height - away;
 	}
 	else if (pos.y === 'top-in')
 	{
@@ -52,7 +53,7 @@ overlays.Fn('position', function(target, overlay, position, offset, padding)
 	}
 	else if (pos.y === 'bottom')
 	{
-		top = body ? rect.bottom - height - pad : rect.bottom;
+		top = body ? rect.bottom - height - pad : rect.bottom + away;
 	}
 
 	left += offset?.x || 0;

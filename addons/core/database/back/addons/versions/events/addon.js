@@ -1,8 +1,5 @@
 import onetype from '#framework/load.js';
 
-/* The Versions setter and the History/Restore readers all live with versions.
-   Registered on @addon.init so every addon can opt into versioning. */
-
 onetype.EmitOn('@addon.init', (addon) =>
 {
 	addon.database.versions = null;
@@ -21,13 +18,20 @@ onetype.EmitOn('@addon.init', (addon) =>
 		};
 	};
 
-	addon.History = function({connection = 'primary'} = {})
+	addon.History = function({ connection = 'primary' } = {})
 	{
-		return onetype.AddonGet('database.versions').Fn('history', addon, null, {connection});
+		return onetype.AddonGet('database.versions').Fn('get.history', addon, null, { connection });
 	};
 
-	addon.Restore = function(versionId, {connection = 'primary'} = {})
+	addon.Restore = async function(version, { connection = 'primary' } = {})
 	{
-		return onetype.AddonGet('database.versions').Fn('restore', addon, versionId, {connection});
+		const result = await onetype.PipelineRun('database:versions:restore', { connection, addon: addon.GetName(), version });
+
+		if(result.code !== 200)
+		{
+			throw onetype.Error(result.code, result.message);
+		}
+
+		return result.data;
 	};
 });

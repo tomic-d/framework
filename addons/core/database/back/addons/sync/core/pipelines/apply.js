@@ -1,13 +1,14 @@
 import onetype from '#framework/load.js';
 import database from '#database/addon.js';
+import sync from '#database/addons/sync/addon.js';
 
 onetype.Pipeline('database:sync:apply', {
-	description: 'Execute one sync plan in ordered phases: create, columns, index, prune.',
+	description: 'Execute one sync plan in ordered phases: create, columns, index, unique, prune, relations.',
 	in: {
 		plan: {
 			type: 'object',
 			required: true,
-			config: 'database.sync'
+			config: 'database.sync.plan'
 		}
 	}
 })
@@ -36,16 +37,21 @@ onetype.Pipeline('database:sync:apply', {
 })
 
 .Join('create', 20, {
-	description: 'Create the table if it does not exist yet.',
+	description: 'Create the table with its columns when it does not exist yet.',
 	when: function({ plan })
 	{
-		return !plan.exists;
+		return !plan.table.exists;
 	},
 	callback: async function({ plan, knex })
 	{
-		await knex.schema.createTable(plan.table, (builder) =>
+		await knex.schema.createTable(plan.table.name, (builder) =>
 		{
-			plan.create.forEach((column) => database.Fn('sync.column', builder, column));
+			plan.columns.write.forEach((column) => sync.Fn('apply.column', builder, column));
+
+			if(plan.keys.primary.length > 1)
+			{
+				builder.primary(plan.keys.primary);
+			}
 		});
 	}
 })
@@ -54,13 +60,13 @@ onetype.Pipeline('database:sync:apply', {
 	description: 'Add missing columns to the existing table.',
 	when: function({ plan })
 	{
-		return plan.exists && plan.add.length > 0;
+		return plan.table.exists && plan.columns.write.length > 0;
 	},
 	callback: async function({ plan, knex })
 	{
-		await knex.schema.alterTable(plan.table, (builder) =>
+		await knex.schema.alterTable(plan.table.name, (builder) =>
 		{
-			plan.add.forEach((column) => database.Fn('sync.column', builder, column));
+			plan.columns.write.forEach((column) => sync.Fn('apply.column', builder, column));
 		});
 	}
 })
@@ -69,13 +75,13 @@ onetype.Pipeline('database:sync:apply', {
 	description: 'Create indexes for the declared groups.',
 	when: function({ plan })
 	{
-		return plan.index.length > 0;
+		return plan.keys.index.length > 0;
 	},
 	callback: async function({ plan, knex })
 	{
-		await knex.schema.alterTable(plan.table, (builder) =>
+		await knex.schema.alterTable(plan.table.name, (builder) =>
 		{
-			plan.index.forEach((group) => builder.index(group, `${plan.table}_${group.join('_')}_index`));
+			plan.keys.index.forEach((group) => builder.index(group, `${plan.table.name}_${group.join('_')}_index`));
 		});
 	}
 })
@@ -84,13 +90,13 @@ onetype.Pipeline('database:sync:apply', {
 	description: 'Create unique constraints for the declared groups.',
 	when: function({ plan })
 	{
-		return plan.unique.length > 0;
+		return plan.keys.unique.length > 0;
 	},
 	callback: async function({ plan, knex })
 	{
-		await knex.schema.alterTable(plan.table, (builder) =>
+		await knex.schema.alterTable(plan.table.name, (builder) =>
 		{
-			plan.unique.forEach((group) => builder.unique(group, { indexName: `${plan.table}_${group.join('_')}_unique` }));
+			plan.keys.unique.forEach((group) => builder.unique(group, { indexName: `${plan.table.name}_${group.join('_')}_unique` }));
 		});
 	}
 })
@@ -99,13 +105,41 @@ onetype.Pipeline('database:sync:apply', {
 	description: 'Drop extra columns when the plan allows it.',
 	when: function({ plan })
 	{
-		return plan.prune && plan.extra.length > 0;
+		return plan.prune && plan.columns.extra.length > 0;
 	},
 	callback: async function({ plan, knex })
 	{
-		await knex.schema.alterTable(plan.table, (builder) =>
+		await knex.schema.alterTable(plan.table.name, (builder) =>
 		{
-			plan.extra.forEach((name) => builder.dropColumn(name));
+			plan.columns.extra.forEach((name) => builder.dropColumn(name));
+		});
+	}
+})
+
+.Join('relations', 60, {
+	description: 'Add the missing foreign keys.',
+	when: function({ plan })
+	{
+		return plan.relations.length > 0;
+	},
+	callback: async function({ plan, knex })
+	{
+		await knex.schema.alterTable(plan.table.name, (builder) =>
+		{
+			plan.relations.forEach((relation) =>
+			{
+				const foreign = builder.foreign(relation.field, relation.name).references(relation.column).inTable(relation.table);
+
+				if(relation.onDelete)
+				{
+					foreign.onDelete(relation.onDelete);
+				}
+
+				if(relation.onUpdate)
+				{
+					foreign.onUpdate(relation.onUpdate);
+				}
+			});
 		});
 	}
 });

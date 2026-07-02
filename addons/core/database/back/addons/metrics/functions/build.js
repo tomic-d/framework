@@ -20,7 +20,7 @@ metrics.Fn('build', async function(knex, query, field, interval, aggregate, valu
 		throw new Error(`Invalid interval '${interval}'. Must be: ${Object.keys(STEP).join(', ')}`);
 	}
 
-	const dateTrunc = await database.Fn('operation', query.knex, 'dateTrunc');
+	const dateTrunc = query.knex.client.config.dateTrunc;
 	const type = aggregate || 'count';
 	const bucket = dateTrunc(query.knex, interval, field);
 	const total = type === 'count' ? query.knex.raw('COUNT(*)') : query.knex.raw(`${type.toUpperCase()}(??)`, [value]);

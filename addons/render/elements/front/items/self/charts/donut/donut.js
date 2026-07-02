@@ -239,7 +239,7 @@ onetype.AddonReady('elements', (elements) =>
 						const percent = el.getAttribute('data-percent');
 						const text = label + ': ' + value + ' (' + percent + '%)';
 
-						overlay = $ot.tooltip(wrap, { text }, { position: { x: 'center', y: 'top' }, offset: { x: 0, y: -6 } });
+						overlay = $ot.float.tooltip(wrap, { text }, { position: { x: 'center', y: 'top' }, offset: { x: 0, y: -6 } });
 					});
 
 					el.addEventListener('mouseleave', () =>

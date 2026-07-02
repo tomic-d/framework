@@ -1,26 +1,10 @@
-import onetype from '#framework/load.js';
-import database from '#database/addon.js';
+import crud from '#database/addons/crud/addon.js';
 
-database.Fn('find.aggregate', async function(query, type, field)
+crud.Fn('aggregate', async function(query, type, field)
 {
-	const validation = database.Fn('validation');
-	validation.field(field);
+	crud.Fn('validate.field', field);
 
-	if(query.impossible)
-	{
-		return 0;
-	}
+	const result = await crud.Fn('execute', query, (knex) => knex[type](`${field} as result`), 0);
 
-	const from = query.from || query.table.name;
-	const knex = query.knex(from)[type](`${field} as result`);
-
-	const middleware = await onetype.Middleware('@database.find.execute', { knex, query });
-
-	if(middleware.errors.length)
-	{
-		throw middleware.errors[0];
-	}
-
-	const result = await knex;
-	return parseFloat(result[0]?.result || 0);
+	return typeof result === 'number' ? result : parseFloat(result[0]?.result || 0);
 });
