@@ -148,8 +148,16 @@ database.Fn('find', function(addon, language)
 
 	methods.count = async () =>
 	{
-		const data = await request();
-		return data.total;
+		const state = database.Fn('find.serialize', query);
+		state.count = true;
+		const result = await database.Fn('batch', 'find', state);
+
+		if(result.code !== 200)
+		{
+			throw onetype.Error(result.code, result.message);
+		}
+
+		return result.data.value;
 	};
 
 	methods.exists = async () =>

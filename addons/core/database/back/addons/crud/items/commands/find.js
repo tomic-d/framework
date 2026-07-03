@@ -77,6 +77,7 @@ onetype.AddonReady('commands', (commands) =>
 			limit: ['number', 50],
 			offset: ['number'],
 			distinct: ['boolean', false],
+			count: ['boolean', false],
 			version: ['number'],
 			aggregate: ['object'],
 			metrics: ['object']
@@ -156,6 +157,12 @@ onetype.AddonReady('commands', (commands) =>
 				{
 					return resolve(null, typeof allowed === 'string' ? allowed : 'Find not allowed.', 400);
 				}
+			}
+
+			if(properties.count)
+			{
+				const value = await find.count();
+				return resolve({ value });
 			}
 
 			find.page(properties.page || 1).limit(Math.min(properties.limit || 50, 500));
