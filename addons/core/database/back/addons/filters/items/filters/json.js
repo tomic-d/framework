@@ -12,7 +12,12 @@ filters.Item({
 	{
 		validation.field(filter.field);
 
-		if(!Array.isArray(filter.value) || !filter.value.length)
+		if(!Array.isArray(filter.value))
+		{
+			filter.value = filter.value === null || filter.value === undefined || filter.value === '' ? [] : [filter.value];
+		}
+
+		if(!filter.value.length)
 		{
 			return false;
 		}
@@ -30,7 +35,12 @@ filters.Item({
 	{
 		validation.field(filter.field);
 
-		if(!Array.isArray(filter.value) || !filter.value.length)
+		if(!Array.isArray(filter.value))
+		{
+			filter.value = filter.value === null || filter.value === undefined || filter.value === '' ? [] : [filter.value];
+		}
+
+		if(!filter.value.length)
 		{
 			return false;
 		}
