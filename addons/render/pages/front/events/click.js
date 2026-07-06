@@ -1,5 +1,10 @@
 document.addEventListener('click', (e) =>
 {
+	if(e.defaultPrevented || e.target.closest('button'))
+	{
+		return;
+	}
+
 	const a = e.target.closest('a');
 
 	if(!a || !a.href)
@@ -19,7 +24,7 @@ document.addEventListener('click', (e) =>
 	if(match)
 	{
 		e.preventDefault();
-		pages.Fn('change', match.page.Get('id'), null, match.parameters, true, url.search);
+		pages.Fn('change', null, url.pathname, match.parameters, true, url.search);
 		return;
 	}
 
