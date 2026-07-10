@@ -283,7 +283,6 @@
 	background: var(--ot-bg-1);
 	border: 1px solid var(--ot-bg-1-border);
 	border-radius: var(--ot-radius-m);
-	box-shadow: var(--ot-shadow-l);
 	min-width: 220px;
 }
 

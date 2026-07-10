@@ -382,7 +382,6 @@
 {
 	transform: translateY(-1px);
 	border-color: var(--ot-bg-3-border);
-	box-shadow: var(--ot-shadow-s);
 }
 
 .e-7e9415d3 > .box.clickable:not(.hover):hover

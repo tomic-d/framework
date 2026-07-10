@@ -50,7 +50,6 @@
 
 .e-64d8716d > .box.shrunk
 {
-	box-shadow: var(--ot-shadow-s);
 }
 
 /* ===== BANNER ===== */
@@ -628,7 +627,6 @@
 	background: var(--ot-bg-1);
 	border: 1px solid var(--ot-bg-2-border);
 	border-radius: var(--ot-radius-m);
-	box-shadow: var(--ot-shadow-m);
 	min-width: 240px;
 	max-width: 320px;
 }
@@ -702,7 +700,6 @@
 	background: var(--ot-bg-1);
 	border: 1px solid var(--ot-bg-2-border);
 	border-radius: var(--ot-radius-m);
-	box-shadow: var(--ot-shadow-m);
 	min-width: 260px;
 	overflow: hidden;
 }

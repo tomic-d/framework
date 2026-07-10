@@ -25,7 +25,6 @@
 .e-7e10f2fa > .box:hover
 {
 	transform: translateY(-2px);
-	box-shadow: var(--ot-shadow-m);
 }
 
 /* ===== RIBBON ===== */

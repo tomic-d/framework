@@ -41,7 +41,6 @@
 .e-7dbb0917 > .box:has(> .link):hover
 {
 	transform: translateY(-2px);
-	box-shadow: var(--ot-shadow-m);
 }
 
 /* Cover */
@@ -105,7 +104,6 @@
 	background-size: cover;
 	background-position: center;
 	border: 3px solid var(--ot-bg-1);
-	box-shadow: var(--ot-shadow-s);
 	flex-shrink: 0;
 }
 

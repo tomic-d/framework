@@ -145,7 +145,6 @@
 	background: var(--ot-bg-1);
 	border: 1px solid var(--ot-bg-2-border);
 	border-radius: var(--ot-radius-m);
-	box-shadow: var(--ot-shadow-m);
 	z-index: 10;
 	max-height: 240px;
 	overflow-y: auto;

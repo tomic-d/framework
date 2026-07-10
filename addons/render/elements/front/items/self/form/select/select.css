@@ -142,7 +142,6 @@
 	background: var(--ot-bg-1);
 	border: 1px solid var(--ot-bg-2-border);
 	border-radius: var(--ot-radius-m);
-	box-shadow: var(--ot-shadow-m);
 	z-index: 100;
 	overflow: hidden;
 	animation: e-15ce864f-drop var(--ot-transition);
