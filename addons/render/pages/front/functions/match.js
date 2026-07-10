@@ -4,9 +4,12 @@ pages.Fn('match', function(path)
 	const current = path || onetype.RouteCurrent();
 	const target = base && !current.startsWith(base) ? base + current : current;
 
+	let found = null;
+	let score = -1;
+
 	for(const item of Object.values(pages.Items()))
 	{
-		if(item.Get('404') || !item.Get('route'))
+		if(!item.Get('route'))
 		{
 			continue;
 		}
@@ -17,15 +20,21 @@ pages.Fn('match', function(path)
 		{
 			const result = onetype.RouteMatch(route, target);
 
-			if(result.match)
+			if(!result.match)
 			{
-				return {
-					page: item,
-					parameters: result.params
-				};
+				continue;
+			}
+
+			/* Specificnija ruta pobedjuje: vise statickih segmenata, manje parametara. */
+			const value = route.split('/').filter(segment => segment && !segment.startsWith(':')).length;
+
+			if(value > score)
+			{
+				found = { page: item, parameters: result.params };
+				score = value;
 			}
 		}
 	}
 
-	return null;
+	return found;
 });

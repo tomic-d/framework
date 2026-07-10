@@ -9,7 +9,7 @@ onetype.AddonReady('html', (html) =>
         position: 'head',
         order: 90,
         attributes: {
-            src: '/assets/build.js?v=18',
+            src: '/assets/build.js?v=' + Date.now(),
             defer: null
         }
     });
