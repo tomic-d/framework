@@ -22,23 +22,23 @@
     --ot-font-secondary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     --ot-bg-1: rgba(30, 30, 30, 1);
-    --ot-bg-1-border: rgba(46, 46, 46, 1);
+    --ot-bg-1-border: rgba(40, 40, 40, 1);
     --ot-bg-1-opacity: rgba(30, 30, 30, 0.85);
-    --ot-bg-1-hover: rgba(35, 35, 35, 1);
+    --ot-bg-1-hover: rgba(45, 45, 45, 1);
 
-    --ot-bg-2: rgba(37, 37, 37, 1);
-    --ot-bg-2-border: rgba(53, 53, 53, 1);
-    --ot-bg-2-opacity: rgba(37, 37, 37, 0.85);
-    --ot-bg-2-hover: rgba(42, 42, 42, 1);
+    --ot-bg-2: rgba(35, 35, 35, 1);
+    --ot-bg-2-border: rgba(45, 45, 45, 1);
+    --ot-bg-2-opacity: rgba(35, 35, 35, 0.85);
+    --ot-bg-2-hover: rgba(50, 50, 50, 1);
 
-    --ot-bg-3: rgba(44, 44, 44, 1);
-    --ot-bg-3-border: rgba(60, 60, 60, 1);
-    --ot-bg-3-opacity: rgba(44, 44, 44, 0.85);
-    --ot-bg-3-hover: rgba(49, 49, 49, 1);
+    --ot-bg-3: rgba(40, 40, 40, 1);
+    --ot-bg-3-border: rgba(50, 50, 50, 1);
+    --ot-bg-3-opacity: rgba(40, 40, 40, 0.85);
+    --ot-bg-3-hover: rgba(55, 55, 55, 1);
 
-    --ot-text-1: rgb(242, 242, 242);
-    --ot-text-2: rgb(166, 166, 166);
-    --ot-text-3: rgb(130, 130, 130);
+    --ot-text-1: rgb(225, 225, 225);
+    --ot-text-2: rgb(195, 195, 195);
+    --ot-text-3: rgb(165, 165, 165);
 
     --ot-brand: rgba(226, 112, 85, 1);
     --ot-brand-border: rgba(236, 142, 120, 1);
@@ -70,6 +70,28 @@
     --ot-transition-slow: 280ms cubic-bezier(0.4, 0, 0.2, 1);
 
     --ot-blur: blur(12px) saturate(180%);
+}
+
+body[schema="light"]
+{
+    --ot-bg-1: rgba(255, 255, 255, 1);
+    --ot-bg-1-border: rgba(245, 245, 245, 1);
+    --ot-bg-1-opacity: rgba(255, 255, 255, 0.85);
+    --ot-bg-1-hover: rgba(240, 240, 240, 1);
+
+    --ot-bg-2: rgba(250, 250, 250, 1);
+    --ot-bg-2-border: rgba(240, 240, 240, 1);
+    --ot-bg-2-opacity: rgba(250, 250, 250, 0.85);
+    --ot-bg-2-hover: rgba(235, 235, 235, 1);
+
+    --ot-bg-3: rgba(245, 245, 245, 1);
+    --ot-bg-3-border: rgba(235, 235, 235, 1);
+    --ot-bg-3-opacity: rgba(245, 245, 245, 0.85);
+    --ot-bg-3-hover: rgba(230, 230, 230, 1);
+
+    --ot-text-1: rgb(30, 30, 30);
+    --ot-text-2: rgb(60, 60, 60);
+    --ot-text-3: rgb(90, 90, 90);
 }
 
 @media screen and (max-width: 900px)
