@@ -5,6 +5,7 @@ const elements = onetype.Addon('elements', (addon) =>
     addon.Field('name', ['string', '']);
     addon.Field('description', ['string', '']);
     addon.Field('category', ['string', '']);
+    addon.Field('author', ['string', '']);
     addon.Field('collection', ['string', '']);
     addon.Field('config', ['object', {}]);
     addon.Field('metadata', ['object', {}]);
