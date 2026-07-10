@@ -31,7 +31,7 @@ onetype.AddonReady('directives', function(directives)
 					key = onetype.Function(node.getAttribute(':ot-key'), compile.data, false);
 				}
 
-				result.__otExternal = { name: 'node', key: key || value, render: result.__otRender || null };
+				result.__otExternal = { name: 'node', key: key || value, render: result.__otRender || null, data: result.__otRender ? result.__otRender.Data : null };
 				node.replaceWith(result);
 
 				return;
