@@ -72,7 +72,7 @@
     --ot-blur: blur(12px) saturate(180%);
 }
 
-body[schema="light"]
+body.ot-light
 {
     --ot-bg-1: rgba(255, 255, 255, 1);
     --ot-bg-1-border: rgba(245, 245, 245, 1);
