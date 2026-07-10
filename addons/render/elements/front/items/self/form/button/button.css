@@ -173,12 +173,10 @@
 .e-64e877b > .box.bg-1 { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
 .e-64e877b > .box.bg-2 { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
 .e-64e877b > .box.bg-3 { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
-.e-64e877b > .box.bg-4 { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
 
 .e-64e877b > .box.bg-1:hover { background: var(--ot-bg-1-hover); }
 .e-64e877b > .box.bg-2:hover { background: var(--ot-bg-2-hover); }
 .e-64e877b > .box.bg-3:hover { background: var(--ot-bg-3-hover); }
-.e-64e877b > .box.bg-4:hover { background: var(--ot-bg-4-hover); }
 
 /* Glass */
 

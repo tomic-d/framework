@@ -60,7 +60,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'string',
 				value: 'bg-1',
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4', 'transparent'],
+				options: ['bg-1', 'bg-2', 'bg-3', 'transparent'],
 				description: 'Mark background depth.'
 			},
 			size:

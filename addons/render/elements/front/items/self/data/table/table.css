@@ -23,7 +23,6 @@
 .e-305e9281 > .box.bg-1 { background: var(--ot-bg-1); }
 .e-305e9281 > .box.bg-2 { background: var(--ot-bg-2); }
 .e-305e9281 > .box.bg-3 { background: var(--ot-bg-3); }
-.e-305e9281 > .box.bg-4 { background: var(--ot-bg-4); }
 
 /* ===== BORDER ===== */
 
@@ -31,7 +30,6 @@
 .e-305e9281 > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-305e9281 > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-305e9281 > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-305e9281 > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* ===== MODIFIERS ===== */
 
@@ -45,7 +43,6 @@
 .e-305e9281 > .box.bg-1.border-bottom { border-bottom-color: var(--ot-bg-1-border); }
 .e-305e9281 > .box.bg-2.border-bottom { border-bottom-color: var(--ot-bg-2-border); }
 .e-305e9281 > .box.bg-3.border-bottom { border-bottom-color: var(--ot-bg-3-border); }
-.e-305e9281 > .box.bg-4.border-bottom { border-bottom-color: var(--ot-bg-4-border); }
 
 .e-305e9281 > .box.clean
 {
@@ -263,7 +260,7 @@
 }
 
 .e-305e9281 > .box.bg-2 > .table > .head-row { background: var(--ot-bg-3); }
-.e-305e9281 > .box.bg-3 > .table > .head-row { background: var(--ot-bg-4); }
+.e-305e9281 > .box.bg-3 > .table > .head-row { background: var(--ot-bg-3); }
 
 .e-305e9281 > .box > .table > .head-row > .cell
 {
@@ -335,7 +332,7 @@
 }
 
 .e-305e9281 > .box.bg-2 > .table > div > .body-row:hover { background: var(--ot-bg-3); }
-.e-305e9281 > .box.bg-3 > .table > div > .body-row:hover { background: var(--ot-bg-4); }
+.e-305e9281 > .box.bg-3 > .table > div > .body-row:hover { background: var(--ot-bg-3); }
 
 .e-305e9281 > .box > .table > div > .body-row.selected
 {

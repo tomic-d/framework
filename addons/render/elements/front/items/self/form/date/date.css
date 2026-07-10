@@ -176,17 +176,14 @@
 .e-283879c1 > .box.bg-1 > .field { background: var(--ot-bg-1); }
 .e-283879c1 > .box.bg-2 > .field { background: var(--ot-bg-2); }
 .e-283879c1 > .box.bg-3 > .field { background: var(--ot-bg-3); }
-.e-283879c1 > .box.bg-4 > .field { background: var(--ot-bg-4); }
 
 .e-283879c1 > .box.bg-1 > .field:hover:not(:focus-within) { background: var(--ot-bg-1-hover); }
 .e-283879c1 > .box.bg-2 > .field:hover:not(:focus-within) { background: var(--ot-bg-2-hover); }
 .e-283879c1 > .box.bg-3 > .field:hover:not(:focus-within) { background: var(--ot-bg-3-hover); }
-.e-283879c1 > .box.bg-4 > .field:hover:not(:focus-within) { background: var(--ot-bg-4-hover); }
 
 .e-283879c1 > .box.bg-1 > .field > .action:hover { background: var(--ot-bg-1-hover); }
 .e-283879c1 > .box.bg-2 > .field > .action:hover { background: var(--ot-bg-2-hover); }
 .e-283879c1 > .box.bg-3 > .field > .action:hover { background: var(--ot-bg-3-hover); }
-.e-283879c1 > .box.bg-4 > .field > .action:hover { background: var(--ot-bg-4-hover); }
 
 /* Transparent */
 
@@ -202,7 +199,6 @@
 .e-283879c1 > .box.bg-1.border > .field { border-color: var(--ot-bg-1-border); }
 .e-283879c1 > .box.bg-2.border > .field { border-color: var(--ot-bg-2-border); }
 .e-283879c1 > .box.bg-3.border > .field { border-color: var(--ot-bg-3-border); }
-.e-283879c1 > .box.bg-4.border > .field { border-color: var(--ot-bg-4-border); }
 
 /* Today */
 

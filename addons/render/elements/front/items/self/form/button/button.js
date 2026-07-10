@@ -64,7 +64,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'string',
 				value: '',
-				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4', 'glass'],
+				options: ['', 'bg-1', 'bg-2', 'bg-3', 'glass'],
 				description: 'Background depth when no color set.'
 			},
 			size:

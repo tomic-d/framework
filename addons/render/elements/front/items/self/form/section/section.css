@@ -182,12 +182,10 @@
 .e-5c75a80e > .box.bg-1 { background: var(--ot-bg-1); }
 .e-5c75a80e > .box.bg-2 { background: var(--ot-bg-2); }
 .e-5c75a80e > .box.bg-3 { background: var(--ot-bg-3); }
-.e-5c75a80e > .box.bg-4 { background: var(--ot-bg-4); }
 
 .e-5c75a80e > .box.bg-1:not(.collapsed) > .head { border-bottom-color: var(--ot-bg-1-border); }
 .e-5c75a80e > .box.bg-2:not(.collapsed) > .head { border-bottom-color: var(--ot-bg-2-border); }
 .e-5c75a80e > .box.bg-3:not(.collapsed) > .head { border-bottom-color: var(--ot-bg-3-border); }
-.e-5c75a80e > .box.bg-4:not(.collapsed) > .head { border-bottom-color: var(--ot-bg-4-border); }
 
 /* ===== BORDER ===== */
 
@@ -195,7 +193,6 @@
 .e-5c75a80e > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-5c75a80e > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-5c75a80e > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-5c75a80e > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* ===== CLEAN ===== */
 

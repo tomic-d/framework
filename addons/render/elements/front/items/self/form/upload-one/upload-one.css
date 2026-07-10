@@ -175,19 +175,16 @@
 .e-37c1b86d > .box.bg-1 > .field { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
 .e-37c1b86d > .box.bg-2 > .field { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
 .e-37c1b86d > .box.bg-3 > .field { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
-.e-37c1b86d > .box.bg-4 > .field { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
 
 .e-37c1b86d > .box.bg-1 > .field:hover:not(:focus-within) { background: var(--ot-bg-1-hover); }
 .e-37c1b86d > .box.bg-2 > .field:hover:not(:focus-within) { background: var(--ot-bg-2-hover); }
 .e-37c1b86d > .box.bg-3 > .field:hover:not(:focus-within) { background: var(--ot-bg-3-hover); }
-.e-37c1b86d > .box.bg-4 > .field:hover:not(:focus-within) { background: var(--ot-bg-4-hover); }
 
 /* Border */
 
 .e-37c1b86d > .box.border > .field { border-color: var(--ot-bg-2-border); }
 .e-37c1b86d > .box.bg-1.border > .field { border-color: var(--ot-bg-1-border); }
 .e-37c1b86d > .box.bg-3.border > .field { border-color: var(--ot-bg-3-border); }
-.e-37c1b86d > .box.bg-4.border > .field { border-color: var(--ot-bg-4-border); }
 
 /* Border bottom */
 

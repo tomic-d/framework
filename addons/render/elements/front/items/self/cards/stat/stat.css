@@ -150,7 +150,6 @@
 .e-7e98a114 > .box > .body > .head > .icon-wrap.bg-1 { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
 .e-7e98a114 > .box > .body > .head > .icon-wrap.bg-2 { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
 .e-7e98a114 > .box > .body > .head > .icon-wrap.bg-3 { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
-.e-7e98a114 > .box > .body > .head > .icon-wrap.bg-4 { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
 
 /* ===== VALUE ROW ===== */
 
@@ -249,13 +248,11 @@
 .e-7e98a114 > .box.bg-1 { background: var(--ot-bg-1); }
 .e-7e98a114 > .box.bg-2 { background: var(--ot-bg-2); }
 .e-7e98a114 > .box.bg-3 { background: var(--ot-bg-3); }
-.e-7e98a114 > .box.bg-4 { background: var(--ot-bg-4); }
 
 .e-7e98a114 > .box.border { border-color: var(--ot-bg-2-border); }
 .e-7e98a114 > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-7e98a114 > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-7e98a114 > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-7e98a114 > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* Hover lift */
 

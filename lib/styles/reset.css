@@ -171,7 +171,7 @@ i
 
 ::-webkit-scrollbar-thumb:hover
 {
-	background: var(--ot-bg-4);
+	background: var(--ot-bg-3);
 }
 
 @media print
@@ -194,9 +194,4 @@ hr.bg-2
 hr.bg-3
 {
 	border: 1px solid var(--ot-bg-3-border);
-}
-
-hr.bg-4
-{
-	border: 1px solid var(--ot-bg-4-border);
 }

@@ -325,21 +325,9 @@
 .e-283fbe2c > .box.bg-3 > .field > .tag > .remove:hover { background: var(--ot-bg-3-hover); }
 .e-283fbe2c > .box.bg-3 > .dropdown { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
 
-.e-283fbe2c > .box.bg-4 { background: var(--ot-bg-4); }
-
-.e-283fbe2c > .box.bg-4 > .field > .tag
-{
-	background: var(--ot-bg-3);
-	border-color: var(--ot-bg-4-border);
-}
-
-.e-283fbe2c > .box.bg-4 > .field > .tag > .remove:hover { background: var(--ot-bg-4-hover); }
-.e-283fbe2c > .box.bg-4 > .dropdown { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
-
 .e-283fbe2c > .box.bg-1:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-1-hover); }
 .e-283fbe2c > .box.bg-2:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-2-hover); }
 .e-283fbe2c > .box.bg-3:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-3-hover); }
-.e-283fbe2c > .box.bg-4:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-4-hover); }
 
 /* Transparent */
 
@@ -351,7 +339,6 @@
 .e-283fbe2c > .box.border.bg-1 { border-color: var(--ot-bg-1-border); }
 .e-283fbe2c > .box.border.bg-2 { border-color: var(--ot-bg-2-border); }
 .e-283fbe2c > .box.border.bg-3 { border-color: var(--ot-bg-3-border); }
-.e-283fbe2c > .box.border.bg-4 { border-color: var(--ot-bg-4-border); }
 
 /* ===== COLOR (tag chips) ===== */
 

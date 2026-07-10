@@ -100,7 +100,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'string',
 				value: 'bg-1',
-				options: ['', 'bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				options: ['', 'bg-1', 'bg-2', 'bg-3'],
 				description: 'Card background depth.'
 			},
 			size:

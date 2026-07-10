@@ -275,12 +275,10 @@
 .e-f249baa > .box.bg-1 > .mark { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
 .e-f249baa > .box.bg-2 > .mark { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
 .e-f249baa > .box.bg-3 > .mark { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
-.e-f249baa > .box.bg-4 > .mark { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
 
 .e-f249baa > .box.bg-1:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-1-hover); }
 .e-f249baa > .box.bg-2:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-2-hover); }
 .e-f249baa > .box.bg-3:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-3-hover); }
-.e-f249baa > .box.bg-4:hover:not(.disabled):not(.indeterminate) > input:not(:checked) ~ .mark { background: var(--ot-bg-4-hover); }
 
 /* Transparent */
 

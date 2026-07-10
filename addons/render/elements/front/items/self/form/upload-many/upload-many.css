@@ -336,7 +336,6 @@
 	font-size: 14px;
 }
 
-
 /* ===== BACKGROUND ===== */
 
 .e-3f8bc2c8 > .box.bg-1 > .zone { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
@@ -347,9 +346,7 @@
 .e-3f8bc2c8 > .box.bg-2 > .zone:hover { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
 
 .e-3f8bc2c8 > .box.bg-3 > .zone { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
-.e-3f8bc2c8 > .box.bg-3 > .zone:hover { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
-
-.e-3f8bc2c8 > .box.bg-4 > .zone { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
+.e-3f8bc2c8 > .box.bg-3 > .zone:hover { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
 
 /* ===== SIZE ===== */
 

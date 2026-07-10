@@ -218,7 +218,6 @@
 	transform: translateY(-50%);
 }
 
-
 /* ===== BADGE ===== */
 
 .e-210c16c7 .item > .badge
@@ -333,14 +332,7 @@
 .e-210c16c7 > .box.bg-3 > .stack.bottom,
 .e-210c16c7 > .box.bg-3 > .foot { border-color: var(--ot-bg-3-border); }
 .e-210c16c7 > .box.bg-3 .item:hover { background: var(--ot-bg-3-hover); }
-.e-210c16c7 > .box.bg-3 .item > .count { background: var(--ot-bg-4); }
-
-.e-210c16c7 > .box.bg-4 { background: var(--ot-bg-4); }
-.e-210c16c7 > .box.bg-4 > .head,
-.e-210c16c7 > .box.bg-4 > .stack.bottom,
-.e-210c16c7 > .box.bg-4 > .foot { border-color: var(--ot-bg-4-border); }
-.e-210c16c7 > .box.bg-4 .item:hover { background: var(--ot-bg-4-hover); }
-.e-210c16c7 > .box.bg-4 .item > .count { background: var(--ot-bg-3); }
+.e-210c16c7 > .box.bg-3 .item > .count { background: var(--ot-bg-3); }
 
 /* ===== BORDER ===== */
 
@@ -367,9 +359,3 @@
 .e-210c16c7 > .box.bg-3.border-right,
 .e-210c16c7 > .box.bg-3.border-bottom,
 .e-210c16c7 > .box.bg-3.border-left { border-color: var(--ot-bg-3-border); }
-
-.e-210c16c7 > .box.bg-4.border,
-.e-210c16c7 > .box.bg-4.border-top,
-.e-210c16c7 > .box.bg-4.border-right,
-.e-210c16c7 > .box.bg-4.border-bottom,
-.e-210c16c7 > .box.bg-4.border-left { border-color: var(--ot-bg-4-border); }

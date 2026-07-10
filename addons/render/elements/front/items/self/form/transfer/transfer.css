@@ -144,7 +144,6 @@
 	color: var(--ot-text-2);
 }
 
-
 /* Item text */
 
 .e-1e66ff82 > .box > .panel > .list > .item > .item-text
@@ -266,14 +265,12 @@
 .e-1e66ff82 > .box.bg-1 > .panel { background: var(--ot-bg-1); }
 .e-1e66ff82 > .box.bg-2 > .panel { background: var(--ot-bg-2); }
 .e-1e66ff82 > .box.bg-3 > .panel { background: var(--ot-bg-3); }
-.e-1e66ff82 > .box.bg-4 > .panel { background: var(--ot-bg-4); }
 
 /* Border */
 
 .e-1e66ff82 > .box.border.bg-1 > .panel { border-color: var(--ot-bg-1-border); }
 .e-1e66ff82 > .box.border.bg-2 > .panel { border-color: var(--ot-bg-2-border); }
 .e-1e66ff82 > .box.border.bg-3 > .panel { border-color: var(--ot-bg-3-border); }
-.e-1e66ff82 > .box.border.bg-4 > .panel { border-color: var(--ot-bg-4-border); }
 
 /* ===== SIZE ===== */
 

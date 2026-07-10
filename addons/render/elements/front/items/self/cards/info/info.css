@@ -20,7 +20,6 @@
 .e-7e93ff6e > .box.bg-1,
 .e-7e93ff6e > .box.bg-2,
 .e-7e93ff6e > .box.bg-3,
-.e-7e93ff6e > .box.bg-4,
 .e-7e93ff6e > .box.border
 {
 	padding: var(--ot-spacing-m);
@@ -389,17 +388,12 @@
 .e-7e93ff6e > .box.bg-3 > .stats { border-color: var(--ot-bg-3-border); }
 .e-7e93ff6e > .box.bg-3 > .tags > .tag { background: var(--ot-bg-2); border-color: var(--ot-bg-3-border); }
 
-.e-7e93ff6e > .box.bg-4 { background: var(--ot-bg-4); }
-.e-7e93ff6e > .box.bg-4 > .stats { border-color: var(--ot-bg-4-border); }
-.e-7e93ff6e > .box.bg-4 > .tags > .tag { background: var(--ot-bg-3); border-color: var(--ot-bg-4-border); }
-
 /* ===== BORDER ===== */
 
 .e-7e93ff6e > .box.border { border-color: var(--ot-bg-2-border); }
 .e-7e93ff6e > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-7e93ff6e > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-7e93ff6e > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-7e93ff6e > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* ===== SIZE ===== */
 

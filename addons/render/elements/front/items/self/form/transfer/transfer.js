@@ -92,7 +92,7 @@ onetype.AddonReady('elements', (elements) =>
 			{
 				type: 'string',
 				value: 'bg-2',
-				options: ['bg-1', 'bg-2', 'bg-3', 'bg-4'],
+				options: ['bg-1', 'bg-2', 'bg-3'],
 				description: 'Panel background depth.'
 			},
 			variant:

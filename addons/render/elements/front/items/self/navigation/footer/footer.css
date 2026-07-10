@@ -23,7 +23,6 @@
 .e-71bcd7e2 > .box.bg-1 { background: var(--ot-bg-1); }
 .e-71bcd7e2 > .box.bg-2 { background: var(--ot-bg-2); }
 .e-71bcd7e2 > .box.bg-3 { background: var(--ot-bg-3); }
-.e-71bcd7e2 > .box.bg-4 { background: var(--ot-bg-4); }
 
 /* ===== MODIFIERS ===== */
 
@@ -31,7 +30,6 @@
 .e-71bcd7e2 > .box.bg-1.border { border-top-color: var(--ot-bg-1-border); }
 .e-71bcd7e2 > .box.bg-2.border { border-top-color: var(--ot-bg-2-border); }
 .e-71bcd7e2 > .box.bg-3.border { border-top-color: var(--ot-bg-3-border); }
-.e-71bcd7e2 > .box.bg-4.border { border-top-color: var(--ot-bg-4-border); }
 
 .e-71bcd7e2 > .box.clean
 {

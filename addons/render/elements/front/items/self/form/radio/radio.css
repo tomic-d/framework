@@ -224,17 +224,6 @@
 	background: var(--ot-bg-3-hover);
 }
 
-.e-206433b8 > .box.bg-4 > .mark
-{
-	background: var(--ot-bg-4);
-	border-color: var(--ot-bg-4-border);
-}
-
-.e-206433b8 > .box.bg-4:hover:not(.disabled) > input:not(:checked) ~ .mark
-{
-	background: var(--ot-bg-4-hover);
-}
-
 /* Transparent */
 
 .e-206433b8 > .box.transparent > .mark
@@ -266,7 +255,6 @@
 .e-206433b8 > .box.bg-1 > input:checked ~ .mark,
 .e-206433b8 > .box.bg-2 > input:checked ~ .mark,
 .e-206433b8 > .box.bg-3 > input:checked ~ .mark,
-.e-206433b8 > .box.bg-4 > input:checked ~ .mark,
 .e-206433b8 > .box.transparent > input:checked ~ .mark,
 .e-206433b8 > .box.border > input:checked ~ .mark
 {

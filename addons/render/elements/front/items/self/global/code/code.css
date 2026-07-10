@@ -21,7 +21,6 @@
 .e-4a15b201 > .box.bg-1 { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
 .e-4a15b201 > .box.bg-2 { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
 .e-4a15b201 > .box.bg-3 { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
-.e-4a15b201 > .box.bg-4 { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
 
 /* Head */
 
@@ -98,7 +97,7 @@
 
 .e-4a15b201 > .box > .head > .copy:hover
 {
-	background: var(--ot-bg-4);
+	background: var(--ot-bg-3);
 	color: var(--ot-text-1);
 }
 
@@ -144,8 +143,8 @@
 
 .e-4a15b201 > .box > .body::-webkit-scrollbar { height: 8px; }
 .e-4a15b201 > .box > .body::-webkit-scrollbar-track { background: transparent; }
-.e-4a15b201 > .box > .body::-webkit-scrollbar-thumb { background: var(--ot-bg-4); border-radius: 100px; }
-.e-4a15b201 > .box > .body::-webkit-scrollbar-thumb:hover { background: var(--ot-bg-4-hover); }
+.e-4a15b201 > .box > .body::-webkit-scrollbar-thumb { background: var(--ot-bg-3); border-radius: 100px; }
+.e-4a15b201 > .box > .body::-webkit-scrollbar-thumb:hover { background: var(--ot-bg-3-hover); }
 
 /* ===== LINE NUMBERS ===== */
 
@@ -220,7 +219,6 @@
 .e-4a15b201 > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-4a15b201 > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-4a15b201 > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-4a15b201 > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* ===== SIZE ===== */
 

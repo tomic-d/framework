@@ -219,10 +219,6 @@
 .e-36dc8444 > .box.bg-3 .step.upcoming > .marker { background: var(--ot-bg-2); border-color: var(--ot-bg-3-border); }
 .e-36dc8444 > .box.bg-3 .step:hover:not(.disabled) { background: var(--ot-bg-3-hover); }
 
-.e-36dc8444 > .box.bg-4 { background: var(--ot-bg-4); }
-.e-36dc8444 > .box.bg-4 .step.upcoming > .marker { background: var(--ot-bg-3); border-color: var(--ot-bg-4-border); }
-.e-36dc8444 > .box.bg-4 .step:hover:not(.disabled) { background: var(--ot-bg-4-hover); }
-
 /* ===== BORDER ===== */
 
 .e-36dc8444 > .box.border { border: 1px solid var(--ot-bg-2-border); }
@@ -249,23 +245,15 @@
 .e-36dc8444 > .box.bg-3.border-bottom,
 .e-36dc8444 > .box.bg-3.border-left { border-color: var(--ot-bg-3-border); }
 
-.e-36dc8444 > .box.bg-4.border,
-.e-36dc8444 > .box.bg-4.border-top,
-.e-36dc8444 > .box.bg-4.border-right,
-.e-36dc8444 > .box.bg-4.border-bottom,
-.e-36dc8444 > .box.bg-4.border-left { border-color: var(--ot-bg-4-border); }
-
 /* Connected line per background */
 
 .e-36dc8444 > .box.bg-1.connected > .step + .step::before { background: var(--ot-bg-1-border); }
 .e-36dc8444 > .box.bg-2.connected > .step + .step::before { background: var(--ot-bg-2-border); }
 .e-36dc8444 > .box.bg-3.connected > .step + .step::before { background: var(--ot-bg-3-border); }
-.e-36dc8444 > .box.bg-4.connected > .step + .step::before { background: var(--ot-bg-4-border); }
 
 .e-36dc8444 > .box.bg-1.connected > .step.done + .step::before,
 .e-36dc8444 > .box.bg-2.connected > .step.done + .step::before,
-.e-36dc8444 > .box.bg-3.connected > .step.done + .step::before,
-.e-36dc8444 > .box.bg-4.connected > .step.done + .step::before { background: var(--ot-brand); }
+.e-36dc8444 > .box.bg-3.connected > .step.done + .step::before{ background: var(--ot-brand); }
 
 /* ===== SIZE — vertical ===== */
 

@@ -183,11 +183,6 @@
 .e-1a845976 > .box.bg-3 .separator { background: var(--ot-bg-3-border); }
 .e-1a845976 > .box.bg-3 .item > .badge { border-color: var(--ot-bg-3); }
 
-.e-1a845976 > .box.bg-4 { background: var(--ot-bg-4); }
-.e-1a845976 > .box.bg-4 .item:hover { background: var(--ot-bg-4-hover); }
-.e-1a845976 > .box.bg-4 .separator { background: var(--ot-bg-4-border); }
-.e-1a845976 > .box.bg-4 .item > .badge { border-color: var(--ot-bg-4); }
-
 /* ===== BORDER ===== */
 
 .e-1a845976 > .box.border { border: 1px solid var(--ot-bg-2-border); }
@@ -213,9 +208,3 @@
 .e-1a845976 > .box.bg-3.border-right,
 .e-1a845976 > .box.bg-3.border-bottom,
 .e-1a845976 > .box.bg-3.border-left { border-color: var(--ot-bg-3-border); }
-
-.e-1a845976 > .box.bg-4.border,
-.e-1a845976 > .box.bg-4.border-top,
-.e-1a845976 > .box.bg-4.border-right,
-.e-1a845976 > .box.bg-4.border-bottom,
-.e-1a845976 > .box.bg-4.border-left { border-color: var(--ot-bg-4-border); }

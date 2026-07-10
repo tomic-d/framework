@@ -95,12 +95,10 @@
 .e-5973ffcd > .box.bg-1 { background: var(--ot-bg-1); }
 .e-5973ffcd > .box.bg-2 { background: var(--ot-bg-2); }
 .e-5973ffcd > .box.bg-3 { background: var(--ot-bg-3); }
-.e-5973ffcd > .box.bg-4 { background: var(--ot-bg-4); }
 
 .e-5973ffcd > .box.bg-1:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-1-hover); }
 .e-5973ffcd > .box.bg-2:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-2-hover); }
 .e-5973ffcd > .box.bg-3:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-3-hover); }
-.e-5973ffcd > .box.bg-4:hover:not(:focus-within):not(.disabled) { background: var(--ot-bg-4-hover); }
 
 /* Transparent */
 
@@ -116,7 +114,6 @@
 .e-5973ffcd > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-5973ffcd > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-5973ffcd > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-5973ffcd > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* ===== SIZE ===== */
 

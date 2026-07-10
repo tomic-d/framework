@@ -217,7 +217,6 @@
 .e-7f41cd6a > .box.bg-1 { background: var(--ot-bg-1); }
 .e-7f41cd6a > .box.bg-2 { background: var(--ot-bg-2); }
 .e-7f41cd6a > .box.bg-3 { background: var(--ot-bg-3); }
-.e-7f41cd6a > .box.bg-4 { background: var(--ot-bg-4); }
 
 /* Border */
 
@@ -225,7 +224,6 @@
 .e-7f41cd6a > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-7f41cd6a > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-7f41cd6a > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-7f41cd6a > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* ===== SIZE ===== */
 

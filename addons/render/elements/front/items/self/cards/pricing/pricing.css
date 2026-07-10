@@ -372,16 +372,12 @@
 .e-7e10f2fa > .box.bg-3 { background: var(--ot-bg-3); }
 .e-7e10f2fa > .box.bg-3 > .features { border-top-color: var(--ot-bg-3-border); }
 
-.e-7e10f2fa > .box.bg-4 { background: var(--ot-bg-4); }
-.e-7e10f2fa > .box.bg-4 > .features { border-top-color: var(--ot-bg-4-border); }
-
 /* ===== BORDER ===== */
 
 .e-7e10f2fa > .box.border { border-color: var(--ot-bg-2-border); }
 .e-7e10f2fa > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-7e10f2fa > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-7e10f2fa > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-7e10f2fa > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 .e-7e10f2fa > .box.highlighted.border,
 .e-7e10f2fa > .box.highlighted

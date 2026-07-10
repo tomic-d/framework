@@ -314,13 +314,8 @@
 
 .e-2248d40 > .box.bg-3 { background: var(--ot-bg-3); }
 .e-2248d40 > .box.bg-3 > .bar { background: var(--ot-bg-3); border-bottom-color: var(--ot-bg-3-border); }
-.e-2248d40 > .box.bg-3 > .bar .btn:hover { background: var(--ot-bg-4); }
+.e-2248d40 > .box.bg-3 > .bar .btn:hover { background: var(--ot-bg-3); }
 .e-2248d40 > .box.bg-3 > .bar .sep { background: var(--ot-bg-3-border); }
-
-.e-2248d40 > .box.bg-4 { background: var(--ot-bg-4); }
-.e-2248d40 > .box.bg-4 > .bar { background: var(--ot-bg-4); border-bottom-color: var(--ot-bg-4-border); }
-.e-2248d40 > .box.bg-4 > .bar .btn:hover { background: var(--ot-bg-3); }
-.e-2248d40 > .box.bg-4 > .bar .sep { background: var(--ot-bg-4-border); }
 
 /* ===== BORDER ===== */
 
@@ -328,7 +323,6 @@
 .e-2248d40 > .box.bg-1.border { border-color: var(--ot-bg-1-border); }
 .e-2248d40 > .box.bg-2.border { border-color: var(--ot-bg-2-border); }
 .e-2248d40 > .box.bg-3.border { border-color: var(--ot-bg-3-border); }
-.e-2248d40 > .box.bg-4.border { border-color: var(--ot-bg-4-border); }
 
 /* ===== SIZE ===== */
 

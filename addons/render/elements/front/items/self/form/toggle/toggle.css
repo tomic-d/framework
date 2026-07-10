@@ -173,14 +173,12 @@
 .e-180e0ca7 > .box.bg-1 > .track { background: var(--ot-bg-1); }
 .e-180e0ca7 > .box.bg-2 > .track { background: var(--ot-bg-2); }
 .e-180e0ca7 > .box.bg-3 > .track { background: var(--ot-bg-3); }
-.e-180e0ca7 > .box.bg-4 > .track { background: var(--ot-bg-4); }
 
 /* Border */
 
 .e-180e0ca7 > .box.border.bg-1 > .track { border: 1px solid var(--ot-bg-1-border); }
 .e-180e0ca7 > .box.border.bg-2 > .track { border: 1px solid var(--ot-bg-2-border); }
 .e-180e0ca7 > .box.border.bg-3 > .track { border: 1px solid var(--ot-bg-3-border); }
-.e-180e0ca7 > .box.border.bg-4 > .track { border: 1px solid var(--ot-bg-4-border); }
 
 /* ===== COLOR (active state) ===== */
 

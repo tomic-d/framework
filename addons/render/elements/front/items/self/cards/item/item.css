@@ -179,7 +179,6 @@
 .e-7e9415d3 > .box > .body > .head > .icon-wrap.bg-1 { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); }
 .e-7e9415d3 > .box > .body > .head > .icon-wrap.bg-2 { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); }
 .e-7e9415d3 > .box > .body > .head > .icon-wrap.bg-3 { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); }
-.e-7e9415d3 > .box > .body > .head > .icon-wrap.bg-4 { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); }
 
 /* Head text */
 
@@ -369,7 +368,6 @@
 .e-7e9415d3 > .box.bg-1 { background: var(--ot-bg-1); }
 .e-7e9415d3 > .box.bg-2 { background: var(--ot-bg-2); }
 .e-7e9415d3 > .box.bg-3 { background: var(--ot-bg-3); }
-.e-7e9415d3 > .box.bg-4 { background: var(--ot-bg-4); }
 
 /* Border */
 
@@ -377,7 +375,6 @@
 .e-7e9415d3 > .box.bg-1.border         { border-color: var(--ot-bg-1-border); }
 .e-7e9415d3 > .box.bg-2.border         { border-color: var(--ot-bg-2-border); }
 .e-7e9415d3 > .box.bg-3.border         { border-color: var(--ot-bg-3-border); }
-.e-7e9415d3 > .box.bg-4.border         { border-color: var(--ot-bg-4-border); }
 
 /* Hover */
 
@@ -396,7 +393,6 @@
 .e-7e9415d3 > .box.bg-1.clickable:not(.hover):hover { background: var(--ot-bg-1-hover); }
 .e-7e9415d3 > .box.bg-2.clickable:not(.hover):hover { background: var(--ot-bg-2-hover); }
 .e-7e9415d3 > .box.bg-3.clickable:not(.hover):hover { background: var(--ot-bg-3-hover); }
-.e-7e9415d3 > .box.bg-4.clickable:not(.hover):hover { background: var(--ot-bg-4-hover); }
 
 /* Glass */
 

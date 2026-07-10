@@ -147,13 +147,10 @@
 .e-2e3de5ec > .box.bg-1 { background: var(--ot-bg-1); border-color: var(--ot-bg-1-border); color: var(--ot-text-2); }
 .e-2e3de5ec > .box.bg-2 { background: var(--ot-bg-2); border-color: var(--ot-bg-2-border); color: var(--ot-text-2); }
 .e-2e3de5ec > .box.bg-3 { background: var(--ot-bg-3); border-color: var(--ot-bg-3-border); color: var(--ot-text-2); }
-.e-2e3de5ec > .box.bg-4 { background: var(--ot-bg-4); border-color: var(--ot-bg-4-border); color: var(--ot-text-2); }
 
 .e-2e3de5ec > .box.bg-1 > .body > .title,
 .e-2e3de5ec > .box.bg-2 > .body > .title,
-.e-2e3de5ec > .box.bg-3 > .body > .title,
-.e-2e3de5ec > .box.bg-4 > .body > .title
-{
+.e-2e3de5ec > .box.bg-3 > .body > .title{
 	color: var(--ot-text-1);
 }
 

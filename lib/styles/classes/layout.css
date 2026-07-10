@@ -21,11 +21,11 @@
 .ot-grid-auto-l { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ot-spacing-m); }
 
 /* Scrollbar - opt-in tanke skrol regije */
-.ot-scrollbar { overflow: auto; scrollbar-width: thin; scrollbar-color: var(--ot-bg-4) transparent; }
+.ot-scrollbar { overflow: auto; scrollbar-width: thin; scrollbar-color: var(--ot-bg-3) transparent; }
 .ot-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
 .ot-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.ot-scrollbar::-webkit-scrollbar-thumb { background: var(--ot-bg-4); border-radius: 4px; }
-.ot-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--ot-bg-4-hover); }
+.ot-scrollbar::-webkit-scrollbar-thumb { background: var(--ot-bg-3); border-radius: 4px; }
+.ot-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--ot-bg-3-hover); }
 
 /* Truncate - single line ellipsis */
 .ot-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }

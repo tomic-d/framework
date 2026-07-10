@@ -196,18 +196,13 @@
 
 .e-4a1d382d > .box.bg-3.pills > .tag { background: var(--ot-bg-3); }
 .e-4a1d382d > .box.bg-3.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-3-hover); }
-.e-4a1d382d > .box.bg-3 .tag > .count { background: var(--ot-bg-4); }
-
-.e-4a1d382d > .box.bg-4.pills > .tag { background: var(--ot-bg-4); }
-.e-4a1d382d > .box.bg-4.pills > .tag:hover:not(.disabled):not(.active) { background: var(--ot-bg-4-hover); }
-.e-4a1d382d > .box.bg-4 .tag > .count { background: var(--ot-bg-3); }
+.e-4a1d382d > .box.bg-3 .tag > .count { background: var(--ot-bg-3); }
 
 /* Outline + bg */
 
 .e-4a1d382d > .box.bg-1.outline > .tag { border-color: var(--ot-bg-1-border); }
 .e-4a1d382d > .box.bg-2.outline > .tag { border-color: var(--ot-bg-2-border); }
 .e-4a1d382d > .box.bg-3.outline > .tag { border-color: var(--ot-bg-3-border); }
-.e-4a1d382d > .box.bg-4.outline > .tag { border-color: var(--ot-bg-4-border); }
 
 /* ===== BORDER MODIFIER ===== */
 
@@ -215,7 +210,6 @@
 .e-4a1d382d > .box.bg-1.border > .tag { border-color: var(--ot-bg-1-border); }
 .e-4a1d382d > .box.bg-2.border > .tag { border-color: var(--ot-bg-2-border); }
 .e-4a1d382d > .box.bg-3.border > .tag { border-color: var(--ot-bg-3-border); }
-.e-4a1d382d > .box.bg-4.border > .tag { border-color: var(--ot-bg-4-border); }
 
 /* ===== SIZE ===== */
 
