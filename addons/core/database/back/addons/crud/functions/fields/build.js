@@ -61,10 +61,18 @@ crud.Fn('fields.build', function(item, { update = false, whitelist = null } = {}
 
 	stamps.forEach((name) =>
 	{
-		if(declared.has(name))
+		if(!declared.has(name))
 		{
-			fields[name] = new Date().toISOString();
+			return;
 		}
+
+		/* a provided created stamp survives (imports, migrations); updated is always fresh */
+		if((name === 'created' || name === 'created_at') && item.Get(name))
+		{
+			return;
+		}
+
+		fields[name] = new Date().toISOString();
 	});
 
 	return { fields, skip };
