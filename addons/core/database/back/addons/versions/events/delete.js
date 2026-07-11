@@ -1,4 +1,5 @@
 import onetype from '#framework/load.js';
+import database from '#database/addon.js';
 import versions from '#database/addons/versions/addon.js';
 
 onetype.MiddlewareIntercept('@database.delete.before', async (middleware) =>
@@ -11,9 +12,9 @@ onetype.MiddlewareIntercept('@database.delete.before', async (middleware) =>
 		return await middleware.next();
 	}
 
-	const stamp = transaction.client.config.stamp();
+	const stamp = new Date().toISOString();
 
-	await transaction(addon.Table().name).where('id', item.Get('id')).update({ [config.delete]: stamp });
+	await transaction(addon.Table().name).where('id', item.Get('id')).update({ [database.Fn('column', addon, config.delete)]: stamp });
 
 	await versions.Fn('apply.write', transaction, addon, {
 		entity: item.Get('id'),

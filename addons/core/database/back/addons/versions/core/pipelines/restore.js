@@ -111,10 +111,12 @@ onetype.Pipeline('database:versions:restore', {
 		const table = target.Table().name;
 		const config = target.Versions();
 		const tracked = versions.Fn('get.tracked', target);
+		const spread = database.Fn('spread', target);
+		const declared = new Set(onetype.AddonGet('database.schema').Fn('parse', target.Schema()).columns.map((column) => column.name));
 
 		return knex.transaction(async (transaction) =>
 		{
-			const stamp = transaction.client.config.stamp;
+			const stamp = () => new Date().toISOString();
 			let restored = 0;
 
 			const current = async (id) =>
@@ -133,7 +135,7 @@ onetype.Pipeline('database:versions:restore', {
 				}
 
 				const now = stamp();
-				const update = { [config.delete]: now, ...(target.FieldGet('updated_at') ? { updated_at: now } : {}) };
+				const update = { [database.Fn('column', target, config.delete)]: now, ...(target.FieldGet('updated_at') ? { updated_at: now } : {}) };
 
 				await transaction(table).where('id', id).update(update);
 				await versions.Fn('apply.write', transaction, target, { entity: id, operation: 'update', changes: { [config.delete]: { old: null, new: now } } });
@@ -154,6 +156,7 @@ onetype.Pipeline('database:versions:restore', {
 				const state = folded.state;
 				const update = {};
 				const changes = {};
+				let bag = false;
 
 				for(const field of [...tracked, config.delete])
 				{
@@ -163,15 +166,46 @@ onetype.Pipeline('database:versions:restore', {
 
 					if(JSON.stringify(existing) !== JSON.stringify(next))
 					{
+						const column = database.Fn('column', target, field);
 						const define = target.FieldGet(field)?.define;
-						update[field] = database.Fn('serialize', targetValue, define ? onetype.DataParseConfig(define).type.split('|')[0] : 'string');
+
+						if(declared.has(column))
+						{
+							update[column] = database.Fn('serialize', targetValue, define ? onetype.DataParseConfig(define).type.split('|')[0] : 'string');
+						}
+						else
+						{
+							bag = true;
+						}
+
 						changes[field] = { old: existing, new: next };
 					}
 				}
 
-				if(!Object.keys(update).length)
+				if(!Object.keys(changes).length)
 				{
 					return false;
+				}
+
+				/* column-less fields fold back through the spread column: rebuild the
+				   whole bag from the folded state (current row fills the untracked) */
+				if(bag && spread)
+				{
+					const document = {};
+
+					for(const field of Object.values(target.Fields().data))
+					{
+						const parsed = onetype.DataParseConfig(field.define);
+
+						if(parsed.virtual || parsed.metadata?.spread || declared.has(database.Fn('column', target, field.name)))
+						{
+							continue;
+						}
+
+						document[field.name] = state.hasOwnProperty(field.name) ? state[field.name] : (row[field.name] ?? null);
+					}
+
+					update[database.Fn('column', target, spread)] = JSON.stringify(document);
 				}
 
 				if(target.FieldGet('updated_at'))

@@ -23,6 +23,7 @@ import '#database/addons/crud/functions/validate/between.js';
 
 /* Write helpers */
 import '#database/addons/crud/functions/hook.js';
+import '#database/addons/crud/functions/fields/bag.js';
 import '#database/addons/crud/functions/fields/build.js';
 import '#database/addons/crud/functions/fields/apply.js';
 

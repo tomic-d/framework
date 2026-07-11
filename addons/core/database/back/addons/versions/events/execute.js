@@ -1,4 +1,5 @@
 import onetype from '#framework/load.js';
+import database from '#database/addon.js';
 import versions from '#database/addons/versions/addon.js';
 
 onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
@@ -15,7 +16,19 @@ onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 	{
 		const alive = await versions.Fn('get.fold.many', query.knex, query.addon, query.versionId);
 
-		let records = Object.entries(alive).map(([entityId, state]) => ({ ...state, id: entityId }));
+		/* folded states carry field names; filters and sort already speak in
+		   columns, so project the states onto columns before matching */
+		let records = Object.entries(alive).map(([entityId, state]) =>
+		{
+			const record = { id: entityId };
+
+			for(const [field, value] of Object.entries(state))
+			{
+				record[database.Fn('column', query.addon, field)] = value;
+			}
+
+			return record;
+		});
 
 		if(query.filters?.children?.length)
 		{
@@ -43,7 +56,7 @@ onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 		return await middleware.next();
 	}
 
-	knex.whereNull(config.delete);
+	knex.whereNull(database.Fn('column', query.addon, config.delete));
 
 	await middleware.next();
 });

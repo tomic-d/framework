@@ -1,58 +1,69 @@
 import onetype from '#framework/load.js';
 import database from '#database/addon.js';
 import crud from '#database/addons/crud/addon.js';
+import schema from '#database/addons/schema/addon.js';
 
-crud.Fn('fields.build', function(item, knex, { update = false, whitelist = null } = {})
+crud.Fn('fields.build', function(item, { update = false, whitelist = null } = {})
 {
-	const stamp = knex.client.config.stamp;
 	const fields = {};
 	const skip = new Set();
+	const map = database.Fn('map', item.addon);
+	const { columns } = schema.Fn('parse', item.addon.Schema());
 
-	const primary = item.addon.Sync().primary;
-
-	for(const field of Object.values(item.addon.Fields().data))
+	for(const column of columns)
 	{
-		if(primary.fields.includes(field.name) && (primary.auto || update))
+		if(column.primary && (column.auto || update))
 		{
 			continue;
 		}
 
-		if(update && (field.name === 'created' || field.name === 'created_at'))
+		const name = map[column.name] || column.name;
+
+		if(update && (name === 'created' || name === 'created_at'))
+		{
+			continue;
+		}
+
+		const field = item.addon.FieldGet(name);
+
+		if(!field)
 		{
 			continue;
 		}
 
 		const parsed = onetype.DataParseConfig(field.define);
 
-		if(parsed.virtual)
+		if(update && whitelist && !whitelist.includes(name) && !parsed.metadata?.spread)
 		{
-			skip.add(field.name);
-			continue;
-		}
-
-		if(update && whitelist && !whitelist.includes(field.name))
-		{
-			skip.add(field.name);
+			skip.add(name);
 			continue;
 		}
 
 		try
 		{
-			fields[field.name] = database.Fn('serialize', item.Get(field.name), parsed.type.split('|')[0]);
+			if(parsed.metadata?.spread)
+			{
+				fields[column.name] = JSON.stringify(crud.Fn('fields.bag', item, columns));
+			}
+			else
+			{
+				fields[column.name] = column.array ? item.Get(name) : database.Fn('serialize', item.Get(name), parsed.type.split('|')[0]);
+			}
 		}
 		catch(error)
 		{
-			throw onetype.Error(500, 'Field :field: error: :reason:.', { field: field.name, reason: error.message });
+			throw onetype.Error(500, 'Field :field: error: :reason:.', { field: name, reason: error.message });
 		}
 	}
 
+	const declared = new Set(columns.map((column) => column.name));
 	const stamps = update ? ['updated', 'updated_at'] : ['created', 'created_at', 'updated', 'updated_at'];
 
 	stamps.forEach((name) =>
 	{
-		if(item.addon.FieldGet(name))
+		if(declared.has(name))
 		{
-			fields[name] = stamp();
+			fields[name] = new Date().toISOString();
 		}
 	});
 

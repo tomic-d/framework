@@ -1,4 +1,5 @@
 import onetype from '#framework/load.js';
+import database from '#database/addon.js';
 import crud from '#database/addons/crud/addon.js';
 
 crud.Item({
@@ -15,7 +16,7 @@ crud.Item({
 			throw onetype.Error(400, 'Invalid sort direction :direction:.', { direction });
 		}
 
-		chain.query.sort = { field, direction };
+		chain.query.sort = { field: database.Fn('column', chain.query.addon, field), direction };
 		return chain;
 	}
 });

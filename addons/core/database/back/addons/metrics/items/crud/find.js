@@ -1,4 +1,5 @@
 import onetype from '#framework/load.js';
+import database from '#database/addon.js';
 import crud from '#database/addons/crud/addon.js';
 import metrics from '../../addon.js';
 
@@ -23,6 +24,9 @@ crud.Item({
 		{
 			throw middleware.errors[0];
 		}
+
+		field = database.Fn('column', query.addon, field);
+		value = value ? database.Fn('column', query.addon, value) : value;
 
 		return metrics.Fn('build', knex, query, field, interval, aggregate, value);
 	}

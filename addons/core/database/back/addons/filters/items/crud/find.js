@@ -1,4 +1,5 @@
 import onetype from '#framework/load.js';
+import database from '#database/addon.js';
 import crud from '#database/addons/crud/addon.js';
 import filters from '../../addon.js';
 
@@ -25,7 +26,7 @@ function push(query, group, field, value, operator, type)
 		throw onetype.Error(400, 'Invalid operator: :1:.', normalized);
 	}
 
-	const filter = { kind: 'filter', field, value, operator: normalized, type };
+	const filter = { kind: 'filter', field: database.Fn('column', query.addon, field), value, operator: normalized, type };
 	const validate = item.Get('validate');
 
 	if(validate && validate.call({}, filter, validation, query) === false)
