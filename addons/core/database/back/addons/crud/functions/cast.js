@@ -4,6 +4,7 @@ import database from '#database/addon.js';
 database.Fn('cast', function(addon, record)
 {
 	const map = database.Fn('map', addon);
+	const spread = database.Fn('spread', addon);
 	const data = {};
 
 	Object.entries(record).forEach(([key, value]) =>
@@ -13,7 +14,13 @@ database.Fn('cast', function(addon, record)
 
 		if(!field)
 		{
-			data[name] = value instanceof Date ? value.toISOString() : value;
+			/* a spread addon has a closed field world: columns no field claims
+			   (empty slots) are storage, not data */
+			if(!spread)
+			{
+				data[name] = value instanceof Date ? value.toISOString() : value;
+			}
+
 			return;
 		}
 
@@ -21,8 +28,6 @@ database.Fn('cast', function(addon, record)
 
 		data[name] = database.Fn('cast.value', value, parsed.type.split('|')[0]);
 	});
-
-	const spread = database.Fn('spread', addon);
 
 	if(spread && data[spread] && typeof data[spread] === 'object')
 	{
