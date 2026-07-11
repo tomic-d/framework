@@ -4,12 +4,14 @@ onetype.EmitOn('@addon.init', (addon) =>
 	{
 		expose: null,
 		table: null,
+		schema: [],
 		translations: null,
 		search: null,
 		versions: null
 	};
 
 	addon.Table = function() {};
+	addon.Schema = function() {};
 	addon.Expose = function() {};
 	addon.Translations = function() {};
 	addon.Search = function() {};

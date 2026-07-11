@@ -13,11 +13,16 @@ const versions = onetype.Addon('database.versions', (addon) =>
 	addon.Field('language', ['string']);
 	addon.Field('created_at', { type: 'string', metadata: { cast: 'date' } });
 
-	addon.Sync((sync) =>
-	{
-		sync.Index(['addon', 'entity_id', 'id']);
-		sync.Index(['site_id', 'id']);
-	});
+	addon.Schema('id bigserial primary key');
+	addon.Schema('site_id bigint');
+	addon.Schema('addon varchar(255)');
+	addon.Schema('entity_id bigint');
+	addon.Schema('operation text');
+	addon.Schema('changes jsonb');
+	addon.Schema('language text');
+	addon.Schema('created_at timestamptz default now()');
+	addon.Schema('index (addon, entity_id, id)');
+	addon.Schema('index (site_id, id)');
 });
 
 export default versions;
