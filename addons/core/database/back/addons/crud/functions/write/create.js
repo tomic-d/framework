@@ -6,9 +6,8 @@ crud.Fn('create', async function(chain)
 	const item = chain.item;
 	const knex = database.Fn('connection', chain.connection || 'primary');
 	const table = item.addon.Table().name;
-	const insert = knex.client.config.insert;
 	const id = item.Get('id');
-	const { fields } = await crud.Fn('fields.build', item, knex);
+	const { fields } = await crud.Fn('fields.build', item);
 
 	return knex.transaction(async (transaction) =>
 	{
@@ -18,7 +17,8 @@ crud.Fn('create', async function(chain)
 
 		if(!hooks.skip)
 		{
-			crud.Fn('fields.apply', item, await insert(transaction, table, fields));
+			const [record] = await transaction(table).insert(fields).returning('*');
+			crud.Fn('fields.apply', item, record);
 		}
 
 		item.addon.ItemRemove(id, false);

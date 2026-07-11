@@ -7,7 +7,7 @@ onetype.MiddlewareIntercept('@database.find.execute', async (middleware) =>
 
 	if(query.filters?.children?.length)
 	{
-		await filters.Fn('build', knex, query.filters);
+		filters.Fn('build', knex, query.filters);
 	}
 
 	await middleware.next();

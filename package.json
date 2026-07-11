@@ -48,12 +48,10 @@
         "@grpc/grpc-js": "^1.13.3",
         "@grpc/proto-loader": "^0.7.15",
         "bcrypt": "^5.1.1",
-        "better-sqlite3": "^12.11.1",
         "busboy": "^1.6.0",
         "dotenv": "^16.4.7",
         "knex": "^3.2.10",
         "linkedom": "^0.18.9",
-        "mysql2": "^3.22.5",
         "pg": "^8.13.3",
         "playwright": "^1.59.1",
         "terser": "^5.37.0"

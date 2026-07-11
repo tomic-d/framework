@@ -18,7 +18,7 @@ onetype.MiddlewareIntercept('@database.create.after', async (middleware) =>
 		return await middleware.next();
 	}
 
-	const stamp = transaction.client.config.stamp();
+	const stamp = new Date().toISOString();
 
 	const rows = fields
 		.filter(field => item.Get(field) !== null && item.Get(field) !== undefined)

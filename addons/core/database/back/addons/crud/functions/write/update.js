@@ -6,7 +6,7 @@ crud.Fn('update', async function(chain)
 	const item = chain.item;
 	const knex = database.Fn('connection', chain.connection || 'primary');
 	const table = item.addon.Table().name;
-	const { fields, skip } = await crud.Fn('fields.build', item, knex, { update: true, whitelist: chain.context.whitelist || null });
+	const { fields, skip } = await crud.Fn('fields.build', item, { update: true, whitelist: chain.context.whitelist || null });
 
 	return knex.transaction(async (transaction) =>
 	{

@@ -1,13 +1,9 @@
 import filters from '../../addon.js';
 
-const resolve = (knex, helpers) =>
-{
-	helpers.jsonContains = knex.client.config.jsonContains;
-};
+/* JSON-array containment over a jsonb column (pg @> via knex whereJsonSupersetOf). */
 
 filters.Item({
 	id: 'CONTAINS',
-	resolve,
 	validate: (filter, validation) =>
 	{
 		validation.field(filter.field);
@@ -22,15 +18,14 @@ filters.Item({
 			return false;
 		}
 	},
-	build: (query, method, filter, helpers) => query[method](function()
+	build: (query, method, filter) => query[method](function()
 	{
-		filter.value.forEach((value) => helpers.jsonContains(this, 'where', filter.field, value));
+		filter.value.forEach((value) => this.whereJsonSupersetOf(filter.field, [value]));
 	})
 });
 
 filters.Item({
 	id: 'OVERLAP',
-	resolve,
 	validate: (filter, validation) =>
 	{
 		validation.field(filter.field);
@@ -45,15 +40,14 @@ filters.Item({
 			return false;
 		}
 	},
-	build: (query, method, filter, helpers) => query[method](function()
+	build: (query, method, filter) => query[method](function()
 	{
-		filter.value.forEach((value) => helpers.jsonContains(this, 'orWhere', filter.field, value));
+		filter.value.forEach((value) => this.orWhereJsonSupersetOf(filter.field, [value]));
 	})
 });
 
 filters.Item({
 	id: 'HAS',
-	resolve,
 	validate: (filter, validation) => validation.field(filter.field),
-	build: (query, method, filter, helpers) => helpers.jsonContains(query, method, filter.field, filter.value)
+	build: (query, method, filter) => query[method + 'JsonSupersetOf'](filter.field, Array.isArray(filter.value) ? filter.value : [filter.value])
 });
