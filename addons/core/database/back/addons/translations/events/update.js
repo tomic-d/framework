@@ -22,8 +22,8 @@ onetype.MiddlewareIntercept('@database.update.before', async (middleware) =>
 
 onetype.MiddlewareIntercept('@database.update.after', async (middleware) =>
 {
-	const { item, transaction, addon, language, languages } = middleware.value;
-	const fields = addon.Translations();
+	const { item, transaction, addon, language, languages, whitelist } = middleware.value;
+	let fields = addon.Translations();
 
 	if(!fields)
 	{
@@ -37,7 +37,12 @@ onetype.MiddlewareIntercept('@database.update.after', async (middleware) =>
 		return await middleware.next();
 	}
 
-	const stamp = transaction.client.config.stamp();
+	if(whitelist)
+	{
+		fields = fields.filter(field => whitelist.includes(field));
+	}
+
+	const stamp = new Date().toISOString();
 
 	const rows = fields
 		.filter(field => item.Get(field) !== null && item.Get(field) !== undefined)

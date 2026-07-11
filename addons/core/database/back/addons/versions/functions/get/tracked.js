@@ -1,3 +1,4 @@
+import onetype from '#framework/load.js';
 import versions from '#database/addons/versions/addon.js';
 
 versions.Fn('get.tracked', function(addon)
@@ -9,8 +10,12 @@ versions.Fn('get.tracked', function(addon)
 		return null;
 	}
 
+	/* virtual fields (join outputs) are not columns; versioning them would replay
+	   them into UPDATE statements on restore */
 	const skip = new Set(['id', 'created_at', 'updated_at']);
-	const all = Object.keys(addon.Fields().data).filter((name) => !skip.has(name));
+	const all = Object.values(addon.Fields().data)
+		.filter((field) => !skip.has(field.name) && !onetype.DataParseConfig(field.define).virtual)
+		.map((field) => field.name);
 
 	if(!config.fields)
 	{

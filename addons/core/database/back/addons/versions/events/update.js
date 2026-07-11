@@ -61,7 +61,8 @@ onetype.MiddlewareIntercept('@database.update.after', async (middleware) =>
 	{
 		const fields = addon.Translations();
 		const tracked = versions.Fn('get.tracked', addon);
-		const translatable = (fields || []).filter((field) => tracked.includes(field));
+		const whitelist = middleware.value.whitelist;
+		const translatable = (fields || []).filter((field) => tracked.includes(field) && (!whitelist || whitelist.includes(field)));
 
 		if(!translatable.length)
 		{

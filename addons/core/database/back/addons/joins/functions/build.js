@@ -14,7 +14,7 @@ joins.Fn('build', async function(records, list)
 
 		if(!addon)
 		{
-			throw new Error(`Join addon '${join.addon}' not found.`);
+			throw onetype.Error(404, 'Join addon :1: not found.', join.addon);
 		}
 
 		const ids = [];
@@ -41,6 +41,11 @@ joins.Fn('build', async function(records, list)
 
 		if(!ids.length)
 		{
+			if(join.required)
+			{
+				return [];
+			}
+
 			continue;
 		}
 
