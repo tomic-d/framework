@@ -1,42 +1,60 @@
-# OneType Framework
+# OneType
 
-Full-stack isomorphic JavaScript framework built from scratch. No React, no Express, no Vue: original architecture from zero.
+**A full-stack JavaScript framework built entirely from scratch — no React, no Vue, no Express.**
 
-One universal abstraction, the **addon**, powers databases, servers, commands, pages, directives, queues, and more. Define an addon with fields, and you get: data validation, event system, middleware chains, CRUD with PostgreSQL, automatic API exposure, frontend reactivity, and DOM manipulation, all from a single definition.
+Most apps are glued together from a dozen libraries that were never meant to work as one. OneType is the opposite: one idea, the **addon**, runs the whole stack. You describe *what* something is once, and you get the database table, the validated API, the live frontend, and the reactivity — all from that single definition.
 
-Built by [Dejan Tomic](https://github.com/tomic-d). Around 43,000 lines across 650+ files and 17 addon categories: its own ORM (SQLite, MySQL, Postgres), HTTP and gRPC servers and clients, task queues, an asset pipeline, a rendering engine with reactive directives, and an AI agents module. Every production project I run consumes it as a versioned npm dependency, including [iamdejan.com](https://iamdejan.com), the site itself.
+Built and maintained by [Dejan Tomic](https://github.com/tomic-d). It powers real production services, including [iamdejan.com](https://iamdejan.com), which runs on it end to end.
 
-## Quick Look
+---
+
+## The one idea
+
+Define an addon once:
 
 ```js
-import onetype from 'onetype';
-import database from 'onetype/database';
-import commands from 'onetype/commands';
-
-// Define an addon: typed, persistent, full CRUD
 const users = onetype.Addon('users', (addon) => {
     addon.Table('users');
-    addon.Field('id', ['string']);
-    addon.Field('name', ['string', null, true]);
+    addon.Field('id',    ['string']);
+    addon.Field('name',  ['string', null, true]);
     addon.Field('email', ['string', null, true]);
-    addon.Field('created_at', ['string']);
 });
+```
 
-// Connect database: all addons with Table() persist automatically
-database.Item({
-    id: 'primary',
-    hostname: process.env.DB_HOSTNAME,
-    username: process.env.DB_USERNAME,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD
-});
+From that single definition you automatically get:
 
-// Start HTTP server
-commands.Fn('http.server', 3000, {
-    onStart: () => console.log('Server started on port 3000')
-});
+- a **PostgreSQL table** with the right columns
+- **validation** on every write
+- an **event system** and middleware chain around it
+- a **typed REST API** you can expose with one flag
+- **frontend reactivity** and DOM binding to the same data
 
-// Define an API endpoint with typed input/output
+No ORM boilerplate, no separate schema files, no wiring the backend to the frontend by hand. The definition *is* the wiring.
+
+## What's inside
+
+Everything a real product needs, written from zero and unified under the addon model:
+
+| Area | What it gives you |
+|---|---|
+| **Database** | Own ORM over SQLite, MySQL, and PostgreSQL — queries, relations, migrations |
+| **Servers** | HTTP and gRPC servers *and* clients, built in |
+| **Render** | A reactive rendering engine with directives — components, reactivity, DOM, all from scratch (this is the React/Vue you don't need) |
+| **Queue** | Background task queues |
+| **Commands** | Typed, exposable API endpoints with input/output validation |
+| **Assets** | An asset pipeline |
+| **AI** | An agents module for building on top of LLMs |
+| **Services** | Cloudflare, Playwright, and other integrations |
+
+The same abstraction spans the database, the server, and the browser — which is what makes it *isomorphic*: one mental model from the SQL row to the rendered pixel.
+
+## Why it exists
+
+I wanted to build entire products alone, at speed, without fighting the seams between someone else's ORM, someone else's router, and someone else's view layer. So I built the layer underneath all of them. It let one person ship and run production software — including a web builder with 30,000+ users — that would normally take a team and a stack of dependencies.
+
+## Quick look — a full API endpoint
+
+```js
 onetype.AddonReady('commands', (commands) => {
     commands.Item({
         id: 'users:get:many',
@@ -48,41 +66,24 @@ onetype.AddonReady('commands', (commands) => {
                 .sort('created_at', 'desc')
                 .page(properties.page || 1)
                 .limit(properties.limit || 20)
-                .many();
+                .all();
 
-            resolve({
-                users: items.map(u => u.Get(['id', 'name', 'email', 'created_at']))
-            });
+            resolve(items);
         }
     });
 });
 ```
 
-## What's inside
+Database access, routing, pagination, and JSON output — no external framework involved.
 
-| Area | What it does |
-|---|---|
-| Addons | The core abstraction: fields, items, functions, lifecycle events, mixin composition |
-| Database | Fluent ORM over SQLite, MySQL and Postgres: query builder, 17+ operators, joins |
-| Commands | Typed API endpoints exposed over four transports from one definition |
-| Servers and clients | HTTP and gRPC, including streaming and binary transport |
-| Rendering | Reactive Proxy-based renders, directives (ot-if, ot-for, ot-click), lifecycle hooks |
-| Pages | Routing, grid layouts, SPA navigation |
-| Queues | Background task processing |
-| Assets | Bundling and serving of JS/CSS from addon folders |
-| Agents | AI agents module: tool calling and orchestration primitives |
-
-## Install
+## Run
 
 ```bash
-npm install @onetype/framework
+npm install
+node demo.js
 ```
 
-Requires Node.js >= 18.
-
-## Origin
-
-Originally built as the core of [Divhunt](https://divhunt.com), a cloud SaaS web builder that grew to 30,000+ users. The framework (v1) powered the entire platform, backend and frontend, for 4+ years. This is v2, the foundation of the OneType platform: rebuilt with Proxy-based reactivity, improved addon architecture, gRPC transport, and a complete render system.
+Requires Node.js >= 18. Published on npm as [`@onetype/framework`](https://www.npmjs.com/package/@onetype/framework).
 
 ## License
 
